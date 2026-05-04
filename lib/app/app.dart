@@ -14,6 +14,8 @@ class MejlisApp extends StatelessWidget {
     return MaterialApp.router(
       title: AppConstants.appTitle,
       theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       routerConfig: router,
     );
   }

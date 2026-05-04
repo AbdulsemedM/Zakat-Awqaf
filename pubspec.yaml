@@ -22,6 +22,9 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_config:
     path: packages/flutter_config
+  url_launcher: ^6.3.2
+  persistent_bottom_nav_bar_v2: ^6.3.2
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +37,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/static/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/static/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/static/Roboto-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/static/Roboto-Bold.ttf
+          weight: 700

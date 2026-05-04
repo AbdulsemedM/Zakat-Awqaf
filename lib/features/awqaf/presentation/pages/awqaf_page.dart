@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/common/widgets/loading_indicator.dart';
-import '../bloc/awqaf_bloc.dart';
-import '../bloc/awqaf_event.dart';
-import '../bloc/awqaf_state.dart';
+import '../../bloc/awqaf_bloc.dart';
+import '../../bloc/awqaf_event.dart';
+import '../../bloc/awqaf_state.dart';
 
 class AwqafPage extends StatelessWidget {
   const AwqafPage({super.key});

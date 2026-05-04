@@ -15,20 +15,7 @@ import 'package:go_router/go_router.dart' as _i583;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../app/router/app_router_module.dart' as _i800;
-import '../../features/awqaf/presentation/bloc/awqaf_bloc.dart' as _i856;
-import '../../features/zakat/data/datasources/local/zakat_local_datasource.dart'
-    as _i726;
-import '../../features/zakat/data/datasources/local/zakat_local_datasource_impl.dart'
-    as _i752;
-import '../../features/zakat/data/datasources/remote/zakat_remote_datasource.dart'
-    as _i636;
-import '../../features/zakat/data/datasources/remote/zakat_remote_datasource_impl.dart'
-    as _i433;
-import '../../features/zakat/data/repositories/zakat_repository_impl.dart'
-    as _i365;
-import '../../features/zakat/domain/repositories/zakat_repository.dart'
-    as _i767;
-import '../../features/zakat/presentation/bloc/zakat_bloc.dart' as _i167;
+import '../../features/awqaf/bloc/awqaf_bloc.dart' as _i833;
 import '../network/dio_module.dart' as _i614;
 import '../network_info/network_info.dart' as _i845;
 import '../network_info/network_info_impl.dart' as _i137;
@@ -42,22 +29,10 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appRouterModule = _$AppRouterModule();
     final dioModule = _$DioModule();
-    gh.factory<_i856.AwqafBloc>(() => _i856.AwqafBloc());
+    gh.factory<_i833.AwqafBloc>(() => _i833.AwqafBloc());
     gh.lazySingleton<_i583.GoRouter>(() => appRouterModule.router());
     gh.lazySingleton<_i361.Dio>(() => dioModule.dio());
     gh.lazySingleton<_i845.NetworkInfo>(() => _i137.NetworkInfoImpl());
-    gh.lazySingleton<_i726.ZakatLocalDataSource>(
-      () => _i752.ZakatLocalDataSourceImpl(),
-    );
-    gh.lazySingleton<_i636.ZakatRemoteDataSource>(
-      () => _i433.ZakatRemoteDataSourceImpl(),
-    );
-    gh.lazySingleton<_i767.ZakatRepository>(
-      () => _i365.ZakatRepositoryImpl(gh<_i636.ZakatRemoteDataSource>()),
-    );
-    gh.factory<_i167.ZakatBloc>(
-      () => _i167.ZakatBloc(gh<_i767.ZakatRepository>()),
-    );
     return this;
   }
 }

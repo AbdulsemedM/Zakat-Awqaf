@@ -4,8 +4,7 @@ import 'package:flutter_config/flutter_config.dart';
 
 import 'app/app.dart';
 import 'core/di/injection.dart';
-import 'features/awqaf/presentation/bloc/awqaf_bloc.dart';
-import 'features/zakat/presentation/bloc/zakat_bloc.dart';
+import 'features/awqaf/bloc/awqaf_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +13,6 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<ZakatBloc>(
-          create: (_) => getIt<ZakatBloc>(),
-        ),
         BlocProvider<AwqafBloc>(
           create: (_) => getIt<AwqafBloc>(),
         ),
