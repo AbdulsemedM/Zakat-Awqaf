@@ -1,0 +1,3 @@
+// Native .env → Info.plist: Xcode Scheme > Build > Pre-actions (flutter_config IOS.md: .envfile + BuildXCConfig.rb → tmp.xcconfig).
+#include "Generated.xcconfig"
+#include? "tmp.xcconfig"
