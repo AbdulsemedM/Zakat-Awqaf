@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../bloc/zakat_calculator_bloc.dart';
 import '../../bloc/zakat_calculator_event.dart';
 import '../../bloc/zakat_calculator_state.dart';
@@ -54,11 +56,12 @@ class ZakatCalculatorScreen extends StatelessWidget {
                   ],
                   const SizedBox(height: 12),
                   FilledButton.icon(
-                    onPressed: () => context.read<ZakatCalculatorBloc>().add(
-                      const PricingRefreshRequested(fromCalculate: true),
+                    onPressed: () => context.push(
+                      '/zakat/payment',
+                      extra: ZakatPaymentArgs.fromCalculator(s),
                     ),
-                    icon: const Icon(Icons.calculate_rounded),
-                    label: const Text('Calculate Zakat'),
+                    icon: const Icon(Icons.volunteer_activism_outlined),
+                    label: const Text('Pay Your Zakat'),
                   ),
                 ],
               ),

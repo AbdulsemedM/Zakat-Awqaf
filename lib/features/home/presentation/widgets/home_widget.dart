@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/constants/urgent_beneficiary_projects.dart';
+
 class TotalCollectedHeroCard extends StatelessWidget {
   const TotalCollectedHeroCard({super.key, required this.theme});
 
@@ -97,6 +99,7 @@ class UrgentNeedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     return SizedBox(
       width: 250,
       child: Card(
@@ -111,7 +114,7 @@ class UrgentNeedCard extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: model.bannerColors,
+                  colors: [scheme.primary, scheme.primaryContainer],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -126,13 +129,14 @@ class UrgentNeedCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: scheme.onPrimary.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
                       model.badge,
                       style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w700,
+                        color: scheme.primary,
                       ),
                     ),
                   ),
@@ -184,11 +188,12 @@ class ZakatReminderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        color: const Color(0xFF0D47A1),
+        color: scheme.primary,
       ),
       child: Row(
         children: [
@@ -199,7 +204,7 @@ class ZakatReminderCard extends StatelessWidget {
                 Text(
                   'Zakat Al-Fitr',
                   style: theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.white,
+                    color: scheme.onPrimary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -207,22 +212,26 @@ class ZakatReminderCard extends StatelessWidget {
                 Text(
                   'Due in approximately 22 days.',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.92),
+                    color: scheme.onPrimary.withValues(alpha: 0.92),
                   ),
                 ),
                 const SizedBox(height: 10),
                 FilledButton.tonal(
                   onPressed: () {},
                   style: FilledButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: const Color(0xFF0D47A1),
+                    backgroundColor: scheme.onPrimary,
+                    foregroundColor: scheme.primary,
                   ),
                   child: const Text('Set Reminder'),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.calendar_month, size: 52, color: Colors.white54),
+          Icon(
+            Icons.calendar_month,
+            size: 52,
+            color: scheme.onPrimary.withValues(alpha: 0.6),
+          ),
         ],
       ),
     );
@@ -236,12 +245,13 @@ class DonateSadaqahCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+        gradient: LinearGradient(
+          colors: [scheme.primary, scheme.primaryContainer],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -252,7 +262,7 @@ class DonateSadaqahCard extends StatelessWidget {
           Text(
             'Need a quick way to give?',
             style: theme.textTheme.titleMedium?.copyWith(
-              color: Colors.white,
+              color: scheme.onPrimary,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -260,7 +270,7 @@ class DonateSadaqahCard extends StatelessWidget {
           Text(
             'Support ongoing community needs instantly with Sadaqah.',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.white.withValues(alpha: 0.93),
+              color: scheme.onPrimary.withValues(alpha: 0.93),
             ),
           ),
           const SizedBox(height: 12),
@@ -269,8 +279,8 @@ class DonateSadaqahCard extends StatelessWidget {
             child: FilledButton.icon(
               onPressed: () => context.go('/calculator'),
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF1B5E20),
+                backgroundColor: scheme.onPrimary,
+                foregroundColor: scheme.primary,
               ),
               icon: const Icon(Icons.favorite),
               label: const Text('Donate Sadaqah'),
@@ -347,46 +357,16 @@ class InfoChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
+        color: theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
         label,
         style: theme.textTheme.labelMedium?.copyWith(
           fontWeight: FontWeight.w700,
+          color: theme.colorScheme.primary,
         ),
       ),
     );
   }
 }
-
-class UrgentNeedModel {
-  const UrgentNeedModel({
-    required this.badge,
-    required this.title,
-    required this.description,
-    required this.bannerColors,
-  });
-
-  final String badge;
-  final String title;
-  final String description;
-  final List<Color> bannerColors;
-}
-
-const homeUrgentNeeds = <UrgentNeedModel>[
-  UrgentNeedModel(
-    badge: 'URGENT',
-    title: 'Drought Relief in Afar',
-    description:
-        'Provide immediate clean water and food supplies to pastoralist families.',
-    bannerColors: [Color(0xFF8D6E63), Color(0xFFD7CCC8)],
-  ),
-  UrgentNeedModel(
-    badge: 'ESSENTIAL',
-    title: 'Education Support',
-    description:
-        'Support annual tuition and school supplies for vulnerable students.',
-    bannerColors: [Color(0xFF455A64), Color(0xFF90A4AE)],
-  ),
-];

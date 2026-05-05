@@ -1,0 +1,103 @@
+import '../../../../core/common/utils/money_formatter.dart';
+import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
+
+enum ZakatAmountEntryMode { fixed, userEstimatedEtb }
+
+/// Navigation extra for [`ZakatPaymentScreen`].
+class ZakatPaymentArgs {
+  const ZakatPaymentArgs({
+    required this.activeTab,
+    required this.amountEntryMode,
+    this.fixedAmountEtb,
+    required this.overviewTitle,
+    required this.overviewPrimaryValue,
+    required this.overviewDueLabel,
+    required this.overviewDueValue,
+    this.livestockSummaryText,
+    this.livestockTransparencyText,
+    this.cropTransparencyText,
+    this.certificateNaturalUnitLine,
+  });
+
+  final ZakatCategoryTab activeTab;
+  final ZakatAmountEntryMode amountEntryMode;
+  final double? fixedAmountEtb;
+
+  /// Mirrors [`_TabOverviewCard`] conceptually.
+  final String overviewTitle;
+  final String overviewPrimaryValue;
+  final String overviewDueLabel;
+  final String overviewDueValue;
+
+  final String? livestockSummaryText;
+  final String? livestockTransparencyText;
+  final String? cropTransparencyText;
+
+  /// Optional one-line text for certificate PDF (livestock/crops natural units).
+  final String? certificateNaturalUnitLine;
+
+  static bool canOpenPayment(ZakatCalculatorInitial s) {
+    switch (s.activeTab) {
+      case ZakatCategoryTab.wealth:
+        return s.aboveNisab && s.estimatedZakatDueEtb > 0;
+      case ZakatCategoryTab.livestock:
+        return s.sheepZakatDueCount > 0 ||
+            s.cattleTabiDueCount > 0 ||
+            s.cattleMusinnahDueCount > 0 ||
+            s.camelZakatDueDescription != 'No due';
+      case ZakatCategoryTab.crops:
+        return s.cropKg >= 653 && s.cropZakatDueKg > 0;
+    }
+  }
+
+  static String blockedMessage(ZakatCalculatorInitial s) {
+    switch (s.activeTab) {
+      case ZakatCategoryTab.wealth:
+        return 'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
+      case ZakatCategoryTab.livestock:
+        return 'No livestock Zakat is due for your current counts.';
+      case ZakatCategoryTab.crops:
+        return 'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
+    }
+  }
+
+  static ZakatPaymentArgs fromCalculator(ZakatCalculatorInitial s) {
+    switch (s.activeTab) {
+      case ZakatCategoryTab.wealth:
+        return ZakatPaymentArgs(
+          activeTab: s.activeTab,
+          amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
+          fixedAmountEtb: s.estimatedZakatDueEtb,
+          overviewTitle: 'Net Worth Overview',
+          overviewPrimaryValue: MoneyFormatter.etb(s.netWealthEtb),
+          overviewDueLabel: 'Zakat Due',
+          overviewDueValue: MoneyFormatter.etb(s.estimatedZakatDueEtb),
+        );
+      case ZakatCategoryTab.livestock:
+        final livestockCount = s.sheepOrGoats + s.cattle + s.camels;
+        return ZakatPaymentArgs(
+          activeTab: s.activeTab,
+          amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
+          overviewTitle: 'Livestock Overview',
+          overviewPrimaryValue: '$livestockCount animals',
+          overviewDueLabel: 'Livestock Due',
+          overviewDueValue: s.livestockSummaryText,
+          livestockSummaryText: s.livestockSummaryText,
+          livestockTransparencyText: s.livestockTransparencyText,
+          certificateNaturalUnitLine: s.livestockSummaryText,
+        );
+      case ZakatCategoryTab.crops:
+        return ZakatPaymentArgs(
+          activeTab: s.activeTab,
+          amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
+          overviewTitle: 'Crop Overview',
+          overviewPrimaryValue: '${s.cropKg.toStringAsFixed(2)} kg harvest',
+          overviewDueLabel: 'Crop Zakat Due',
+          overviewDueValue: '${s.cropZakatDueKg.toStringAsFixed(2)} kg',
+          cropTransparencyText: s.cropTransparencyText,
+          certificateNaturalUnitLine:
+              'Crop Zakat due: ${s.cropZakatDueKg.toStringAsFixed(2)} kg',
+        );
+    }
+  }
+}

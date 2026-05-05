@@ -59,6 +59,18 @@ class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.12);
+            }
+            return scheme.primary;
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.38);
+            }
+            return scheme.onPrimary;
+          }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
@@ -66,6 +78,18 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.12);
+            }
+            return scheme.primary;
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.38);
+            }
+            return scheme.onPrimary;
+          }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
           elevation: WidgetStateProperty.resolveWith((states) {
@@ -78,6 +102,18 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.38);
+            }
+            return scheme.primary;
+          }),
+          side: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return BorderSide(color: scheme.onSurface.withValues(alpha: 0.12));
+            }
+            return BorderSide(color: scheme.primary);
+          }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
@@ -85,14 +121,20 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.onSurface.withValues(alpha: 0.38);
+            }
+            return scheme.primary;
+          }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: scheme.secondaryContainer,
-        foregroundColor: scheme.onSecondaryContainer,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
         shape: roundedControlShape,
         elevation: 3,
       ),

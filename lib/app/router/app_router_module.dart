@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -9,6 +10,10 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/presentation/screens/impact_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
+import '../../features/zakat_payment/presentation/models/zakat_certificate_args.dart';
+import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
+import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
+import '../../features/zakat_payment/presentation/screens/zakat_payment_screen.dart';
 import '../pages/main_nav_shell_page.dart';
 
 @module
@@ -67,6 +72,30 @@ abstract class AppRouterModule {
           GoRoute(
             path: '/awqaf',
             builder: (context, state) => const AwqafScreen(),
+          ),
+          GoRoute(
+            path: '/zakat/payment',
+            builder: (context, state) {
+              final extra = state.extra;
+              if (extra is! ZakatPaymentArgs) {
+                return const Scaffold(
+                  body: Center(child: Text('Missing payment details.')),
+                );
+              }
+              return ZakatPaymentScreen(args: extra);
+            },
+          ),
+          GoRoute(
+            path: '/zakat/certificate',
+            builder: (context, state) {
+              final extra = state.extra;
+              if (extra is! ZakatCertificateArgs) {
+                return const Scaffold(
+                  body: Center(child: Text('Missing certificate details.')),
+                );
+              }
+              return ZakatCertificateScreen(args: extra);
+            },
           ),
         ],
       );
