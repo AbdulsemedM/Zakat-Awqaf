@@ -7,9 +7,14 @@ import '../../features/awqaf/presentation/screens/awqaf_screen.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/impact/bloc/impact_bloc.dart';
+import '../../features/impact/bloc/impact_event.dart';
 import '../../features/impact/presentation/screens/impact_screen.dart';
+import '../../features/profile/bloc/profile_bloc.dart';
+import '../../features/profile/bloc/profile_event.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
+import '../../core/di/injection.dart';
 import '../../features/zakat_payment/presentation/models/zakat_certificate_args.dart';
 import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
@@ -47,7 +52,11 @@ abstract class AppRouterModule {
                 routes: [
                   GoRoute(
                     path: '/impact',
-                    builder: (context, state) => const ImpactScreen(),
+                    builder: (context, state) => BlocProvider(
+                      create: (_) =>
+                          getIt<ImpactBloc>()..add(const ImpactStarted()),
+                      child: const ImpactScreen(),
+                    ),
                   ),
                 ],
               ),
@@ -55,7 +64,11 @@ abstract class AppRouterModule {
                 routes: [
                   GoRoute(
                     path: '/profile',
-                    builder: (context, state) => const ProfileScreen(),
+                    builder: (context, state) => BlocProvider(
+                      create: (_) =>
+                          getIt<ProfileBloc>()..add(const ProfileStarted()),
+                      child: const ProfileScreen(),
+                    ),
                   ),
                 ],
               ),

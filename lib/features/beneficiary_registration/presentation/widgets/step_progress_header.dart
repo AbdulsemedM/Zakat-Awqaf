@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/theme/app_colors.dart';
 import '../../bloc/beneficiary_registration_state.dart';
 
 class StepProgressHeader extends StatelessWidget {
@@ -39,7 +40,7 @@ class StepProgressHeader extends StatelessWidget {
                         height: 2,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         color: index < activeIndex
-                            ? scheme.primary
+                            ? AppColors.primary
                             : scheme.outlineVariant,
                       ),
                     ),
@@ -69,12 +70,13 @@ class _StepCircle extends StatelessWidget {
     final isActive = index <= activeIndex;
     return CircleAvatar(
       radius: 12,
-      backgroundColor: isActive ? scheme.primary : scheme.surfaceContainerHighest,
+      backgroundColor:
+          isActive ? AppColors.primary : scheme.surfaceContainerHighest,
       child: Text(
         '${index + 1}',
         style: TextStyle(
           fontSize: 11,
-          color: isActive ? scheme.onPrimary : scheme.onSurfaceVariant,
+          color: isActive ? AppColors.textOnPrimary : scheme.onSurfaceVariant,
           fontWeight: FontWeight.w600,
         ),
       ),

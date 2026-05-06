@@ -69,7 +69,7 @@ class AppTheme {
             if (states.contains(WidgetState.disabled)) {
               return scheme.onSurface.withValues(alpha: 0.38);
             }
-            return scheme.onPrimary;
+            return AppColors.textOnPrimary;
           }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
@@ -88,7 +88,7 @@ class AppTheme {
             if (states.contains(WidgetState.disabled)) {
               return scheme.onSurface.withValues(alpha: 0.38);
             }
-            return scheme.onPrimary;
+            return AppColors.textOnPrimary;
           }),
           minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
           padding: WidgetStateProperty.all(buttonPadding),
@@ -134,7 +134,7 @@ class AppTheme {
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: scheme.primary,
-        foregroundColor: scheme.onPrimary,
+        foregroundColor: AppColors.textOnPrimary,
         shape: roundedControlShape,
         elevation: 3,
       ),

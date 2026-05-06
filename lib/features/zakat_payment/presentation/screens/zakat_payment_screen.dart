@@ -105,7 +105,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.verified_user_outlined, color: theme.colorScheme.primary),
+                  Icon(Icons.verified_user_outlined, color: AppColors.primary),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -213,12 +213,25 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
               ...ZakatCheckoutMethod.values.map(
                 (m) => Padding(
                   padding: const EdgeInsets.only(bottom: 6),
-                  child: Material(
-                    color: _method == m
-                        ? theme.colorScheme.primaryContainer.withValues(alpha: 0.45)
-                        : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
-                    borderRadius: BorderRadius.circular(12),
-                    child: InkWell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _method == m
+                          ? AppColors.secondary.withValues(alpha: 0.22)
+                          : theme.colorScheme.surfaceContainerHighest
+                              .withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _method == m
+                            ? AppColors.primary
+                            : theme.colorScheme.outlineVariant
+                                .withValues(alpha: 0.5),
+                        width: _method == m ? 1.5 : 1,
+                      ),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () => setState(() => _method = m),
                       child: Padding(
@@ -232,7 +245,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                                   : m == ZakatCheckoutMethod.cbeBirr
                                   ? Icons.account_balance_outlined
                                   : Icons.phone_iphone_outlined,
-                              color: theme.colorScheme.primary,
+                              color: AppColors.primary,
                             ),
                             const SizedBox(width: 10),
                             Expanded(
@@ -260,6 +273,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                           ],
                         ),
                       ),
+                    ),
                     ),
                   ),
                 ),
@@ -301,8 +315,6 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
               FilledButton.icon(
                 onPressed: _canPay ? _onPay : null,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 icon: const Icon(Icons.lock_outline),
@@ -321,7 +333,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.volunteer_activism_outlined, color: theme.colorScheme.primary),
+                    Icon(Icons.volunteer_activism_outlined, color: AppColors.primary),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -361,7 +373,7 @@ class _AmountSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
+            color: AppColors.secondary.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: theme.colorScheme.outlineVariant.withValues(alpha: 0.6)),
           ),
@@ -418,7 +430,7 @@ class _AmountSection extends StatelessWidget {
                       args.overviewDueValue,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
-                        color: theme.colorScheme.primary,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],

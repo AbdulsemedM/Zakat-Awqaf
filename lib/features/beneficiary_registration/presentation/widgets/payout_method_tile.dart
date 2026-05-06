@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/theme/app_colors.dart';
+
 class PayoutMethodTile extends StatelessWidget {
   const PayoutMethodTile({
     required this.title,
@@ -26,9 +28,11 @@ class PayoutMethodTile extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: selected ? scheme.primaryContainer.withValues(alpha: 0.45) : scheme.surface,
+          color: selected
+              ? AppColors.secondary.withValues(alpha: 0.22)
+              : scheme.surface,
           border: Border.all(
-            color: selected ? scheme.primary : scheme.outlineVariant,
+            color: selected ? AppColors.primary : scheme.outlineVariant,
           ),
         ),
         child: Row(
@@ -36,7 +40,7 @@ class PayoutMethodTile extends StatelessWidget {
             CircleAvatar(
               radius: 18,
               backgroundColor: scheme.surfaceContainerHighest,
-              child: Icon(icon, size: 18, color: scheme.primary),
+              child: Icon(icon, size: 18, color: AppColors.primary),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -56,7 +60,7 @@ class PayoutMethodTile extends StatelessWidget {
             ),
             Icon(
               selected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: selected ? scheme.primary : scheme.outline,
+              color: selected ? AppColors.primary : scheme.outline,
             ),
           ],
         ),

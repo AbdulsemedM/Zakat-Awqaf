@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/theme/app_colors.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../widgets/home_widget.dart';
 
@@ -53,29 +54,46 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.secondary,
+                  foregroundColor: AppColors.textOnPrimary,
+                ),
                 onPressed: () => context.go('/beneficiary-registration'),
                 icon: const Icon(Icons.person_add_alt_1),
                 label: const Text('Register to Accept Zakat'),
               ),
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Text(
-                  'Urgent Beneficiary Needs',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Text(
+                    'Urgent Beneficiary Needs',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                const Spacer(),
-                SizedBox(
-                  width: 96,
-                  child: TextButton(
-                    onPressed: () => context.go('/beneficiary-registration'),
-                    child: const Text('View All'),
+                  const Spacer(),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: () => context.go('/beneficiary-registration'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 6,
+                      ),
+                      child: Text(
+                        'View All',
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -95,25 +113,25 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 14),
             DonateSadaqahCard(theme: theme),
             const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () => context.go('/calculator'),
-                    icon: const Icon(Icons.calculate),
-                    label: const Text('Calculate'),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => context.go('/awqaf'),
-                    icon: const Icon(Icons.account_balance),
-                    label: const Text('Awqaf'),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: FilledButton.icon(
+            //         onPressed: () => context.go('/calculator'),
+            //         icon: const Icon(Icons.calculate),
+            //         label: const Text('Calculate'),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     Expanded(
+            //       child: OutlinedButton.icon(
+            //         onPressed: () => context.go('/awqaf'),
+            //         icon: const Icon(Icons.account_balance),
+            //         label: const Text('Awqaf'),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

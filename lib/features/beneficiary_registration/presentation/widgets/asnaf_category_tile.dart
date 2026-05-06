@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/theme/app_colors.dart';
+
 class AsnafCategoryTile extends StatelessWidget {
   const AsnafCategoryTile({
     required this.label,
@@ -21,9 +23,11 @@ class AsnafCategoryTile extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: selected ? scheme.primaryContainer.withValues(alpha: 0.6) : scheme.surface,
+          color: selected
+              ? AppColors.secondary.withValues(alpha: 0.22)
+              : scheme.surface,
           border: Border.all(
-            color: selected ? scheme.primary : scheme.outlineVariant,
+            color: selected ? AppColors.primary : scheme.outlineVariant,
           ),
         ),
         child: Center(
@@ -34,7 +38,7 @@ class AsnafCategoryTile extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                color: selected ? scheme.primary : null,
+                color: selected ? AppColors.onSecondary : null,
               ),
             ),
           ),

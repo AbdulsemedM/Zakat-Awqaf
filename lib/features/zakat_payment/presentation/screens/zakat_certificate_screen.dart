@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../app/theme/app_colors.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../data/zakat_certificate_pdf_builder.dart';
 import '../models/zakat_certificate_args.dart';
@@ -34,6 +33,7 @@ class ZakatCertificateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class ZakatCertificateScreen extends StatelessWidget {
               Icon(
                 Icons.verified_outlined,
                 size: 56,
-                color: AppColors.primary,
+                color: scheme.primary,
               ),
               const SizedBox(height: 12),
               Text(
@@ -113,8 +113,6 @@ class ZakatCertificateScreen extends StatelessWidget {
               FilledButton.icon(
                 onPressed: () => _sharePdf(context),
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 icon: const Icon(Icons.download_outlined),

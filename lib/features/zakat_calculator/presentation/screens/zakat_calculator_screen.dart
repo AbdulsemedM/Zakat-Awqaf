@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/primary_hero.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../bloc/zakat_calculator_bloc.dart';
@@ -236,6 +238,7 @@ class _TabOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     final livestockCount = state.sheepOrGoats + state.cattle + state.camels;
     final cropAboveNisab = state.cropKg >= 653;
 
@@ -276,17 +279,17 @@ class _TabOverviewCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            theme.colorScheme.primaryContainer.withValues(alpha: 0.65),
-            theme.colorScheme.secondaryContainer.withValues(alpha: 0.45),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: PrimaryHero.gradient(scheme),
         borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: scheme.shadow.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.7),
+          color: AppColors.textOnPrimary.withValues(alpha: 0.22),
         ),
       ),
       child: Padding(
@@ -298,13 +301,14 @@ class _TabOverviewCard extends StatelessWidget {
               children: [
                 Icon(
                   badgeActive ? Icons.workspace_premium : Icons.shield_outlined,
-                  color: theme.colorScheme.primary,
+                  color: AppColors.secondary,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   title,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
+                    color: AppColors.textOnPrimary,
                   ),
                 ),
                 const Spacer(),
@@ -312,8 +316,8 @@ class _TabOverviewCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: badgeActive
-                        ? theme.colorScheme.primary.withValues(alpha: 0.16)
-                        : theme.colorScheme.surface.withValues(alpha: 0.5),
+                        ? AppColors.secondary.withValues(alpha: 0.28)
+                        : AppColors.textOnPrimary.withValues(alpha: 0.14),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
@@ -321,8 +325,8 @@ class _TabOverviewCard extends StatelessWidget {
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: badgeActive
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.onSurfaceVariant,
+                          ? AppColors.onSecondary
+                          : AppColors.textOnPrimary.withValues(alpha: 0.78),
                     ),
                   ),
                 ),
@@ -333,6 +337,7 @@ class _TabOverviewCard extends StatelessWidget {
               primaryValue,
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w800,
+                color: AppColors.textOnPrimary,
               ),
             ),
             const SizedBox(height: 12),
@@ -340,7 +345,7 @@ class _TabOverviewCard extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surface.withValues(alpha: 0.45),
+                color: scheme.surface.withValues(alpha: 0.92),
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Column(
@@ -349,7 +354,7 @@ class _TabOverviewCard extends StatelessWidget {
                   Text(
                     dueLabel,
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                      color: scheme.onSurfaceVariant,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -359,8 +364,8 @@ class _TabOverviewCard extends StatelessWidget {
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w900,
                       color: badgeActive
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.onSurfaceVariant,
+                          ? AppColors.primary
+                          : scheme.onSurfaceVariant,
                     ),
                   ),
                   if (state.activeTab == ZakatCategoryTab.livestock) ...[
@@ -368,7 +373,7 @@ class _TabOverviewCard extends StatelessWidget {
                     Text(
                       'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: scheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -732,7 +737,7 @@ class _LivestockPostOverviewSection extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
+            color: AppColors.secondary.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
@@ -893,7 +898,7 @@ class _CropPostOverviewSection extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
+            color: AppColors.secondary.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
