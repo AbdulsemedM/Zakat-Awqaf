@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 
 enum Madhhab { hanafi, shafii, maliki, hanbali }
 
-enum AppLanguage { english, amharic, afaanOromoo, somali }
+enum AppLanguage { english, amharic, afaanOromoo, arabic, afanSomali }
+
+enum AppThemePreference { light, dark }
 
 enum BeneficiaryStatus { approved, pending, rejected }
 
@@ -30,8 +32,21 @@ extension AppLanguageX on AppLanguage {
         return 'Amharic';
       case AppLanguage.afaanOromoo:
         return 'Afaan Oromoo';
-      case AppLanguage.somali:
-        return 'Somali';
+      case AppLanguage.arabic:
+        return 'Arabic';
+      case AppLanguage.afanSomali:
+        return 'Afan Somali';
+    }
+  }
+}
+
+extension AppThemePreferenceX on AppThemePreference {
+  String get label {
+    switch (this) {
+      case AppThemePreference.light:
+        return 'Light';
+      case AppThemePreference.dark:
+        return 'Dark';
     }
   }
 }
@@ -61,6 +76,7 @@ class ProfileModel extends Equatable {
     required this.nisabAlerts,
     required this.biometricEnabled,
     required this.language,
+    required this.themePreference,
     required this.isBeneficiary,
     required this.beneficiaryStatus,
     required this.lastDisbursement,
@@ -84,6 +100,7 @@ class ProfileModel extends Equatable {
   final bool nisabAlerts;
   final bool biometricEnabled;
   final AppLanguage language;
+  final AppThemePreference themePreference;
 
   final bool isBeneficiary;
   final BeneficiaryStatus beneficiaryStatus;
@@ -105,6 +122,7 @@ class ProfileModel extends Equatable {
     bool? nisabAlerts,
     bool? biometricEnabled,
     AppLanguage? language,
+    AppThemePreference? themePreference,
     bool? isBeneficiary,
     BeneficiaryStatus? beneficiaryStatus,
     DateTime? lastDisbursement,
@@ -124,6 +142,7 @@ class ProfileModel extends Equatable {
       nisabAlerts: nisabAlerts ?? this.nisabAlerts,
       biometricEnabled: biometricEnabled ?? this.biometricEnabled,
       language: language ?? this.language,
+      themePreference: themePreference ?? this.themePreference,
       isBeneficiary: isBeneficiary ?? this.isBeneficiary,
       beneficiaryStatus: beneficiaryStatus ?? this.beneficiaryStatus,
       lastDisbursement: lastDisbursement ?? this.lastDisbursement,
@@ -146,6 +165,7 @@ class ProfileModel extends Equatable {
         nisabAlerts,
         biometricEnabled,
         language,
+        themePreference,
         isBeneficiary,
         beneficiaryStatus,
         lastDisbursement,

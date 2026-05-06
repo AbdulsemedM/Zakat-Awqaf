@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/l10n.dart';
+
 class ZakatMethodologySheet extends StatelessWidget {
   const ZakatMethodologySheet({super.key});
 
@@ -12,9 +14,9 @@ class ZakatMethodologySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16),
-      child: Text('Zakat methodology content placeholder.'),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Text(context.l10n.calcMethodologyPlaceholder),
     );
   }
 }

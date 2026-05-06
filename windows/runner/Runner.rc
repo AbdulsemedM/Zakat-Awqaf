@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.mejlis" "\0"
-            VALUE "FileDescription", "mejlis_digital_hub" "\0"
+            VALUE "FileDescription", "Zakat & Awqaf Commission" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "mejlis_digital_hub" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.mejlis. All rights reserved." "\0"
             VALUE "OriginalFilename", "mejlis_digital_hub.exe" "\0"
-            VALUE "ProductName", "mejlis_digital_hub" "\0"
+            VALUE "ProductName", "Zakat & Awqaf Commission" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

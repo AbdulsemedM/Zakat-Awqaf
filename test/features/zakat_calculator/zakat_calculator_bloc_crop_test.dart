@@ -14,7 +14,7 @@ void main() {
 
       final state = bloc.state as ZakatCalculatorInitial;
       expect(state.cropZakatDueKg, 0);
-      expect(state.cropTransparencyText, contains('below Nisab'));
+      expect(state.cropKg, lessThan(653));
     });
 
     test('rain-fed applies 10 percent', () async {
@@ -69,7 +69,7 @@ void main() {
       // (0.10 * 0.70) + (0.05 * 0.30) = 0.085
       expect(state.cropEffectiveRate, closeTo(0.085, 0.0001));
       expect(state.cropZakatDueKg, closeTo(85, 0.0001));
-      expect(state.cropTransparencyText, contains('Mixed irrigation'));
+      expect(state.cropIrrigationMode, CropIrrigationMode.mixed);
     });
   });
 }

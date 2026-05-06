@@ -14,6 +14,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileBiometricToggled>(_onBiometricToggled);
     on<ProfileMadhhabSelected>(_onMadhhabSelected);
     on<ProfileLanguageSelected>(_onLanguageSelected);
+    on<ProfileThemeSelected>(_onThemeSelected);
     on<ProfileLoggedOut>(_onLoggedOut);
   }
 
@@ -58,6 +59,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     await _mutate(emit, (p) => p.copyWith(language: event.language));
+  }
+
+  Future<void> _onThemeSelected(
+    ProfileThemeSelected event,
+    Emitter<ProfileState> emit,
+  ) async {
+    await _mutate(
+      emit,
+      (p) => p.copyWith(themePreference: event.themePreference),
+    );
   }
 
   Future<void> _onLoggedOut(

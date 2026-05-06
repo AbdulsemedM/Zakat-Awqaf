@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../core/l10n/l10n.dart';
 import '../../../../core/utils/number_format.dart';
 import '../../bloc/profile_bloc.dart';
 import '../../bloc/profile_event.dart';
@@ -1053,7 +1055,7 @@ class _SettingsSecurityCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Language Preferences',
+                    context.l10n.profileLanguagePreferences,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -1066,17 +1068,41 @@ class _SettingsSecurityCard extends StatelessWidget {
               child: _LanguageChipRow(profile: profile),
             ),
             const Divider(height: 1, indent: 16, endIndent: 16),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.palette_outlined,
+                    size: 18,
+                    color: scheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    context.l10n.profileThemeMode,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              child: _ThemeChipRow(profile: profile),
+            ),
+            const Divider(height: 1, indent: 16, endIndent: 16),
             SwitchListTile.adaptive(
               value: profile.biometricEnabled,
               onChanged: (v) => context
                   .read<ProfileBloc>()
                   .add(ProfileBiometricToggled(v)),
-              title: const Text(
-                'Biometric Login',
+              title: Text(
+                context.l10n.profileBiometricLogin,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(
-                'Use fingerprint or face ID',
+                context.l10n.profileBiometricSubtitle,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: scheme.onSurfaceVariant,
                 ),
@@ -1134,10 +1160,45 @@ class _LanguageChipRow extends StatelessWidget {
             selected: lang == profile.language,
             onSelected: (selected) {
               if (selected) {
+                context.read<AppSettingsController>().setLanguage(lang);
                 context
                     .read<ProfileBloc>()
                     .add(ProfileLanguageSelected(lang));
               }
+            },
+          ),
+      ],
+    );
+  }
+}
+
+class _ThemeChipRow extends StatelessWidget {
+  const _ThemeChipRow({required this.profile});
+
+  final ProfileModel profile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final pref in AppThemePreference.values)
+          ChoiceChip(
+            label: Text(
+              pref == AppThemePreference.light
+                  ? context.l10n.themeLight
+                  : context.l10n.themeDark,
+            ),
+            selected: pref == profile.themePreference,
+            onSelected: (selected) {
+              if (!selected) return;
+              context.read<ProfileBloc>().add(ProfileThemeSelected(pref));
+              context.read<AppSettingsController>().setThemeMode(
+                pref == AppThemePreference.light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+              );
             },
           ),
       ],

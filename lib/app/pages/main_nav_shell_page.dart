@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../theme/app_colors.dart';
 
 class MainNavShellPage extends StatelessWidget {
@@ -14,24 +15,25 @@ class MainNavShellPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final items = const <_NavItem>[
+    final l10n = context.l10n;
+    final items = <_NavItem>[
       _NavItem(
-        label: 'Home',
+        label: l10n.navHome,
         activeIcon: Icons.home_rounded,
         inactiveIcon: Icons.home_outlined,
       ),
       _NavItem(
-        label: 'Calculator',
+        label: l10n.navCalculator,
         activeIcon: Icons.calculate_rounded,
         inactiveIcon: Icons.calculate_outlined,
       ),
       _NavItem(
-        label: 'Impact',
+        label: l10n.navImpact,
         activeIcon: Icons.auto_graph_rounded,
         inactiveIcon: Icons.auto_graph_outlined,
       ),
       _NavItem(
-        label: 'Profile',
+        label: l10n.navProfile,
         activeIcon: Icons.person_rounded,
         inactiveIcon: Icons.person_outline_rounded,
       ),

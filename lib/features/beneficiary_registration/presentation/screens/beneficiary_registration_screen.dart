@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../app/theme/app_colors.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
@@ -51,9 +52,9 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               },
             ),
             title: const Text('Beneficiary Registration'),
-            actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.settings_outlined)),
-            ],
+            // actions: [
+            //   IconButton(onPressed: () {}, icon: const Icon(Icons.settings_outlined)),
+            // ],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -571,6 +572,10 @@ class _FooterActions extends StatelessWidget {
             Expanded(
               flex: 2,
               child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textOnPrimary,
+                ),
                 onPressed: !canContinue
                     ? null
                     : () {

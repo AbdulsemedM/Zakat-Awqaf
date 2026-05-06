@@ -15,6 +15,7 @@ import '../../features/profile/bloc/profile_event.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
 import '../../core/di/injection.dart';
+import '../../core/l10n/l10n.dart';
 import '../../features/zakat_payment/presentation/models/zakat_certificate_args.dart';
 import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
@@ -91,8 +92,8 @@ abstract class AppRouterModule {
             builder: (context, state) {
               final extra = state.extra;
               if (extra is! ZakatPaymentArgs) {
-                return const Scaffold(
-                  body: Center(child: Text('Missing payment details.')),
+                return Scaffold(
+                  body: Center(child: Text(context.l10n.missingPaymentDetails)),
                 );
               }
               return ZakatPaymentScreen(args: extra);
@@ -103,8 +104,10 @@ abstract class AppRouterModule {
             builder: (context, state) {
               final extra = state.extra;
               if (extra is! ZakatCertificateArgs) {
-                return const Scaffold(
-                  body: Center(child: Text('Missing certificate details.')),
+                return Scaffold(
+                  body: Center(
+                    child: Text(context.l10n.missingCertificateDetails),
+                  ),
                 );
               }
               return ZakatCertificateScreen(args: extra);

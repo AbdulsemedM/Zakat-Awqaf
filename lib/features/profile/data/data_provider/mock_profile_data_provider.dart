@@ -16,6 +16,7 @@ class MockProfileDataProvider implements ProfileDataProvider {
     nisabAlerts: true,
     biometricEnabled: true,
     language: AppLanguage.english,
+    themePreference: AppThemePreference.light,
     isBeneficiary: true,
     beneficiaryStatus: BeneficiaryStatus.approved,
     lastDisbursement: DateTime(2023, 10, 12),

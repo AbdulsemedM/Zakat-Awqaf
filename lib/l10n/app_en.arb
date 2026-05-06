@@ -1,0 +1,315 @@
+{
+  "@@locale": "en",
+  "appTitle": "Zakat & Awqaf Commission",
+  "navHome": "Home",
+  "navCalculator": "Calculator",
+  "navImpact": "Impact",
+  "navProfile": "Profile",
+  "homeCommissionTitle": "Zakat and Awqaf Commission",
+  "homeGreeting": "Assalamu'alaikum",
+  "registerAcceptZakat": "Register to Accept Zakat",
+  "urgentBeneficiaryNeeds": "Urgent Beneficiary Needs",
+  "viewAll": "View All",
+  "totalZakatCollected": "TOTAL ZAKAT COLLECTED",
+  "thisMonth": "This month",
+  "totalBeneficiariesSupported": "Total beneficiaries supported",
+  "transparencyQuote": "Transparent, accountable, and impactful: your giving powers nationwide relief and empowerment.",
+  "payZakatCause": "Pay Zakat to this cause",
+  "zakatAlFitr": "Zakat Al-Fitr",
+  "zakatDueDays": "Due in approximately 22 days.",
+  "setReminder": "Set Reminder",
+  "needQuickWayGive": "Need a quick way to give?",
+  "supportCommunityNeeds": "Support ongoing community needs instantly with Sadaqah.",
+  "donateSadaqah": "Donate Sadaqah",
+  "aboutCommission": "About Ethiopian Zakat and Awqaf Commission",
+  "aboutCommissionBody": "The Ethiopian Zakat and Awqaf Commission coordinates zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs.",
+  "chipTransparencyFirst": "Transparency-first",
+  "chipNationwideImpact": "Nationwide impact",
+  "chipShariahAligned": "Shariah aligned",
+  "profileLanguagePreferences": "Language Preferences",
+  "profileThemeMode": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "profileBiometricLogin": "Biometric Login",
+  "profileBiometricSubtitle": "Use fingerprint or face ID",
+  "missingPaymentDetails": "Missing payment details.",
+  "missingCertificateDetails": "Missing certificate details.",
+  "calcAppBarTitle": "Zakat Calculator",
+  "calcPayYourZakat": "Pay Your Zakat",
+  "calcTabWealth": "Wealth",
+  "calcTabLivestock": "Livestock",
+  "calcTabCrops": "Crops",
+  "calcStep1NisabTitle": "Step 1: Nisab threshold",
+  "calcStep1NisabBody": "Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.",
+  "calcNisabGoldFormula": "{grams} × {price} = {total}",
+  "@calcNisabGoldFormula": {
+    "placeholders": {
+      "grams": {"type": "String"},
+      "price": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "calcNisabThresholdBanner": "Nisab threshold (platform rate, 85g gold equivalent): {amount}",
+  "@calcNisabThresholdBanner": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "calcUsdEtb": "USD/ETB",
+  "calcFxLive": "Using live exchange rate",
+  "calcFxCache": "Using cached exchange rate",
+  "calcFxFallback": "Using fallback exchange rate",
+  "calcTimestampUnavailable": "timestamp unavailable",
+  "calcStep1LivestockTitle": "Step 1: Livestock scale method",
+  "calcStep1LivestockBody": "Livestock Zakat is calculated by physical head-count scales (not % of value).",
+  "calcStep1LivestockNisabNote": "Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.",
+  "calcAdvisoryPrefix": "Advisory: {text}",
+  "@calcAdvisoryPrefix": {
+    "placeholders": {
+      "text": {"type": "String"}
+    }
+  },
+  "calcArabicTermDefinitionsTitle": "Arabic Term Definitions",
+  "calcArabicDefTabi": "one-year-old calf",
+  "calcArabicDefMusinnah": "two-year-old cow",
+  "calcArabicDefBintMakhad": "one-year-old she-camel",
+  "calcArabicDefBintLabun": "two-year-old she-camel",
+  "calcArabicDefHiqqah": "three-year-old she-camel",
+  "calcArabicDefJadhah": "four-year-old she-camel",
+  "calcStep1CropTitle": "Step 1: Crop (Ushr) calculation",
+  "calcStep1CropBody": "Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.",
+  "calcCropLineThreshold": "{kg} kg {relation} 653 kg",
+  "@calcCropLineThreshold": {
+    "placeholders": {
+      "kg": {"type": "String"},
+      "relation": {"type": "String"}
+    }
+  },
+  "calcCropLineIrrigation": "Irrigation mode: {mode}",
+  "@calcCropLineIrrigation": {
+    "placeholders": {
+      "mode": {"type": "String"}
+    }
+  },
+  "calcCropLineEffectiveRate": "Effective rate: {rate}%",
+  "@calcCropLineEffectiveRate": {
+    "placeholders": {
+      "rate": {"type": "String"}
+    }
+  },
+  "calcCropLineFormula": "Formula: {line}",
+  "@calcCropLineFormula": {
+    "placeholders": {
+      "line": {"type": "String"}
+    }
+  },
+  "calcRelationGte": "≥",
+  "calcRelationLt": "<",
+  "calcOverviewNetWorthTitle": "Net Worth Overview",
+  "calcOverviewLivestockTitle": "Livestock Overview",
+  "calcOverviewCropTitle": "Crop Overview",
+  "calcBadgeAboveNisab": "Above Nisab",
+  "calcBadgeBelowNisab": "Below Nisab",
+  "calcBadgeZakatDue": "Zakat Due",
+  "calcBadgeNoDue": "No Due",
+  "calcZakatDueLabel": "Zakat Due",
+  "calcLivestockDueLabel": "Livestock Due",
+  "calcCropZakatDueLabel": "Crop Zakat Due",
+  "calcAnimalsCount": "{count} animals",
+  "@calcAnimalsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "calcKgHarvest": "{kg} kg harvest",
+  "@calcKgHarvest": {
+    "placeholders": {
+      "kg": {"type": "String"}
+    }
+  },
+  "calcLivestockTermsFootnote": "Terms like tabi', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.",
+  "calcStep2EnterAssets": "Step 2: Enter Your Assets",
+  "calcStep2EnterAssetsBody": "Enter the value of your assets in ETB",
+  "calcCashBankSavings": "Cash & Bank Savings",
+  "calcCashOnHand": "Cash on Hand",
+  "calcBankBalance": "Bank Balance",
+  "calcMobileWallet": "Mobile Wallet",
+  "calcBusinessAssets": "Business Assets",
+  "calcFieldDescription": "Description",
+  "calcFieldType": "Type",
+  "calcAmountEtb": "Amount (ETB)",
+  "calcAddBusinessAsset": "Add business asset",
+  "calcGoldSilver": "Gold & Silver",
+  "calcGoldGrams": "Gold (grams)",
+  "calcGoldKarat": "Gold Karat",
+  "calcSilverGrams": "Silver (grams)",
+  "calcLiabilities": "Liabilities",
+  "calcAddLiability": "Add liability",
+  "calcAssetInventory": "Inventory",
+  "calcAssetReceivable": "Receivable",
+  "calcAssetOther": "Other",
+  "calcLiabilityShortTermDebt": "Short-term debt",
+  "calcLiabilityPayable": "Payable",
+  "calcLiabilityOther": "Other",
+  "calcLivestockSheepGoats": "Sheep / Goats",
+  "calcLivestockCattle": "Cattle",
+  "calcLivestockCamels": "Camels",
+  "calcPastureFedTitle": "Pasture-fed most of the year",
+  "calcPastureFedSubtitle": "Advisory only; does not block calculation",
+  "calcHawlTitle": "Completed one lunar year (hawl)",
+  "calcHawlSubtitle": "Advisory only; does not block calculation",
+  "calcWorkAnimalsTitle": "Used for work (plowing/transport)",
+  "calcWorkAnimalsSubtitle": "Advisory only; does not block calculation",
+  "calcLivestockSummaryHeading": "Livestock summary",
+  "calcCropNisabHeading": "Nisab & crop due",
+  "calcEffectiveCropRateLine": "Effective crop rate: {percent}%",
+  "@calcEffectiveCropRateLine": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "calcCropZakatDueKgLine": "Crop Zakat due: {kg} kg",
+  "@calcCropZakatDueKgLine": {
+    "placeholders": {
+      "kg": {"type": "String"}
+    }
+  },
+  "calcHowCropZakatWorksTitle": "How crop Zakat works",
+  "calcHowCropZakatWorksBody": "Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).",
+  "calcHowCropZakatNote": "Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.",
+  "calcCropWeightKg": "Crop Weight (kg)",
+  "calcCropModeRainFed": "Rain-fed",
+  "calcCropModeIrrigated": "Irrigated",
+  "calcCropModeMixed": "Mixed",
+  "calcRainFedSharePct": "Rain-fed share %",
+  "calcIrrigatedSharePct": "Irrigated share %",
+  "calcGoldK24": "24k",
+  "calcGoldK22": "22k",
+  "calcGoldK21": "21k",
+  "calcGoldK18": "18k",
+  "calcGoldK14": "14k",
+  "calcMethodologyPlaceholder": "Zakat methodology content placeholder.",
+  "calcPayBlockedWealth": "No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.",
+  "calcPayBlockedLivestock": "No livestock Zakat is due for your current counts.",
+  "calcPayBlockedCrops": "Crop Zakat is not due yet (below harvest nisab or zero kg due).",
+  "calcCertCropDueLine": "Crop Zakat due: {kg} kg",
+  "@calcCertCropDueLine": {
+    "placeholders": {
+      "kg": {"type": "String"}
+    }
+  },
+  "calcBulletSeparator": " • ",
+  "calcLsSheepGoats": "Sheep/Goats: {count} sheep",
+  "@calcLsSheepGoats": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "calcLsCattle": "Cattle: {tabi} tabi' + {musinnah} musinnah",
+  "@calcLsCattle": {
+    "placeholders": {
+      "tabi": {"type": "int"},
+      "musinnah": {"type": "int"}
+    }
+  },
+  "calcLsCamels": "Camels: {description}",
+  "@calcLsCamels": {
+    "placeholders": {
+      "description": {"type": "String"}
+    }
+  },
+  "calcLsNone": "No livestock due under current counts",
+  "calcTransSheep": "Sheep/Goats threshold: {head} >= 40 => due {due} sheep.",
+  "@calcTransSheep": {
+    "placeholders": {
+      "head": {"type": "int"},
+      "due": {"type": "int"}
+    }
+  },
+  "calcTransCattle": "Cattle threshold: {head} >= 30 => due {tabi} tabi', {musinnah} musinnah (30/40 combination).",
+  "@calcTransCattle": {
+    "placeholders": {
+      "head": {"type": "int"},
+      "tabi": {"type": "int"},
+      "musinnah": {"type": "int"}
+    }
+  },
+  "calcTransCamel": "Camel threshold: {head} >= 5 => due {due}.",
+  "@calcTransCamel": {
+    "placeholders": {
+      "head": {"type": "int"},
+      "due": {"type": "String"}
+    }
+  },
+  "calcTransAdvisoryLine": "Advisory: {text}",
+  "@calcTransAdvisoryLine": {
+    "placeholders": {
+      "text": {"type": "String"}
+    }
+  },
+  "calcAdvNotPasture": "Not pasture-fed most of the year: check trade/business treatment with scholars.",
+  "calcAdvHawl": "Hawl not completed: many scholars require one lunar year for livestock zakat.",
+  "calcAdvWork": "Work animals are typically exempt from livestock zakat.",
+  "calcCropTransBelow": "Harvest {kg}kg is below Nisab ({nisab} kg), so no crop Zakat is due.",
+  "@calcCropTransBelow": {
+    "placeholders": {
+      "kg": {"type": "String"},
+      "nisab": {"type": "String"}
+    }
+  },
+  "calcCropTransMixed": "Mixed irrigation: rain {rain}%, irrigated {irrig}%. Effective rate = {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransMixed": {
+    "placeholders": {
+      "rain": {"type": "String"},
+      "irrig": {"type": "String"},
+      "rate": {"type": "String"},
+      "kg": {"type": "String"},
+      "rate2": {"type": "String"},
+      "due": {"type": "String"}
+    }
+  },
+  "calcCropTransRainFed": "Rain-fed rate {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransRainFed": {
+    "placeholders": {
+      "rate": {"type": "String"},
+      "kg": {"type": "String"},
+      "rate2": {"type": "String"},
+      "due": {"type": "String"}
+    }
+  },
+  "calcCropTransIrrigated": "Irrigated rate {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransIrrigated": {
+    "placeholders": {
+      "rate": {"type": "String"},
+      "kg": {"type": "String"},
+      "rate2": {"type": "String"},
+      "due": {"type": "String"}
+    }
+  },
+  "calcCamelNoDue": "No due",
+  "calcCamelSheepN": "{count, plural, one{1 sheep} other{{count} sheep}}",
+  "@calcCamelSheepN": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "calcCamel1BintMakhad": "1 bint makhad",
+  "calcCamel1BintLabun": "1 bint labun",
+  "calcCamel1Hiqqah": "1 hiqqah",
+  "calcCamel1Jadhah": "1 jadhah",
+  "calcCamel2BintLabun": "2 bint labun",
+  "calcCamel2Hiqqah": "2 hiqqah",
+  "calcCamelCombo": "{hiqqah} hiqqah + {bintLabun} bint labun",
+  "@calcCamelCombo": {
+    "placeholders": {
+      "hiqqah": {"type": "int"},
+      "bintLabun": {"type": "int"}
+    }
+  },
+  "calcCamelApproxBintLabun": "{count} bint labun (approximate combo)",
+  "@calcCamelApproxBintLabun": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

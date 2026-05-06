@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
+import '../../../../core/l10n/l10n.dart';
 import '../widgets/home_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,30 +12,31 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final urgentNeeds = homeUrgentNeeds;
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          'Zakat and Awqaf Commission',
+          l10n.homeCommissionTitle,
           style: theme.textTheme.titleLarge?.copyWith(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: CircleAvatar(
-              radius: 16,
-              child: Icon(
-                Icons.person,
-                size: 18,
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 16),
+        //     child: CircleAvatar(
+        //       radius: 16,
+        //       child: Icon(
+        //         Icons.person,
+        //         size: 18,
+        //         color: theme.colorScheme.onSurface,
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),
@@ -42,7 +44,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Assalamu\'alaikum',
+              l10n.homeGreeting,
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w400,
               ),
@@ -60,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 onPressed: () => context.go('/beneficiary-registration'),
                 icon: const Icon(Icons.person_add_alt_1),
-                label: const Text('Register to Accept Zakat'),
+                label: Text(l10n.registerAcceptZakat),
               ),
             ),
             const SizedBox(height: 12),
@@ -68,13 +70,17 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: Row(
                 children: [
-                  Text(
-                    'Urgent Beneficiary Needs',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
+                  Expanded(
+                    child: Text(
+                      l10n.urgentBeneficiaryNeeds,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(width: 8),
                   InkWell(
                     borderRadius: BorderRadius.circular(8),
                     onTap: () => context.go('/beneficiary-registration'),
@@ -84,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                         vertical: 6,
                       ),
                       child: Text(
-                        'View All',
+                        l10n.viewAll,
                         style: theme.textTheme.labelLarge?.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

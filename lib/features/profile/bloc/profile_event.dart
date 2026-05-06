@@ -49,6 +49,15 @@ final class ProfileLanguageSelected extends ProfileEvent {
   List<Object?> get props => [language];
 }
 
+final class ProfileThemeSelected extends ProfileEvent {
+  const ProfileThemeSelected(this.themePreference);
+
+  final AppThemePreference themePreference;
+
+  @override
+  List<Object?> get props => [themePreference];
+}
+
 final class ProfileLoggedOut extends ProfileEvent {
   const ProfileLoggedOut();
 }

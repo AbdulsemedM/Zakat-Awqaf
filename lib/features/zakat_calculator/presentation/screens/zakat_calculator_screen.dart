@@ -5,19 +5,13 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../core/l10n/l10n.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../bloc/zakat_calculator_bloc.dart';
 import '../../bloc/zakat_calculator_event.dart';
 import '../../bloc/zakat_calculator_state.dart';
-
-const Map<String, String> kLivestockArabicTermDefinitions = {
-  "tabi'": 'one-year-old calf',
-  'musinnah': 'two-year-old cow',
-  'bint makhad': 'one-year-old she-camel',
-  'bint labun': 'two-year-old she-camel',
-  'hiqqah': 'three-year-old she-camel',
-  'jadhah': 'four-year-old she-camel',
-};
+import '../zakat_calculator_strings.dart';
 
 class ZakatCalculatorScreen extends StatelessWidget {
   const ZakatCalculatorScreen({super.key});
@@ -27,7 +21,7 @@ class ZakatCalculatorScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ZakatCalculatorBloc()..add(const ZakatCalculatorStarted()),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Zakat Calculator')),
+        appBar: AppBar(title: Text(context.l10n.calcAppBarTitle)),
         body: BlocBuilder<ZakatCalculatorBloc, ZakatCalculatorState>(
           builder: (context, state) {
             final s = state as ZakatCalculatorInitial;
@@ -60,10 +54,10 @@ class ZakatCalculatorScreen extends StatelessWidget {
                   FilledButton.icon(
                     onPressed: () => context.push(
                       '/zakat/payment',
-                      extra: ZakatPaymentArgs.fromCalculator(s),
+                      extra: ZakatPaymentArgs.fromCalculator(context.l10n, s),
                     ),
                     icon: const Icon(Icons.volunteer_activism_outlined),
-                    label: const Text('Pay Your Zakat'),
+                    label: Text(context.l10n.calcPayYourZakat),
                   ),
                 ],
               ),
@@ -81,15 +75,19 @@ class _CategoryTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedButton<ZakatCategoryTab>(
-      segments: const [
-        ButtonSegment(value: ZakatCategoryTab.wealth, label: Text('Wealth')),
-        ButtonSegment(value: ZakatCategoryTab.livestock, label: Text('Livestock')),
-        ButtonSegment(value: ZakatCategoryTab.crops, label: Text('Crops')),
-      ],
-      selected: {activeTab},
-      onSelectionChanged: (value) => context.read<ZakatCalculatorBloc>().add(
-        ZakatCategoryTabChanged(value.first),
+    final l10n = context.l10n;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SegmentedButton<ZakatCategoryTab>(
+        segments: [
+          ButtonSegment(value: ZakatCategoryTab.wealth, label: Text(l10n.calcTabWealth)),
+          ButtonSegment(value: ZakatCategoryTab.livestock, label: Text(l10n.calcTabLivestock)),
+          ButtonSegment(value: ZakatCategoryTab.crops, label: Text(l10n.calcTabCrops)),
+        ],
+        selected: {activeTab},
+        onSelectionChanged: (value) => context.read<ZakatCalculatorBloc>().add(
+          ZakatCategoryTabChanged(value.first),
+        ),
       ),
     );
   }
@@ -120,28 +118,32 @@ class _Step1Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     switch (state.activeTab) {
       case ZakatCategoryTab.wealth:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Step 1: Nisab threshold', style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1NisabTitle, style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
             Text(
-              'Zakat is due if your net wealth exceeds the threshold. '
-              'Nisab is based on 85g of platform 24k gold price.',
+              l10n.calcStep1NisabBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 4),
             Text(
-              '85 × ${_money(state.platformGoldPricePerGram24kEtb)} = ${_money(state.nisabThresholdEtb)}',
+              l10n.calcNisabGoldFormula(
+                '85',
+                _money(state.platformGoldPricePerGram24kEtb),
+                _money(state.nisabThresholdEtb),
+              ),
               style: theme.textTheme.labelMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              '${state.pricingStatusText} • USD/ETB ${state.usdToEtbRate.toStringAsFixed(6)} • ${_formatTimestamp(state.rateTimestamp)}',
+              '${ZakatCalculatorStrings.fxStatus(l10n, state.rateSource)} • ${l10n.calcUsdEtb} ${state.usdToEtbRate.toStringAsFixed(6)} • ${ZakatCalculatorStrings.formatRateTimestamp(context.contentLocale, l10n, state.rateTimestamp)}',
               style: theme.textTheme.labelSmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -155,34 +157,34 @@ class _Step1Card extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                'Nisab threshold (platform rate, 85g gold equivalent): ${_money(state.nisabThresholdEtb)}',
+                l10n.calcNisabThresholdBanner(_money(state.nisabThresholdEtb)),
                 style: theme.textTheme.titleSmall,
               ),
             ),
           ],
         );
       case ZakatCategoryTab.livestock:
+        final advisory = ZakatCalculatorStrings.livestockAdvisory(l10n, state);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Step 1: Livestock scale method', style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1LivestockTitle, style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
             Text(
-              'Livestock Zakat is calculated by physical head-count scales (not % of value).',
+              l10n.calcStep1LivestockBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
             Text(
-              'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. '
-              'Cattle uses 30/40 combinations; camels follow tier ranges.',
+              l10n.calcStep1LivestockNisabNote,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
-            if (state.livestockAdvisoryText.isNotEmpty) ...[
+            if (advisory.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                'Advisory: ${state.livestockAdvisoryText}',
+                l10n.calcAdvisoryPrefix(advisory),
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.error,
                 ),
@@ -190,22 +192,23 @@ class _Step1Card extends StatelessWidget {
             ],
             const SizedBox(height: 8),
             _ArabicTermsDefinitionsCard(
-              title: 'Arabic Term Definitions',
+              title: l10n.calcArabicTermDefinitionsTitle,
               compact: true,
             ),
           ],
         );
       case ZakatCategoryTab.crops:
-        final isAboveNisab = state.cropKg >= 653;
+        final isAboveNisab = state.cropKg >= ZakatCalculatorStrings.cropNisabKg;
         final ratePercent = (state.cropEffectiveRate * 100).toStringAsFixed(2);
+        final formulaInner =
+            '${state.cropKg.toStringAsFixed(2)} × $ratePercent% = ${state.cropZakatDueKg.toStringAsFixed(2)}kg';
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Step 1: Crop (Ushr) calculation', style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1CropTitle, style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
             Text(
-              'Crop Zakat is due at harvest. Nisab is 653kg. '
-              'Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.',
+              l10n.calcStep1CropBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
@@ -217,10 +220,10 @@ class _Step1Card extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                'Threshold check: ${state.cropKg.toStringAsFixed(2)}kg ${isAboveNisab ? ">=" : "<"} 653kg'
-                '\nIrrigation mode: ${_cropModeLabel(state.cropIrrigationMode)}'
-                '\nEffective rate: $ratePercent%'
-                '\nFormula: ${state.cropKg.toStringAsFixed(2)} × $ratePercent% = ${state.cropZakatDueKg.toStringAsFixed(2)}kg',
+                '${l10n.calcCropLineThreshold(state.cropKg.toStringAsFixed(2), isAboveNisab ? l10n.calcRelationGte : l10n.calcRelationLt)}\n'
+                '${l10n.calcCropLineIrrigation(ZakatCalculatorStrings.cropModeLabel(l10n, state.cropIrrigationMode))}\n'
+                '${l10n.calcCropLineEffectiveRate(ratePercent)}\n'
+                '${l10n.calcCropLineFormula(formulaInner)}',
                 style: theme.textTheme.titleSmall,
               ),
             ),
@@ -239,40 +242,38 @@ class _TabOverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     final livestockCount = state.sheepOrGoats + state.cattle + state.camels;
-    final cropAboveNisab = state.cropKg >= 653;
+    final cropAboveNisab = state.cropKg >= ZakatCalculatorStrings.cropNisabKg;
+    final livestockHasDue =
+        state.sheepZakatDueCount > 0 ||
+        state.cattleTabiDueCount > 0 ||
+        state.cattleMusinnahDueCount > 0 ||
+        ZakatCalculatorStrings.camelHasDue(state);
 
     final (title, badge, badgeActive, primaryValue, dueLabel, dueValue) = switch (state.activeTab) {
       ZakatCategoryTab.wealth => (
-        'Net Worth Overview',
-        state.aboveNisab ? 'Above Nisab' : 'Below Nisab',
+        l10n.calcOverviewNetWorthTitle,
+        state.aboveNisab ? l10n.calcBadgeAboveNisab : l10n.calcBadgeBelowNisab,
         state.aboveNisab,
         _money(state.netWealthEtb),
-        'Zakat Due',
+        l10n.calcZakatDueLabel,
         _money(state.estimatedZakatDueEtb),
       ),
       ZakatCategoryTab.livestock => (
-        'Livestock Overview',
-        (state.sheepZakatDueCount > 0 ||
-                state.cattleTabiDueCount > 0 ||
-                state.cattleMusinnahDueCount > 0 ||
-                state.camelZakatDueDescription != 'No due')
-            ? 'Zakat Due'
-            : 'No Due',
-        state.sheepZakatDueCount > 0 ||
-            state.cattleTabiDueCount > 0 ||
-            state.cattleMusinnahDueCount > 0 ||
-            state.camelZakatDueDescription != 'No due',
-        '$livestockCount animals',
-        'Livestock Due',
-        state.livestockSummaryText,
+        l10n.calcOverviewLivestockTitle,
+        livestockHasDue ? l10n.calcBadgeZakatDue : l10n.calcBadgeNoDue,
+        livestockHasDue,
+        l10n.calcAnimalsCount(livestockCount),
+        l10n.calcLivestockDueLabel,
+        ZakatCalculatorStrings.livestockSummary(l10n, state),
       ),
       ZakatCategoryTab.crops => (
-        'Crop Overview',
-        cropAboveNisab ? 'Above Nisab' : 'Below Nisab',
+        l10n.calcOverviewCropTitle,
+        cropAboveNisab ? l10n.calcBadgeAboveNisab : l10n.calcBadgeBelowNisab,
         cropAboveNisab,
-        '${state.cropKg.toStringAsFixed(2)} kg harvest',
-        'Crop Zakat Due',
+        l10n.calcKgHarvest(state.cropKg.toStringAsFixed(2)),
+        l10n.calcCropZakatDueLabel,
         '${state.cropZakatDueKg.toStringAsFixed(2)} kg',
       ),
     };
@@ -371,7 +372,7 @@ class _TabOverviewCard extends StatelessWidget {
                   if (state.activeTab == ZakatCategoryTab.livestock) ...[
                     const SizedBox(height: 8),
                     Text(
-                      'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.',
+                      l10n.calcLivestockTermsFootnote,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
@@ -395,23 +396,24 @@ class _WealthPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<ZakatCalculatorBloc>();
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Step 2: Enter Your Assets', style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep2EnterAssets, style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
-            Text('Enter the value of your assets in ETB', style: theme.textTheme.bodySmall),
+            Text(l10n.calcStep2EnterAssetsBody, style: theme.textTheme.bodySmall),
             const SizedBox(height: 12),
-            Text('Cash & Bank Savings', style: theme.textTheme.titleSmall),
+            Text(l10n.calcCashBankSavings, style: theme.textTheme.titleSmall),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: _NumberField(
-                    label: 'Cash on Hand',
+                    label: l10n.calcCashOnHand,
                     value: state.cashOnHand,
                     onChanged: (v) => bloc.add(WealthFieldsUpdated(cashOnHand: v)),
                   ),
@@ -419,7 +421,7 @@ class _WealthPanel extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: _NumberField(
-                    label: 'Bank Balance',
+                    label: l10n.calcBankBalance,
                     value: state.bankBalance,
                     onChanged: (v) => bloc.add(WealthFieldsUpdated(bankBalance: v)),
                   ),
@@ -431,7 +433,7 @@ class _WealthPanel extends StatelessWidget {
               children: [
                 Expanded(
                   child: _NumberField(
-                    label: 'Mobile Wallet',
+                    label: l10n.calcMobileWallet,
                     value: state.mobileWallet,
                     onChanged: (v) => bloc.add(WealthFieldsUpdated(mobileWallet: v)),
                   ),
@@ -440,7 +442,7 @@ class _WealthPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 14),
-            Text('Business Assets', style: theme.textTheme.titleSmall),
+            Text(l10n.calcBusinessAssets, style: theme.textTheme.titleSmall),
             const SizedBox(height: 8),
             ...List.generate(state.businessAssets.length, (index) {
               final item = state.businessAssets[index];
@@ -454,7 +456,7 @@ class _WealthPanel extends StatelessWidget {
                           flex: 3,
                           child: TextFormField(
                             initialValue: item.description,
-                            decoration: const InputDecoration(labelText: 'Description'),
+                            decoration: InputDecoration(labelText: l10n.calcFieldDescription),
                             onChanged: (v) => bloc.add(
                               BusinessAssetUpdated(index: index, description: v),
                             ),
@@ -466,13 +468,13 @@ class _WealthPanel extends StatelessWidget {
                           child: DropdownButtonFormField<BusinessAssetType>(
                             initialValue: item.type,
                             isExpanded: true,
-                            decoration: const InputDecoration(labelText: 'Type'),
+                            decoration: InputDecoration(labelText: l10n.calcFieldType),
                             items: BusinessAssetType.values
                                 .map(
                                   (t) => DropdownMenuItem(
                                     value: t,
                                     child: Text(
-                                      _assetTypeLabel(t),
+                                      _assetTypeLabel(l10n, t),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -490,7 +492,7 @@ class _WealthPanel extends StatelessWidget {
                       children: [
                         Expanded(
                           child: _NumberField(
-                            label: 'Amount (ETB)',
+                            label: l10n.calcAmountEtb,
                             value: item.amount,
                             onChanged: (v) => bloc.add(
                               BusinessAssetUpdated(index: index, amount: v),
@@ -510,16 +512,16 @@ class _WealthPanel extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: () => bloc.add(const BusinessAssetAdded()),
               icon: const Icon(Icons.add),
-              label: const Text('Add business asset'),
+              label: Text(l10n.calcAddBusinessAsset),
             ),
             const SizedBox(height: 14),
-            Text('Gold & Silver', style: theme.textTheme.titleSmall),
+            Text(l10n.calcGoldSilver, style: theme.textTheme.titleSmall),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: _NumberField(
-                    label: 'Gold (grams)',
+                    label: l10n.calcGoldGrams,
                     value: state.goldGrams,
                     onChanged: (v) => bloc.add(WealthFieldsUpdated(goldGrams: v)),
                   ),
@@ -529,12 +531,15 @@ class _WealthPanel extends StatelessWidget {
                   child: DropdownButtonFormField<GoldKarat>(
                     initialValue: state.goldKarat,
                     isExpanded: true,
-                    decoration: const InputDecoration(labelText: 'Gold Karat'),
+                    decoration: InputDecoration(labelText: l10n.calcGoldKarat),
                     items: GoldKarat.values
                         .map(
                           (k) => DropdownMenuItem(
                             value: k,
-                            child: Text(k.label, overflow: TextOverflow.ellipsis),
+                            child: Text(
+                              k.localizedLabel(l10n),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         )
                         .toList(),
@@ -548,7 +553,7 @@ class _WealthPanel extends StatelessWidget {
               children: [
                 Expanded(
                   child: _NumberField(
-                    label: 'Silver (grams)',
+                    label: l10n.calcSilverGrams,
                     value: state.silverGrams,
                     onChanged: (v) => bloc.add(WealthFieldsUpdated(silverGrams: v)),
                   ),
@@ -557,7 +562,7 @@ class _WealthPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 14),
-            Text('Liabilities', style: theme.textTheme.titleSmall),
+            Text(l10n.calcLiabilities, style: theme.textTheme.titleSmall),
             const SizedBox(height: 8),
             ...List.generate(state.liabilities.length, (index) {
               final item = state.liabilities[index];
@@ -571,7 +576,7 @@ class _WealthPanel extends StatelessWidget {
                           flex: 3,
                           child: TextFormField(
                             initialValue: item.description,
-                            decoration: const InputDecoration(labelText: 'Description'),
+                            decoration: InputDecoration(labelText: l10n.calcFieldDescription),
                             onChanged: (v) =>
                                 bloc.add(LiabilityUpdated(index: index, description: v)),
                           ),
@@ -582,13 +587,13 @@ class _WealthPanel extends StatelessWidget {
                           child: DropdownButtonFormField<LiabilityType>(
                             initialValue: item.type,
                             isExpanded: true,
-                            decoration: const InputDecoration(labelText: 'Type'),
+                            decoration: InputDecoration(labelText: l10n.calcFieldType),
                             items: LiabilityType.values
                                 .map(
                                   (t) => DropdownMenuItem(
                                     value: t,
                                     child: Text(
-                                      _liabilityTypeLabel(t),
+                                      _liabilityTypeLabel(l10n, t),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -606,7 +611,7 @@ class _WealthPanel extends StatelessWidget {
                       children: [
                         Expanded(
                           child: _NumberField(
-                            label: 'Amount (ETB)',
+                            label: l10n.calcAmountEtb,
                             value: item.amount,
                             onChanged: (v) =>
                                 bloc.add(LiabilityUpdated(index: index, amount: v)),
@@ -625,7 +630,7 @@ class _WealthPanel extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: () => bloc.add(const LiabilityAdded()),
               icon: const Icon(Icons.add),
-              label: const Text('Add liability'),
+              label: Text(l10n.calcAddLiability),
             ),
           ],
         ),
@@ -641,6 +646,7 @@ class _LivestockPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<ZakatCalculatorBloc>();
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -648,19 +654,19 @@ class _LivestockPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _IntField(
-              label: 'Sheep / Goats',
+              label: l10n.calcLivestockSheepGoats,
               value: state.sheepOrGoats,
               onChanged: (v) => bloc.add(LivestockFieldsUpdated(sheepOrGoats: v)),
             ),
             const SizedBox(height: 8),
             _IntField(
-              label: 'Cattle',
+              label: l10n.calcLivestockCattle,
               value: state.cattle,
               onChanged: (v) => bloc.add(LivestockFieldsUpdated(cattle: v)),
             ),
             const SizedBox(height: 8),
             _IntField(
-              label: 'Camels',
+              label: l10n.calcLivestockCamels,
               value: state.camels,
               onChanged: (v) => bloc.add(LivestockFieldsUpdated(camels: v)),
             ),
@@ -668,8 +674,8 @@ class _LivestockPanel extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: state.isPastureFedMostOfYear,
-              title: const Text('Pasture-fed most of the year'),
-              subtitle: const Text('Advisory only; does not block calculation'),
+              title: Text(l10n.calcPastureFedTitle),
+              subtitle: Text(l10n.calcPastureFedSubtitle),
               onChanged: (v) => bloc.add(
                 LivestockFieldsUpdated(isPastureFedMostOfYear: v),
               ),
@@ -677,8 +683,8 @@ class _LivestockPanel extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: state.completedHawl,
-              title: const Text('Completed one lunar year (hawl)'),
-              subtitle: const Text('Advisory only; does not block calculation'),
+              title: Text(l10n.calcHawlTitle),
+              subtitle: Text(l10n.calcHawlSubtitle),
               onChanged: (v) => bloc.add(
                 LivestockFieldsUpdated(completedHawl: v),
               ),
@@ -686,8 +692,8 @@ class _LivestockPanel extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: state.usedForWork,
-              title: const Text('Used for work (plowing/transport)'),
-              subtitle: const Text('Advisory only; does not block calculation'),
+              title: Text(l10n.calcWorkAnimalsTitle),
+              subtitle: Text(l10n.calcWorkAnimalsSubtitle),
               onChanged: (v) => bloc.add(
                 LivestockFieldsUpdated(usedForWork: v),
               ),
@@ -707,6 +713,7 @@ class _LivestockPostOverviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -721,12 +728,12 @@ class _LivestockPostOverviewSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Livestock summary',
+                l10n.calcLivestockSummaryHeading,
                 style: theme.textTheme.titleSmall,
               ),
               const SizedBox(height: 4),
               Text(
-                state.livestockSummaryText,
+                ZakatCalculatorStrings.livestockSummary(l10n, state),
                 style: theme.textTheme.bodyMedium,
               ),
             ],
@@ -741,12 +748,12 @@ class _LivestockPostOverviewSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
-            state.livestockTransparencyText,
+            ZakatCalculatorStrings.livestockTransparency(l10n, state),
             style: theme.textTheme.bodySmall,
           ),
         ),
         const SizedBox(height: 10),
-        const _ArabicTermsDefinitionsCard(title: 'Arabic Term Definitions'),
+        _ArabicTermsDefinitionsCard(title: l10n.calcArabicTermDefinitionsTitle),
       ],
     );
   }
@@ -759,6 +766,7 @@ class _CropsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<ZakatCalculatorBloc>();
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -766,29 +774,32 @@ class _CropsPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _NumberField(
-              label: 'Crop Weight (kg)',
+              label: l10n.calcCropWeightKg,
               value: state.cropKg,
               onChanged: (v) => bloc.add(CropFieldsUpdated(cropKg: v)),
             ),
             const SizedBox(height: 8),
-            SegmentedButton<CropIrrigationMode>(
-              segments: const [
-                ButtonSegment(
-                  value: CropIrrigationMode.rainFed,
-                  label: Text('Rain-fed'),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SegmentedButton<CropIrrigationMode>(
+                segments: [
+                  ButtonSegment(
+                    value: CropIrrigationMode.rainFed,
+                    label: Text(l10n.calcCropModeRainFed),
+                  ),
+                  ButtonSegment(
+                    value: CropIrrigationMode.irrigated,
+                    label: Text(l10n.calcCropModeIrrigated),
+                  ),
+                  ButtonSegment(
+                    value: CropIrrigationMode.mixed,
+                    label: Text(l10n.calcCropModeMixed),
+                  ),
+                ],
+                selected: {state.cropIrrigationMode},
+                onSelectionChanged: (value) => bloc.add(
+                  CropFieldsUpdated(cropIrrigationMode: value.first),
                 ),
-                ButtonSegment(
-                  value: CropIrrigationMode.irrigated,
-                  label: Text('Irrigated'),
-                ),
-                ButtonSegment(
-                  value: CropIrrigationMode.mixed,
-                  label: Text('Mixed'),
-                ),
-              ],
-              selected: {state.cropIrrigationMode},
-              onSelectionChanged: (value) => bloc.add(
-                CropFieldsUpdated(cropIrrigationMode: value.first),
               ),
             ),
             if (state.cropIrrigationMode == CropIrrigationMode.mixed) ...[
@@ -797,7 +808,7 @@ class _CropsPanel extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _NumberField(
-                      label: 'Rain-fed share %',
+                      label: l10n.calcRainFedSharePct,
                       value: state.rainSharePercent,
                       onChanged: (v) => bloc.add(CropFieldsUpdated(rainSharePercent: v)),
                     ),
@@ -805,7 +816,7 @@ class _CropsPanel extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: _NumberField(
-                      label: 'Irrigated share %',
+                      label: l10n.calcIrrigatedSharePct,
                       value: state.irrigatedSharePercent,
                       onChanged: (v) => bloc.add(CropFieldsUpdated(irrigatedSharePercent: v)),
                     ),
@@ -828,6 +839,7 @@ class _CropPostOverviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -842,17 +854,19 @@ class _CropPostOverviewSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Nisab & crop due',
+                l10n.calcCropNisabHeading,
                 style: theme.textTheme.titleSmall,
               ),
               const SizedBox(height: 4),
               Text(
-                'Effective crop rate: ${(state.cropEffectiveRate * 100).toStringAsFixed(2)}%',
+                l10n.calcEffectiveCropRateLine(
+                  (state.cropEffectiveRate * 100).toStringAsFixed(2),
+                ),
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: 2),
               Text(
-                'Crop Zakat due: ${state.cropZakatDueKg.toStringAsFixed(2)} kg',
+                l10n.calcCropZakatDueKgLine(state.cropZakatDueKg.toStringAsFixed(2)),
                 style: theme.textTheme.bodyMedium,
               ),
             ],
@@ -873,19 +887,17 @@ class _CropPostOverviewSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'How crop Zakat works',
+                l10n.calcHowCropZakatWorksTitle,
                 style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 6),
               Text(
-                'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. '
-                'Zakat is due at harvest (no annual hawl for crops).',
+                l10n.calcHowCropZakatWorksBody,
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 4),
               Text(
-                'Note: App applies these rules broadly for simplicity. Scholarly positions differ '
-                'on crop-type scope and expense deductions; consult qualified scholars for specific cases.',
+                l10n.calcHowCropZakatNote,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -902,7 +914,7 @@ class _CropPostOverviewSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
-            state.cropTransparencyText,
+            ZakatCalculatorStrings.cropTransparency(l10n, state),
             style: theme.textTheme.bodySmall,
           ),
         ),
@@ -1003,7 +1015,7 @@ class _ArabicTermsDefinitionsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const _ArabicTermsDefinitionBody(),
+          _ArabicTermsDefinitionBody(),
         ],
       ),
     );
@@ -1018,9 +1030,10 @@ class _ArabicTermsDefinitionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: kLivestockArabicTermDefinitions.entries
+      children: ZakatCalculatorStrings.arabicTermEntries(l10n)
           .map(
             (entry) => Padding(
               padding: EdgeInsets.only(bottom: compact ? 4 : 6),
@@ -1035,51 +1048,29 @@ class _ArabicTermsDefinitionBody extends StatelessWidget {
   }
 }
 
-String _assetTypeLabel(BusinessAssetType type) {
+String _assetTypeLabel(AppLocalizations l, BusinessAssetType type) {
   switch (type) {
     case BusinessAssetType.inventory:
-      return 'Inventory';
+      return l.calcAssetInventory;
     case BusinessAssetType.receivable:
-      return 'Receivable';
+      return l.calcAssetReceivable;
     case BusinessAssetType.other:
-      return 'Other';
+      return l.calcAssetOther;
   }
 }
 
-String _liabilityTypeLabel(LiabilityType type) {
+String _liabilityTypeLabel(AppLocalizations l, LiabilityType type) {
   switch (type) {
     case LiabilityType.shortTermDebt:
-      return 'Short-term debt';
+      return l.calcLiabilityShortTermDebt;
     case LiabilityType.payable:
-      return 'Payable';
+      return l.calcLiabilityPayable;
     case LiabilityType.other:
-      return 'Other';
-  }
-}
-
-String _cropModeLabel(CropIrrigationMode mode) {
-  switch (mode) {
-    case CropIrrigationMode.rainFed:
-      return 'Rain-fed';
-    case CropIrrigationMode.irrigated:
-      return 'Irrigated';
-    case CropIrrigationMode.mixed:
-      return 'Mixed';
+      return l.calcLiabilityOther;
   }
 }
 
 String _money(double value) => MoneyFormatter.etb(value);
-
-String _formatTimestamp(DateTime? timestamp) {
-  if (timestamp == null) return 'timestamp unavailable';
-  final local = timestamp.toLocal();
-  final y = local.year.toString().padLeft(4, '0');
-  final m = local.month.toString().padLeft(2, '0');
-  final d = local.day.toString().padLeft(2, '0');
-  final hh = local.hour.toString().padLeft(2, '0');
-  final mm = local.minute.toString().padLeft(2, '0');
-  return '$y-$m-$d $hh:$mm';
-}
 
 class _Step1Shimmer extends StatefulWidget {
   const _Step1Shimmer();

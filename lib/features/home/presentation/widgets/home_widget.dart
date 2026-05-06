@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
+import '../../../../core/l10n/l10n.dart';
 
 class TotalCollectedHeroCard extends StatelessWidget {
   const TotalCollectedHeroCard({super.key, required this.theme});
@@ -13,6 +14,7 @@ class TotalCollectedHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -31,7 +33,7 @@ class TotalCollectedHeroCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'TOTAL ZAKAT COLLECTED',
+            l10n.totalZakatCollected,
             style: theme.textTheme.labelMedium?.copyWith(
               letterSpacing: 1.2,
               color: AppColors.textOnPrimary.withValues(alpha: 0.9),
@@ -68,7 +70,7 @@ class TotalCollectedHeroCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'This month',
+                  l10n.thisMonth,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textOnPrimary.withValues(alpha: 0.88),
                   ),
@@ -88,7 +90,7 @@ class TotalCollectedHeroCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Total beneficiaries supported',
+                  l10n.totalBeneficiariesSupported,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textOnPrimary.withValues(alpha: 0.88),
                   ),
@@ -115,7 +117,7 @@ class TotalCollectedHeroCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Transparent, accountable, and impactful: your giving powers nationwide relief and empowerment.',
+            l10n.transparencyQuote,
             style: theme.textTheme.bodySmall?.copyWith(
               color: AppColors.textOnPrimary.withValues(alpha: 0.85),
               fontStyle: FontStyle.italic,
@@ -136,6 +138,7 @@ class UrgentNeedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     return SizedBox(
       width: 250,
       child: Card(
@@ -148,9 +151,7 @@ class UrgentNeedCard extends StatelessWidget {
             Container(
               height: 90,
               width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: PrimaryHero.gradient(scheme),
-              ),
+              decoration: BoxDecoration(gradient: PrimaryHero.gradient(scheme)),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Align(
@@ -205,7 +206,10 @@ class UrgentNeedCard extends StatelessWidget {
                     ),
                     onPressed: () => context.go('/calculator'),
                     icon: const Icon(Icons.volunteer_activism, size: 16),
-                    label: const Text('Pay Zakat to this cause', style: TextStyle(color: AppColors.textOnPrimary),),
+                    label: Text(
+                      l10n.payZakatCause,
+                      style: TextStyle(color: AppColors.textOnPrimary),
+                    ),
                   ),
                 ],
               ),
@@ -225,6 +229,7 @@ class ZakatReminderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -238,7 +243,7 @@ class ZakatReminderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Zakat Al-Fitr',
+                  l10n.zakatAlFitr,
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: AppColors.textOnPrimary,
                     fontWeight: FontWeight.w700,
@@ -246,7 +251,7 @@ class ZakatReminderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Due in approximately 22 days.',
+                  l10n.zakatDueDays,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textOnPrimary.withValues(alpha: 0.92),
                   ),
@@ -258,16 +263,12 @@ class ZakatReminderCard extends StatelessWidget {
                     backgroundColor: AppColors.textOnPrimary,
                     foregroundColor: AppColors.primary,
                   ),
-                  child: const Text('Set Reminder'),
+                  child: Text(l10n.setReminder),
                 ),
               ],
             ),
           ),
-          Icon(
-            Icons.calendar_month,
-            size: 52,
-            color: AppColors.secondary,
-          ),
+          Icon(Icons.calendar_month, size: 52, color: AppColors.secondary),
         ],
       ),
     );
@@ -282,6 +283,7 @@ class DonateSadaqahCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -292,7 +294,7 @@ class DonateSadaqahCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Need a quick way to give?',
+            l10n.needQuickWayGive,
             style: theme.textTheme.titleMedium?.copyWith(
               color: AppColors.textOnPrimary,
               fontWeight: FontWeight.w700,
@@ -300,7 +302,7 @@ class DonateSadaqahCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Support ongoing community needs instantly with Sadaqah.',
+            l10n.supportCommunityNeeds,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: AppColors.textOnPrimary.withValues(alpha: 0.93),
             ),
@@ -315,7 +317,7 @@ class DonateSadaqahCard extends StatelessWidget {
                 foregroundColor: AppColors.primary,
               ),
               icon: const Icon(Icons.favorite),
-              label: const Text('Donate Sadaqah'),
+              label: Text(l10n.donateSadaqah),
             ),
           ),
         ],
@@ -331,6 +333,7 @@ class AboutCommissionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -345,7 +348,7 @@ class AboutCommissionSection extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'About Ethiopian Zakat and Awqaf Commission',
+                    l10n.aboutCommission,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
@@ -355,20 +358,20 @@ class AboutCommissionSection extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'The Ethiopian Zakat and Awqaf Commission coordinates zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs.',
+              l10n.aboutCommissionBody,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
                 height: 1.35,
               ),
             ),
             const SizedBox(height: 10),
-            const Wrap(
+            Wrap(
               spacing: 8,
               runSpacing: 8,
               children: [
-                InfoChip(label: 'Transparency-first'),
-                InfoChip(label: 'Nationwide impact'),
-                InfoChip(label: 'Shariah aligned'),
+                InfoChip(label: l10n.chipTransparencyFirst),
+                InfoChip(label: l10n.chipNationwideImpact),
+                InfoChip(label: l10n.chipShariahAligned),
               ],
             ),
           ],
