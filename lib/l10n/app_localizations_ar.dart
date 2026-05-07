@@ -584,4 +584,286 @@ class AppLocalizationsAr extends AppLocalizations {
   String calcCamelApproxBintLabun(int count) {
     return '$count bint labun (approximate combo)';
   }
+
+  @override
+  String get profileLoadErrorTitle => 'تعذر تحميل ملفك الشخصي';
+
+  @override
+  String get profileTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get profileSectionImpactDashboard => 'لوحة الأثر';
+
+  @override
+  String get profileSectionBeneficiaryInsights => 'رؤى المستفيد';
+
+  @override
+  String get profileSectionPersonalInformation => 'المعلومات الشخصية';
+
+  @override
+  String get profileSectionSpiritualSettings => 'الإعدادات الشرعية';
+
+  @override
+  String get profileSectionCoreActions => 'الإجراءات الأساسية';
+
+  @override
+  String get profileSectionSettingsSecurity => 'الإعدادات والأمان';
+
+  @override
+  String get profileSectionSupport => 'الدعم';
+
+  @override
+  String get profileNoNewNotifications => 'لا توجد إشعارات جديدة';
+
+  @override
+  String get profileVerificationStatus => 'حالة التحقق';
+
+  @override
+  String get profileFaydaVerified => 'موثّق بفايدة';
+
+  @override
+  String get profileNotVerified => 'غير موثّق';
+
+  @override
+  String get profileTotalZakatPaid => 'إجمالي الزكاة المدفوعة';
+
+  @override
+  String get profileFySummary => 'ملخص السنة المالية 2023';
+
+  @override
+  String get profileActiveEndowments => 'الأوقاف النشطة';
+
+  @override
+  String get profileSustainableImpact => 'أثر مستدام';
+
+  @override
+  String get profileBeneficiariesHelped => 'المستفيدون الذين تمت مساعدتهم';
+
+  @override
+  String get profileAcrossPrograms => 'عبر البرامج';
+
+  @override
+  String get profileApplicationStatus => 'حالة الطلب';
+
+  @override
+  String get profileLastDisbursement => 'آخر صرف';
+
+  @override
+  String get profileTotalAidReceived => 'إجمالي المساعدات المستلمة';
+
+  @override
+  String get profileEmailAddress => 'البريد الإلكتروني';
+
+  @override
+  String get profilePhoneNumber => 'رقم الهاتف';
+
+  @override
+  String profileEditFieldComingSoon(String field) {
+    return 'تعديل $field قريبًا';
+  }
+
+  @override
+  String get profileNisabThresholdAlerts => 'تنبيهات حد النصاب';
+
+  @override
+  String get profileNisabThresholdAlertsSubtitle =>
+      'الإشعار عند بلوغ الثروة حد النصاب';
+
+  @override
+  String get profileChangePin => 'تغيير الرقم السري';
+
+  @override
+  String get profileChangePinComingSoon => 'تغيير الرقم السري قريبًا';
+
+  @override
+  String get profileMyZakatHistory => 'سجل الزكاة الخاص بي';
+
+  @override
+  String get profileMyZakatHistorySubtitle => 'عرض السجل والشهادات';
+
+  @override
+  String get profileZakatHistoryComingSoon => 'سجل الزكاة قريبًا';
+
+  @override
+  String get profileMyAwqafEndowments => 'أوقافي';
+
+  @override
+  String get profileMyAwqafEndowmentsSubtitle => 'عرض المدارس والآبار';
+
+  @override
+  String get profileBeneficiaryApplication => 'طلب المستفيد';
+
+  @override
+  String get profileApplyAsBeneficiary => 'التقديم كمستفيد';
+
+  @override
+  String get profileBeneficiaryApplicationSubtitle =>
+      'إرسال أو متابعة طلبات الدعم';
+
+  @override
+  String get profileApplyAsBeneficiarySubtitle => 'سجّل لتلقي المساعدة';
+
+  @override
+  String get profileDonationHistory => 'سجل التبرعات';
+
+  @override
+  String get profileDonationHistorySubtitle => 'عرض كل مساهمة';
+
+  @override
+  String get profileDonationHistoryComingSoon => 'سجل التبرعات قريبًا';
+
+  @override
+  String get profileHelpCenter => 'مركز المساعدة';
+
+  @override
+  String get profileHelpCenterSubtitle => 'الأسئلة الشائعة والإرشاد';
+
+  @override
+  String get profileHelpCenterComingSoon => 'مركز المساعدة قريبًا';
+
+  @override
+  String get profileSupportAndGrievances => 'الدعم والشكاوى';
+
+  @override
+  String get profileSupportAndGrievancesSubtitle => 'تواصل مع فريقنا';
+
+  @override
+  String get profileSupportCenterComingSoon => 'مركز الدعم قريبًا';
+
+  @override
+  String get profileLogOut => 'تسجيل الخروج';
+
+  @override
+  String get profileLogOutSubtitle => 'إنهاء جلستك الحالية';
+
+  @override
+  String get profileLogOutDialogTitle => 'تسجيل الخروج؟';
+
+  @override
+  String get profileLogOutDialogBody =>
+      'سيتم تسجيل خروجك من التطبيق على هذا الجهاز.';
+
+  @override
+  String get profileCancel => 'إلغاء';
+
+  @override
+  String get profileHadithOfTheDay => 'حديث اليوم';
+
+  @override
+  String get profileHadithQuote => '\"ظل المؤمن يوم القيامة صدقته.\"';
+
+  @override
+  String get profileHadithSource => '— الترمذي';
+
+  @override
+  String get impactNationalImpact => 'الأثر الوطني';
+
+  @override
+  String get impactNotifications => 'الإشعارات';
+
+  @override
+  String get impactCouldNotLoad => 'تعذر تحميل الأثر الوطني';
+
+  @override
+  String get impactGeographicReach => 'الانتشار الجغرافي';
+
+  @override
+  String get impactBarakaStories => 'قصص البركة';
+
+  @override
+  String get impactActiveAwqafProjects => 'مشاريع الأوقاف النشطة';
+
+  @override
+  String get impactAllProjectsComingSoon => 'جميع المشاريع قريبًا';
+
+  @override
+  String get impactLiveImpactStream => 'بث الأثر المباشر';
+
+  @override
+  String get impactDistributedFunds => 'الأموال الموزعة';
+
+  @override
+  String impactEtbAmount(String amount) {
+    return '$amount بر إثيوبي';
+  }
+
+  @override
+  String get impactLivesTouched => 'الأرواح المستفيدة';
+
+  @override
+  String get impactActiveProjects => 'المشاريع النشطة';
+
+  @override
+  String get impactTapRegionHint => 'اضغط على منطقة لعرض الأثر المحلي';
+
+  @override
+  String impactRegionImpactComingSoon(String region) {
+    return 'أثر $region قريبًا';
+  }
+
+  @override
+  String impactStoryComingSoon(String name) {
+    return 'قصة $name قريبًا';
+  }
+
+  @override
+  String impactProjectDetailsComingSoon(String title) {
+    return 'تفاصيل $title قريبًا';
+  }
+
+  @override
+  String impactPercentFunded(String percent) {
+    return 'تم تمويل $percent%';
+  }
+
+  @override
+  String impactEtbLeft(String amount) {
+    return 'متبقي $amount بر إثيوبي';
+  }
+
+  @override
+  String get impactSeeYourPersonalBaraka => 'اطلع على بركتك الشخصية';
+
+  @override
+  String get impactTrackStewardship => 'تتبع كل مساهمة من أمانتك.';
+
+  @override
+  String get impactViewMyHistory => 'عرض سجلي';
+
+  @override
+  String get onboardingSkip => 'تخطي';
+
+  @override
+  String get onboardingNext => 'التالي';
+
+  @override
+  String get onboardingGetStarted => 'ابدأ الآن';
+
+  @override
+  String get onboardingTitleFaithAndPurpose => 'إيمان ذو غاية';
+
+  @override
+  String get onboardingSubtitleFaithAndPurpose =>
+      'مرحبًا بك في منصة موثوقة لإدارة الزكاة والأوقاف.';
+
+  @override
+  String get onboardingTitleTransparentGiving => 'عطاء شفاف';
+
+  @override
+  String get onboardingSubtitleTransparentGiving =>
+      'تابع كيف تتحول مساهماتك إلى أثر حقيقي في المجتمعات.';
+
+  @override
+  String get onboardingTitleEasyPayments => 'مدفوعات سهلة وسريعة';
+
+  @override
+  String get onboardingSubtitleEasyPayments =>
+      'ادفع زكاتك بسرعة عبر تجربة آمنة وسلسة على الجوال.';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'رحمة تتحول إلى عمل';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'ادعم المستفيدين والمشاريع بوضوح وثقة وبركة.';
 }

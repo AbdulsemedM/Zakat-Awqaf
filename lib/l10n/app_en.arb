@@ -311,5 +311,127 @@
     "placeholders": {
       "count": {"type": "int"}
     }
-  }
+  },
+  "profileLoadErrorTitle": "Could not load your profile",
+  "profileTryAgain": "Try again",
+  "profileSectionImpactDashboard": "Impact Dashboard",
+  "profileSectionBeneficiaryInsights": "Beneficiary Insights",
+  "profileSectionPersonalInformation": "Personal Information",
+  "profileSectionSpiritualSettings": "Spiritual Settings",
+  "profileSectionCoreActions": "Core Actions",
+  "profileSectionSettingsSecurity": "Settings & Security",
+  "profileSectionSupport": "Support",
+  "profileNoNewNotifications": "No new notifications",
+  "profileVerificationStatus": "Verification Status",
+  "profileFaydaVerified": "Fayda Verified",
+  "profileNotVerified": "Not verified",
+  "profileTotalZakatPaid": "Total Zakat Paid",
+  "profileFySummary": "FY 2023 Summary",
+  "profileActiveEndowments": "Active Endowments",
+  "profileSustainableImpact": "Sustainable impact",
+  "profileBeneficiariesHelped": "Beneficiaries Helped",
+  "profileAcrossPrograms": "Across programs",
+  "profileApplicationStatus": "Application Status",
+  "profileLastDisbursement": "Last Disbursement",
+  "profileTotalAidReceived": "Total Aid Received",
+  "profileEmailAddress": "Email Address",
+  "profilePhoneNumber": "Phone Number",
+  "profileEditFieldComingSoon": "Edit {field} coming soon",
+  "@profileEditFieldComingSoon": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "profileNisabThresholdAlerts": "Nisab Threshold Alerts",
+  "profileNisabThresholdAlertsSubtitle": "Notify when wealth reaches threshold",
+  "profileChangePin": "Change PIN",
+  "profileChangePinComingSoon": "Change PIN coming soon",
+  "profileMyZakatHistory": "My Zakat History",
+  "profileMyZakatHistorySubtitle": "View ledger & certificates",
+  "profileZakatHistoryComingSoon": "Zakat history coming soon",
+  "profileMyAwqafEndowments": "My Awqaf Endowments",
+  "profileMyAwqafEndowmentsSubtitle": "View schools & wells",
+  "profileBeneficiaryApplication": "Beneficiary Application",
+  "profileApplyAsBeneficiary": "Apply as Beneficiary",
+  "profileBeneficiaryApplicationSubtitle": "Submit or track aid requests",
+  "profileApplyAsBeneficiarySubtitle": "Register to receive aid",
+  "profileDonationHistory": "Donation History",
+  "profileDonationHistorySubtitle": "See every contribution",
+  "profileDonationHistoryComingSoon": "Donation history coming soon",
+  "profileHelpCenter": "Help Center",
+  "profileHelpCenterSubtitle": "FAQs and guidance",
+  "profileHelpCenterComingSoon": "Help center coming soon",
+  "profileSupportAndGrievances": "Support & Grievances",
+  "profileSupportAndGrievancesSubtitle": "Talk to our team",
+  "profileSupportCenterComingSoon": "Support center coming soon",
+  "profileLogOut": "Log Out",
+  "profileLogOutSubtitle": "End your current session",
+  "profileLogOutDialogTitle": "Log out?",
+  "profileLogOutDialogBody": "You will be signed out of the app on this device.",
+  "profileCancel": "Cancel",
+  "profileHadithOfTheDay": "Hadith of the Day",
+  "profileHadithQuote": "\"The believer's shade on the Day of Resurrection will be his charity.\"",
+  "profileHadithSource": "— At-Tirmidhi",
+  "impactNationalImpact": "National Impact",
+  "impactNotifications": "Notifications",
+  "impactCouldNotLoad": "Could not load national impact",
+  "impactGeographicReach": "Geographic Reach",
+  "impactBarakaStories": "Baraka Stories",
+  "impactActiveAwqafProjects": "Active Awqaf Projects",
+  "impactAllProjectsComingSoon": "All projects coming soon",
+  "impactLiveImpactStream": "LIVE IMPACT STREAM",
+  "impactDistributedFunds": "DISTRIBUTED FUNDS",
+  "impactEtbAmount": "{amount} ETB",
+  "@impactEtbAmount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactLivesTouched": "LIVES TOUCHED",
+  "impactActiveProjects": "ACTIVE PROJECTS",
+  "impactTapRegionHint": "Tap a region to see local impact",
+  "impactRegionImpactComingSoon": "{region} impact coming soon",
+  "@impactRegionImpactComingSoon": {
+    "placeholders": {
+      "region": {"type": "String"}
+    }
+  },
+  "impactStoryComingSoon": "{name} story coming soon",
+  "@impactStoryComingSoon": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "impactProjectDetailsComingSoon": "{title} details coming soon",
+  "@impactProjectDetailsComingSoon": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "impactPercentFunded": "{percent}% Funded",
+  "@impactPercentFunded": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "impactEtbLeft": "{amount} ETB Left",
+  "@impactEtbLeft": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactSeeYourPersonalBaraka": "See Your Personal Baraka",
+  "impactTrackStewardship": "Track every cent of your stewardship.",
+  "impactViewMyHistory": "View My History",
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingGetStarted": "Get Started",
+  "onboardingTitleFaithAndPurpose": "Faith with Purpose",
+  "onboardingSubtitleFaithAndPurpose": "Welcome to a trusted platform for Zakat and Awqaf stewardship.",
+  "onboardingTitleTransparentGiving": "Transparent Giving",
+  "onboardingSubtitleTransparentGiving": "See how your contributions flow into real impact across communities.",
+  "onboardingTitleEasyPayments": "Fast, Simple Payments",
+  "onboardingSubtitleEasyPayments": "Pay Zakat quickly with a smooth, secure, mobile-first experience.",
+  "onboardingTitleCompassionInAction": "Compassion in Action",
+  "onboardingSubtitleCompassionInAction": "Support beneficiaries and projects with clarity, trust, and baraka."
 }

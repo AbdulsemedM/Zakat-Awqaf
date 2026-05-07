@@ -10,6 +10,8 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/bloc/impact_bloc.dart';
 import '../../features/impact/bloc/impact_event.dart';
 import '../../features/impact/presentation/screens/impact_screen.dart';
+import '../../features/onboarding/presentation/screens/first_start_onboarding_screen.dart';
+import '../../features/onboarding/presentation/screens/startup_splash_screen.dart';
 import '../../features/profile/bloc/profile_bloc.dart';
 import '../../features/profile/bloc/profile_event.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -26,8 +28,16 @@ import '../pages/main_nav_shell_page.dart';
 abstract class AppRouterModule {
   @lazySingleton
   GoRouter router() => GoRouter(
-        initialLocation: '/',
+        initialLocation: '/splash',
         routes: [
+          GoRoute(
+            path: '/splash',
+            builder: (context, state) => const StartupSplashScreen(),
+          ),
+          GoRoute(
+            path: '/onboarding',
+            builder: (context, state) => const FirstStartOnboardingScreen(),
+          ),
           StatefulShellRoute.indexedStack(
             builder: (context, state, navigationShell) => MainNavShellPage(
               navigationShell: navigationShell,

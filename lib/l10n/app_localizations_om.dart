@@ -586,4 +586,299 @@ class AppLocalizationsOm extends AppLocalizations {
   String calcCamelApproxBintLabun(int count) {
     return '$count bint labun (approximate combo)';
   }
+
+  @override
+  String get profileLoadErrorTitle =>
+      'Piroofaayiliin kee fe\'amuu hin dandeenye';
+
+  @override
+  String get profileTryAgain => 'Ammas yaali';
+
+  @override
+  String get profileSectionImpactDashboard => 'Daashboordii Bu\'aa';
+
+  @override
+  String get profileSectionBeneficiaryInsights => 'Hubannoo Fayyadamtootaa';
+
+  @override
+  String get profileSectionPersonalInformation => 'Odeeffannoo Dhuunfaa';
+
+  @override
+  String get profileSectionSpiritualSettings => 'Qindaa\'ina Amantii';
+
+  @override
+  String get profileSectionCoreActions => 'Gochaalee Ijoo';
+
+  @override
+  String get profileSectionSettingsSecurity => 'Qindaa\'ina fi Nageenya';
+
+  @override
+  String get profileSectionSupport => 'Deeggarsa';
+
+  @override
+  String get profileNoNewNotifications => 'Beeksisa haaraa hin jiru';
+
+  @override
+  String get profileVerificationStatus => 'Haala Mirkaneessaa';
+
+  @override
+  String get profileFaydaVerified => 'Faydaan mirkanaa\'eera';
+
+  @override
+  String get profileNotVerified => 'Hin mirkanoofne';
+
+  @override
+  String get profileTotalZakatPaid => 'Walitti qabama zakaa kaffalame';
+
+  @override
+  String get profileFySummary => 'Cuunfaa bara baajataa 2023';
+
+  @override
+  String get profileActiveEndowments => 'Awqaafa hojii irra jiran';
+
+  @override
+  String get profileSustainableImpact => 'Bu\'aa itti fufiinsa qabu';
+
+  @override
+  String get profileBeneficiariesHelped => 'Fayyadamtoota deeggarsa argatan';
+
+  @override
+  String get profileAcrossPrograms => 'Sagantaalee hunda keessatti';
+
+  @override
+  String get profileApplicationStatus => 'Haala iyyannoo';
+
+  @override
+  String get profileLastDisbursement => 'Kaffaltii dhumaa';
+
+  @override
+  String get profileTotalAidReceived => 'Walitti qabama gargaarsa argame';
+
+  @override
+  String get profileEmailAddress => 'Teessoo Imeelii';
+
+  @override
+  String get profilePhoneNumber => 'Lakkoofsa Bilbilaa';
+
+  @override
+  String profileEditFieldComingSoon(String field) {
+    return '$field gulaaluun yeroo dhihoo dhufa';
+  }
+
+  @override
+  String get profileNisabThresholdAlerts => 'Beeksisa daangaa Nisaab';
+
+  @override
+  String get profileNisabThresholdAlertsSubtitle =>
+      'Qabeenyi yeroo daangaa nisaab ga\'u ni beeksifna';
+
+  @override
+  String get profileChangePin => 'PIN Jijjiiri';
+
+  @override
+  String get profileChangePinComingSoon => 'PIN jijjiiruun yeroo dhihoo dhufa';
+
+  @override
+  String get profileMyZakatHistory => 'Seenaa Zakaa Koo';
+
+  @override
+  String get profileMyZakatHistorySubtitle => 'Galmee fi ragaa ilaali';
+
+  @override
+  String get profileZakatHistoryComingSoon => 'Seenaa zakaa yeroo dhihoo dhufa';
+
+  @override
+  String get profileMyAwqafEndowments => 'Awqaafa Koo';
+
+  @override
+  String get profileMyAwqafEndowmentsSubtitle =>
+      'Manneen barnootaa fi boolla bishaanii ilaali';
+
+  @override
+  String get profileBeneficiaryApplication => 'Iyyannoo Fayyadamaa';
+
+  @override
+  String get profileApplyAsBeneficiary => 'Akka fayyadamaa ta\'uun galmaa\'i';
+
+  @override
+  String get profileBeneficiaryApplicationSubtitle =>
+      'Gaaffii gargaarsaa galchi yookaan hordofi';
+
+  @override
+  String get profileApplyAsBeneficiarySubtitle =>
+      'Gargaarsa argachuuf galmaa\'i';
+
+  @override
+  String get profileDonationHistory => 'Seenaa Arjoomaa';
+
+  @override
+  String get profileDonationHistorySubtitle => 'Gumaacha hunda ilaali';
+
+  @override
+  String get profileDonationHistoryComingSoon =>
+      'Seenaa arjoomaa yeroo dhihoo dhufa';
+
+  @override
+  String get profileHelpCenter => 'Wiirtuu Gargaarsa';
+
+  @override
+  String get profileHelpCenterSubtitle =>
+      'Gaaffilee yeroo baay\'ee fi qajeelfama';
+
+  @override
+  String get profileHelpCenterComingSoon =>
+      'Wiirtuun gargaarsa yeroo dhihoo dhufa';
+
+  @override
+  String get profileSupportAndGrievances => 'Deeggarsa fi Komii';
+
+  @override
+  String get profileSupportAndGrievancesSubtitle =>
+      'Garee keenya waliin dubbadhu';
+
+  @override
+  String get profileSupportCenterComingSoon =>
+      'Wiirtuun deeggarsaa yeroo dhihoo dhufa';
+
+  @override
+  String get profileLogOut => 'Ba\'i';
+
+  @override
+  String get profileLogOutSubtitle => 'Yeroo ammaa jiru xumuri';
+
+  @override
+  String get profileLogOutDialogTitle => 'Ba\'uu barbaaddaa?';
+
+  @override
+  String get profileLogOutDialogBody =>
+      'Meeshaa kana irratti app keessaa ni baata.';
+
+  @override
+  String get profileCancel => 'Haqi';
+
+  @override
+  String get profileHadithOfTheDay => 'Hadiisa Guyyaa';
+
+  @override
+  String get profileHadithQuote =>
+      '\"Gaaddisi amanaa guyyaa qiyaamaa sadaqaa isaa ta\'a.\"';
+
+  @override
+  String get profileHadithSource => '— At-Tirmidhi';
+
+  @override
+  String get impactNationalImpact => 'Bu\'aa Biyyaalessaa';
+
+  @override
+  String get impactNotifications => 'Beeksisoota';
+
+  @override
+  String get impactCouldNotLoad =>
+      'Bu\'aan biyyaalessaa fe\'amuu hin dandeenye';
+
+  @override
+  String get impactGeographicReach => 'Dhaqqabina Naannoo';
+
+  @override
+  String get impactBarakaStories => 'Seenaawwan Barakaa';
+
+  @override
+  String get impactActiveAwqafProjects =>
+      'Pirojektoota Awqaaf Sochii Irra Jiran';
+
+  @override
+  String get impactAllProjectsComingSoon =>
+      'Pirojektoonni hundi yeroo dhihoo dhufu';
+
+  @override
+  String get impactLiveImpactStream => 'Tamsaasa Bu\'aa Kallattii';
+
+  @override
+  String get impactDistributedFunds => 'Maallaqa Raabsame';
+
+  @override
+  String impactEtbAmount(String amount) {
+    return '$amount ETB';
+  }
+
+  @override
+  String get impactLivesTouched => 'Jireenyota Tuqaman';
+
+  @override
+  String get impactActiveProjects => 'Pirojektoota Sochii Irra Jiran';
+
+  @override
+  String get impactTapRegionHint => 'Bu\'aa naannoo ilaaluuf naannoo tuqi';
+
+  @override
+  String impactRegionImpactComingSoon(String region) {
+    return 'Bu\'aan $region yeroo dhihoo dhufa';
+  }
+
+  @override
+  String impactStoryComingSoon(String name) {
+    return 'Seenaa $name yeroo dhihoo dhufa';
+  }
+
+  @override
+  String impactProjectDetailsComingSoon(String title) {
+    return 'Bal\'inni $title yeroo dhihoo dhufa';
+  }
+
+  @override
+  String impactPercentFunded(String percent) {
+    return '$percent% guutameera';
+  }
+
+  @override
+  String impactEtbLeft(String amount) {
+    return '$amount ETB hafa';
+  }
+
+  @override
+  String get impactSeeYourPersonalBaraka => 'Barakaa Dhuunfaa Kee Ilaali';
+
+  @override
+  String get impactTrackStewardship =>
+      'Bulchiinsa kee keessatti saantima hunda hordofi.';
+
+  @override
+  String get impactViewMyHistory => 'Seenaa Koo Ilaali';
+
+  @override
+  String get onboardingSkip => 'Darbi';
+
+  @override
+  String get onboardingNext => 'Itti Aanu';
+
+  @override
+  String get onboardingGetStarted => 'Jalqabi';
+
+  @override
+  String get onboardingTitleFaithAndPurpose => 'Amantii fi Kaayyoo';
+
+  @override
+  String get onboardingSubtitleFaithAndPurpose =>
+      'Baga gara waltajjii amanamaa zakaa fi awqaaf bulchiinsaa dhuftan.';
+
+  @override
+  String get onboardingTitleTransparentGiving => 'Kennaa Ifa Ta\'e';
+
+  @override
+  String get onboardingSubtitleTransparentGiving =>
+      'Gumaachi kee hawaasa keessatti bu\'aa dhugaa akkamitti uumu akka ta\'e ilaali.';
+
+  @override
+  String get onboardingTitleEasyPayments => 'Kaffaltii Saffisaa fi Salphaa';
+
+  @override
+  String get onboardingSubtitleEasyPayments =>
+      'Muuxannoo amansiisaa fi mobaayilii irratti salphaan zakaa kee kaffali.';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'Rahmata Hojii Keessatti';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'Ifaafi amanamummaadhaan fayyadamtootaa fi pirojektoota deeggari.';
 }

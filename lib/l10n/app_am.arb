@@ -33,5 +33,127 @@
   "profileBiometricLogin": "ባዮሜትሪክ ግባ",
   "profileBiometricSubtitle": "የጣት አሻራ ወይም ፊት መለያ ይጠቀሙ",
   "missingPaymentDetails": "የክፍያ ዝርዝር የለም።",
-  "missingCertificateDetails": "የምስክር ወረቀት ዝርዝር የለም።"
+  "missingCertificateDetails": "የምስክር ወረቀት ዝርዝር የለም።",
+  "profileLoadErrorTitle": "መገለጫዎ መጫን አልተቻለም",
+  "profileTryAgain": "እንደገና ሞክር",
+  "profileSectionImpactDashboard": "የተፅዕኖ ዳሽቦርድ",
+  "profileSectionBeneficiaryInsights": "የተጠቃሚ ግንዛቤዎች",
+  "profileSectionPersonalInformation": "የግል መረጃ",
+  "profileSectionSpiritualSettings": "መንፈሳዊ ቅንብሮች",
+  "profileSectionCoreActions": "ዋና እርምጃዎች",
+  "profileSectionSettingsSecurity": "ቅንብሮች እና ደህንነት",
+  "profileSectionSupport": "ድጋፍ",
+  "profileNoNewNotifications": "አዲስ ማሳወቂያ የለም",
+  "profileVerificationStatus": "የማረጋገጫ ሁኔታ",
+  "profileFaydaVerified": "በፋይዳ የተረጋገጠ",
+  "profileNotVerified": "አልተረጋገጠም",
+  "profileTotalZakatPaid": "ጠቅላላ የተከፈለ ዘካት",
+  "profileFySummary": "የ2015 በጀት ዓመት ማጠቃለያ",
+  "profileActiveEndowments": "ንቁ ወቅፎች",
+  "profileSustainableImpact": "ዘላቂ ተፅዕኖ",
+  "profileBeneficiariesHelped": "የተረዱ ተጠቃሚዎች",
+  "profileAcrossPrograms": "በፕሮግራሞች ውስጥ",
+  "profileApplicationStatus": "የማመልከቻ ሁኔታ",
+  "profileLastDisbursement": "የመጨረሻ ክፍያ",
+  "profileTotalAidReceived": "ጠቅላላ የተቀበሉት እርዳታ",
+  "profileEmailAddress": "ኢሜይል አድራሻ",
+  "profilePhoneNumber": "ስልክ ቁጥር",
+  "profileEditFieldComingSoon": "{field} ማስተካከያ በቅርቡ ይመጣል",
+  "@profileEditFieldComingSoon": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "profileNisabThresholdAlerts": "የኒሳብ ገደብ ማሳወቂያዎች",
+  "profileNisabThresholdAlertsSubtitle": "ሀብት ወደ ኒሳብ ሲደርስ ያሳውቁ",
+  "profileChangePin": "PIN ይቀይሩ",
+  "profileChangePinComingSoon": "PIN መቀየር በቅርቡ ይመጣል",
+  "profileMyZakatHistory": "የዘካት ታሪኬ",
+  "profileMyZakatHistorySubtitle": "መዝገብ እና ሰርቲፊኬቶችን ይመልከቱ",
+  "profileZakatHistoryComingSoon": "የዘካት ታሪክ በቅርቡ ይመጣል",
+  "profileMyAwqafEndowments": "የእኔ ወቅፍ ንብረቶች",
+  "profileMyAwqafEndowmentsSubtitle": "ትምህርት ቤቶችን እና ጉድጓዶችን ይመልከቱ",
+  "profileBeneficiaryApplication": "የተጠቃሚ ማመልከቻ",
+  "profileApplyAsBeneficiary": "እንደ ተጠቃሚ ይመዝገቡ",
+  "profileBeneficiaryApplicationSubtitle": "የእርዳታ ጥያቄዎችን ያስገቡ ወይም ይከታተሉ",
+  "profileApplyAsBeneficiarySubtitle": "እርዳታ ለመቀበል ይመዝገቡ",
+  "profileDonationHistory": "የልገሳ ታሪክ",
+  "profileDonationHistorySubtitle": "ሁሉንም አስተዋጽኦ ይመልከቱ",
+  "profileDonationHistoryComingSoon": "የልገሳ ታሪክ በቅርቡ ይመጣል",
+  "profileHelpCenter": "የእገዛ ማዕከል",
+  "profileHelpCenterSubtitle": "ተደጋጋሚ ጥያቄዎች እና መመሪያ",
+  "profileHelpCenterComingSoon": "የእገዛ ማዕከል በቅርቡ ይመጣል",
+  "profileSupportAndGrievances": "ድጋፍ እና ቅሬታዎች",
+  "profileSupportAndGrievancesSubtitle": "ከቡድናችን ጋር ይነጋገሩ",
+  "profileSupportCenterComingSoon": "የድጋፍ ማዕከል በቅርቡ ይመጣል",
+  "profileLogOut": "ውጣ",
+  "profileLogOutSubtitle": "የአሁኑን ክፍለ ጊዜ ያቁሙ",
+  "profileLogOutDialogTitle": "ልትወጡ ነው?",
+  "profileLogOutDialogBody": "በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።",
+  "profileCancel": "ሰርዝ",
+  "profileHadithOfTheDay": "የዛሬ ሐዲስ",
+  "profileHadithQuote": "\"በትንሣኤ ቀን የአማኙ ጥላ ሰደቃው ነው።\"",
+  "profileHadithSource": "— አት-ቲርሚዚ",
+  "impactNationalImpact": "ሀገር አቀፍ ተፅዕኖ",
+  "impactNotifications": "ማሳወቂያዎች",
+  "impactCouldNotLoad": "ሀገር አቀፍ ተፅዕኖ መጫን አልተቻለም",
+  "impactGeographicReach": "የአካባቢ ስፋት",
+  "impactBarakaStories": "የበረከት ታሪኮች",
+  "impactActiveAwqafProjects": "ንቁ የወቅፍ ፕሮጀክቶች",
+  "impactAllProjectsComingSoon": "ሁሉም ፕሮጀክቶች በቅርቡ ይመጣሉ",
+  "impactLiveImpactStream": "ቀጥታ የተፅዕኖ ስርጭት",
+  "impactDistributedFunds": "የተከፋፈለ ገንዘብ",
+  "impactEtbAmount": "{amount} ብር",
+  "@impactEtbAmount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactLivesTouched": "የተነኩ ሕይወቶች",
+  "impactActiveProjects": "ንቁ ፕሮጀክቶች",
+  "impactTapRegionHint": "አካባቢያዊ ተፅዕኖ ለማየት ክልል ይንኩ",
+  "impactRegionImpactComingSoon": "የ{region} ተፅዕኖ በቅርቡ ይመጣል",
+  "@impactRegionImpactComingSoon": {
+    "placeholders": {
+      "region": {"type": "String"}
+    }
+  },
+  "impactStoryComingSoon": "የ{name} ታሪክ በቅርቡ ይመጣል",
+  "@impactStoryComingSoon": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "impactProjectDetailsComingSoon": "የ{title} ዝርዝሮች በቅርቡ ይመጣሉ",
+  "@impactProjectDetailsComingSoon": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "impactPercentFunded": "{percent}% ተሸፍኗል",
+  "@impactPercentFunded": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "impactEtbLeft": "{amount} ብር ይቀራል",
+  "@impactEtbLeft": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactSeeYourPersonalBaraka": "የግል በረከትዎን ይመልከቱ",
+  "impactTrackStewardship": "የእርስዎን አስተዳደር እያንዳንዱን ሳንቲም ይከታተሉ።",
+  "impactViewMyHistory": "ታሪኬን ይመልከቱ",
+  "onboardingSkip": "ዝለል",
+  "onboardingNext": "ቀጣይ",
+  "onboardingGetStarted": "ጀምር",
+  "onboardingTitleFaithAndPurpose": "እምነት ከዓላማ ጋር",
+  "onboardingSubtitleFaithAndPurpose": "ለዘካትና ወቅፍ አስተዳደር የታመነ መድረክ እንኳን ደህና መጡ።",
+  "onboardingTitleTransparentGiving": "ግልጽ ስጦታ",
+  "onboardingSubtitleTransparentGiving": "ልገሳዎ በማህበረሰብ ላይ እውነተኛ ተፅዕኖ እንዴት እንደሚፈጥር ይከታተሉ።",
+  "onboardingTitleEasyPayments": "ፈጣን እና ቀላል ክፍያ",
+  "onboardingSubtitleEasyPayments": "በደህንነት እና በቀላሉ በሞባይል ተስማሚ ተሞክሮ ዘካትዎን ይክፈሉ።",
+  "onboardingTitleCompassionInAction": "ርህራሄ በተግባር",
+  "onboardingSubtitleCompassionInAction": "ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።"
 }

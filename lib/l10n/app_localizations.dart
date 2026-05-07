@@ -1081,6 +1081,528 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} bint labun (approximate combo)'**
   String calcCamelApproxBintLabun(int count);
+
+  /// No description provided for @profileLoadErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your profile'**
+  String get profileLoadErrorTitle;
+
+  /// No description provided for @profileTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get profileTryAgain;
+
+  /// No description provided for @profileSectionImpactDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact Dashboard'**
+  String get profileSectionImpactDashboard;
+
+  /// No description provided for @profileSectionBeneficiaryInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary Insights'**
+  String get profileSectionBeneficiaryInsights;
+
+  /// No description provided for @profileSectionPersonalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get profileSectionPersonalInformation;
+
+  /// No description provided for @profileSectionSpiritualSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Spiritual Settings'**
+  String get profileSectionSpiritualSettings;
+
+  /// No description provided for @profileSectionCoreActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Core Actions'**
+  String get profileSectionCoreActions;
+
+  /// No description provided for @profileSectionSettingsSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & Security'**
+  String get profileSectionSettingsSecurity;
+
+  /// No description provided for @profileSectionSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get profileSectionSupport;
+
+  /// No description provided for @profileNoNewNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No new notifications'**
+  String get profileNoNewNotifications;
+
+  /// No description provided for @profileVerificationStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Status'**
+  String get profileVerificationStatus;
+
+  /// No description provided for @profileFaydaVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Fayda Verified'**
+  String get profileFaydaVerified;
+
+  /// No description provided for @profileNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified'**
+  String get profileNotVerified;
+
+  /// No description provided for @profileTotalZakatPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Zakat Paid'**
+  String get profileTotalZakatPaid;
+
+  /// No description provided for @profileFySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'FY 2023 Summary'**
+  String get profileFySummary;
+
+  /// No description provided for @profileActiveEndowments.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Endowments'**
+  String get profileActiveEndowments;
+
+  /// No description provided for @profileSustainableImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustainable impact'**
+  String get profileSustainableImpact;
+
+  /// No description provided for @profileBeneficiariesHelped.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiaries Helped'**
+  String get profileBeneficiariesHelped;
+
+  /// No description provided for @profileAcrossPrograms.
+  ///
+  /// In en, this message translates to:
+  /// **'Across programs'**
+  String get profileAcrossPrograms;
+
+  /// No description provided for @profileApplicationStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Status'**
+  String get profileApplicationStatus;
+
+  /// No description provided for @profileLastDisbursement.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Disbursement'**
+  String get profileLastDisbursement;
+
+  /// No description provided for @profileTotalAidReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Aid Received'**
+  String get profileTotalAidReceived;
+
+  /// No description provided for @profileEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get profileEmailAddress;
+
+  /// No description provided for @profilePhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get profilePhoneNumber;
+
+  /// No description provided for @profileEditFieldComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit {field} coming soon'**
+  String profileEditFieldComingSoon(String field);
+
+  /// No description provided for @profileNisabThresholdAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab Threshold Alerts'**
+  String get profileNisabThresholdAlerts;
+
+  /// No description provided for @profileNisabThresholdAlertsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when wealth reaches threshold'**
+  String get profileNisabThresholdAlertsSubtitle;
+
+  /// No description provided for @profileChangePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get profileChangePin;
+
+  /// No description provided for @profileChangePinComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN coming soon'**
+  String get profileChangePinComingSoon;
+
+  /// No description provided for @profileMyZakatHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'My Zakat History'**
+  String get profileMyZakatHistory;
+
+  /// No description provided for @profileMyZakatHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View ledger & certificates'**
+  String get profileMyZakatHistorySubtitle;
+
+  /// No description provided for @profileZakatHistoryComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat history coming soon'**
+  String get profileZakatHistoryComingSoon;
+
+  /// No description provided for @profileMyAwqafEndowments.
+  ///
+  /// In en, this message translates to:
+  /// **'My Awqaf Endowments'**
+  String get profileMyAwqafEndowments;
+
+  /// No description provided for @profileMyAwqafEndowmentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View schools & wells'**
+  String get profileMyAwqafEndowmentsSubtitle;
+
+  /// No description provided for @profileBeneficiaryApplication.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary Application'**
+  String get profileBeneficiaryApplication;
+
+  /// No description provided for @profileApplyAsBeneficiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply as Beneficiary'**
+  String get profileApplyAsBeneficiary;
+
+  /// No description provided for @profileBeneficiaryApplicationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit or track aid requests'**
+  String get profileBeneficiaryApplicationSubtitle;
+
+  /// No description provided for @profileApplyAsBeneficiarySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register to receive aid'**
+  String get profileApplyAsBeneficiarySubtitle;
+
+  /// No description provided for @profileDonationHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation History'**
+  String get profileDonationHistory;
+
+  /// No description provided for @profileDonationHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See every contribution'**
+  String get profileDonationHistorySubtitle;
+
+  /// No description provided for @profileDonationHistoryComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation history coming soon'**
+  String get profileDonationHistoryComingSoon;
+
+  /// No description provided for @profileHelpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get profileHelpCenter;
+
+  /// No description provided for @profileHelpCenterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQs and guidance'**
+  String get profileHelpCenterSubtitle;
+
+  /// No description provided for @profileHelpCenterComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Help center coming soon'**
+  String get profileHelpCenterComingSoon;
+
+  /// No description provided for @profileSupportAndGrievances.
+  ///
+  /// In en, this message translates to:
+  /// **'Support & Grievances'**
+  String get profileSupportAndGrievances;
+
+  /// No description provided for @profileSupportAndGrievancesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk to our team'**
+  String get profileSupportAndGrievancesSubtitle;
+
+  /// No description provided for @profileSupportCenterComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Support center coming soon'**
+  String get profileSupportCenterComingSoon;
+
+  /// No description provided for @profileLogOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get profileLogOut;
+
+  /// No description provided for @profileLogOutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End your current session'**
+  String get profileLogOutSubtitle;
+
+  /// No description provided for @profileLogOutDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get profileLogOutDialogTitle;
+
+  /// No description provided for @profileLogOutDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be signed out of the app on this device.'**
+  String get profileLogOutDialogBody;
+
+  /// No description provided for @profileCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get profileCancel;
+
+  /// No description provided for @profileHadithOfTheDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith of the Day'**
+  String get profileHadithOfTheDay;
+
+  /// No description provided for @profileHadithQuote.
+  ///
+  /// In en, this message translates to:
+  /// **'\"The believer\'s shade on the Day of Resurrection will be his charity.\"'**
+  String get profileHadithQuote;
+
+  /// No description provided for @profileHadithSource.
+  ///
+  /// In en, this message translates to:
+  /// **'— At-Tirmidhi'**
+  String get profileHadithSource;
+
+  /// No description provided for @impactNationalImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'National Impact'**
+  String get impactNationalImpact;
+
+  /// No description provided for @impactNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get impactNotifications;
+
+  /// No description provided for @impactCouldNotLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load national impact'**
+  String get impactCouldNotLoad;
+
+  /// No description provided for @impactGeographicReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Geographic Reach'**
+  String get impactGeographicReach;
+
+  /// No description provided for @impactBarakaStories.
+  ///
+  /// In en, this message translates to:
+  /// **'Baraka Stories'**
+  String get impactBarakaStories;
+
+  /// No description provided for @impactActiveAwqafProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Awqaf Projects'**
+  String get impactActiveAwqafProjects;
+
+  /// No description provided for @impactAllProjectsComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'All projects coming soon'**
+  String get impactAllProjectsComingSoon;
+
+  /// No description provided for @impactLiveImpactStream.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE IMPACT STREAM'**
+  String get impactLiveImpactStream;
+
+  /// No description provided for @impactDistributedFunds.
+  ///
+  /// In en, this message translates to:
+  /// **'DISTRIBUTED FUNDS'**
+  String get impactDistributedFunds;
+
+  /// No description provided for @impactEtbAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} ETB'**
+  String impactEtbAmount(String amount);
+
+  /// No description provided for @impactLivesTouched.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVES TOUCHED'**
+  String get impactLivesTouched;
+
+  /// No description provided for @impactActiveProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE PROJECTS'**
+  String get impactActiveProjects;
+
+  /// No description provided for @impactTapRegionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a region to see local impact'**
+  String get impactTapRegionHint;
+
+  /// No description provided for @impactRegionImpactComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'{region} impact coming soon'**
+  String impactRegionImpactComingSoon(String region);
+
+  /// No description provided for @impactStoryComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} story coming soon'**
+  String impactStoryComingSoon(String name);
+
+  /// No description provided for @impactProjectDetailsComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} details coming soon'**
+  String impactProjectDetailsComingSoon(String title);
+
+  /// No description provided for @impactPercentFunded.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% Funded'**
+  String impactPercentFunded(String percent);
+
+  /// No description provided for @impactEtbLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} ETB Left'**
+  String impactEtbLeft(String amount);
+
+  /// No description provided for @impactSeeYourPersonalBaraka.
+  ///
+  /// In en, this message translates to:
+  /// **'See Your Personal Baraka'**
+  String get impactSeeYourPersonalBaraka;
+
+  /// No description provided for @impactTrackStewardship.
+  ///
+  /// In en, this message translates to:
+  /// **'Track every cent of your stewardship.'**
+  String get impactTrackStewardship;
+
+  /// No description provided for @impactViewMyHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'View My History'**
+  String get impactViewMyHistory;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingGetStarted;
+
+  /// No description provided for @onboardingTitleFaithAndPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Faith with Purpose'**
+  String get onboardingTitleFaithAndPurpose;
+
+  /// No description provided for @onboardingSubtitleFaithAndPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to a trusted platform for Zakat and Awqaf stewardship.'**
+  String get onboardingSubtitleFaithAndPurpose;
+
+  /// No description provided for @onboardingTitleTransparentGiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Transparent Giving'**
+  String get onboardingTitleTransparentGiving;
+
+  /// No description provided for @onboardingSubtitleTransparentGiving.
+  ///
+  /// In en, this message translates to:
+  /// **'See how your contributions flow into real impact across communities.'**
+  String get onboardingSubtitleTransparentGiving;
+
+  /// No description provided for @onboardingTitleEasyPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast, Simple Payments'**
+  String get onboardingTitleEasyPayments;
+
+  /// No description provided for @onboardingSubtitleEasyPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Zakat quickly with a smooth, secure, mobile-first experience.'**
+  String get onboardingSubtitleEasyPayments;
+
+  /// No description provided for @onboardingTitleCompassionInAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Compassion in Action'**
+  String get onboardingTitleCompassionInAction;
+
+  /// No description provided for @onboardingSubtitleCompassionInAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Support beneficiaries and projects with clarity, trust, and baraka.'**
+  String get onboardingSubtitleCompassionInAction;
 }
 
 class _AppLocalizationsDelegate

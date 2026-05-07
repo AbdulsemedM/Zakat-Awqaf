@@ -589,4 +589,299 @@ class AppLocalizationsSo extends AppLocalizations {
   String calcCamelApproxBintLabun(int count) {
     return '$count bint labun (approximate combo)';
   }
+
+  @override
+  String get profileLoadErrorTitle => 'Lama soo dejin karin profile-kaaga';
+
+  @override
+  String get profileTryAgain => 'Mar kale isku day';
+
+  @override
+  String get profileSectionImpactDashboard => 'Dashboard-ka Saameynta';
+
+  @override
+  String get profileSectionBeneficiaryInsights =>
+      'Aragtiyada Ka-faa\'iideystaha';
+
+  @override
+  String get profileSectionPersonalInformation => 'Macluumaadka Shakhsiyeed';
+
+  @override
+  String get profileSectionSpiritualSettings => 'Dejimaha Ruuxiga';
+
+  @override
+  String get profileSectionCoreActions => 'Tallaabooyinka Muhiimka ah';
+
+  @override
+  String get profileSectionSettingsSecurity => 'Dejimo & Ammaan';
+
+  @override
+  String get profileSectionSupport => 'Taageero';
+
+  @override
+  String get profileNoNewNotifications => 'Ogeysiis cusub ma jiro';
+
+  @override
+  String get profileVerificationStatus => 'Xaaladda Xaqiijinta';
+
+  @override
+  String get profileFaydaVerified => 'Fayda waa la xaqiijiyey';
+
+  @override
+  String get profileNotVerified => 'Lama xaqiijin';
+
+  @override
+  String get profileTotalZakatPaid => 'Wadarta Zakat la bixiyay';
+
+  @override
+  String get profileFySummary => 'Soo koobidda FY 2023';
+
+  @override
+  String get profileActiveEndowments => 'Awqaafta Firfircoon';
+
+  @override
+  String get profileSustainableImpact => 'Saameyn waarta';
+
+  @override
+  String get profileBeneficiariesHelped => 'Ka-faa\'iideystayaal la caawiyay';
+
+  @override
+  String get profileAcrossPrograms => 'Dhammaan barnaamijyada';
+
+  @override
+  String get profileApplicationStatus => 'Xaaladda Codsiga';
+
+  @override
+  String get profileLastDisbursement => 'Bixintii Ugu Dambeysay';
+
+  @override
+  String get profileTotalAidReceived => 'Wadarta Kaalmada la helay';
+
+  @override
+  String get profileEmailAddress => 'Cinwaanka Iimaylka';
+
+  @override
+  String get profilePhoneNumber => 'Lambarka Taleefanka';
+
+  @override
+  String profileEditFieldComingSoon(String field) {
+    return 'Wax-ka-beddelka $field dhawaan ayuu imanayaa';
+  }
+
+  @override
+  String get profileNisabThresholdAlerts => 'Digniinaha xadka Nisab';
+
+  @override
+  String get profileNisabThresholdAlertsSubtitle =>
+      'Ogow marka hantidu gaadho xadka nisab';
+
+  @override
+  String get profileChangePin => 'Beddel PIN';
+
+  @override
+  String get profileChangePinComingSoon =>
+      'Beddelka PIN-ka dhawaan ayuu imanayaa';
+
+  @override
+  String get profileMyZakatHistory => 'Taariikhda Zakat-kayga';
+
+  @override
+  String get profileMyZakatHistorySubtitle =>
+      'Eeg ledger-ka iyo shahaadooyinka';
+
+  @override
+  String get profileZakatHistoryComingSoon =>
+      'Taariikhda zakat-ka dhawaan ayay imanaysaa';
+
+  @override
+  String get profileMyAwqafEndowments => 'Awqaaftayda';
+
+  @override
+  String get profileMyAwqafEndowmentsSubtitle => 'Eeg dugsiyada iyo ceelasha';
+
+  @override
+  String get profileBeneficiaryApplication => 'Codsiga Ka-faa\'iideystaha';
+
+  @override
+  String get profileApplyAsBeneficiary => 'Codso Ka-faa\'iideyste ahaan';
+
+  @override
+  String get profileBeneficiaryApplicationSubtitle =>
+      'Gudbi ama la soco codsiyada kaalmo';
+
+  @override
+  String get profileApplyAsBeneficiarySubtitle =>
+      'Isdiiwaangeli si aad kaalmo u hesho';
+
+  @override
+  String get profileDonationHistory => 'Taariikhda Deeqaha';
+
+  @override
+  String get profileDonationHistorySubtitle => 'Eeg tabaruc kasta';
+
+  @override
+  String get profileDonationHistoryComingSoon =>
+      'Taariikhda deeqaha dhawaan ayay imanaysaa';
+
+  @override
+  String get profileHelpCenter => 'Xarunta Caawinta';
+
+  @override
+  String get profileHelpCenterSubtitle =>
+      'Su\'aalaha badanaa la isweydiiyo iyo hagid';
+
+  @override
+  String get profileHelpCenterComingSoon =>
+      'Xarunta caawinta dhawaan ayay imanaysaa';
+
+  @override
+  String get profileSupportAndGrievances => 'Taageero & Cabashooyin';
+
+  @override
+  String get profileSupportAndGrievancesSubtitle => 'La hadal kooxdayada';
+
+  @override
+  String get profileSupportCenterComingSoon =>
+      'Xarunta taageerada dhawaan ayay imanaysaa';
+
+  @override
+  String get profileLogOut => 'Ka bax';
+
+  @override
+  String get profileLogOutSubtitle => 'Dhamee fadhigaaga hadda';
+
+  @override
+  String get profileLogOutDialogTitle => 'Ma ka baxaysaa?';
+
+  @override
+  String get profileLogOutDialogBody =>
+      'Waxaad ka bixi doontaa app-ka qalabkan.';
+
+  @override
+  String get profileCancel => 'Jooji';
+
+  @override
+  String get profileHadithOfTheDay => 'Xadiiska Maanta';
+
+  @override
+  String get profileHadithQuote =>
+      '\"Hadhka mu’minka maalinta qiyaame wuxuu ahaanayaa sadaqadiisa.\"';
+
+  @override
+  String get profileHadithSource => '— At-Tirmidhi';
+
+  @override
+  String get impactNationalImpact => 'Saameynta Qaran';
+
+  @override
+  String get impactNotifications => 'Ogeysiisyada';
+
+  @override
+  String get impactCouldNotLoad => 'Lama soo dejin karin saameynta qaranka';
+
+  @override
+  String get impactGeographicReach => 'Gaarsiinta Juqraafiyeed';
+
+  @override
+  String get impactBarakaStories => 'Sheekooyinka Barako';
+
+  @override
+  String get impactActiveAwqafProjects => 'Mashaariicda Awqaafta ee Firfircoon';
+
+  @override
+  String get impactAllProjectsComingSoon =>
+      'Dhammaan mashaariicda dhawaan ayay imanayaan';
+
+  @override
+  String get impactLiveImpactStream => 'TOOS: QUUDINTA SAAMEYNTA';
+
+  @override
+  String get impactDistributedFunds => 'LACAGTA LA QAYBIYEY';
+
+  @override
+  String impactEtbAmount(String amount) {
+    return '$amount ETB';
+  }
+
+  @override
+  String get impactLivesTouched => 'NOLOLAL LA TAABTAY';
+
+  @override
+  String get impactActiveProjects => 'MASHAAARIIC FIRFIRCOON';
+
+  @override
+  String get impactTapRegionHint =>
+      'Taabo gobol si aad u aragto saameynta deegaanka';
+
+  @override
+  String impactRegionImpactComingSoon(String region) {
+    return 'Saameynta $region dhawaan ayay imanaysaa';
+  }
+
+  @override
+  String impactStoryComingSoon(String name) {
+    return 'Sheekada $name dhawaan ayay imanaysaa';
+  }
+
+  @override
+  String impactProjectDetailsComingSoon(String title) {
+    return 'Faahfaahinta $title dhawaan ayay imanaysaa';
+  }
+
+  @override
+  String impactPercentFunded(String percent) {
+    return '$percent% la maalgeliyey';
+  }
+
+  @override
+  String impactEtbLeft(String amount) {
+    return '$amount ETB ayaa hadhay';
+  }
+
+  @override
+  String get impactSeeYourPersonalBaraka => 'Arag Barakadaada Shaqsiga ah';
+
+  @override
+  String get impactTrackStewardship =>
+      'La soco senti kasta oo masuuliyaddaada ah.';
+
+  @override
+  String get impactViewMyHistory => 'Eeg Taariikhdhayda';
+
+  @override
+  String get onboardingSkip => 'Ka bood';
+
+  @override
+  String get onboardingNext => 'Xiga';
+
+  @override
+  String get onboardingGetStarted => 'Bilow';
+
+  @override
+  String get onboardingTitleFaithAndPurpose => 'Iimaan leh Ujeeddo';
+
+  @override
+  String get onboardingSubtitleFaithAndPurpose =>
+      'Ku soo dhawoow madal lagu kalsoon yahay oo loogu talagalay maareynta Zakada iyo Awqaafta.';
+
+  @override
+  String get onboardingTitleTransparentGiving => 'Bixin Hufan';
+
+  @override
+  String get onboardingSubtitleTransparentGiving =>
+      'Arag sida tabarucaaga ugu beddelmo saameyn dhab ah oo bulshooyinka gaarta.';
+
+  @override
+  String get onboardingTitleEasyPayments => 'Lacag-bixin Fudud oo Degdeg ah';
+
+  @override
+  String get onboardingSubtitleEasyPayments =>
+      'Si dhakhso leh ugu bixi Zakada adigoo adeegsanaya khibrad ammaan ah oo mobile-friendly ah.';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'Naxariis Ficil ah';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'Ku taageer ka-faa\'iideystayaasha iyo mashaariicda si cad, kalsooni leh, kuna dheehan barako.';
 }

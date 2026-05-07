@@ -33,5 +33,127 @@
   "profileBiometricLogin": "Galitaanka Biometric",
   "profileBiometricSubtitle": "Isticmaal far ama aqoonsi wajiga",
   "missingPaymentDetails": "Faahfaahinta lacag-bixinta maqan.",
-  "missingCertificateDetails": "Faahfaahinta shahaadada maqan."
+  "missingCertificateDetails": "Faahfaahinta shahaadada maqan.",
+  "profileLoadErrorTitle": "Lama soo dejin karin profile-kaaga",
+  "profileTryAgain": "Mar kale isku day",
+  "profileSectionImpactDashboard": "Dashboard-ka Saameynta",
+  "profileSectionBeneficiaryInsights": "Aragtiyada Ka-faa'iideystaha",
+  "profileSectionPersonalInformation": "Macluumaadka Shakhsiyeed",
+  "profileSectionSpiritualSettings": "Dejimaha Ruuxiga",
+  "profileSectionCoreActions": "Tallaabooyinka Muhiimka ah",
+  "profileSectionSettingsSecurity": "Dejimo & Ammaan",
+  "profileSectionSupport": "Taageero",
+  "profileNoNewNotifications": "Ogeysiis cusub ma jiro",
+  "profileVerificationStatus": "Xaaladda Xaqiijinta",
+  "profileFaydaVerified": "Fayda waa la xaqiijiyey",
+  "profileNotVerified": "Lama xaqiijin",
+  "profileTotalZakatPaid": "Wadarta Zakat la bixiyay",
+  "profileFySummary": "Soo koobidda FY 2023",
+  "profileActiveEndowments": "Awqaafta Firfircoon",
+  "profileSustainableImpact": "Saameyn waarta",
+  "profileBeneficiariesHelped": "Ka-faa'iideystayaal la caawiyay",
+  "profileAcrossPrograms": "Dhammaan barnaamijyada",
+  "profileApplicationStatus": "Xaaladda Codsiga",
+  "profileLastDisbursement": "Bixintii Ugu Dambeysay",
+  "profileTotalAidReceived": "Wadarta Kaalmada la helay",
+  "profileEmailAddress": "Cinwaanka Iimaylka",
+  "profilePhoneNumber": "Lambarka Taleefanka",
+  "profileEditFieldComingSoon": "Wax-ka-beddelka {field} dhawaan ayuu imanayaa",
+  "@profileEditFieldComingSoon": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "profileNisabThresholdAlerts": "Digniinaha xadka Nisab",
+  "profileNisabThresholdAlertsSubtitle": "Ogow marka hantidu gaadho xadka nisab",
+  "profileChangePin": "Beddel PIN",
+  "profileChangePinComingSoon": "Beddelka PIN-ka dhawaan ayuu imanayaa",
+  "profileMyZakatHistory": "Taariikhda Zakat-kayga",
+  "profileMyZakatHistorySubtitle": "Eeg ledger-ka iyo shahaadooyinka",
+  "profileZakatHistoryComingSoon": "Taariikhda zakat-ka dhawaan ayay imanaysaa",
+  "profileMyAwqafEndowments": "Awqaaftayda",
+  "profileMyAwqafEndowmentsSubtitle": "Eeg dugsiyada iyo ceelasha",
+  "profileBeneficiaryApplication": "Codsiga Ka-faa'iideystaha",
+  "profileApplyAsBeneficiary": "Codso Ka-faa'iideyste ahaan",
+  "profileBeneficiaryApplicationSubtitle": "Gudbi ama la soco codsiyada kaalmo",
+  "profileApplyAsBeneficiarySubtitle": "Isdiiwaangeli si aad kaalmo u hesho",
+  "profileDonationHistory": "Taariikhda Deeqaha",
+  "profileDonationHistorySubtitle": "Eeg tabaruc kasta",
+  "profileDonationHistoryComingSoon": "Taariikhda deeqaha dhawaan ayay imanaysaa",
+  "profileHelpCenter": "Xarunta Caawinta",
+  "profileHelpCenterSubtitle": "Su'aalaha badanaa la isweydiiyo iyo hagid",
+  "profileHelpCenterComingSoon": "Xarunta caawinta dhawaan ayay imanaysaa",
+  "profileSupportAndGrievances": "Taageero & Cabashooyin",
+  "profileSupportAndGrievancesSubtitle": "La hadal kooxdayada",
+  "profileSupportCenterComingSoon": "Xarunta taageerada dhawaan ayay imanaysaa",
+  "profileLogOut": "Ka bax",
+  "profileLogOutSubtitle": "Dhamee fadhigaaga hadda",
+  "profileLogOutDialogTitle": "Ma ka baxaysaa?",
+  "profileLogOutDialogBody": "Waxaad ka bixi doontaa app-ka qalabkan.",
+  "profileCancel": "Jooji",
+  "profileHadithOfTheDay": "Xadiiska Maanta",
+  "profileHadithQuote": "\"Hadhka mu’minka maalinta qiyaame wuxuu ahaanayaa sadaqadiisa.\"",
+  "profileHadithSource": "— At-Tirmidhi",
+  "impactNationalImpact": "Saameynta Qaran",
+  "impactNotifications": "Ogeysiisyada",
+  "impactCouldNotLoad": "Lama soo dejin karin saameynta qaranka",
+  "impactGeographicReach": "Gaarsiinta Juqraafiyeed",
+  "impactBarakaStories": "Sheekooyinka Barako",
+  "impactActiveAwqafProjects": "Mashaariicda Awqaafta ee Firfircoon",
+  "impactAllProjectsComingSoon": "Dhammaan mashaariicda dhawaan ayay imanayaan",
+  "impactLiveImpactStream": "TOOS: QUUDINTA SAAMEYNTA",
+  "impactDistributedFunds": "LACAGTA LA QAYBIYEY",
+  "impactEtbAmount": "{amount} ETB",
+  "@impactEtbAmount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactLivesTouched": "NOLOLAL LA TAABTAY",
+  "impactActiveProjects": "MASHAAARIIC FIRFIRCOON",
+  "impactTapRegionHint": "Taabo gobol si aad u aragto saameynta deegaanka",
+  "impactRegionImpactComingSoon": "Saameynta {region} dhawaan ayay imanaysaa",
+  "@impactRegionImpactComingSoon": {
+    "placeholders": {
+      "region": {"type": "String"}
+    }
+  },
+  "impactStoryComingSoon": "Sheekada {name} dhawaan ayay imanaysaa",
+  "@impactStoryComingSoon": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "impactProjectDetailsComingSoon": "Faahfaahinta {title} dhawaan ayay imanaysaa",
+  "@impactProjectDetailsComingSoon": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "impactPercentFunded": "{percent}% la maalgeliyey",
+  "@impactPercentFunded": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "impactEtbLeft": "{amount} ETB ayaa hadhay",
+  "@impactEtbLeft": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactSeeYourPersonalBaraka": "Arag Barakadaada Shaqsiga ah",
+  "impactTrackStewardship": "La soco senti kasta oo masuuliyaddaada ah.",
+  "impactViewMyHistory": "Eeg Taariikhdhayda",
+  "onboardingSkip": "Ka bood",
+  "onboardingNext": "Xiga",
+  "onboardingGetStarted": "Bilow",
+  "onboardingTitleFaithAndPurpose": "Iimaan leh Ujeeddo",
+  "onboardingSubtitleFaithAndPurpose": "Ku soo dhawoow madal lagu kalsoon yahay oo loogu talagalay maareynta Zakada iyo Awqaafta.",
+  "onboardingTitleTransparentGiving": "Bixin Hufan",
+  "onboardingSubtitleTransparentGiving": "Arag sida tabarucaaga ugu beddelmo saameyn dhab ah oo bulshooyinka gaarta.",
+  "onboardingTitleEasyPayments": "Lacag-bixin Fudud oo Degdeg ah",
+  "onboardingSubtitleEasyPayments": "Si dhakhso leh ugu bixi Zakada adigoo adeegsanaya khibrad ammaan ah oo mobile-friendly ah.",
+  "onboardingTitleCompassionInAction": "Naxariis Ficil ah",
+  "onboardingSubtitleCompassionInAction": "Ku taageer ka-faa'iideystayaasha iyo mashaariicda si cad, kalsooni leh, kuna dheehan barako."
 }

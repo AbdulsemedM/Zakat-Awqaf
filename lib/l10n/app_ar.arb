@@ -33,5 +33,127 @@
   "profileBiometricLogin": "تسجيل الدخول البيومتري",
   "profileBiometricSubtitle": "استخدم البصمة أو التعرف على الوجه",
   "missingPaymentDetails": "تفاصيل الدفع غير متوفرة.",
-  "missingCertificateDetails": "تفاصيل الشهادة غير متوفرة."
+  "missingCertificateDetails": "تفاصيل الشهادة غير متوفرة.",
+  "profileLoadErrorTitle": "تعذر تحميل ملفك الشخصي",
+  "profileTryAgain": "حاول مرة أخرى",
+  "profileSectionImpactDashboard": "لوحة الأثر",
+  "profileSectionBeneficiaryInsights": "رؤى المستفيد",
+  "profileSectionPersonalInformation": "المعلومات الشخصية",
+  "profileSectionSpiritualSettings": "الإعدادات الشرعية",
+  "profileSectionCoreActions": "الإجراءات الأساسية",
+  "profileSectionSettingsSecurity": "الإعدادات والأمان",
+  "profileSectionSupport": "الدعم",
+  "profileNoNewNotifications": "لا توجد إشعارات جديدة",
+  "profileVerificationStatus": "حالة التحقق",
+  "profileFaydaVerified": "موثّق بفايدة",
+  "profileNotVerified": "غير موثّق",
+  "profileTotalZakatPaid": "إجمالي الزكاة المدفوعة",
+  "profileFySummary": "ملخص السنة المالية 2023",
+  "profileActiveEndowments": "الأوقاف النشطة",
+  "profileSustainableImpact": "أثر مستدام",
+  "profileBeneficiariesHelped": "المستفيدون الذين تمت مساعدتهم",
+  "profileAcrossPrograms": "عبر البرامج",
+  "profileApplicationStatus": "حالة الطلب",
+  "profileLastDisbursement": "آخر صرف",
+  "profileTotalAidReceived": "إجمالي المساعدات المستلمة",
+  "profileEmailAddress": "البريد الإلكتروني",
+  "profilePhoneNumber": "رقم الهاتف",
+  "profileEditFieldComingSoon": "تعديل {field} قريبًا",
+  "@profileEditFieldComingSoon": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "profileNisabThresholdAlerts": "تنبيهات حد النصاب",
+  "profileNisabThresholdAlertsSubtitle": "الإشعار عند بلوغ الثروة حد النصاب",
+  "profileChangePin": "تغيير الرقم السري",
+  "profileChangePinComingSoon": "تغيير الرقم السري قريبًا",
+  "profileMyZakatHistory": "سجل الزكاة الخاص بي",
+  "profileMyZakatHistorySubtitle": "عرض السجل والشهادات",
+  "profileZakatHistoryComingSoon": "سجل الزكاة قريبًا",
+  "profileMyAwqafEndowments": "أوقافي",
+  "profileMyAwqafEndowmentsSubtitle": "عرض المدارس والآبار",
+  "profileBeneficiaryApplication": "طلب المستفيد",
+  "profileApplyAsBeneficiary": "التقديم كمستفيد",
+  "profileBeneficiaryApplicationSubtitle": "إرسال أو متابعة طلبات الدعم",
+  "profileApplyAsBeneficiarySubtitle": "سجّل لتلقي المساعدة",
+  "profileDonationHistory": "سجل التبرعات",
+  "profileDonationHistorySubtitle": "عرض كل مساهمة",
+  "profileDonationHistoryComingSoon": "سجل التبرعات قريبًا",
+  "profileHelpCenter": "مركز المساعدة",
+  "profileHelpCenterSubtitle": "الأسئلة الشائعة والإرشاد",
+  "profileHelpCenterComingSoon": "مركز المساعدة قريبًا",
+  "profileSupportAndGrievances": "الدعم والشكاوى",
+  "profileSupportAndGrievancesSubtitle": "تواصل مع فريقنا",
+  "profileSupportCenterComingSoon": "مركز الدعم قريبًا",
+  "profileLogOut": "تسجيل الخروج",
+  "profileLogOutSubtitle": "إنهاء جلستك الحالية",
+  "profileLogOutDialogTitle": "تسجيل الخروج؟",
+  "profileLogOutDialogBody": "سيتم تسجيل خروجك من التطبيق على هذا الجهاز.",
+  "profileCancel": "إلغاء",
+  "profileHadithOfTheDay": "حديث اليوم",
+  "profileHadithQuote": "\"ظل المؤمن يوم القيامة صدقته.\"",
+  "profileHadithSource": "— الترمذي",
+  "impactNationalImpact": "الأثر الوطني",
+  "impactNotifications": "الإشعارات",
+  "impactCouldNotLoad": "تعذر تحميل الأثر الوطني",
+  "impactGeographicReach": "الانتشار الجغرافي",
+  "impactBarakaStories": "قصص البركة",
+  "impactActiveAwqafProjects": "مشاريع الأوقاف النشطة",
+  "impactAllProjectsComingSoon": "جميع المشاريع قريبًا",
+  "impactLiveImpactStream": "بث الأثر المباشر",
+  "impactDistributedFunds": "الأموال الموزعة",
+  "impactEtbAmount": "{amount} بر إثيوبي",
+  "@impactEtbAmount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactLivesTouched": "الأرواح المستفيدة",
+  "impactActiveProjects": "المشاريع النشطة",
+  "impactTapRegionHint": "اضغط على منطقة لعرض الأثر المحلي",
+  "impactRegionImpactComingSoon": "أثر {region} قريبًا",
+  "@impactRegionImpactComingSoon": {
+    "placeholders": {
+      "region": {"type": "String"}
+    }
+  },
+  "impactStoryComingSoon": "قصة {name} قريبًا",
+  "@impactStoryComingSoon": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "impactProjectDetailsComingSoon": "تفاصيل {title} قريبًا",
+  "@impactProjectDetailsComingSoon": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "impactPercentFunded": "تم تمويل {percent}%",
+  "@impactPercentFunded": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "impactEtbLeft": "متبقي {amount} بر إثيوبي",
+  "@impactEtbLeft": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactSeeYourPersonalBaraka": "اطلع على بركتك الشخصية",
+  "impactTrackStewardship": "تتبع كل مساهمة من أمانتك.",
+  "impactViewMyHistory": "عرض سجلي",
+  "onboardingSkip": "تخطي",
+  "onboardingNext": "التالي",
+  "onboardingGetStarted": "ابدأ الآن",
+  "onboardingTitleFaithAndPurpose": "إيمان ذو غاية",
+  "onboardingSubtitleFaithAndPurpose": "مرحبًا بك في منصة موثوقة لإدارة الزكاة والأوقاف.",
+  "onboardingTitleTransparentGiving": "عطاء شفاف",
+  "onboardingSubtitleTransparentGiving": "تابع كيف تتحول مساهماتك إلى أثر حقيقي في المجتمعات.",
+  "onboardingTitleEasyPayments": "مدفوعات سهلة وسريعة",
+  "onboardingSubtitleEasyPayments": "ادفع زكاتك بسرعة عبر تجربة آمنة وسلسة على الجوال.",
+  "onboardingTitleCompassionInAction": "رحمة تتحول إلى عمل",
+  "onboardingSubtitleCompassionInAction": "ادعم المستفيدين والمشاريع بوضوح وثقة وبركة."
 }

@@ -584,4 +584,284 @@ class AppLocalizationsAm extends AppLocalizations {
   String calcCamelApproxBintLabun(int count) {
     return '$count bint labun (approximate combo)';
   }
+
+  @override
+  String get profileLoadErrorTitle => 'መገለጫዎ መጫን አልተቻለም';
+
+  @override
+  String get profileTryAgain => 'እንደገና ሞክር';
+
+  @override
+  String get profileSectionImpactDashboard => 'የተፅዕኖ ዳሽቦርድ';
+
+  @override
+  String get profileSectionBeneficiaryInsights => 'የተጠቃሚ ግንዛቤዎች';
+
+  @override
+  String get profileSectionPersonalInformation => 'የግል መረጃ';
+
+  @override
+  String get profileSectionSpiritualSettings => 'መንፈሳዊ ቅንብሮች';
+
+  @override
+  String get profileSectionCoreActions => 'ዋና እርምጃዎች';
+
+  @override
+  String get profileSectionSettingsSecurity => 'ቅንብሮች እና ደህንነት';
+
+  @override
+  String get profileSectionSupport => 'ድጋፍ';
+
+  @override
+  String get profileNoNewNotifications => 'አዲስ ማሳወቂያ የለም';
+
+  @override
+  String get profileVerificationStatus => 'የማረጋገጫ ሁኔታ';
+
+  @override
+  String get profileFaydaVerified => 'በፋይዳ የተረጋገጠ';
+
+  @override
+  String get profileNotVerified => 'አልተረጋገጠም';
+
+  @override
+  String get profileTotalZakatPaid => 'ጠቅላላ የተከፈለ ዘካት';
+
+  @override
+  String get profileFySummary => 'የ2015 በጀት ዓመት ማጠቃለያ';
+
+  @override
+  String get profileActiveEndowments => 'ንቁ ወቅፎች';
+
+  @override
+  String get profileSustainableImpact => 'ዘላቂ ተፅዕኖ';
+
+  @override
+  String get profileBeneficiariesHelped => 'የተረዱ ተጠቃሚዎች';
+
+  @override
+  String get profileAcrossPrograms => 'በፕሮግራሞች ውስጥ';
+
+  @override
+  String get profileApplicationStatus => 'የማመልከቻ ሁኔታ';
+
+  @override
+  String get profileLastDisbursement => 'የመጨረሻ ክፍያ';
+
+  @override
+  String get profileTotalAidReceived => 'ጠቅላላ የተቀበሉት እርዳታ';
+
+  @override
+  String get profileEmailAddress => 'ኢሜይል አድራሻ';
+
+  @override
+  String get profilePhoneNumber => 'ስልክ ቁጥር';
+
+  @override
+  String profileEditFieldComingSoon(String field) {
+    return '$field ማስተካከያ በቅርቡ ይመጣል';
+  }
+
+  @override
+  String get profileNisabThresholdAlerts => 'የኒሳብ ገደብ ማሳወቂያዎች';
+
+  @override
+  String get profileNisabThresholdAlertsSubtitle => 'ሀብት ወደ ኒሳብ ሲደርስ ያሳውቁ';
+
+  @override
+  String get profileChangePin => 'PIN ይቀይሩ';
+
+  @override
+  String get profileChangePinComingSoon => 'PIN መቀየር በቅርቡ ይመጣል';
+
+  @override
+  String get profileMyZakatHistory => 'የዘካት ታሪኬ';
+
+  @override
+  String get profileMyZakatHistorySubtitle => 'መዝገብ እና ሰርቲፊኬቶችን ይመልከቱ';
+
+  @override
+  String get profileZakatHistoryComingSoon => 'የዘካት ታሪክ በቅርቡ ይመጣል';
+
+  @override
+  String get profileMyAwqafEndowments => 'የእኔ ወቅፍ ንብረቶች';
+
+  @override
+  String get profileMyAwqafEndowmentsSubtitle => 'ትምህርት ቤቶችን እና ጉድጓዶችን ይመልከቱ';
+
+  @override
+  String get profileBeneficiaryApplication => 'የተጠቃሚ ማመልከቻ';
+
+  @override
+  String get profileApplyAsBeneficiary => 'እንደ ተጠቃሚ ይመዝገቡ';
+
+  @override
+  String get profileBeneficiaryApplicationSubtitle =>
+      'የእርዳታ ጥያቄዎችን ያስገቡ ወይም ይከታተሉ';
+
+  @override
+  String get profileApplyAsBeneficiarySubtitle => 'እርዳታ ለመቀበል ይመዝገቡ';
+
+  @override
+  String get profileDonationHistory => 'የልገሳ ታሪክ';
+
+  @override
+  String get profileDonationHistorySubtitle => 'ሁሉንም አስተዋጽኦ ይመልከቱ';
+
+  @override
+  String get profileDonationHistoryComingSoon => 'የልገሳ ታሪክ በቅርቡ ይመጣል';
+
+  @override
+  String get profileHelpCenter => 'የእገዛ ማዕከል';
+
+  @override
+  String get profileHelpCenterSubtitle => 'ተደጋጋሚ ጥያቄዎች እና መመሪያ';
+
+  @override
+  String get profileHelpCenterComingSoon => 'የእገዛ ማዕከል በቅርቡ ይመጣል';
+
+  @override
+  String get profileSupportAndGrievances => 'ድጋፍ እና ቅሬታዎች';
+
+  @override
+  String get profileSupportAndGrievancesSubtitle => 'ከቡድናችን ጋር ይነጋገሩ';
+
+  @override
+  String get profileSupportCenterComingSoon => 'የድጋፍ ማዕከል በቅርቡ ይመጣል';
+
+  @override
+  String get profileLogOut => 'ውጣ';
+
+  @override
+  String get profileLogOutSubtitle => 'የአሁኑን ክፍለ ጊዜ ያቁሙ';
+
+  @override
+  String get profileLogOutDialogTitle => 'ልትወጡ ነው?';
+
+  @override
+  String get profileLogOutDialogBody => 'በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።';
+
+  @override
+  String get profileCancel => 'ሰርዝ';
+
+  @override
+  String get profileHadithOfTheDay => 'የዛሬ ሐዲስ';
+
+  @override
+  String get profileHadithQuote => '\"በትንሣኤ ቀን የአማኙ ጥላ ሰደቃው ነው።\"';
+
+  @override
+  String get profileHadithSource => '— አት-ቲርሚዚ';
+
+  @override
+  String get impactNationalImpact => 'ሀገር አቀፍ ተፅዕኖ';
+
+  @override
+  String get impactNotifications => 'ማሳወቂያዎች';
+
+  @override
+  String get impactCouldNotLoad => 'ሀገር አቀፍ ተፅዕኖ መጫን አልተቻለም';
+
+  @override
+  String get impactGeographicReach => 'የአካባቢ ስፋት';
+
+  @override
+  String get impactBarakaStories => 'የበረከት ታሪኮች';
+
+  @override
+  String get impactActiveAwqafProjects => 'ንቁ የወቅፍ ፕሮጀክቶች';
+
+  @override
+  String get impactAllProjectsComingSoon => 'ሁሉም ፕሮጀክቶች በቅርቡ ይመጣሉ';
+
+  @override
+  String get impactLiveImpactStream => 'ቀጥታ የተፅዕኖ ስርጭት';
+
+  @override
+  String get impactDistributedFunds => 'የተከፋፈለ ገንዘብ';
+
+  @override
+  String impactEtbAmount(String amount) {
+    return '$amount ብር';
+  }
+
+  @override
+  String get impactLivesTouched => 'የተነኩ ሕይወቶች';
+
+  @override
+  String get impactActiveProjects => 'ንቁ ፕሮጀክቶች';
+
+  @override
+  String get impactTapRegionHint => 'አካባቢያዊ ተፅዕኖ ለማየት ክልል ይንኩ';
+
+  @override
+  String impactRegionImpactComingSoon(String region) {
+    return 'የ$region ተፅዕኖ በቅርቡ ይመጣል';
+  }
+
+  @override
+  String impactStoryComingSoon(String name) {
+    return 'የ$name ታሪክ በቅርቡ ይመጣል';
+  }
+
+  @override
+  String impactProjectDetailsComingSoon(String title) {
+    return 'የ$title ዝርዝሮች በቅርቡ ይመጣሉ';
+  }
+
+  @override
+  String impactPercentFunded(String percent) {
+    return '$percent% ተሸፍኗል';
+  }
+
+  @override
+  String impactEtbLeft(String amount) {
+    return '$amount ብር ይቀራል';
+  }
+
+  @override
+  String get impactSeeYourPersonalBaraka => 'የግል በረከትዎን ይመልከቱ';
+
+  @override
+  String get impactTrackStewardship => 'የእርስዎን አስተዳደር እያንዳንዱን ሳንቲም ይከታተሉ።';
+
+  @override
+  String get impactViewMyHistory => 'ታሪኬን ይመልከቱ';
+
+  @override
+  String get onboardingSkip => 'ዝለል';
+
+  @override
+  String get onboardingNext => 'ቀጣይ';
+
+  @override
+  String get onboardingGetStarted => 'ጀምር';
+
+  @override
+  String get onboardingTitleFaithAndPurpose => 'እምነት ከዓላማ ጋር';
+
+  @override
+  String get onboardingSubtitleFaithAndPurpose =>
+      'ለዘካትና ወቅፍ አስተዳደር የታመነ መድረክ እንኳን ደህና መጡ።';
+
+  @override
+  String get onboardingTitleTransparentGiving => 'ግልጽ ስጦታ';
+
+  @override
+  String get onboardingSubtitleTransparentGiving =>
+      'ልገሳዎ በማህበረሰብ ላይ እውነተኛ ተፅዕኖ እንዴት እንደሚፈጥር ይከታተሉ።';
+
+  @override
+  String get onboardingTitleEasyPayments => 'ፈጣን እና ቀላል ክፍያ';
+
+  @override
+  String get onboardingSubtitleEasyPayments =>
+      'በደህንነት እና በቀላሉ በሞባይል ተስማሚ ተሞክሮ ዘካትዎን ይክፈሉ።';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'ርህራሄ በተግባር';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።';
 }

@@ -585,4 +585,287 @@ class AppLocalizationsEn extends AppLocalizations {
   String calcCamelApproxBintLabun(int count) {
     return '$count bint labun (approximate combo)';
   }
+
+  @override
+  String get profileLoadErrorTitle => 'Could not load your profile';
+
+  @override
+  String get profileTryAgain => 'Try again';
+
+  @override
+  String get profileSectionImpactDashboard => 'Impact Dashboard';
+
+  @override
+  String get profileSectionBeneficiaryInsights => 'Beneficiary Insights';
+
+  @override
+  String get profileSectionPersonalInformation => 'Personal Information';
+
+  @override
+  String get profileSectionSpiritualSettings => 'Spiritual Settings';
+
+  @override
+  String get profileSectionCoreActions => 'Core Actions';
+
+  @override
+  String get profileSectionSettingsSecurity => 'Settings & Security';
+
+  @override
+  String get profileSectionSupport => 'Support';
+
+  @override
+  String get profileNoNewNotifications => 'No new notifications';
+
+  @override
+  String get profileVerificationStatus => 'Verification Status';
+
+  @override
+  String get profileFaydaVerified => 'Fayda Verified';
+
+  @override
+  String get profileNotVerified => 'Not verified';
+
+  @override
+  String get profileTotalZakatPaid => 'Total Zakat Paid';
+
+  @override
+  String get profileFySummary => 'FY 2023 Summary';
+
+  @override
+  String get profileActiveEndowments => 'Active Endowments';
+
+  @override
+  String get profileSustainableImpact => 'Sustainable impact';
+
+  @override
+  String get profileBeneficiariesHelped => 'Beneficiaries Helped';
+
+  @override
+  String get profileAcrossPrograms => 'Across programs';
+
+  @override
+  String get profileApplicationStatus => 'Application Status';
+
+  @override
+  String get profileLastDisbursement => 'Last Disbursement';
+
+  @override
+  String get profileTotalAidReceived => 'Total Aid Received';
+
+  @override
+  String get profileEmailAddress => 'Email Address';
+
+  @override
+  String get profilePhoneNumber => 'Phone Number';
+
+  @override
+  String profileEditFieldComingSoon(String field) {
+    return 'Edit $field coming soon';
+  }
+
+  @override
+  String get profileNisabThresholdAlerts => 'Nisab Threshold Alerts';
+
+  @override
+  String get profileNisabThresholdAlertsSubtitle =>
+      'Notify when wealth reaches threshold';
+
+  @override
+  String get profileChangePin => 'Change PIN';
+
+  @override
+  String get profileChangePinComingSoon => 'Change PIN coming soon';
+
+  @override
+  String get profileMyZakatHistory => 'My Zakat History';
+
+  @override
+  String get profileMyZakatHistorySubtitle => 'View ledger & certificates';
+
+  @override
+  String get profileZakatHistoryComingSoon => 'Zakat history coming soon';
+
+  @override
+  String get profileMyAwqafEndowments => 'My Awqaf Endowments';
+
+  @override
+  String get profileMyAwqafEndowmentsSubtitle => 'View schools & wells';
+
+  @override
+  String get profileBeneficiaryApplication => 'Beneficiary Application';
+
+  @override
+  String get profileApplyAsBeneficiary => 'Apply as Beneficiary';
+
+  @override
+  String get profileBeneficiaryApplicationSubtitle =>
+      'Submit or track aid requests';
+
+  @override
+  String get profileApplyAsBeneficiarySubtitle => 'Register to receive aid';
+
+  @override
+  String get profileDonationHistory => 'Donation History';
+
+  @override
+  String get profileDonationHistorySubtitle => 'See every contribution';
+
+  @override
+  String get profileDonationHistoryComingSoon => 'Donation history coming soon';
+
+  @override
+  String get profileHelpCenter => 'Help Center';
+
+  @override
+  String get profileHelpCenterSubtitle => 'FAQs and guidance';
+
+  @override
+  String get profileHelpCenterComingSoon => 'Help center coming soon';
+
+  @override
+  String get profileSupportAndGrievances => 'Support & Grievances';
+
+  @override
+  String get profileSupportAndGrievancesSubtitle => 'Talk to our team';
+
+  @override
+  String get profileSupportCenterComingSoon => 'Support center coming soon';
+
+  @override
+  String get profileLogOut => 'Log Out';
+
+  @override
+  String get profileLogOutSubtitle => 'End your current session';
+
+  @override
+  String get profileLogOutDialogTitle => 'Log out?';
+
+  @override
+  String get profileLogOutDialogBody =>
+      'You will be signed out of the app on this device.';
+
+  @override
+  String get profileCancel => 'Cancel';
+
+  @override
+  String get profileHadithOfTheDay => 'Hadith of the Day';
+
+  @override
+  String get profileHadithQuote =>
+      '\"The believer\'s shade on the Day of Resurrection will be his charity.\"';
+
+  @override
+  String get profileHadithSource => '— At-Tirmidhi';
+
+  @override
+  String get impactNationalImpact => 'National Impact';
+
+  @override
+  String get impactNotifications => 'Notifications';
+
+  @override
+  String get impactCouldNotLoad => 'Could not load national impact';
+
+  @override
+  String get impactGeographicReach => 'Geographic Reach';
+
+  @override
+  String get impactBarakaStories => 'Baraka Stories';
+
+  @override
+  String get impactActiveAwqafProjects => 'Active Awqaf Projects';
+
+  @override
+  String get impactAllProjectsComingSoon => 'All projects coming soon';
+
+  @override
+  String get impactLiveImpactStream => 'LIVE IMPACT STREAM';
+
+  @override
+  String get impactDistributedFunds => 'DISTRIBUTED FUNDS';
+
+  @override
+  String impactEtbAmount(String amount) {
+    return '$amount ETB';
+  }
+
+  @override
+  String get impactLivesTouched => 'LIVES TOUCHED';
+
+  @override
+  String get impactActiveProjects => 'ACTIVE PROJECTS';
+
+  @override
+  String get impactTapRegionHint => 'Tap a region to see local impact';
+
+  @override
+  String impactRegionImpactComingSoon(String region) {
+    return '$region impact coming soon';
+  }
+
+  @override
+  String impactStoryComingSoon(String name) {
+    return '$name story coming soon';
+  }
+
+  @override
+  String impactProjectDetailsComingSoon(String title) {
+    return '$title details coming soon';
+  }
+
+  @override
+  String impactPercentFunded(String percent) {
+    return '$percent% Funded';
+  }
+
+  @override
+  String impactEtbLeft(String amount) {
+    return '$amount ETB Left';
+  }
+
+  @override
+  String get impactSeeYourPersonalBaraka => 'See Your Personal Baraka';
+
+  @override
+  String get impactTrackStewardship => 'Track every cent of your stewardship.';
+
+  @override
+  String get impactViewMyHistory => 'View My History';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get onboardingTitleFaithAndPurpose => 'Faith with Purpose';
+
+  @override
+  String get onboardingSubtitleFaithAndPurpose =>
+      'Welcome to a trusted platform for Zakat and Awqaf stewardship.';
+
+  @override
+  String get onboardingTitleTransparentGiving => 'Transparent Giving';
+
+  @override
+  String get onboardingSubtitleTransparentGiving =>
+      'See how your contributions flow into real impact across communities.';
+
+  @override
+  String get onboardingTitleEasyPayments => 'Fast, Simple Payments';
+
+  @override
+  String get onboardingSubtitleEasyPayments =>
+      'Pay Zakat quickly with a smooth, secure, mobile-first experience.';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'Compassion in Action';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'Support beneficiaries and projects with clarity, trust, and baraka.';
 }

@@ -33,5 +33,127 @@
   "profileBiometricLogin": "Seensa Baayomeetrikii",
   "profileBiometricSubtitle": "Quba yookaan fuula fayyadami",
   "missingPaymentDetails": "Bal'ina kaffaltii hin jiru.",
-  "missingCertificateDetails": "Bal'ina ragaa hin jiru."
+  "missingCertificateDetails": "Bal'ina ragaa hin jiru.",
+  "profileLoadErrorTitle": "Piroofaayiliin kee fe'amuu hin dandeenye",
+  "profileTryAgain": "Ammas yaali",
+  "profileSectionImpactDashboard": "Daashboordii Bu'aa",
+  "profileSectionBeneficiaryInsights": "Hubannoo Fayyadamtootaa",
+  "profileSectionPersonalInformation": "Odeeffannoo Dhuunfaa",
+  "profileSectionSpiritualSettings": "Qindaa'ina Amantii",
+  "profileSectionCoreActions": "Gochaalee Ijoo",
+  "profileSectionSettingsSecurity": "Qindaa'ina fi Nageenya",
+  "profileSectionSupport": "Deeggarsa",
+  "profileNoNewNotifications": "Beeksisa haaraa hin jiru",
+  "profileVerificationStatus": "Haala Mirkaneessaa",
+  "profileFaydaVerified": "Faydaan mirkanaa'eera",
+  "profileNotVerified": "Hin mirkanoofne",
+  "profileTotalZakatPaid": "Walitti qabama zakaa kaffalame",
+  "profileFySummary": "Cuunfaa bara baajataa 2023",
+  "profileActiveEndowments": "Awqaafa hojii irra jiran",
+  "profileSustainableImpact": "Bu'aa itti fufiinsa qabu",
+  "profileBeneficiariesHelped": "Fayyadamtoota deeggarsa argatan",
+  "profileAcrossPrograms": "Sagantaalee hunda keessatti",
+  "profileApplicationStatus": "Haala iyyannoo",
+  "profileLastDisbursement": "Kaffaltii dhumaa",
+  "profileTotalAidReceived": "Walitti qabama gargaarsa argame",
+  "profileEmailAddress": "Teessoo Imeelii",
+  "profilePhoneNumber": "Lakkoofsa Bilbilaa",
+  "profileEditFieldComingSoon": "{field} gulaaluun yeroo dhihoo dhufa",
+  "@profileEditFieldComingSoon": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "profileNisabThresholdAlerts": "Beeksisa daangaa Nisaab",
+  "profileNisabThresholdAlertsSubtitle": "Qabeenyi yeroo daangaa nisaab ga'u ni beeksifna",
+  "profileChangePin": "PIN Jijjiiri",
+  "profileChangePinComingSoon": "PIN jijjiiruun yeroo dhihoo dhufa",
+  "profileMyZakatHistory": "Seenaa Zakaa Koo",
+  "profileMyZakatHistorySubtitle": "Galmee fi ragaa ilaali",
+  "profileZakatHistoryComingSoon": "Seenaa zakaa yeroo dhihoo dhufa",
+  "profileMyAwqafEndowments": "Awqaafa Koo",
+  "profileMyAwqafEndowmentsSubtitle": "Manneen barnootaa fi boolla bishaanii ilaali",
+  "profileBeneficiaryApplication": "Iyyannoo Fayyadamaa",
+  "profileApplyAsBeneficiary": "Akka fayyadamaa ta'uun galmaa'i",
+  "profileBeneficiaryApplicationSubtitle": "Gaaffii gargaarsaa galchi yookaan hordofi",
+  "profileApplyAsBeneficiarySubtitle": "Gargaarsa argachuuf galmaa'i",
+  "profileDonationHistory": "Seenaa Arjoomaa",
+  "profileDonationHistorySubtitle": "Gumaacha hunda ilaali",
+  "profileDonationHistoryComingSoon": "Seenaa arjoomaa yeroo dhihoo dhufa",
+  "profileHelpCenter": "Wiirtuu Gargaarsa",
+  "profileHelpCenterSubtitle": "Gaaffilee yeroo baay'ee fi qajeelfama",
+  "profileHelpCenterComingSoon": "Wiirtuun gargaarsa yeroo dhihoo dhufa",
+  "profileSupportAndGrievances": "Deeggarsa fi Komii",
+  "profileSupportAndGrievancesSubtitle": "Garee keenya waliin dubbadhu",
+  "profileSupportCenterComingSoon": "Wiirtuun deeggarsaa yeroo dhihoo dhufa",
+  "profileLogOut": "Ba'i",
+  "profileLogOutSubtitle": "Yeroo ammaa jiru xumuri",
+  "profileLogOutDialogTitle": "Ba'uu barbaaddaa?",
+  "profileLogOutDialogBody": "Meeshaa kana irratti app keessaa ni baata.",
+  "profileCancel": "Haqi",
+  "profileHadithOfTheDay": "Hadiisa Guyyaa",
+  "profileHadithQuote": "\"Gaaddisi amanaa guyyaa qiyaamaa sadaqaa isaa ta'a.\"",
+  "profileHadithSource": "— At-Tirmidhi",
+  "impactNationalImpact": "Bu'aa Biyyaalessaa",
+  "impactNotifications": "Beeksisoota",
+  "impactCouldNotLoad": "Bu'aan biyyaalessaa fe'amuu hin dandeenye",
+  "impactGeographicReach": "Dhaqqabina Naannoo",
+  "impactBarakaStories": "Seenaawwan Barakaa",
+  "impactActiveAwqafProjects": "Pirojektoota Awqaaf Sochii Irra Jiran",
+  "impactAllProjectsComingSoon": "Pirojektoonni hundi yeroo dhihoo dhufu",
+  "impactLiveImpactStream": "Tamsaasa Bu'aa Kallattii",
+  "impactDistributedFunds": "Maallaqa Raabsame",
+  "impactEtbAmount": "{amount} ETB",
+  "@impactEtbAmount": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactLivesTouched": "Jireenyota Tuqaman",
+  "impactActiveProjects": "Pirojektoota Sochii Irra Jiran",
+  "impactTapRegionHint": "Bu'aa naannoo ilaaluuf naannoo tuqi",
+  "impactRegionImpactComingSoon": "Bu'aan {region} yeroo dhihoo dhufa",
+  "@impactRegionImpactComingSoon": {
+    "placeholders": {
+      "region": {"type": "String"}
+    }
+  },
+  "impactStoryComingSoon": "Seenaa {name} yeroo dhihoo dhufa",
+  "@impactStoryComingSoon": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "impactProjectDetailsComingSoon": "Bal'inni {title} yeroo dhihoo dhufa",
+  "@impactProjectDetailsComingSoon": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "impactPercentFunded": "{percent}% guutameera",
+  "@impactPercentFunded": {
+    "placeholders": {
+      "percent": {"type": "String"}
+    }
+  },
+  "impactEtbLeft": "{amount} ETB hafa",
+  "@impactEtbLeft": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "impactSeeYourPersonalBaraka": "Barakaa Dhuunfaa Kee Ilaali",
+  "impactTrackStewardship": "Bulchiinsa kee keessatti saantima hunda hordofi.",
+  "impactViewMyHistory": "Seenaa Koo Ilaali",
+  "onboardingSkip": "Darbi",
+  "onboardingNext": "Itti Aanu",
+  "onboardingGetStarted": "Jalqabi",
+  "onboardingTitleFaithAndPurpose": "Amantii fi Kaayyoo",
+  "onboardingSubtitleFaithAndPurpose": "Baga gara waltajjii amanamaa zakaa fi awqaaf bulchiinsaa dhuftan.",
+  "onboardingTitleTransparentGiving": "Kennaa Ifa Ta'e",
+  "onboardingSubtitleTransparentGiving": "Gumaachi kee hawaasa keessatti bu'aa dhugaa akkamitti uumu akka ta'e ilaali.",
+  "onboardingTitleEasyPayments": "Kaffaltii Saffisaa fi Salphaa",
+  "onboardingSubtitleEasyPayments": "Muuxannoo amansiisaa fi mobaayilii irratti salphaan zakaa kee kaffali.",
+  "onboardingTitleCompassionInAction": "Rahmata Hojii Keessatti",
+  "onboardingSubtitleCompassionInAction": "Ifaafi amanamummaadhaan fayyadamtootaa fi pirojektoota deeggari."
 }
