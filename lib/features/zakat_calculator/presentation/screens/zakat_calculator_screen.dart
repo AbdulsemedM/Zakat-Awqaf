@@ -58,6 +58,10 @@ class ZakatCalculatorScreen extends StatelessWidget {
                     ),
                     icon: const Icon(Icons.volunteer_activism_outlined),
                     label: Text(context.l10n.calcPayYourZakat),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: AppColors.textOnPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -76,19 +80,28 @@ class _CategoryTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: SegmentedButton<ZakatCategoryTab>(
-        segments: [
-          ButtonSegment(value: ZakatCategoryTab.wealth, label: Text(l10n.calcTabWealth)),
-          ButtonSegment(value: ZakatCategoryTab.livestock, label: Text(l10n.calcTabLivestock)),
-          ButtonSegment(value: ZakatCategoryTab.crops, label: Text(l10n.calcTabCrops)),
-        ],
-        selected: {activeTab},
-        onSelectionChanged: (value) => context.read<ZakatCalculatorBloc>().add(
-          ZakatCategoryTabChanged(value.first),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: constraints.maxWidth),
+            child: Center(
+              child: SegmentedButton<ZakatCategoryTab>(
+                segments: [
+                  ButtonSegment(value: ZakatCategoryTab.wealth, label: Text(l10n.calcTabWealth)),
+                  ButtonSegment(value: ZakatCategoryTab.livestock, label: Text(l10n.calcTabLivestock)),
+                  ButtonSegment(value: ZakatCategoryTab.crops, label: Text(l10n.calcTabCrops)),
+                ],
+                selected: {activeTab},
+                onSelectionChanged: (value) => context.read<ZakatCalculatorBloc>().add(
+                  ZakatCategoryTabChanged(value.first),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

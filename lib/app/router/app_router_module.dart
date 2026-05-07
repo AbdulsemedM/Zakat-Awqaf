@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/awqaf/presentation/screens/awqaf_screen.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart';
+import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dart';
+import '../../features/awqaf/home/presentation/screens/awqaf_home_screen.dart';
+import '../../features/awqaf/impact/presentation/screens/awqaf_impact_screen.dart';
+import '../../features/awqaf/portfolio/presentation/screens/awqaf_portfolio_screen.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/bloc/impact_bloc.dart';
@@ -28,101 +31,130 @@ import '../pages/main_nav_shell_page.dart';
 abstract class AppRouterModule {
   @lazySingleton
   GoRouter router() => GoRouter(
-        initialLocation: '/splash',
-        routes: [
-          GoRoute(
-            path: '/splash',
-            builder: (context, state) => const StartupSplashScreen(),
-          ),
-          GoRoute(
-            path: '/onboarding',
-            builder: (context, state) => const FirstStartOnboardingScreen(),
-          ),
-          StatefulShellRoute.indexedStack(
-            builder: (context, state, navigationShell) => MainNavShellPage(
-              navigationShell: navigationShell,
-            ),
-            branches: [
-              StatefulShellBranch(
-                routes: [
-                  GoRoute(
-                    path: '/',
-                    builder: (context, state) => const HomeScreen(),
-                  ),
-                ],
-              ),
-              StatefulShellBranch(
-                routes: [
-                  GoRoute(
-                    path: '/calculator',
-                    builder: (context, state) => const ZakatCalculatorScreen(),
-                  ),
-                ],
-              ),
-              StatefulShellBranch(
-                routes: [
-                  GoRoute(
-                    path: '/impact',
-                    builder: (context, state) => BlocProvider(
-                      create: (_) =>
-                          getIt<ImpactBloc>()..add(const ImpactStarted()),
-                      child: const ImpactScreen(),
-                    ),
-                  ),
-                ],
-              ),
-              StatefulShellBranch(
-                routes: [
-                  GoRoute(
-                    path: '/profile',
-                    builder: (context, state) => BlocProvider(
-                      create: (_) =>
-                          getIt<ProfileBloc>()..add(const ProfileStarted()),
-                      child: const ProfileScreen(),
-                    ),
-                  ),
-                ],
+    initialLocation: '/splash',
+    routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const StartupSplashScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const FirstStartOnboardingScreen(),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            MainNavShellPage(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/',
+                builder: (context, state) => const HomeScreen(),
               ),
             ],
           ),
-          GoRoute(path: '/zakat/summary', builder: (context, state) => const HomeScreen()),
-          GoRoute(
-            path: '/beneficiary-registration',
-            builder: (context, state) => BlocProvider(
-              create: (_) => BeneficiaryRegistrationBloc(),
-              child: const BeneficiaryRegistrationScreen(),
-            ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/calculator',
+                builder: (context, state) => const ZakatCalculatorScreen(),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/awqaf',
-            builder: (context, state) => const AwqafScreen(),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/impact',
+                builder: (context, state) => BlocProvider(
+                  create: (_) =>
+                      getIt<ImpactBloc>()..add(const ImpactStarted()),
+                  child: const ImpactScreen(),
+                ),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/zakat/payment',
-            builder: (context, state) {
-              final extra = state.extra;
-              if (extra is! ZakatPaymentArgs) {
-                return Scaffold(
-                  body: Center(child: Text(context.l10n.missingPaymentDetails)),
-                );
-              }
-              return ZakatPaymentScreen(args: extra);
-            },
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (context, state) => BlocProvider(
+                  create: (_) =>
+                      getIt<ProfileBloc>()..add(const ProfileStarted()),
+                  child: const ProfileScreen(),
+                ),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/zakat/certificate',
-            builder: (context, state) {
-              final extra = state.extra;
-              if (extra is! ZakatCertificateArgs) {
-                return Scaffold(
-                  body: Center(
-                    child: Text(context.l10n.missingCertificateDetails),
-                  ),
-                );
-              }
-              return ZakatCertificateScreen(args: extra);
-            },
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/awqaf',
+                builder: (context, state) => const AwqafHomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/awqaf/create',
+                builder: (context, state) => const AwqafCreateScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/awqaf/impact',
+                builder: (context, state) => const AwqafImpactScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/awqaf/portfolio',
+                builder: (context, state) => const AwqafPortfolioScreen(),
+              ),
+            ],
           ),
         ],
-      );
+      ),
+      GoRoute(
+        path: '/zakat/summary',
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/beneficiary-registration',
+        builder: (context, state) => BlocProvider(
+          create: (_) => BeneficiaryRegistrationBloc(),
+          child: const BeneficiaryRegistrationScreen(),
+        ),
+      ),
+
+      GoRoute(
+        path: '/zakat/payment',
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is! ZakatPaymentArgs) {
+            return Scaffold(
+              body: Center(child: Text(context.l10n.missingPaymentDetails)),
+            );
+          }
+          return ZakatPaymentScreen(args: extra);
+        },
+      ),
+      GoRoute(
+        path: '/zakat/certificate',
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is! ZakatCertificateArgs) {
+            return Scaffold(
+              body: Center(child: Text(context.l10n.missingCertificateDetails)),
+            );
+          }
+          return ZakatCertificateScreen(args: extra);
+        },
+      ),
+    ],
+  );
 }

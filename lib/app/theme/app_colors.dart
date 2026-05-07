@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 abstract final class AppColors {
   AppColors._();
 
-  static const Color primary = Color.fromARGB(255, 1, 109, 12);
+  static const Color primary = Color.fromARGB(255, 48, 235, 67);
   static const Color secondary = Color(0xFFD97706);
+  static const Color awqafPrimary = Color(0xFF0E7C7B);
+  static const Color awqafSecondary = Color(0xFF5BC0BE);
 
   /// Main text/icons on [primary] fills and hero gradients (plain white, not `onPrimary`).
   static const Color textOnPrimary = Color(0xFFFFFFFF);

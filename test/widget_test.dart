@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mejlis_digital_hub/app/app.dart';
 import 'package:mejlis_digital_hub/core/di/injection.dart';
-import 'package:mejlis_digital_hub/features/awqaf/bloc/awqaf_bloc.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +16,7 @@ void main() {
     configureDependencies();
 
     await tester.pumpWidget(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<AwqafBloc>(create: (_) => getIt<AwqafBloc>()),
-        ],
-        child: const MejlisApp(),
-      ),
+      MultiBlocProvider(providers: [], child: const MejlisApp()),
     );
     await tester.pump();
 

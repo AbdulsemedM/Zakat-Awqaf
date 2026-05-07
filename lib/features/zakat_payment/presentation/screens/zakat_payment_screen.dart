@@ -23,9 +23,18 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   final _grandFatherName = TextEditingController();
   final _estimatedEtb = TextEditingController();
 
-  ZakatCheckoutMethod _method = ZakatCheckoutMethod.telebirr;
+  ZakatCheckoutMethod _method = ZakatCheckoutMethod.coopBankAlhuda;
   bool _recurring = false;
   String? _beneficiaryProjectTitle;
+
+  @override
+  void initState() {
+    super.initState();
+    final prefillAmount = widget.args.fixedAmountEtb;
+    if (prefillAmount != null && prefillAmount > 0) {
+      _estimatedEtb.text = _formatEtbInput(prefillAmount);
+    }
+  }
 
   @override
   void dispose() {
@@ -35,11 +44,6 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     _estimatedEtb.dispose();
     super.dispose();
   }
-
-  bool get _namesOk =>
-      _firstName.text.trim().isNotEmpty &&
-      _fatherName.text.trim().isNotEmpty &&
-      _grandFatherName.text.trim().isNotEmpty;
 
   double get _payAmountEtb {
     final a = widget.args;
@@ -57,10 +61,17 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     return _payAmountEtb > 0;
   }
 
-  bool get _canPay => _namesOk && _amountOk;
+  bool get _canPay => _amountOk;
 
-  String get _fullName =>
-      '${_firstName.text.trim()} ${_fatherName.text.trim()} ${_grandFatherName.text.trim()}';
+  String get _fullName {
+    final parts = [
+      _firstName.text.trim(),
+      _fatherName.text.trim(),
+      _grandFatherName.text.trim(),
+    ].where((part) => part.isNotEmpty).toList();
+    if (parts.isEmpty) return 'Anonymous Payer';
+    return parts.join(' ');
+  }
 
   Future<void> _onPay() async {
     if (!_canPay) {
@@ -210,73 +221,80 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                 style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
-              ...ZakatCheckoutMethod.values.map(
-                (m) => Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Container(
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: ZakatCheckoutMethod.values.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 1.4,
+                ),
+                itemBuilder: (context, index) {
+                  final m = ZakatCheckoutMethod.values[index];
+                  final isSelected = _method == m;
+                  return Container(
                     decoration: BoxDecoration(
-                      color: _method == m
+                      color: isSelected
                           ? AppColors.secondary.withValues(alpha: 0.22)
-                          : theme.colorScheme.surfaceContainerHighest
-                              .withValues(alpha: 0.35),
+                          : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: _method == m
+                        color: isSelected
                             ? AppColors.primary
-                            : theme.colorScheme.outlineVariant
-                                .withValues(alpha: 0.5),
-                        width: _method == m ? 1.5 : 1,
+                            : theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                        width: isSelected ? 1.5 : 1,
                       ),
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () => setState(() => _method = m),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              m == ZakatCheckoutMethod.telebirr
-                                  ? Icons.account_balance_wallet_outlined
-                                  : m == ZakatCheckoutMethod.cbeBirr
-                                  ? Icons.account_balance_outlined
-                                  : Icons.phone_iphone_outlined,
-                              color: AppColors.primary,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () => setState(() => _method = m),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Text(
-                                    m.label,
-                                    style: theme.textTheme.titleSmall?.copyWith(
-                                      fontWeight: FontWeight.w700,
+                                  Icon(_methodIcon(m), color: AppColors.primary),
+                                  const Spacer(),
+                                  if (isSelected)
+                                    const Icon(
+                                      Icons.check_circle,
+                                      color: AppColors.primary,
+                                      size: 20,
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    m.subtitle,
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
                                 ],
                               ),
-                            ),
-                            if (_method == m)
-                              Icon(Icons.check_circle, color: AppColors.primary, size: 22),
-                          ],
+                              const SizedBox(height: 8),
+                              Text(
+                                m.label,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                m.subtitle,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
               CheckboxListTile(
                 value: _recurring,
@@ -315,6 +333,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
               FilledButton.icon(
                 onPressed: _canPay ? _onPay : null,
                 style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 icon: const Icon(Icons.lock_outline),
@@ -350,6 +369,24 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
       ),
     );
   }
+}
+
+String _formatEtbInput(double value) {
+  if (value == value.roundToDouble()) {
+    return value.toStringAsFixed(0);
+  }
+  return value.toStringAsFixed(2);
+}
+
+IconData _methodIcon(ZakatCheckoutMethod method) {
+  return switch (method) {
+    ZakatCheckoutMethod.telebirr => Icons.account_balance_wallet_outlined,
+    ZakatCheckoutMethod.cbeBirr => Icons.account_balance_outlined,
+    ZakatCheckoutMethod.mPesa => Icons.phone_iphone_outlined,
+    ZakatCheckoutMethod.coopBankAlhuda => Icons.account_balance_rounded,
+    ZakatCheckoutMethod.cbe => Icons.account_balance_wallet_rounded,
+    ZakatCheckoutMethod.zamzamBank => Icons.mosque_outlined,
+  };
 }
 
 class _AmountSection extends StatelessWidget {

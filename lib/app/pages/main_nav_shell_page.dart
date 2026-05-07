@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../settings/app_settings_controller.dart';
 import '../../core/l10n/l10n.dart';
 import '../theme/app_colors.dart';
 
@@ -16,6 +18,9 @@ class MainNavShellPage extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
+    final appMode = context.watch<AppSettingsController>().appMode;
+    final isAwqaf = appMode == AppMode.awqaf;
+    final selectedIndex = navigationShell.currentIndex % 4;
     final items = <_NavItem>[
       _NavItem(
         label: l10n.navHome,
@@ -23,9 +28,9 @@ class MainNavShellPage extends StatelessWidget {
         inactiveIcon: Icons.home_outlined,
       ),
       _NavItem(
-        label: l10n.navCalculator,
-        activeIcon: Icons.calculate_rounded,
-        inactiveIcon: Icons.calculate_outlined,
+        label: isAwqaf ? 'Create' : l10n.navCalculator,
+        activeIcon: isAwqaf ? Icons.add_circle_rounded : Icons.calculate_rounded,
+        inactiveIcon: isAwqaf ? Icons.add_circle_outline_rounded : Icons.calculate_outlined,
       ),
       _NavItem(
         label: l10n.navImpact,
@@ -33,9 +38,9 @@ class MainNavShellPage extends StatelessWidget {
         inactiveIcon: Icons.auto_graph_outlined,
       ),
       _NavItem(
-        label: l10n.navProfile,
-        activeIcon: Icons.person_rounded,
-        inactiveIcon: Icons.person_outline_rounded,
+        label: isAwqaf ? 'Portfolio' : l10n.navProfile,
+        activeIcon: isAwqaf ? Icons.workspaces_rounded : Icons.person_rounded,
+        inactiveIcon: isAwqaf ? Icons.workspaces_outline : Icons.person_outline_rounded,
       ),
     ];
 
@@ -71,9 +76,14 @@ class MainNavShellPage extends StatelessWidget {
                       Expanded(
                         child: _NavButton(
                           item: items[i],
-                          selected: navigationShell.currentIndex == i,
+                          selected: selectedIndex == i,
                           textTheme: textTheme,
-                          onTap: () => navigationShell.goBranch(i),
+                          onTap: () => context.go(
+                            _destinationFor(
+                              itemIndex: i,
+                              appMode: appMode,
+                            ),
+                          ),
                         ),
                       ),
                   ],
@@ -84,6 +94,28 @@ class MainNavShellPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _destinationFor({
+    required int itemIndex,
+    required AppMode appMode,
+  }) {
+    if (appMode == AppMode.awqaf) {
+      return switch (itemIndex) {
+        0 => '/awqaf',
+        1 => '/awqaf/create',
+        2 => '/awqaf/impact',
+        3 => '/awqaf/portfolio',
+        _ => '/awqaf',
+      };
+    }
+    return switch (itemIndex) {
+      0 => '/',
+      1 => '/calculator',
+      2 => '/impact',
+      3 => '/profile',
+      _ => '/',
+    };
   }
 }
 

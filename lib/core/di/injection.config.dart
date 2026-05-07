@@ -15,7 +15,6 @@ import 'package:go_router/go_router.dart' as _i583;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../app/router/app_router_module.dart' as _i800;
-import '../../features/awqaf/bloc/awqaf_bloc.dart' as _i833;
 import '../../features/impact/bloc/impact_bloc.dart' as _i239;
 import '../../features/impact/data/data_provider/impact_data_provider.dart'
     as _i141;
@@ -46,7 +45,6 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appRouterModule = _$AppRouterModule();
     final dioModule = _$DioModule();
-    gh.factory<_i833.AwqafBloc>(() => _i833.AwqafBloc());
     gh.lazySingleton<_i583.GoRouter>(() => appRouterModule.router());
     gh.lazySingleton<_i361.Dio>(() => dioModule.dio());
     gh.lazySingleton<_i845.NetworkInfo>(() => _i137.NetworkInfoImpl());

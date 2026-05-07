@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../../../../core/l10n/l10n.dart';
@@ -17,26 +19,47 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: Text(
-          l10n.homeCommissionTitle,
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.homeCommissionTitle,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Mode: Zakat',
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 16),
-        //     child: CircleAvatar(
-        //       radius: 16,
-        //       child: Icon(
-        //         Icons.person,
-        //         size: 18,
-        //         color: theme.colorScheme.onSurface,
-        //       ),
-        //     ),
-        //   ),
-        // ],
+        actions: [
+          PopupMenuButton<AppMode>(
+            tooltip: 'Change mode',
+            icon: const Icon(Icons.swap_horiz),
+            onSelected: (mode) async {
+              if (mode != AppMode.awqaf) return;
+              final controller = context.read<AppSettingsController>();
+              await controller.setAppMode(AppMode.awqaf);
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Switched to Awqaf mode')),
+              );
+              context.go('/awqaf');
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: AppMode.awqaf,
+                child: Text('Switch to Awqaf'),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),
