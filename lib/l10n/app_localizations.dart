@@ -1571,13 +1571,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitleTransparentGiving.
   ///
   /// In en, this message translates to:
-  /// **'Transparent Giving'**
+  /// **'Zakat Calculator'**
   String get onboardingTitleTransparentGiving;
 
   /// No description provided for @onboardingSubtitleTransparentGiving.
   ///
   /// In en, this message translates to:
-  /// **'See how your contributions flow into real impact across communities.'**
+  /// **'Calculate your Zakat instantly across wealth, livestock, and crops with clear guidance.'**
   String get onboardingSubtitleTransparentGiving;
 
   /// No description provided for @onboardingTitleEasyPayments.

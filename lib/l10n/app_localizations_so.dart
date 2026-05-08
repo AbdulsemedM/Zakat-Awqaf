@@ -865,11 +865,11 @@ class AppLocalizationsSo extends AppLocalizations {
       'Ku soo dhawoow madal lagu kalsoon yahay oo loogu talagalay maareynta Zakada iyo Awqaafta.';
 
   @override
-  String get onboardingTitleTransparentGiving => 'Bixin Hufan';
+  String get onboardingTitleTransparentGiving => 'Xisaabiyaha Zakat';
 
   @override
   String get onboardingSubtitleTransparentGiving =>
-      'Arag sida tabarucaaga ugu beddelmo saameyn dhab ah oo bulshooyinka gaarta.';
+      'Si degdeg ah u xisaabi Zakat-kaaga hantida, xoolaha, iyo dalagyada adigoo helaya hagitaan cad.';
 
   @override
   String get onboardingTitleEasyPayments => 'Lacag-bixin Fudud oo Degdeg ah';

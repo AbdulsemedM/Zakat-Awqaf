@@ -847,11 +847,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'مرحبًا بك في منصة موثوقة لإدارة الزكاة والأوقاف.';
 
   @override
-  String get onboardingTitleTransparentGiving => 'عطاء شفاف';
+  String get onboardingTitleTransparentGiving => 'حاسبة الزكاة';
 
   @override
   String get onboardingSubtitleTransparentGiving =>
-      'تابع كيف تتحول مساهماتك إلى أثر حقيقي في المجتمعات.';
+      'احسب زكاتك فورًا في الأموال والأنعام والزروع بإرشادات واضحة.';
 
   @override
   String get onboardingTitleEasyPayments => 'مدفوعات سهلة وسريعة';

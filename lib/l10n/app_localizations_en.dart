@@ -849,11 +849,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Welcome to a trusted platform for Zakat and Awqaf stewardship.';
 
   @override
-  String get onboardingTitleTransparentGiving => 'Transparent Giving';
+  String get onboardingTitleTransparentGiving => 'Zakat Calculator';
 
   @override
   String get onboardingSubtitleTransparentGiving =>
-      'See how your contributions flow into real impact across communities.';
+      'Calculate your Zakat instantly across wealth, livestock, and crops with clear guidance.';
 
   @override
   String get onboardingTitleEasyPayments => 'Fast, Simple Payments';

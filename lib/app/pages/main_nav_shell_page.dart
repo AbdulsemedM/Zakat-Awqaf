@@ -21,6 +21,15 @@ class MainNavShellPage extends StatelessWidget {
     final appMode = context.watch<AppSettingsController>().appMode;
     final isAwqaf = appMode == AppMode.awqaf;
     final selectedIndex = navigationShell.currentIndex % 4;
+    final selectedBgColor = isAwqaf
+        ? AppColors.awqafSecondary.withValues(alpha: 0.34)
+        : AppColors.primary.withValues(alpha: 0.16);
+    final selectedFgColor = isAwqaf
+        ? AppColors.awqafPrimary
+        : AppColors.primary;
+    final unselectedFgColor = isAwqaf
+        ? AppColors.awqafSecondary
+        : AppColors.primary.withValues(alpha: 0.66);
     final items = <_NavItem>[
       _NavItem(
         label: l10n.navHome,
@@ -78,6 +87,9 @@ class MainNavShellPage extends StatelessWidget {
                           item: items[i],
                           selected: selectedIndex == i,
                           textTheme: textTheme,
+                          selectedBgColor: selectedBgColor,
+                          selectedFgColor: selectedFgColor,
+                          unselectedFgColor: unselectedFgColor,
                           onTap: () => context.go(
                             _destinationFor(
                               itemIndex: i,
@@ -136,12 +148,18 @@ class _NavButton extends StatelessWidget {
     required this.item,
     required this.selected,
     required this.textTheme,
+    required this.selectedBgColor,
+    required this.selectedFgColor,
+    required this.unselectedFgColor,
     required this.onTap,
   });
 
   final _NavItem item;
   final bool selected;
   final TextTheme textTheme;
+  final Color selectedBgColor;
+  final Color selectedFgColor;
+  final Color unselectedFgColor;
   final VoidCallback onTap;
 
   @override
@@ -156,7 +174,7 @@ class _NavButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
           color: selected
-              ? AppColors.secondary
+              ? selectedBgColor
               : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
@@ -165,7 +183,7 @@ class _NavButton extends StatelessWidget {
           children: [
             Icon(
               selected ? item.activeIcon : item.inactiveIcon,
-              color: selected ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
+              color: selected ? selectedFgColor : unselectedFgColor,
               size: 21,
             ),
             const SizedBox(height: 1),
@@ -173,7 +191,7 @@ class _NavButton extends StatelessWidget {
               item.label,
               style: (textTheme.labelSmall ?? const TextStyle(fontSize: 11)).copyWith(
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                color: selected ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
+                color: selected ? selectedFgColor : unselectedFgColor,
               ),
             ),
           ],

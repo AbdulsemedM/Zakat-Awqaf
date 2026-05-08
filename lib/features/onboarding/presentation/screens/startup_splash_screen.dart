@@ -52,9 +52,14 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
   Future<void> _routeFromSplash() async {
     final prefs = await SharedPreferences.getInstance();
     final hasSeen = prefs.getBool(kWelcomeIntroCompletedKey) ?? false;
+    final appMode = prefs.getString('app_mode');
     await Future<void>.delayed(const Duration(seconds: 3));
     if (!mounted) return;
-    context.go(hasSeen ? '/' : '/onboarding');
+    if (!hasSeen) {
+      context.go('/onboarding');
+      return;
+    }
+    context.go(appMode == 'awqaf' ? '/awqaf' : '/');
   }
 
   @override

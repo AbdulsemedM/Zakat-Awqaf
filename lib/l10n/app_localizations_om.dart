@@ -862,11 +862,11 @@ class AppLocalizationsOm extends AppLocalizations {
       'Baga gara waltajjii amanamaa zakaa fi awqaaf bulchiinsaa dhuftan.';
 
   @override
-  String get onboardingTitleTransparentGiving => 'Kennaa Ifa Ta\'e';
+  String get onboardingTitleTransparentGiving => 'Herregaa Zakaa';
 
   @override
   String get onboardingSubtitleTransparentGiving =>
-      'Gumaachi kee hawaasa keessatti bu\'aa dhugaa akkamitti uumu akka ta\'e ilaali.';
+      'Qabeenya, horii fi midhaan irratti qajeelfama ifaan zakaa kee saffisaan herregi.';
 
   @override
   String get onboardingTitleEasyPayments => 'Kaffaltii Saffisaa fi Salphaa';

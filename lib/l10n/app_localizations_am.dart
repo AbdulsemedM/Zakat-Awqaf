@@ -845,11 +845,11 @@ class AppLocalizationsAm extends AppLocalizations {
       'ለዘካትና ወቅፍ አስተዳደር የታመነ መድረክ እንኳን ደህና መጡ።';
 
   @override
-  String get onboardingTitleTransparentGiving => 'ግልጽ ስጦታ';
+  String get onboardingTitleTransparentGiving => 'የዘካት ማስያ';
 
   @override
   String get onboardingSubtitleTransparentGiving =>
-      'ልገሳዎ በማህበረሰብ ላይ እውነተኛ ተፅዕኖ እንዴት እንደሚፈጥር ይከታተሉ።';
+      'ዘካትዎን በሀብት፣ በእንስሳት እና በሰብል ላይ በግልጽ መመሪያ ወዲያውኑ ያስሉ።';
 
   @override
   String get onboardingTitleEasyPayments => 'ፈጣን እና ቀላል ክፍያ';
