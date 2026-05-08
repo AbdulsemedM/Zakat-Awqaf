@@ -242,7 +242,7 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.textOnPrimary,
-                    minimumSize: const Size.fromHeight(52),
+                    minimumSize: const Size(0, 52),
                   ),
                   onPressed: _isFinishing
                       ? null

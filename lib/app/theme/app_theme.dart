@@ -71,7 +71,7 @@ class AppTheme {
             }
             return AppColors.textOnPrimary;
           }),
-          minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
+          minimumSize: const WidgetStatePropertyAll(Size(0, 48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
         ),
@@ -90,7 +90,7 @@ class AppTheme {
             }
             return AppColors.textOnPrimary;
           }),
-          minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
+          minimumSize: const WidgetStatePropertyAll(Size(0, 48)),
           padding: WidgetStateProperty.all(buttonPadding),
           elevation: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) return 0.0;
@@ -114,7 +114,7 @@ class AppTheme {
             }
             return BorderSide(color: scheme.primary);
           }),
-          minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
+          minimumSize: const WidgetStatePropertyAll(Size(0, 48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
         ),
@@ -127,7 +127,7 @@ class AppTheme {
             }
             return scheme.primary;
           }),
-          minimumSize: const WidgetStatePropertyAll(Size.fromHeight(48)),
+          minimumSize: const WidgetStatePropertyAll(Size(0, 48)),
           padding: WidgetStateProperty.all(buttonPadding),
           shape: WidgetStateProperty.all(roundedControlShape),
         ),
