@@ -1542,6 +1542,18 @@ abstract class AppLocalizations {
   /// **'Enter your phone number'**
   String get loginPhoneRequired;
 
+  /// No description provided for @loginPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid 9-digit mobile number (e.g. 923974838)'**
+  String get loginPhoneInvalid;
+
+  /// No description provided for @loginSecureNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sign-in is encrypted and secure'**
+  String get loginSecureNote;
+
   /// No description provided for @loginPasswordRequired.
   ///
   /// In en, this message translates to:

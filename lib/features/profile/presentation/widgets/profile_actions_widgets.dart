@@ -195,7 +195,6 @@ class _SupportCard extends StatelessWidget {
     );
     if (confirmed == true && context.mounted) {
       bloc.add(const ProfileLoggedOut());
-      context.go('/login');
     }
   }
 }

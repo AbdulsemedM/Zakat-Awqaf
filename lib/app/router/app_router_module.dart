@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/auth/auth_session_controller.dart';
-import '../../features/auth/bloc/auth_bloc.dart';
-import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_event.dart';
 import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dart';
@@ -19,9 +17,7 @@ import '../../features/impact/bloc/impact_event.dart';
 import '../../features/impact/presentation/screens/impact_screen.dart';
 import '../../features/onboarding/presentation/screens/first_start_onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/startup_splash_screen.dart';
-import '../../features/profile/bloc/profile_bloc.dart';
-import '../../features/profile/bloc/profile_event.dart';
-import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/profile/presentation/screens/profile_auth_gate_screen.dart';
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
 import '../../core/di/injection.dart';
 import '../../core/l10n/l10n.dart';
@@ -33,25 +29,10 @@ import '../pages/main_nav_shell_page.dart';
 
 @module
 abstract class AppRouterModule {
-  static const _publicRoutes = <String>{'/splash', '/onboarding', '/login'};
-
   @lazySingleton
   GoRouter router(AuthSessionController authSession) => GoRouter(
     initialLocation: '/splash',
     refreshListenable: authSession,
-    redirect: (context, state) {
-      final location = state.matchedLocation;
-      if (_publicRoutes.contains(location)) {
-        if (location == '/login' && authSession.isAuthenticated) {
-          return '/';
-        }
-        return null;
-      }
-      if (!authSession.isAuthenticated) {
-        return '/login';
-      }
-      return null;
-    },
     routes: [
       GoRoute(
         path: '/splash',
@@ -60,13 +41,6 @@ abstract class AppRouterModule {
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const FirstStartOnboardingScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => BlocProvider(
-          create: (_) => getIt<AuthBloc>(),
-          child: const LoginScreen(),
-        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -104,11 +78,7 @@ abstract class AppRouterModule {
             routes: [
               GoRoute(
                 path: '/profile',
-                builder: (context, state) => BlocProvider(
-                  create: (_) =>
-                      getIt<ProfileBloc>()..add(const ProfileStarted()),
-                  child: const ProfileScreen(),
-                ),
+                builder: (context, state) => const ProfileAuthGateScreen(),
               ),
             ],
           ),

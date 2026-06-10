@@ -865,6 +865,13 @@ class AppLocalizationsOm extends AppLocalizations {
   String get loginPhoneRequired => 'Enter your phone number';
 
   @override
+  String get loginPhoneInvalid =>
+      'Enter a valid 9-digit mobile number (e.g. 923974838)';
+
+  @override
+  String get loginSecureNote => 'Your sign-in is encrypted and secure';
+
+  @override
   String get loginPasswordRequired => 'Enter your password';
 
   @override

@@ -67,10 +67,6 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
       context.go('/onboarding');
       return;
     }
-    if (!authSession.isAuthenticated) {
-      context.go('/login');
-      return;
-    }
     context.go(appMode == 'awqaf' ? '/awqaf' : '/');
   }
 
