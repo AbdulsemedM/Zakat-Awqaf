@@ -970,4 +970,12 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get onboardingSubtitleEasyPayments =>
-      'በደህንነት እና በቀላሉ በሞባይል ተስማሚ
+      'በደህንነት እና በቀላሉ በሞባይል ተስማሚ ተሞክሮ ዘካትዎን ይክፈሉ።';
+
+  @override
+  String get onboardingTitleCompassionInAction => 'ርህራሄ በተግባር';
+
+  @override
+  String get onboardingSubtitleCompassionInAction =>
+      'ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።';
+}
