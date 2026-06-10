@@ -1,15 +1,18 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as p;
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
+import '../../data/models/institution_subtype.dart';
 import '../pages/fayda_verification_webview_page.dart';
 import '../widgets/asnaf_category_tile.dart';
 import '../widgets/payout_method_tile.dart';
@@ -195,6 +198,10 @@ class _StepContent extends StatelessWidget {
         return _NeedsStep(state: state);
       case BeneficiaryRegistrationStep.disbursement:
         return _DisbursementStep(state: state);
+      case BeneficiaryRegistrationStep.institutionDetails:
+        return _InstitutionDetailsStep(state: state);
+      case BeneficiaryRegistrationStep.institutionDocuments:
+        return _InstitutionDocumentsStep(state: state);
     }
   }
 }
@@ -236,6 +243,16 @@ class _WelcomeStep extends StatelessWidget {
                 selected: state.method == RegistrationMethod.manual,
                 onTap: () => bloc.add(
                   const RegistrationMethodSelected(RegistrationMethod.manual),
+                ),
+              ),
+              const SizedBox(height: 12),
+              PayoutMethodTile(
+                title: 'Register as Institution',
+                subtitle: 'Company, NGO, cooperative, or government entity.',
+                icon: Icons.business_outlined,
+                selected: state.method == RegistrationMethod.institution,
+                onTap: () => bloc.add(
+                  const RegistrationMethodSelected(RegistrationMethod.institution),
                 ),
               ),
             ],
@@ -685,6 +702,372 @@ class _DisbursementStep extends StatelessWidget {
   }
 }
 
+class _InstitutionDetailsStep extends StatelessWidget {
+  const _InstitutionDetailsStep({required this.state});
+
+  final BeneficiaryRegistrationState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<BeneficiaryRegistrationBloc>();
+    return Column(
+      children: [
+        SectionCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Institution Registration',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 12),
+              DropdownButtonFormField<InstitutionSubtype>(
+                key: ValueKey(state.institutionSubtype),
+                initialValue: state.institutionSubtype,
+                decoration: const InputDecoration(
+                  labelText: 'Institution Type',
+                ),
+                items: InstitutionSubtype.values
+                    .map(
+                      (subtype) => DropdownMenuItem(
+                        value: subtype,
+                        child: Text(subtype.label),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    bloc.add(InstitutionSubtypeUpdated(value));
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(LegalNameUpdated(v)),
+                decoration: const InputDecoration(labelText: 'Legal Name'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(TradingNameUpdated(v)),
+                decoration: const InputDecoration(labelText: 'Trading Name'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(TradeRegistrationNumberUpdated(v)),
+                decoration: const InputDecoration(
+                  labelText: 'Trade Registration Number',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(TaxIdentificationNumberUpdated(v)),
+                decoration: const InputDecoration(
+                  labelText: 'Tax Identification Number (TIN)',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(VatRegistrationNumberUpdated(v)),
+                decoration: const InputDecoration(
+                  labelText: 'VAT Registration Number (optional)',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                keyboardType: TextInputType.phone,
+                onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  hintText: '+251911223344 or 0911223344',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (v) => bloc.add(EmailUpdated(v)),
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(RegionUpdated(v)),
+                decoration: const InputDecoration(labelText: 'Region'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(CityUpdated(v)),
+                decoration: const InputDecoration(labelText: 'City'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(AddressUpdated(v)),
+                decoration: const InputDecoration(labelText: 'Address'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                onChanged: (v) => bloc.add(NotesUpdated(v)),
+                decoration: const InputDecoration(
+                  labelText: 'Notes (optional)',
+                ),
+                maxLines: 2,
+              ),
+              const SizedBox(height: 12),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                value: state.authorityToActDocumentRequired,
+                onChanged: (value) =>
+                    bloc.add(AuthorityToActRequiredToggled(value)),
+                title: const Text('Authority to act document required'),
+                subtitle: const Text(
+                  'Enable if someone other than a registered signatory submits.',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Future<void> _pickInstitutionDocument(
+  BuildContext context,
+  String documentCode,
+) async {
+  final source = await showModalBottomSheet<_DocumentPickSource>(
+    context: context,
+    builder: (sheetContext) {
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_camera_outlined),
+              title: const Text('Take Photo'),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(_DocumentPickSource.camera),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from Gallery'),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(_DocumentPickSource.gallery),
+            ),
+            ListTile(
+              leading: const Icon(Icons.attach_file_outlined),
+              title: const Text('Choose File'),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(_DocumentPickSource.file),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+
+  if (source == null || !context.mounted) {
+    return;
+  }
+
+  try {
+    String? filePath;
+    switch (source) {
+      case _DocumentPickSource.camera:
+      case _DocumentPickSource.gallery:
+        final picker = ImagePicker();
+        final image = await picker.pickImage(
+          source: source == _DocumentPickSource.camera
+              ? ImageSource.camera
+              : ImageSource.gallery,
+          imageQuality: 85,
+          maxWidth: 1400,
+        );
+        filePath = image?.path;
+      case _DocumentPickSource.file:
+        final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+        );
+        filePath = result?.files.single.path;
+    }
+
+    if (filePath == null || filePath.trim().isEmpty || !context.mounted) {
+      return;
+    }
+
+    context.read<BeneficiaryRegistrationBloc>().add(
+          InstitutionDocumentPicked(
+            documentCode: documentCode,
+            filePath: filePath,
+          ),
+        );
+  } catch (_) {
+    if (!context.mounted) {
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Could not pick file. Please check permissions.'),
+      ),
+    );
+  }
+}
+
+enum _DocumentPickSource { camera, gallery, file }
+
+class _InstitutionDocumentsStep extends StatelessWidget {
+  const _InstitutionDocumentsStep({required this.state});
+
+  final BeneficiaryRegistrationState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<BeneficiaryRegistrationBloc>();
+    final documents = state.kycDocuments;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Upload KYC Documents',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Upload each required document. You can finish once all required documents are uploaded.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              if (state.createdBeneficiaryId != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'Reference: ${state.createdBeneficiaryId}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        if (documents.isEmpty)
+          const SectionCard(
+            child: Text('No documents required at this time.'),
+          )
+        else
+          ...documents.map((doc) {
+            final pickedPath = state.pickedDocumentPaths[doc.code];
+            final pickedName =
+                pickedPath == null ? null : p.basename(pickedPath);
+            final isUploading = state.uploadingDocumentCode == doc.code;
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: SectionCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            doc.label,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        if (doc.uploaded)
+                          const Icon(
+                            Icons.check_circle,
+                            color: AppColors.primary,
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: doc.required
+                            ? AppColors.primary.withValues(alpha: 0.12)
+                            : Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        doc.required ? 'Required' : 'Optional',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ),
+                    if (pickedName != null && !doc.uploaded) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        'Selected: $pickedName',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: doc.uploaded || isUploading
+                                ? null
+                                : () => _pickInstitutionDocument(
+                                      context,
+                                      doc.code,
+                                    ),
+                            icon: const Icon(Icons.attach_file_outlined),
+                            label: const Text('Choose File'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.textOnPrimary,
+                            ),
+                            onPressed: doc.uploaded ||
+                                    isUploading ||
+                                    pickedPath == null
+                                ? null
+                                : () => bloc.add(
+                                      InstitutionDocumentUploadRequested(
+                                        doc.code,
+                                      ),
+                                    ),
+                            child: isUploading
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppColors.textOnPrimary,
+                                    ),
+                                  )
+                                : Text(doc.uploaded ? 'Uploaded' : 'Upload'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+      ],
+    );
+  }
+}
+
 class _FooterActions extends StatelessWidget {
   const _FooterActions({required this.state});
   final BeneficiaryRegistrationState state;
@@ -694,13 +1077,24 @@ class _FooterActions extends StatelessWidget {
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final isManualIdentitySubmit = state.method == RegistrationMethod.manual &&
         state.step == BeneficiaryRegistrationStep.identity;
+    final isInstitutionDetailsSubmit =
+        state.method == RegistrationMethod.institution &&
+            state.step == BeneficiaryRegistrationStep.institutionDetails;
     final isFinalStep = state.step == BeneficiaryRegistrationStep.disbursement;
+    final isInstitutionFinish =
+        state.method == RegistrationMethod.institution &&
+            state.step == BeneficiaryRegistrationStep.institutionDocuments;
 
     final canContinue = switch (state.step) {
       BeneficiaryRegistrationStep.welcome =>
         state.method != RegistrationMethod.fastTrack ||
             (!state.isFaydaPosting && !state.awaitingFaydaSse),
       BeneficiaryRegistrationStep.identity => state.isIdentityStepComplete,
+      BeneficiaryRegistrationStep.institutionDetails =>
+        state.isInstitutionDetailsComplete,
+      BeneficiaryRegistrationStep.institutionDocuments =>
+        state.institutionRequiredKycComplete &&
+            state.uploadingDocumentCode == null,
       BeneficiaryRegistrationStep.needs =>
         state.selectedCategories.isNotEmpty &&
             state.situationDescription.trim().isNotEmpty,
@@ -718,6 +1112,9 @@ class _FooterActions extends StatelessWidget {
                 ? 'Continue'
                 : 'Continue with Fayda',
       BeneficiaryRegistrationStep.identity when isManualIdentitySubmit => 'Submit & Continue',
+      BeneficiaryRegistrationStep.institutionDetails when isInstitutionDetailsSubmit =>
+        'Submit & Continue',
+      BeneficiaryRegistrationStep.institutionDocuments => 'Finish',
       BeneficiaryRegistrationStep.disbursement => 'Finish',
       _ => 'Continue',
     };
@@ -753,9 +1150,36 @@ class _FooterActions extends StatelessWidget {
                 ),
                 onPressed: !canContinue ||
                         state.isFaydaPosting ||
-                        state.awaitingFaydaSse
+                        state.awaitingFaydaSse ||
+                        state.uploadingDocumentCode != null
                     ? null
                     : () {
+                        if (isInstitutionFinish) {
+                          bloc.add(const InstitutionRegistrationFinished());
+                          final id = state.createdBeneficiaryId;
+                          final status =
+                              state.registeredBeneficiary?.verificationStatus;
+                          final buffer = StringBuffer();
+                          if (id != null && id.isNotEmpty) {
+                            buffer.write(
+                              'Institution registration complete. Reference: $id',
+                            );
+                          } else {
+                            buffer.write('Institution registration complete.');
+                          }
+                          if (status != null && status.trim().isNotEmpty) {
+                            buffer.write(' Status: ${status.trim()}.');
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(buffer.toString())),
+                          );
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.go('/');
+                          }
+                          return;
+                        }
                         if (isFinalStep) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -773,11 +1197,14 @@ class _FooterActions extends StatelessWidget {
                         }
                         if (isManualIdentitySubmit) {
                           bloc.add(const BeneficiarySubmissionRequested());
+                        } else if (isInstitutionDetailsSubmit) {
+                          bloc.add(const InstitutionRegistrationRequested());
                         } else {
                           bloc.add(const RegistrationStepAdvanced());
                         }
                       },
-                child: isManualIdentitySubmit && state.isSubmitting
+                child: (isManualIdentitySubmit || isInstitutionDetailsSubmit) &&
+                        state.isSubmitting
                     ? const SizedBox(
                         height: 22,
                         width: 22,

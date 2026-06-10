@@ -1,10 +1,20 @@
 import 'package:equatable/equatable.dart';
 
 import '../data/models/beneficiary_dto.dart';
+import '../data/models/institution_kyc_document.dart';
+import '../data/models/institution_subtype.dart';
 
-enum BeneficiaryRegistrationStep { welcome, identity, needs, disbursement }
+enum BeneficiaryRegistrationStep {
+  welcome,
+  identity,
+  needs,
+  disbursement,
+  institutionDetails,
+  institutionDocuments,
+}
 
-enum RegistrationMethod { fastTrack, manual }
+enum RegistrationMethod { fastTrack, manual, institution }
+
 enum Gender { male, female }
 
 enum AsnafCategory {
@@ -45,6 +55,18 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.accountOrMobileNumber = '',
     this.legalName = '',
     this.hasAcceptedCompliance = false,
+    this.tradingName = '',
+    this.tradeRegistrationNumber = '',
+    this.taxIdentificationNumber = '',
+    this.vatRegistrationNumber = '',
+    this.institutionSubtype = InstitutionSubtype.company,
+    this.authorityToActDocumentRequired = false,
+    this.companyDocumentUploadToken,
+    this.kycDocuments = const [],
+    this.pickedDocumentPaths = const {},
+    this.uploadingDocumentCode,
+    this.institutionRegistrationSubmitted = false,
+    this.institutionRequiredKycComplete = false,
     this.errorMessage,
     this.submissionSuccess = false,
     this.isSubmitting = false,
@@ -80,6 +102,18 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String accountOrMobileNumber;
   final String legalName;
   final bool hasAcceptedCompliance;
+  final String tradingName;
+  final String tradeRegistrationNumber;
+  final String taxIdentificationNumber;
+  final String vatRegistrationNumber;
+  final InstitutionSubtype institutionSubtype;
+  final bool authorityToActDocumentRequired;
+  final String? companyDocumentUploadToken;
+  final List<InstitutionKycDocument> kycDocuments;
+  final Map<String, String> pickedDocumentPaths;
+  final String? uploadingDocumentCode;
+  final bool institutionRegistrationSubmitted;
+  final bool institutionRequiredKycComplete;
   final String? errorMessage;
   final bool submissionSuccess;
   final bool isSubmitting;
@@ -96,8 +130,10 @@ sealed class BeneficiaryRegistrationState extends Equatable {
       case BeneficiaryRegistrationStep.welcome:
         return 0.25;
       case BeneficiaryRegistrationStep.identity:
+      case BeneficiaryRegistrationStep.institutionDetails:
         return 0.5;
       case BeneficiaryRegistrationStep.needs:
+      case BeneficiaryRegistrationStep.institutionDocuments:
         return 0.75;
       case BeneficiaryRegistrationStep.disbursement:
         return 1.0;
@@ -122,42 +158,66 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         notes.trim().isNotEmpty;
   }
 
+  bool get isInstitutionDetailsComplete {
+    return legalName.trim().isNotEmpty &&
+        tradingName.trim().isNotEmpty &&
+        tradeRegistrationNumber.trim().isNotEmpty &&
+        taxIdentificationNumber.trim().isNotEmpty &&
+        phoneNumber.trim().isNotEmpty &&
+        email.trim().isNotEmpty &&
+        region.trim().isNotEmpty &&
+        city.trim().isNotEmpty &&
+        address.trim().isNotEmpty;
+  }
+
   @override
   List<Object?> get props => [
-    step,
-    method,
-    selectedCategories,
-    payoutMethod,
-    nationalId,
-    generatedNationalId,
-    firstName,
-    fatherName,
-    grandFatherName,
-    phoneNumber,
-    email,
-    profilePicture,
-    gender,
-    birthdate,
-    address,
-    region,
-    city,
-    notes,
-    situationDescription,
-    uploadedProofName,
-    accountOrMobileNumber,
-    legalName,
-    hasAcceptedCompliance,
-    errorMessage,
-    submissionSuccess,
-    isSubmitting,
-    isFaydaPosting,
-    awaitingFaydaSse,
-    faydaVerificationComplete,
-    manualIdentitySubmitted,
-    createdBeneficiaryId,
-    verificationLink,
-    registeredBeneficiary,
-  ];
+        step,
+        method,
+        selectedCategories,
+        payoutMethod,
+        nationalId,
+        generatedNationalId,
+        firstName,
+        fatherName,
+        grandFatherName,
+        phoneNumber,
+        email,
+        profilePicture,
+        gender,
+        birthdate,
+        address,
+        region,
+        city,
+        notes,
+        situationDescription,
+        uploadedProofName,
+        accountOrMobileNumber,
+        legalName,
+        hasAcceptedCompliance,
+        tradingName,
+        tradeRegistrationNumber,
+        taxIdentificationNumber,
+        vatRegistrationNumber,
+        institutionSubtype,
+        authorityToActDocumentRequired,
+        companyDocumentUploadToken,
+        kycDocuments,
+        pickedDocumentPaths,
+        uploadingDocumentCode,
+        institutionRegistrationSubmitted,
+        institutionRequiredKycComplete,
+        errorMessage,
+        submissionSuccess,
+        isSubmitting,
+        isFaydaPosting,
+        awaitingFaydaSse,
+        faydaVerificationComplete,
+        manualIdentitySubmitted,
+        createdBeneficiaryId,
+        verificationLink,
+        registeredBeneficiary,
+      ];
 }
 
 final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState {
@@ -185,6 +245,18 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.accountOrMobileNumber,
     super.legalName,
     super.hasAcceptedCompliance,
+    super.tradingName,
+    super.tradeRegistrationNumber,
+    super.taxIdentificationNumber,
+    super.vatRegistrationNumber,
+    super.institutionSubtype,
+    super.authorityToActDocumentRequired,
+    super.companyDocumentUploadToken,
+    super.kycDocuments,
+    super.pickedDocumentPaths,
+    super.uploadingDocumentCode,
+    super.institutionRegistrationSubmitted,
+    super.institutionRequiredKycComplete,
     super.errorMessage,
     super.submissionSuccess,
     super.isSubmitting,
@@ -225,6 +297,20 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     String? accountOrMobileNumber,
     String? legalName,
     bool? hasAcceptedCompliance,
+    String? tradingName,
+    String? tradeRegistrationNumber,
+    String? taxIdentificationNumber,
+    String? vatRegistrationNumber,
+    InstitutionSubtype? institutionSubtype,
+    bool? authorityToActDocumentRequired,
+    String? companyDocumentUploadToken,
+    bool clearCompanyDocumentUploadToken = false,
+    List<InstitutionKycDocument>? kycDocuments,
+    Map<String, String>? pickedDocumentPaths,
+    String? uploadingDocumentCode,
+    bool clearUploadingDocumentCode = false,
+    bool? institutionRegistrationSubmitted,
+    bool? institutionRequiredKycComplete,
     String? errorMessage,
     bool clearError = false,
     bool? submissionSuccess,
@@ -238,6 +324,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     BeneficiaryDto? registeredBeneficiary,
     bool clearBeneficiaryMeta = false,
     bool clearFaydaProgress = false,
+    bool clearInstitutionMeta = false,
   }) {
     return BeneficiaryRegistrationInitial(
       step: step ?? this.step,
@@ -269,6 +356,37 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       accountOrMobileNumber: accountOrMobileNumber ?? this.accountOrMobileNumber,
       legalName: legalName ?? this.legalName,
       hasAcceptedCompliance: hasAcceptedCompliance ?? this.hasAcceptedCompliance,
+      tradingName: tradingName ?? this.tradingName,
+      tradeRegistrationNumber:
+          tradeRegistrationNumber ?? this.tradeRegistrationNumber,
+      taxIdentificationNumber:
+          taxIdentificationNumber ?? this.taxIdentificationNumber,
+      vatRegistrationNumber:
+          vatRegistrationNumber ?? this.vatRegistrationNumber,
+      institutionSubtype: institutionSubtype ?? this.institutionSubtype,
+      authorityToActDocumentRequired: authorityToActDocumentRequired ??
+          this.authorityToActDocumentRequired,
+      companyDocumentUploadToken: clearCompanyDocumentUploadToken ||
+              clearInstitutionMeta
+          ? null
+          : (companyDocumentUploadToken ?? this.companyDocumentUploadToken),
+      kycDocuments: clearInstitutionMeta
+          ? const []
+          : (kycDocuments ?? this.kycDocuments),
+      pickedDocumentPaths: clearInstitutionMeta
+          ? const {}
+          : (pickedDocumentPaths ?? this.pickedDocumentPaths),
+      uploadingDocumentCode: clearUploadingDocumentCode
+          ? null
+          : (uploadingDocumentCode ?? this.uploadingDocumentCode),
+      institutionRegistrationSubmitted: clearInstitutionMeta
+          ? false
+          : (institutionRegistrationSubmitted ??
+              this.institutionRegistrationSubmitted),
+      institutionRequiredKycComplete: clearInstitutionMeta
+          ? false
+          : (institutionRequiredKycComplete ??
+              this.institutionRequiredKycComplete),
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       submissionSuccess: clearBeneficiaryMeta
           ? false
@@ -285,7 +403,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
           : (faydaVerificationComplete ?? this.faydaVerificationComplete),
       manualIdentitySubmitted:
           manualIdentitySubmitted ?? this.manualIdentitySubmitted,
-      createdBeneficiaryId: clearBeneficiaryMeta
+      createdBeneficiaryId: clearBeneficiaryMeta || clearInstitutionMeta
           ? null
           : (createdBeneficiaryId ?? this.createdBeneficiaryId),
       verificationLink: clearBeneficiaryMeta || clearFaydaProgress

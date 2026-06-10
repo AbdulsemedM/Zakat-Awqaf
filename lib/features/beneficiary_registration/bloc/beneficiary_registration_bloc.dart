@@ -8,6 +8,7 @@ import 'package:mejlis_digital_hub/core/common/utils/phone_e164.dart';
 import '../data/beneficiary_registration_exception.dart';
 import '../data/beneficiary_sse_client.dart';
 import '../data/models/beneficiary_create_request.dart';
+import '../data/models/company_beneficiary_create_request.dart';
 import '../data/national_id_generator.dart';
 import '../data/repository/beneficiary_registration_repository.dart';
 import 'beneficiary_registration_event.dart';
@@ -52,6 +53,16 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<RegistrationStepAdvanced>(_onAdvanceStep);
     on<RegistrationStepWentBack>(_onBackStep);
     on<BeneficiarySubmissionRequested>(_onSubmit);
+    on<TradingNameUpdated>(_onTradingNameUpdated);
+    on<TradeRegistrationNumberUpdated>(_onTradeRegistrationNumberUpdated);
+    on<TaxIdentificationNumberUpdated>(_onTaxIdentificationNumberUpdated);
+    on<VatRegistrationNumberUpdated>(_onVatRegistrationNumberUpdated);
+    on<InstitutionSubtypeUpdated>(_onInstitutionSubtypeUpdated);
+    on<AuthorityToActRequiredToggled>(_onAuthorityToActRequiredToggled);
+    on<InstitutionRegistrationRequested>(_onInstitutionRegistrationRequested);
+    on<InstitutionDocumentPicked>(_onInstitutionDocumentPicked);
+    on<InstitutionDocumentUploadRequested>(_onInstitutionDocumentUploadRequested);
+    on<InstitutionRegistrationFinished>(_onInstitutionRegistrationFinished);
   }
 
   final BeneficiaryRegistrationRepository _repository;
@@ -485,7 +496,100 @@ class BeneficiaryRegistrationBloc extends Bloc<
     emit(_current.copyWith(hasAcceptedCompliance: event.accepted, clearError: true));
   }
 
+  void _onTradingNameUpdated(
+    TradingNameUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(_current.copyWith(tradingName: event.value, clearError: true));
+  }
+
+  void _onTradeRegistrationNumberUpdated(
+    TradeRegistrationNumberUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(
+      _current.copyWith(
+        tradeRegistrationNumber: event.value,
+        clearError: true,
+      ),
+    );
+  }
+
+  void _onTaxIdentificationNumberUpdated(
+    TaxIdentificationNumberUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(
+      _current.copyWith(
+        taxIdentificationNumber: event.value,
+        clearError: true,
+      ),
+    );
+  }
+
+  void _onVatRegistrationNumberUpdated(
+    VatRegistrationNumberUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(
+      _current.copyWith(
+        vatRegistrationNumber: event.value,
+        clearError: true,
+      ),
+    );
+  }
+
+  void _onInstitutionSubtypeUpdated(
+    InstitutionSubtypeUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(
+      _current.copyWith(
+        institutionSubtype: event.value,
+        clearError: true,
+      ),
+    );
+  }
+
+  void _onAuthorityToActRequiredToggled(
+    AuthorityToActRequiredToggled event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(
+      _current.copyWith(
+        authorityToActDocumentRequired: event.required,
+        clearError: true,
+      ),
+    );
+  }
+
+  void _onInstitutionDocumentPicked(
+    InstitutionDocumentPicked event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    final updated = Map<String, String>.from(_current.pickedDocumentPaths);
+    updated[event.documentCode] = event.filePath;
+    emit(
+      _current.copyWith(
+        pickedDocumentPaths: updated,
+        clearError: true,
+      ),
+    );
+  }
+
   BeneficiaryRegistrationStep? _nextStepAfter(BeneficiaryRegistrationInitial c) {
+    if (c.method == RegistrationMethod.institution) {
+      return switch (c.step) {
+        BeneficiaryRegistrationStep.welcome =>
+          BeneficiaryRegistrationStep.institutionDetails,
+        BeneficiaryRegistrationStep.institutionDetails =>
+          BeneficiaryRegistrationStep.institutionDocuments,
+        BeneficiaryRegistrationStep.institutionDocuments => null,
+        BeneficiaryRegistrationStep.identity => null,
+        BeneficiaryRegistrationStep.needs => null,
+        BeneficiaryRegistrationStep.disbursement => null,
+      };
+    }
     if (c.method == RegistrationMethod.fastTrack) {
       return switch (c.step) {
         BeneficiaryRegistrationStep.welcome => BeneficiaryRegistrationStep.needs,
@@ -493,6 +597,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
           BeneficiaryRegistrationStep.disbursement,
         BeneficiaryRegistrationStep.disbursement => null,
         BeneficiaryRegistrationStep.identity => null,
+        BeneficiaryRegistrationStep.institutionDetails => null,
+        BeneficiaryRegistrationStep.institutionDocuments => null,
       };
     }
     return switch (c.step) {
@@ -501,10 +607,24 @@ class BeneficiaryRegistrationBloc extends Bloc<
       BeneficiaryRegistrationStep.needs =>
         BeneficiaryRegistrationStep.disbursement,
       BeneficiaryRegistrationStep.disbursement => null,
+      BeneficiaryRegistrationStep.institutionDetails => null,
+      BeneficiaryRegistrationStep.institutionDocuments => null,
     };
   }
 
   BeneficiaryRegistrationStep? _prevStepAfter(BeneficiaryRegistrationInitial c) {
+    if (c.method == RegistrationMethod.institution) {
+      return switch (c.step) {
+        BeneficiaryRegistrationStep.institutionDetails =>
+          BeneficiaryRegistrationStep.welcome,
+        BeneficiaryRegistrationStep.institutionDocuments =>
+          BeneficiaryRegistrationStep.institutionDetails,
+        BeneficiaryRegistrationStep.welcome => null,
+        BeneficiaryRegistrationStep.identity => null,
+        BeneficiaryRegistrationStep.needs => null,
+        BeneficiaryRegistrationStep.disbursement => null,
+      };
+    }
     if (c.method == RegistrationMethod.fastTrack) {
       return switch (c.step) {
         BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.welcome,
@@ -512,6 +632,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
           BeneficiaryRegistrationStep.needs,
         BeneficiaryRegistrationStep.welcome => null,
         BeneficiaryRegistrationStep.identity => null,
+        BeneficiaryRegistrationStep.institutionDetails => null,
+        BeneficiaryRegistrationStep.institutionDocuments => null,
       };
     }
     return switch (c.step) {
@@ -520,6 +642,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
       BeneficiaryRegistrationStep.disbursement =>
         BeneficiaryRegistrationStep.needs,
       BeneficiaryRegistrationStep.welcome => null,
+      BeneficiaryRegistrationStep.institutionDetails => null,
+      BeneficiaryRegistrationStep.institutionDocuments => null,
     };
   }
 
@@ -548,6 +672,13 @@ class BeneficiaryRegistrationBloc extends Bloc<
         _current.method == RegistrationMethod.manual &&
         !_current.manualIdentitySubmitted) {
       add(const BeneficiarySubmissionRequested());
+      return;
+    }
+
+    if (_current.step == BeneficiaryRegistrationStep.institutionDetails &&
+        _current.method == RegistrationMethod.institution &&
+        !_current.institutionRegistrationSubmitted) {
+      add(const InstitutionRegistrationRequested());
       return;
     }
 
@@ -686,6 +817,219 @@ class BeneficiaryRegistrationBloc extends Bloc<
         .join(' ');
   }
 
+  Future<void> _onInstitutionRegistrationRequested(
+    InstitutionRegistrationRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    if (_current.step != BeneficiaryRegistrationStep.institutionDetails) {
+      return;
+    }
+    if (_current.method != RegistrationMethod.institution) {
+      return;
+    }
+    if (_current.institutionRegistrationSubmitted) {
+      final next = _nextStepAfter(_current);
+      if (next != null) {
+        emit(_current.copyWith(step: next, clearError: true));
+      }
+      return;
+    }
+
+    final validation = _validateInstitutionDetails(_current);
+    if (validation != null) {
+      emit(
+        _current.copyWith(
+          errorMessage: validation,
+          submissionSuccess: false,
+        ),
+      );
+      return;
+    }
+
+    emit(
+      _current.copyWith(
+        isSubmitting: true,
+        clearError: true,
+        clearInstitutionMeta: true,
+      ),
+    );
+
+    final request = _buildCompanyCreateRequest(_current);
+
+    try {
+      final result = await _repository.registerCompany(request);
+      if (result.statusCode != 201) {
+        throw BeneficiaryRegistrationException(
+          'Unexpected status: ${result.statusCode}',
+        );
+      }
+      final dto = result.dto;
+      emit(
+        _current.copyWith(
+          isSubmitting: false,
+          institutionRegistrationSubmitted: true,
+          submissionSuccess: true,
+          createdBeneficiaryId: dto.id,
+          registeredBeneficiary: dto,
+          companyDocumentUploadToken: dto.companyDocumentUploadToken,
+          kycDocuments: dto.institutionRecommendedKycDocuments,
+          institutionRequiredKycComplete:
+              dto.institutionRequiredKycComplete ?? false,
+          step: BeneficiaryRegistrationStep.institutionDocuments,
+          clearError: true,
+        ),
+      );
+    } on BeneficiaryRegistrationException catch (e) {
+      emit(
+        _current.copyWith(
+          isSubmitting: false,
+          submissionSuccess: false,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        _current.copyWith(
+          isSubmitting: false,
+          submissionSuccess: false,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onInstitutionDocumentUploadRequested(
+    InstitutionDocumentUploadRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    if (_current.step != BeneficiaryRegistrationStep.institutionDocuments) {
+      return;
+    }
+
+    final companyId = _current.createdBeneficiaryId?.trim();
+    final uploadToken = _current.companyDocumentUploadToken?.trim();
+    final filePath = _current.pickedDocumentPaths[event.documentCode]?.trim();
+
+    if (companyId == null ||
+        companyId.isEmpty ||
+        uploadToken == null ||
+        uploadToken.isEmpty) {
+      emit(
+        _current.copyWith(
+          errorMessage: 'Registration session expired. Please go back and try again.',
+        ),
+      );
+      return;
+    }
+    if (filePath == null || filePath.isEmpty) {
+      emit(
+        _current.copyWith(
+          errorMessage: 'Please select a file before uploading.',
+        ),
+      );
+      return;
+    }
+
+    emit(
+      _current.copyWith(
+        uploadingDocumentCode: event.documentCode,
+        clearError: true,
+      ),
+    );
+
+    try {
+      final result = await _repository.uploadCompanyDocument(
+        companyId: companyId,
+        uploadToken: uploadToken,
+        documentCode: event.documentCode,
+        filePath: filePath,
+      );
+      final dto = result.dto;
+      emit(
+        _current.copyWith(
+          uploadingDocumentCode: null,
+          clearUploadingDocumentCode: true,
+          registeredBeneficiary: dto,
+          kycDocuments: dto.institutionRecommendedKycDocuments,
+          institutionRequiredKycComplete:
+              dto.institutionRequiredKycComplete ?? false,
+          companyDocumentUploadToken:
+              dto.companyDocumentUploadToken ?? uploadToken,
+          clearError: true,
+        ),
+      );
+    } on BeneficiaryRegistrationException catch (e) {
+      emit(
+        _current.copyWith(
+          uploadingDocumentCode: null,
+          clearUploadingDocumentCode: true,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        _current.copyWith(
+          uploadingDocumentCode: null,
+          clearUploadingDocumentCode: true,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  void _onInstitutionRegistrationFinished(
+    InstitutionRegistrationFinished event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    if (!_current.institutionRequiredKycComplete) {
+      emit(
+        _current.copyWith(
+          errorMessage: 'Please upload all required documents before finishing.',
+        ),
+      );
+      return;
+    }
+    emit(
+      _current.copyWith(
+        submissionSuccess: true,
+        clearError: true,
+      ),
+    );
+  }
+
+  String? _validateInstitutionDetails(BeneficiaryRegistrationInitial s) {
+    if (!s.isInstitutionDetailsComplete) {
+      return 'Please complete all required institution fields.';
+    }
+    if (PhoneE164.normalize(s.phoneNumber) == null) {
+      return 'Enter a valid phone number (e.g. +251911223344 or 0911223344).';
+    }
+    if (!s.email.trim().contains('@')) {
+      return 'Enter a valid email address.';
+    }
+    return null;
+  }
+
+  CompanyBeneficiaryCreateRequest _buildCompanyCreateRequest(
+    BeneficiaryRegistrationInitial s,
+  ) {
+    return CompanyBeneficiaryCreateRequest(
+      legalName: s.legalName.trim(),
+      tradingName: s.tradingName.trim(),
+      tradeRegistrationNumber: s.tradeRegistrationNumber.trim(),
+      taxIdentificationNumber: s.taxIdentificationNumber.trim(),
+      vatRegistrationNumber: s.vatRegistrationNumber.trim(),
+      phone: PhoneE164.normalize(s.phoneNumber)!,
+      email: s.email.trim(),
+      region: s.region.trim(),
+      city: s.city.trim(),
+      addressLine: s.address.trim(),
+      institutionSubtype: s.institutionSubtype,
+      authorityToActDocumentRequired: s.authorityToActDocumentRequired,
+      notes: s.notes.trim(),
+    );
+  }
+
   bool _canMoveForward(BeneficiaryRegistrationInitial current) {
     switch (current.step) {
       case BeneficiaryRegistrationStep.welcome:
@@ -697,6 +1041,13 @@ class BeneficiaryRegistrationBloc extends Bloc<
         return current.method == RegistrationMethod.manual &&
             current.isIdentityStepComplete &&
             !current.isSubmitting;
+      case BeneficiaryRegistrationStep.institutionDetails:
+        return current.method == RegistrationMethod.institution &&
+            current.isInstitutionDetailsComplete &&
+            !current.isSubmitting;
+      case BeneficiaryRegistrationStep.institutionDocuments:
+        return current.institutionRequiredKycComplete &&
+            current.uploadingDocumentCode == null;
       case BeneficiaryRegistrationStep.needs:
         return current.selectedCategories.isNotEmpty &&
             current.situationDescription.trim().isNotEmpty;

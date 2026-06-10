@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../data/models/institution_subtype.dart';
 import 'beneficiary_registration_state.dart';
 
 sealed class BeneficiaryRegistrationEvent extends Equatable {
@@ -223,4 +224,81 @@ final class ComplianceToggled extends BeneficiaryRegistrationEvent {
 
 final class BeneficiarySubmissionRequested extends BeneficiaryRegistrationEvent {
   const BeneficiarySubmissionRequested();
+}
+
+final class TradingNameUpdated extends BeneficiaryRegistrationEvent {
+  const TradingNameUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class TradeRegistrationNumberUpdated extends BeneficiaryRegistrationEvent {
+  const TradeRegistrationNumberUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class TaxIdentificationNumberUpdated extends BeneficiaryRegistrationEvent {
+  const TaxIdentificationNumberUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class VatRegistrationNumberUpdated extends BeneficiaryRegistrationEvent {
+  const VatRegistrationNumberUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class InstitutionSubtypeUpdated extends BeneficiaryRegistrationEvent {
+  const InstitutionSubtypeUpdated(this.value);
+  final InstitutionSubtype value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class AuthorityToActRequiredToggled extends BeneficiaryRegistrationEvent {
+  const AuthorityToActRequiredToggled(this.required);
+  final bool required;
+
+  @override
+  List<Object?> get props => [required];
+}
+
+final class InstitutionRegistrationRequested extends BeneficiaryRegistrationEvent {
+  const InstitutionRegistrationRequested();
+}
+
+final class InstitutionDocumentPicked extends BeneficiaryRegistrationEvent {
+  const InstitutionDocumentPicked({
+    required this.documentCode,
+    required this.filePath,
+  });
+
+  final String documentCode;
+  final String filePath;
+
+  @override
+  List<Object?> get props => [documentCode, filePath];
+}
+
+final class InstitutionDocumentUploadRequested extends BeneficiaryRegistrationEvent {
+  const InstitutionDocumentUploadRequested(this.documentCode);
+  final String documentCode;
+
+  @override
+  List<Object?> get props => [documentCode];
+}
+
+final class InstitutionRegistrationFinished extends BeneficiaryRegistrationEvent {
+  const InstitutionRegistrationFinished();
 }

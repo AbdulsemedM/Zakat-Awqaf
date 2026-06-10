@@ -17,12 +17,24 @@ class StepProgressHeader extends StatelessWidget {
     if (step == BeneficiaryRegistrationStep.welcome) {
       return -1;
     }
+    if (method == RegistrationMethod.institution) {
+      return switch (step) {
+        BeneficiaryRegistrationStep.institutionDetails => 0,
+        BeneficiaryRegistrationStep.institutionDocuments => 1,
+        BeneficiaryRegistrationStep.welcome => -1,
+        BeneficiaryRegistrationStep.identity => -1,
+        BeneficiaryRegistrationStep.needs => -1,
+        BeneficiaryRegistrationStep.disbursement => -1,
+      };
+    }
     if (method == RegistrationMethod.fastTrack) {
       return switch (step) {
         BeneficiaryRegistrationStep.needs => 0,
         BeneficiaryRegistrationStep.disbursement => 1,
         BeneficiaryRegistrationStep.welcome => -1,
         BeneficiaryRegistrationStep.identity => -1,
+        BeneficiaryRegistrationStep.institutionDetails => -1,
+        BeneficiaryRegistrationStep.institutionDocuments => -1,
       };
     }
     return switch (step) {
@@ -30,6 +42,8 @@ class StepProgressHeader extends StatelessWidget {
       BeneficiaryRegistrationStep.needs => 1,
       BeneficiaryRegistrationStep.disbursement => 2,
       BeneficiaryRegistrationStep.welcome => -1,
+      BeneficiaryRegistrationStep.institutionDetails => -1,
+      BeneficiaryRegistrationStep.institutionDocuments => -1,
     };
   }
 
@@ -41,9 +55,11 @@ class StepProgressHeader extends StatelessWidget {
       return const SizedBox(height: 8);
     }
 
-    final labels = method == RegistrationMethod.fastTrack
-        ? ['Needs', 'Disburse']
-        : ['Identity', 'Needs', 'Verify'];
+    final labels = switch (method) {
+      RegistrationMethod.fastTrack => ['Needs', 'Disburse'],
+      RegistrationMethod.institution => ['Details', 'Documents'],
+      RegistrationMethod.manual => ['Identity', 'Needs', 'Verify'],
+    };
     final activeIndex = _activeIndex(step, method);
 
     return LayoutBuilder(
