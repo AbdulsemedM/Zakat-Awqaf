@@ -22,14 +22,14 @@ class _CoreActionsCard extends StatelessWidget {
               );
             },
           ),
-          const Divider(height: 1, indent: 56, endIndent: 16),
-          _ActionTile(
-            icon: Icons.account_balance_rounded,
-            iconColor: Theme.of(context).colorScheme.secondary,
-            title: context.l10n.profileMyAwqafEndowments,
-            subtitle: context.l10n.profileMyAwqafEndowmentsSubtitle,
-            onTap: () => context.go('/awqaf'),
-          ),
+          // const Divider(height: 1, indent: 56, endIndent: 16),
+          // _ActionTile(
+          //   icon: Icons.account_balance_rounded,
+          //   iconColor: Theme.of(context).colorScheme.secondary,
+          //   title: context.l10n.profileMyAwqafEndowments,
+          //   subtitle: context.l10n.profileMyAwqafEndowmentsSubtitle,
+          //   onTap: () => context.go('/awqaf'),
+          // ),
           const Divider(height: 1, indent: 56, endIndent: 16),
           _ActionTile(
             icon: Icons.assignment_outlined,
@@ -193,8 +193,9 @@ class _SupportCard extends StatelessWidget {
         ],
       ),
     );
-    if (confirmed == true) {
+    if (confirmed == true && context.mounted) {
       bloc.add(const ProfileLoggedOut());
+      context.go('/login');
     }
   }
 }

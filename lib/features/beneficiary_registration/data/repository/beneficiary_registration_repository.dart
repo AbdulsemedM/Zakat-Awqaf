@@ -1,6 +1,8 @@
+import '../models/beneficiary_create_request.dart';
+import '../models/beneficiary_registration_result.dart';
+
 abstract class BeneficiaryRegistrationRepository {
-  Future<void> registerBeneficiary({
-    required String fullName,
-    required String phone,
-  });
+  Future<BeneficiaryRegistrationResult> register(
+    BeneficiaryRegistrationRequest request,
+  );
 }

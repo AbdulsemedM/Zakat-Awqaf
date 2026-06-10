@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "appTitle": "Zakat & Awqaf Commission",
+  "splashSlogan": "For the sake of Allah, for the service of humanity",
   "navHome": "Home",
   "navCalculator": "Calculator",
   "navImpact": "Impact",
@@ -177,6 +178,102 @@
   "calcHowCropZakatWorksTitle": "How crop Zakat works",
   "calcHowCropZakatWorksBody": "Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).",
   "calcHowCropZakatNote": "Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.",
+  "calcWealthNisabHeading": "Nisab & wealth Zakat",
+  "calcWealthNisabLine": "Nisab threshold: {nisab}",
+  "@calcWealthNisabLine": {
+    "placeholders": {
+      "nisab": {"type": "String"}
+    }
+  },
+  "calcWealthZakatDueLine": "Wealth Zakat due (smaller amount on the card): {due}",
+  "@calcWealthZakatDueLine": {
+    "placeholders": {
+      "due": {"type": "String"}
+    }
+  },
+  "calcHowWealthZakatWorksTitle": "How wealth Zakat is calculated",
+  "calcHowWealthZakatWorksBody": "We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is {grams} g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of {silverRate} ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.",
+  "@calcHowWealthZakatWorksBody": {
+    "placeholders": {
+      "grams": {"type": "int"},
+      "silverRate": {"type": "int"}
+    }
+  },
+  "calcHowWealthZakatNote": "Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.",
+  "calcWealthBreakdownTitle": "How the amounts above are calculated",
+  "calcWealthTransLiquidsLine": "Cash + bank + mobile: {cash} + {bank} + {mobile} = {subtotal}",
+  "@calcWealthTransLiquidsLine": {
+    "placeholders": {
+      "cash": {"type": "String"},
+      "bank": {"type": "String"},
+      "mobile": {"type": "String"},
+      "subtotal": {"type": "String"}
+    }
+  },
+  "calcWealthTransBusinessLine": "Business assets (sum of rows): {business}",
+  "@calcWealthTransBusinessLine": {
+    "placeholders": {
+      "business": {"type": "String"}
+    }
+  },
+  "calcWealthTransRollupLine": "Total assets: {liquids} + {business} + {gold} + {silver} = {total}",
+  "@calcWealthTransRollupLine": {
+    "placeholders": {
+      "liquids": {"type": "String"},
+      "business": {"type": "String"},
+      "gold": {"type": "String"},
+      "silver": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "calcWealthTransNisabLine": "Nisab: {grams} g × 24k ({price}/g) = {nisab}",
+  "@calcWealthTransNisabLine": {
+    "placeholders": {
+      "grams": {"type": "String"},
+      "price": {"type": "String"},
+      "nisab": {"type": "String"}
+    }
+  },
+  "calcWealthTransGoldLine": "Gold: {grams} g × {karat} ({price}/g) = {value}",
+  "@calcWealthTransGoldLine": {
+    "placeholders": {
+      "grams": {"type": "String"},
+      "karat": {"type": "String"},
+      "price": {"type": "String"},
+      "value": {"type": "String"}
+    }
+  },
+  "calcWealthTransSilverLine": "Silver: {grams} g × {rate} ETB/g = {value}",
+  "@calcWealthTransSilverLine": {
+    "placeholders": {
+      "grams": {"type": "String"},
+      "rate": {"type": "String"},
+      "value": {"type": "String"}
+    }
+  },
+  "calcWealthTransNetLine": "Net wealth (large amount on the card): total assets − liabilities ({liabilities}) = {net}",
+  "@calcWealthTransNetLine": {
+    "placeholders": {
+      "liabilities": {"type": "String"},
+      "net": {"type": "String"}
+    }
+  },
+  "calcWealthTransDueAbove": "Because {net} is at or above nisab ({nisab}), Zakat due = {net} × 2.5% = {due}.",
+  "@calcWealthTransDueAbove": {
+    "placeholders": {
+      "net": {"type": "String"},
+      "due": {"type": "String"},
+      "nisab": {"type": "String"}
+    }
+  },
+  "calcWealthTransDueBelow": "Because {net} is below nisab ({nisab}), wealth Zakat due = {due}.",
+  "@calcWealthTransDueBelow": {
+    "placeholders": {
+      "net": {"type": "String"},
+      "nisab": {"type": "String"},
+      "due": {"type": "String"}
+    }
+  },
   "calcCropWeightKg": "Crop Weight (kg)",
   "calcCropModeRainFed": "Rain-fed",
   "calcCropModeIrrigated": "Irrigated",
@@ -368,6 +465,13 @@
   "profileLogOutSubtitle": "End your current session",
   "profileLogOutDialogTitle": "Log out?",
   "profileLogOutDialogBody": "You will be signed out of the app on this device.",
+  "loginTitle": "Sign in",
+  "loginSubtitle": "Use your registered phone number and password",
+  "loginPhoneLabel": "Phone number",
+  "loginPasswordLabel": "Password",
+  "loginButton": "Sign in",
+  "loginPhoneRequired": "Enter your phone number",
+  "loginPasswordRequired": "Enter your password",
   "profileCancel": "Cancel",
   "profileHadithOfTheDay": "Hadith of the Day",
   "profileHadithQuote": "\"The believer's shade on the Day of Resurrection will be his charity.\"",

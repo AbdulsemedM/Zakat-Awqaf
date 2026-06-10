@@ -12,6 +12,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTitle => 'Zakat & Awqaf Commission';
 
   @override
+  String get splashSlogan => 'لأجل الله، لأجل خدمة الإنسانية';
+
+  @override
   String get navHome => 'الرئيسية';
 
   @override
@@ -48,8 +51,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalBeneficiariesSupported => 'إجمالي المستفيدين المدعومين';
 
   @override
-  String get transparencyQuote =>
-      'بشفافية ومساءلة وأثر حقيقي: عطاؤك يدعم الإغاثة والتمكين على مستوى الوطن.';
+  String get transparencyQuote => 'بشفافية ومساءلة وأثر حقيقي: عطاؤك يدعم الإغاثة والتمكين على مستوى الوطن.';
 
   @override
   String get payZakatCause => 'ادفع الزكاة لهذه الحالة';
@@ -76,8 +78,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutCommission => 'حول هيئة الزكاة والأوقاف الإثيوبية';
 
   @override
-  String get aboutCommissionBody =>
-      'تنسق هيئة الزكاة والأوقاف الإثيوبية جمع الزكاة وتطوير الأوقاف لرفع المجتمعات الهشة عبر برامج شفافة ومتوافقة مع الشريعة.';
+  String get aboutCommissionBody => 'تنسق هيئة الزكاة والأوقاف الإثيوبية جمع الزكاة وتطوير الأوقاف لرفع المجتمعات الهشة عبر برامج شفافة ومتوافقة مع الشريعة.';
 
   @override
   String get chipTransparencyFirst => 'الشفافية أولاً';
@@ -131,8 +132,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcStep1NisabTitle => 'Step 1: Nisab threshold';
 
   @override
-  String get calcStep1NisabBody =>
-      'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.';
+  String get calcStep1NisabBody => 'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.';
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
@@ -163,12 +163,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcStep1LivestockTitle => 'Step 1: Livestock scale method';
 
   @override
-  String get calcStep1LivestockBody =>
-      'Livestock Zakat is calculated by physical head-count scales (not % of value).';
+  String get calcStep1LivestockBody => 'Livestock Zakat is calculated by physical head-count scales (not % of value).';
 
   @override
-  String get calcStep1LivestockNisabNote =>
-      'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.';
+  String get calcStep1LivestockNisabNote => 'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.';
 
   @override
   String calcAdvisoryPrefix(String text) {
@@ -200,8 +198,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcStep1CropTitle => 'Step 1: Crop (Ushr) calculation';
 
   @override
-  String get calcStep1CropBody =>
-      'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.';
+  String get calcStep1CropBody => 'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.';
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -270,15 +267,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get calcLivestockTermsFootnote =>
-      'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.';
+  String get calcLivestockTermsFootnote => 'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.';
 
   @override
   String get calcStep2EnterAssets => 'Step 2: Enter Your Assets';
 
   @override
-  String get calcStep2EnterAssetsBody =>
-      'Enter the value of your assets in ETB';
+  String get calcStep2EnterAssetsBody => 'Enter the value of your assets in ETB';
 
   @override
   String get calcCashBankSavings => 'Cash & Bank Savings';
@@ -356,8 +351,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcPastureFedTitle => 'Pasture-fed most of the year';
 
   @override
-  String get calcPastureFedSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcPastureFedSubtitle => 'Advisory only; does not block calculation';
 
   @override
   String get calcHawlTitle => 'Completed one lunar year (hawl)';
@@ -369,8 +363,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcWorkAnimalsTitle => 'Used for work (plowing/transport)';
 
   @override
-  String get calcWorkAnimalsSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcWorkAnimalsSubtitle => 'Advisory only; does not block calculation';
 
   @override
   String get calcLivestockSummaryHeading => 'Livestock summary';
@@ -392,12 +385,82 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcHowCropZakatWorksTitle => 'How crop Zakat works';
 
   @override
-  String get calcHowCropZakatWorksBody =>
-      'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
+  String get calcHowCropZakatWorksBody => 'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
 
   @override
-  String get calcHowCropZakatNote =>
-      'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.';
+  String get calcHowCropZakatNote => 'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.';
+
+  @override
+  String get calcWealthNisabHeading => 'Nisab & wealth Zakat';
+
+  @override
+  String calcWealthNisabLine(String nisab) {
+    return 'Nisab threshold: $nisab';
+  }
+
+  @override
+  String calcWealthZakatDueLine(String due) {
+    return 'Wealth Zakat due (smaller amount on the card): $due';
+  }
+
+  @override
+  String get calcHowWealthZakatWorksTitle => 'How wealth Zakat is calculated';
+
+  @override
+  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
+    return 'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is $grams g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of $silverRate ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.';
+  }
+
+  @override
+  String get calcHowWealthZakatNote => 'Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.';
+
+  @override
+  String get calcWealthBreakdownTitle => 'How the amounts above are calculated';
+
+  @override
+  String calcWealthTransLiquidsLine(String cash, String bank, String mobile, String subtotal) {
+    return 'Cash + bank + mobile: $cash + $bank + $mobile = $subtotal';
+  }
+
+  @override
+  String calcWealthTransBusinessLine(String business) {
+    return 'Business assets (sum of rows): $business';
+  }
+
+  @override
+  String calcWealthTransRollupLine(String liquids, String business, String gold, String silver, String total) {
+    return 'Total assets: $liquids + $business + $gold + $silver = $total';
+  }
+
+  @override
+  String calcWealthTransNisabLine(String grams, String price, String nisab) {
+    return 'Nisab: $grams g × 24k ($price/g) = $nisab';
+  }
+
+  @override
+  String calcWealthTransGoldLine(String grams, String karat, String price, String value) {
+    return 'Gold: $grams g × $karat ($price/g) = $value';
+  }
+
+  @override
+  String calcWealthTransSilverLine(String grams, String rate, String value) {
+    return 'Silver: $grams g × $rate ETB/g = $value';
+  }
+
+  @override
+  String calcWealthTransNetLine(String liabilities, String net) {
+    return 'Net wealth (large amount on the card): total assets − liabilities ($liabilities) = $net';
+  }
+
+  @override
+  String calcWealthTransDueAbove(String net, String due, String nisab) {
+    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × 2.5% = $due.';
+  }
+
+  @override
+  String calcWealthTransDueBelow(String net, String nisab, String due) {
+    return 'Because $net is below nisab ($nisab), wealth Zakat due = $due.';
+  }
 
   @override
   String get calcCropWeightKg => 'Crop Weight (kg)';
@@ -433,20 +496,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcGoldK14 => '14k';
 
   @override
-  String get calcMethodologyPlaceholder =>
-      'Zakat methodology content placeholder.';
+  String get calcMethodologyPlaceholder => 'Zakat methodology content placeholder.';
 
   @override
-  String get calcPayBlockedWealth =>
-      'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
+  String get calcPayBlockedWealth => 'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
 
   @override
-  String get calcPayBlockedLivestock =>
-      'No livestock Zakat is due for your current counts.';
+  String get calcPayBlockedLivestock => 'No livestock Zakat is due for your current counts.';
 
   @override
-  String get calcPayBlockedCrops =>
-      'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
+  String get calcPayBlockedCrops => 'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
 
   @override
   String calcCertCropDueLine(String kg) {
@@ -495,16 +554,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get calcAdvNotPasture =>
-      'Not pasture-fed most of the year: check trade/business treatment with scholars.';
+  String get calcAdvNotPasture => 'Not pasture-fed most of the year: check trade/business treatment with scholars.';
 
   @override
-  String get calcAdvHawl =>
-      'Hawl not completed: many scholars require one lunar year for livestock zakat.';
+  String get calcAdvHawl => 'Hawl not completed: many scholars require one lunar year for livestock zakat.';
 
   @override
-  String get calcAdvWork =>
-      'Work animals are typically exempt from livestock zakat.';
+  String get calcAdvWork => 'Work animals are typically exempt from livestock zakat.';
 
   @override
   String calcCropTransBelow(String kg, String nisab) {
@@ -512,34 +568,17 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String calcCropTransMixed(
-    String rain,
-    String irrig,
-    String rate,
-    String kg,
-    String rate2,
-    String due,
-  ) {
+  String calcCropTransMixed(String rain, String irrig, String rate, String kg, String rate2, String due) {
     return 'Mixed irrigation: rain $rain%, irrigated $irrig%. Effective rate = $rate%. Formula: $kg × $rate2% = ${due}kg.';
   }
 
   @override
-  String calcCropTransRainFed(
-    String rate,
-    String kg,
-    String rate2,
-    String due,
-  ) {
+  String calcCropTransRainFed(String rate, String kg, String rate2, String due) {
     return 'Rain-fed rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
   }
 
   @override
-  String calcCropTransIrrigated(
-    String rate,
-    String kg,
-    String rate2,
-    String due,
-  ) {
+  String calcCropTransIrrigated(String rate, String kg, String rate2, String due) {
     return 'Irrigated rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
   }
 
@@ -666,8 +705,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileNisabThresholdAlerts => 'تنبيهات حد النصاب';
 
   @override
-  String get profileNisabThresholdAlertsSubtitle =>
-      'الإشعار عند بلوغ الثروة حد النصاب';
+  String get profileNisabThresholdAlertsSubtitle => 'الإشعار عند بلوغ الثروة حد النصاب';
 
   @override
   String get profileChangePin => 'تغيير الرقم السري';
@@ -697,8 +735,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileApplyAsBeneficiary => 'التقديم كمستفيد';
 
   @override
-  String get profileBeneficiaryApplicationSubtitle =>
-      'إرسال أو متابعة طلبات الدعم';
+  String get profileBeneficiaryApplicationSubtitle => 'إرسال أو متابعة طلبات الدعم';
 
   @override
   String get profileApplyAsBeneficiarySubtitle => 'سجّل لتلقي المساعدة';
@@ -740,8 +777,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileLogOutDialogTitle => 'تسجيل الخروج؟';
 
   @override
-  String get profileLogOutDialogBody =>
-      'سيتم تسجيل خروجك من التطبيق على هذا الجهاز.';
+  String get profileLogOutDialogBody => 'سيتم تسجيل خروجك من التطبيق على هذا الجهاز.';
+
+  @override
+  String get loginTitle => 'Sign in';
+
+  @override
+  String get loginSubtitle => 'Use your registered phone number and password';
+
+  @override
+  String get loginPhoneLabel => 'Phone number';
+
+  @override
+  String get loginPasswordLabel => 'Password';
+
+  @override
+  String get loginButton => 'Sign in';
+
+  @override
+  String get loginPhoneRequired => 'Enter your phone number';
+
+  @override
+  String get loginPasswordRequired => 'Enter your password';
 
   @override
   String get profileCancel => 'إلغاء';
@@ -843,27 +900,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingTitleFaithAndPurpose => 'إيمان ذو غاية';
 
   @override
-  String get onboardingSubtitleFaithAndPurpose =>
-      'مرحبًا بك في منصة موثوقة لإدارة الزكاة والأوقاف.';
+  String get onboardingSubtitleFaithAndPurpose => 'مرحبًا بك في منصة موثوقة لإدارة الزكاة والأوقاف.';
 
   @override
   String get onboardingTitleTransparentGiving => 'حاسبة الزكاة';
 
   @override
-  String get onboardingSubtitleTransparentGiving =>
-      'احسب زكاتك فورًا في الأموال والأنعام والزروع بإرشادات واضحة.';
+  String get onboardingSubtitleTransparentGiving => 'احسب زكاتك فورًا في الأموال والأنعام والزروع بإرشادات واضحة.';
 
   @override
   String get onboardingTitleEasyPayments => 'مدفوعات سهلة وسريعة';
 
   @override
-  String get onboardingSubtitleEasyPayments =>
-      'ادفع زكاتك بسرعة عبر تجربة آمنة وسلسة على الجوال.';
+  String get onboardingSubtitleEasyPayments => 'ادفع زكاتك بسرعة عبر تجربة آمنة وسلسة على الجوال.';
 
   @override
   String get onboardingTitleCompassionInAction => 'رحمة تتحول إلى عمل';
 
   @override
-  String get onboardingSubtitleCompassionInAction =>
-      'ادعم المستفيدين والمشاريع بوضوح وثقة وبركة.';
+  String get onboardingSubtitleCompassionInAction => 'ادعم المستفيدين والمشاريع بوضوح وثقة وبركة.';
 }

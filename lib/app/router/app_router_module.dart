@@ -3,11 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../core/auth/auth_session_controller.dart';
+import '../../features/auth/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart';
+import '../../features/beneficiary_registration/bloc/beneficiary_registration_event.dart';
 import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dart';
 import '../../features/awqaf/home/presentation/screens/awqaf_home_screen.dart';
-import '../../features/awqaf/impact/presentation/screens/awqaf_impact_screen.dart';
 import '../../features/awqaf/portfolio/presentation/screens/awqaf_portfolio_screen.dart';
+import '../../features/awqaf/profile/presentation/screens/awqaf_profile_screen.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/bloc/impact_bloc.dart';
@@ -29,9 +33,25 @@ import '../pages/main_nav_shell_page.dart';
 
 @module
 abstract class AppRouterModule {
+  static const _publicRoutes = <String>{'/splash', '/onboarding', '/login'};
+
   @lazySingleton
-  GoRouter router() => GoRouter(
+  GoRouter router(AuthSessionController authSession) => GoRouter(
     initialLocation: '/splash',
+    refreshListenable: authSession,
+    redirect: (context, state) {
+      final location = state.matchedLocation;
+      if (_publicRoutes.contains(location)) {
+        if (location == '/login' && authSession.isAuthenticated) {
+          return '/';
+        }
+        return null;
+      }
+      if (!authSession.isAuthenticated) {
+        return '/login';
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/splash',
@@ -40,6 +60,13 @@ abstract class AppRouterModule {
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const FirstStartOnboardingScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => BlocProvider(
+          create: (_) => getIt<AuthBloc>(),
+          child: const LoginScreen(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -104,16 +131,16 @@ abstract class AppRouterModule {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/awqaf/impact',
-                builder: (context, state) => const AwqafImpactScreen(),
+                path: '/awqaf/portfolio',
+                builder: (context, state) => const AwqafPortfolioScreen(),
               ),
             ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/awqaf/portfolio',
-                builder: (context, state) => const AwqafPortfolioScreen(),
+                path: '/awqaf/profile',
+                builder: (context, state) => const AwqafProfileScreen(),
               ),
             ],
           ),
@@ -126,7 +153,8 @@ abstract class AppRouterModule {
       GoRoute(
         path: '/beneficiary-registration',
         builder: (context, state) => BlocProvider(
-          create: (_) => BeneficiaryRegistrationBloc(),
+          create: (_) => getIt<BeneficiaryRegistrationBloc>()
+            ..add(const BeneficiaryRegistrationStarted()),
           child: const BeneficiaryRegistrationScreen(),
         ),
       ),

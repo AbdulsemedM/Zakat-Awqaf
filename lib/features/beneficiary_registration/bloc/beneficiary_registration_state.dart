@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../data/models/beneficiary_dto.dart';
+
 enum BeneficiaryRegistrationStep { welcome, identity, needs, disbursement }
 
 enum RegistrationMethod { fastTrack, manual }
@@ -25,7 +27,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     required this.selectedCategories,
     required this.payoutMethod,
     this.nationalId = '',
-    this.identityVerified = false,
+    this.generatedNationalId,
     this.firstName = '',
     this.fatherName = '',
     this.grandFatherName = '',
@@ -35,6 +37,9 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.gender,
     this.birthdate,
     this.address = '',
+    this.region = '',
+    this.city = '',
+    this.notes = '',
     this.situationDescription = '',
     this.uploadedProofName,
     this.accountOrMobileNumber = '',
@@ -42,6 +47,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.hasAcceptedCompliance = false,
     this.errorMessage,
     this.submissionSuccess = false,
+    this.isSubmitting = false,
+    this.isFaydaPosting = false,
+    this.awaitingFaydaSse = false,
+    this.faydaVerificationComplete = false,
+    this.manualIdentitySubmitted = false,
+    this.createdBeneficiaryId,
+    this.verificationLink,
+    this.registeredBeneficiary,
   });
 
   final BeneficiaryRegistrationStep step;
@@ -49,7 +62,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final Set<AsnafCategory> selectedCategories;
   final PayoutMethod payoutMethod;
   final String nationalId;
-  final bool identityVerified;
+  final String? generatedNationalId;
   final String firstName;
   final String fatherName;
   final String grandFatherName;
@@ -59,6 +72,9 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final Gender? gender;
   final DateTime? birthdate;
   final String address;
+  final String region;
+  final String city;
+  final String notes;
   final String situationDescription;
   final String? uploadedProofName;
   final String accountOrMobileNumber;
@@ -66,6 +82,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final bool hasAcceptedCompliance;
   final String? errorMessage;
   final bool submissionSuccess;
+  final bool isSubmitting;
+  final bool isFaydaPosting;
+  final bool awaitingFaydaSse;
+  final bool faydaVerificationComplete;
+  final bool manualIdentitySubmitted;
+  final String? createdBeneficiaryId;
+  final String? verificationLink;
+  final BeneficiaryDto? registeredBeneficiary;
 
   double get progressValue {
     switch (step) {
@@ -82,7 +106,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
 
   bool get isIdentityStepComplete {
     if (method == RegistrationMethod.fastTrack) {
-      return identityVerified;
+      return false;
     }
 
     return firstName.trim().isNotEmpty &&
@@ -90,10 +114,12 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         grandFatherName.trim().isNotEmpty &&
         phoneNumber.trim().isNotEmpty &&
         email.trim().isNotEmpty &&
-        profilePicture != null &&
         gender != null &&
         birthdate != null &&
-        address.trim().isNotEmpty;
+        address.trim().isNotEmpty &&
+        region.trim().isNotEmpty &&
+        city.trim().isNotEmpty &&
+        notes.trim().isNotEmpty;
   }
 
   @override
@@ -103,7 +129,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     selectedCategories,
     payoutMethod,
     nationalId,
-    identityVerified,
+    generatedNationalId,
     firstName,
     fatherName,
     grandFatherName,
@@ -113,6 +139,9 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     gender,
     birthdate,
     address,
+    region,
+    city,
+    notes,
     situationDescription,
     uploadedProofName,
     accountOrMobileNumber,
@@ -120,6 +149,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     hasAcceptedCompliance,
     errorMessage,
     submissionSuccess,
+    isSubmitting,
+    isFaydaPosting,
+    awaitingFaydaSse,
+    faydaVerificationComplete,
+    manualIdentitySubmitted,
+    createdBeneficiaryId,
+    verificationLink,
+    registeredBeneficiary,
   ];
 }
 
@@ -130,7 +167,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.selectedCategories = const {},
     super.payoutMethod = PayoutMethod.telebirrWallet,
     super.nationalId,
-    super.identityVerified,
+    super.generatedNationalId,
     super.firstName,
     super.fatherName,
     super.grandFatherName,
@@ -140,6 +177,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.gender,
     super.birthdate,
     super.address,
+    super.region,
+    super.city,
+    super.notes,
     super.situationDescription,
     super.uploadedProofName,
     super.accountOrMobileNumber,
@@ -147,6 +187,14 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.hasAcceptedCompliance,
     super.errorMessage,
     super.submissionSuccess,
+    super.isSubmitting,
+    super.isFaydaPosting,
+    super.awaitingFaydaSse,
+    super.faydaVerificationComplete,
+    super.manualIdentitySubmitted,
+    super.createdBeneficiaryId,
+    super.verificationLink,
+    super.registeredBeneficiary,
   });
 
   BeneficiaryRegistrationInitial copyWith({
@@ -155,7 +203,8 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     Set<AsnafCategory>? selectedCategories,
     PayoutMethod? payoutMethod,
     String? nationalId,
-    bool? identityVerified,
+    String? generatedNationalId,
+    bool clearGeneratedNationalId = false,
     String? firstName,
     String? fatherName,
     String? grandFatherName,
@@ -167,6 +216,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     DateTime? birthdate,
     bool clearBirthdate = false,
     String? address,
+    String? region,
+    String? city,
+    String? notes,
     String? situationDescription,
     String? uploadedProofName,
     bool clearUploadedProof = false,
@@ -176,6 +228,16 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     String? errorMessage,
     bool clearError = false,
     bool? submissionSuccess,
+    bool? isSubmitting,
+    bool? isFaydaPosting,
+    bool? awaitingFaydaSse,
+    bool? faydaVerificationComplete,
+    bool? manualIdentitySubmitted,
+    String? createdBeneficiaryId,
+    String? verificationLink,
+    BeneficiaryDto? registeredBeneficiary,
+    bool clearBeneficiaryMeta = false,
+    bool clearFaydaProgress = false,
   }) {
     return BeneficiaryRegistrationInitial(
       step: step ?? this.step,
@@ -183,7 +245,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       selectedCategories: selectedCategories ?? this.selectedCategories,
       payoutMethod: payoutMethod ?? this.payoutMethod,
       nationalId: nationalId ?? this.nationalId,
-      identityVerified: identityVerified ?? this.identityVerified,
+      generatedNationalId: clearGeneratedNationalId
+          ? null
+          : (generatedNationalId ?? this.generatedNationalId),
       firstName: firstName ?? this.firstName,
       fatherName: fatherName ?? this.fatherName,
       grandFatherName: grandFatherName ?? this.grandFatherName,
@@ -195,6 +259,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       gender: gender ?? this.gender,
       birthdate: clearBirthdate ? null : (birthdate ?? this.birthdate),
       address: address ?? this.address,
+      region: region ?? this.region,
+      city: city ?? this.city,
+      notes: notes ?? this.notes,
       situationDescription: situationDescription ?? this.situationDescription,
       uploadedProofName: clearUploadedProof
           ? null
@@ -203,7 +270,30 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       legalName: legalName ?? this.legalName,
       hasAcceptedCompliance: hasAcceptedCompliance ?? this.hasAcceptedCompliance,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      submissionSuccess: submissionSuccess ?? this.submissionSuccess,
+      submissionSuccess: clearBeneficiaryMeta
+          ? false
+          : (submissionSuccess ?? this.submissionSuccess),
+      isSubmitting: isSubmitting ?? this.isSubmitting,
+      isFaydaPosting: clearBeneficiaryMeta || clearFaydaProgress
+          ? false
+          : (isFaydaPosting ?? this.isFaydaPosting),
+      awaitingFaydaSse: clearBeneficiaryMeta || clearFaydaProgress
+          ? false
+          : (awaitingFaydaSse ?? this.awaitingFaydaSse),
+      faydaVerificationComplete: clearFaydaProgress
+          ? false
+          : (faydaVerificationComplete ?? this.faydaVerificationComplete),
+      manualIdentitySubmitted:
+          manualIdentitySubmitted ?? this.manualIdentitySubmitted,
+      createdBeneficiaryId: clearBeneficiaryMeta
+          ? null
+          : (createdBeneficiaryId ?? this.createdBeneficiaryId),
+      verificationLink: clearBeneficiaryMeta || clearFaydaProgress
+          ? null
+          : (verificationLink ?? this.verificationLink),
+      registeredBeneficiary: clearBeneficiaryMeta
+          ? null
+          : (registeredBeneficiary ?? this.registeredBeneficiary),
     );
   }
 }

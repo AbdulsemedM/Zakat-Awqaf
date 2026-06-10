@@ -42,14 +42,14 @@ class MainNavShellPage extends StatelessWidget {
         inactiveIcon: isAwqaf ? Icons.add_circle_outline_rounded : Icons.calculate_outlined,
       ),
       _NavItem(
-        label: l10n.navImpact,
-        activeIcon: Icons.auto_graph_rounded,
-        inactiveIcon: Icons.auto_graph_outlined,
+        label: isAwqaf ? 'Portfolio' : l10n.navImpact,
+        activeIcon: isAwqaf ? Icons.workspaces_rounded : Icons.auto_graph_rounded,
+        inactiveIcon: isAwqaf ? Icons.workspaces_outline : Icons.auto_graph_outlined,
       ),
       _NavItem(
-        label: isAwqaf ? 'Portfolio' : l10n.navProfile,
-        activeIcon: isAwqaf ? Icons.workspaces_rounded : Icons.person_rounded,
-        inactiveIcon: isAwqaf ? Icons.workspaces_outline : Icons.person_outline_rounded,
+        label: isAwqaf ? 'Profile' : l10n.navProfile,
+        activeIcon: Icons.person_rounded,
+        inactiveIcon: Icons.person_outline_rounded,
       ),
     ];
 
@@ -116,8 +116,8 @@ class MainNavShellPage extends StatelessWidget {
       return switch (itemIndex) {
         0 => '/awqaf',
         1 => '/awqaf/create',
-        2 => '/awqaf/impact',
-        3 => '/awqaf/portfolio',
+        2 => '/awqaf/portfolio',
+        3 => '/awqaf/profile',
         _ => '/awqaf',
       };
     }

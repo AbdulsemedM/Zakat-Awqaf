@@ -1,9 +1,6 @@
-import 'package:injectable/injectable.dart';
-
 import '../models/profile_model.dart';
 import 'profile_data_provider.dart';
 
-@LazySingleton(as: ProfileDataProvider)
 class MockProfileDataProvider implements ProfileDataProvider {
   ProfileModel _cached = ProfileModel(
     name: 'Abdullah Ahmed',

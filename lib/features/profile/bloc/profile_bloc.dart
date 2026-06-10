@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../auth/data/repository/auth_repository.dart';
 import '../data/models/profile_model.dart';
 import '../data/repository/profile_repository.dart';
 import 'profile_event.dart';
@@ -8,7 +9,7 @@ import 'profile_state.dart';
 
 @injectable
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc(this._repository) : super(const ProfileInitial()) {
+  ProfileBloc(this._repository, this._authRepository) : super(const ProfileInitial()) {
     on<ProfileStarted>(_onStarted);
     on<ProfileNisabAlertsToggled>(_onNisabAlertsToggled);
     on<ProfileBiometricToggled>(_onBiometricToggled);
@@ -19,6 +20,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   final ProfileRepository _repository;
+  final AuthRepository _authRepository;
 
   Future<void> _onStarted(
     ProfileStarted event,
@@ -75,6 +77,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ProfileLoggedOut event,
     Emitter<ProfileState> emit,
   ) async {
+    await _authRepository.logout();
     emit(const ProfileInitial());
   }
 

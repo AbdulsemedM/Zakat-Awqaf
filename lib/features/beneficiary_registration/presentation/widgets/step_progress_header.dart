@@ -4,20 +4,47 @@ import '../../../../app/theme/app_colors.dart';
 import '../../bloc/beneficiary_registration_state.dart';
 
 class StepProgressHeader extends StatelessWidget {
-  const StepProgressHeader({required this.step, super.key});
+  const StepProgressHeader({
+    required this.step,
+    required this.method,
+    super.key,
+  });
 
   final BeneficiaryRegistrationStep step;
+  final RegistrationMethod method;
+
+  static int _activeIndex(BeneficiaryRegistrationStep step, RegistrationMethod method) {
+    if (step == BeneficiaryRegistrationStep.welcome) {
+      return -1;
+    }
+    if (method == RegistrationMethod.fastTrack) {
+      return switch (step) {
+        BeneficiaryRegistrationStep.needs => 0,
+        BeneficiaryRegistrationStep.disbursement => 1,
+        BeneficiaryRegistrationStep.welcome => -1,
+        BeneficiaryRegistrationStep.identity => -1,
+      };
+    }
+    return switch (step) {
+      BeneficiaryRegistrationStep.identity => 0,
+      BeneficiaryRegistrationStep.needs => 1,
+      BeneficiaryRegistrationStep.disbursement => 2,
+      BeneficiaryRegistrationStep.welcome => -1,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final labels = ['Identity', 'Needs', 'Verify'];
-    final activeIndex = switch (step) {
-      BeneficiaryRegistrationStep.welcome => 0,
-      BeneficiaryRegistrationStep.identity => 0,
-      BeneficiaryRegistrationStep.needs => 1,
-      BeneficiaryRegistrationStep.disbursement => 2,
-    };
+
+    if (step == BeneficiaryRegistrationStep.welcome) {
+      return const SizedBox(height: 8);
+    }
+
+    final labels = method == RegistrationMethod.fastTrack
+        ? ['Needs', 'Disburse']
+        : ['Identity', 'Needs', 'Verify'];
+    final activeIndex = _activeIndex(step, method);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -33,7 +60,11 @@ class StepProgressHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 for (var index = 0; index < labels.length; index++) ...[
-                  _StepCircle(index: index, activeIndex: activeIndex, scheme: scheme),
+                  _StepCircle(
+                    index: index,
+                    activeIndex: activeIndex,
+                    scheme: scheme,
+                  ),
                   if (index < labels.length - 1)
                     Expanded(
                       child: Container(
@@ -67,7 +98,7 @@ class _StepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isActive = index <= activeIndex;
+    final isActive = activeIndex >= 0 && index <= activeIndex;
     return CircleAvatar(
       radius: 12,
       backgroundColor:

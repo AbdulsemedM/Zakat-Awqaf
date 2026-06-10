@@ -6,72 +6,172 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
+import '../pages/fayda_verification_webview_page.dart';
 import '../widgets/asnaf_category_tile.dart';
 import '../widgets/payout_method_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/step_progress_header.dart';
+
+void _openFaydaVerificationWebView(BuildContext context, String link) {
+  final uri = Uri.tryParse(link.trim());
+  if (uri == null) {
+    return;
+  }
+  final bloc = context.read<BeneficiaryRegistrationBloc>();
+  Navigator.of(context).push<void>(
+    MaterialPageRoute<void>(
+      builder: (_) => BlocProvider.value(
+        value: bloc,
+        child: FaydaVerificationWebViewPage(url: uri),
+      ),
+    ),
+  );
+}
 
 class BeneficiaryRegistrationScreen extends StatelessWidget {
   const BeneficiaryRegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
-      listener: (context, state) {
-        if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
-          );
-        }
-        if (state.submissionSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Application submitted successfully.')),
-          );
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                if (state.step == BeneficiaryRegistrationStep.welcome) {
-                  if (context.canPop()) {
-                    context.pop();
-                  } else {
-                    context.go('/');
-                  }
-                  return;
-                }
-                context.read<BeneficiaryRegistrationBloc>().add(
-                  const RegistrationStepWentBack(),
-                );
-              },
-            ),
-            title: const Text('Beneficiary Registration'),
-            // actions: [
-            //   IconButton(onPressed: () {}, icon: const Icon(Icons.settings_outlined)),
-            // ],
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  StepProgressHeader(step: state.step),
-                  const SizedBox(height: 16),
-                  _StepContent(state: state),
-                ],
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) =>
+              current.errorMessage != null &&
+              current.errorMessage!.isNotEmpty &&
+              current.errorMessage != previous.errorMessage,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage!)),
+            );
+          },
+        ),
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) {
+            if (current.method != RegistrationMethod.fastTrack) {
+              return false;
+            }
+            final link = current.verificationLink?.trim();
+            if (link == null || link.isEmpty) {
+              return false;
+            }
+            if (!current.awaitingFaydaSse) {
+              return false;
+            }
+            return !previous.awaitingFaydaSse ||
+                previous.verificationLink != current.verificationLink;
+          },
+          listener: (context, state) {
+            _openFaydaVerificationWebView(context, state.verificationLink!);
+          },
+        ),
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) =>
+              current.submissionSuccess && !previous.submissionSuccess,
+          listener: (context, state) {
+            final id = state.createdBeneficiaryId;
+            final status = state.registeredBeneficiary?.verificationStatus;
+            final buffer = StringBuffer();
+            if (id != null && id.isNotEmpty) {
+              buffer.write('Application submitted. Reference: $id');
+            } else {
+              buffer.write('Application submitted successfully.');
+            }
+            if (status != null && status.trim().isNotEmpty) {
+              buffer.write(' Status: ${status.trim()}.');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(buffer.toString())),
+            );
+          },
+        ),
+      ],
+      child: BlocBuilder<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+        builder: (context, state) {
+          final theme = Theme.of(context);
+          return Theme(
+            data: theme.copyWith(
+              inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primary, width: 1.4),
+                ),
+                labelStyle: const TextStyle(color: AppColors.primary),
+              ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.primary,
+                  side: const BorderSide(color: AppColors.primary),
+                ),
               ),
             ),
-          ),
-          bottomNavigationBar: _FooterActions(state: state),
-        );
-      },
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.textOnPrimary,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (state.step == BeneficiaryRegistrationStep.welcome) {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/');
+                      }
+                      return;
+                    }
+                    context.read<BeneficiaryRegistrationBloc>().add(
+                      const RegistrationStepWentBack(),
+                    );
+                  },
+                ),
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Beneficiary Registration',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: AppColors.textOnPrimary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const AppLogo(height: 28),
+                  ],
+                ),
+              ),
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      StepProgressHeader(
+                        step: state.step,
+                        method: state.method,
+                      ),
+                      if (state.method == RegistrationMethod.fastTrack &&
+                          state.step == BeneficiaryRegistrationStep.welcome &&
+                          (state.isFaydaPosting || state.awaitingFaydaSse)) ...[
+                        const SizedBox(height: 16),
+                        const _FaydaVerificationBanner(),
+                      ],
+                      const SizedBox(height: 16),
+                      _StepContent(state: state),
+                    ],
+                  ),
+                ),
+              ),
+              bottomNavigationBar: _FooterActions(state: state),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -87,7 +187,10 @@ class _StepContent extends StatelessWidget {
       case BeneficiaryRegistrationStep.welcome:
         return _WelcomeStep(state: state);
       case BeneficiaryRegistrationStep.identity:
-        return _IdentityStep(state: state);
+        if (state.method == RegistrationMethod.manual) {
+          return _IdentityStep(state: state);
+        }
+        return const SizedBox.shrink();
       case BeneficiaryRegistrationStep.needs:
         return _NeedsStep(state: state);
       case BeneficiaryRegistrationStep.disbursement:
@@ -153,6 +256,48 @@ class _WelcomeStep extends StatelessWidget {
             ],
           ),
         ),
+        if (state.method == RegistrationMethod.fastTrack &&
+            !state.faydaVerificationComplete &&
+            state.createdBeneficiaryId != null &&
+            state.createdBeneficiaryId!.trim().isNotEmpty &&
+            state.errorMessage != null &&
+            state.errorMessage!.trim().isNotEmpty) ...[
+          const SizedBox(height: 12),
+          SectionCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Verification interrupted',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  state.errorMessage!,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: state.verificationLink?.trim().isNotEmpty == true
+                      ? () => _openFaydaVerificationWebView(
+                            context,
+                            state.verificationLink!,
+                          )
+                      : null,
+                  icon: const Icon(Icons.open_in_browser_outlined),
+                  label: const Text('Reopen verification'),
+                ),
+                const SizedBox(height: 8),
+                FilledButton.icon(
+                  onPressed: () =>
+                      bloc.add(const FaydaSseRetryRequested()),
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Retry listening'),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
     );
   }
@@ -219,11 +364,10 @@ class _IdentityStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BeneficiaryRegistrationBloc>();
-    if (state.method == RegistrationMethod.manual) {
-      final birthdateText = state.birthdate == null
+    final birthdateText = state.birthdate == null
           ? 'Select birthdate'
           : MaterialLocalizations.of(context).formatMediumDate(state.birthdate!);
-      return Column(
+    return Column(
         children: [
           SectionCard(
             child: Column(
@@ -239,56 +383,67 @@ class _IdentityStep extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(FirstNameUpdated(v)),
-                        decoration: const InputDecoration(
-                          labelText: 'First Name',
-                        ),
+                        decoration: const InputDecoration(labelText: 'First Name'),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(FatherNameUpdated(v)),
-                        decoration: const InputDecoration(
-                          labelText: "Father's Name",
-                        ),
+                        decoration: const InputDecoration(labelText: 'Last Name'),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(GrandFatherNameUpdated(v)),
+                        decoration: const InputDecoration(labelText: "Grandfather's Name"),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.phone,
+                        onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
                         decoration: const InputDecoration(
-                          labelText: "Grandfather's Name",
+                          labelText: 'Phone Number',
+                          hintText: '+251911223344 or 0911223344',
                         ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                TextField(
-                  keyboardType: TextInputType.phone,
-                  onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (v) => bloc.add(EmailUpdated(v)),
-                  decoration: const InputDecoration(labelText: 'Email'),
-                ),
-                const SizedBox(height: 10),
-                DropdownButtonFormField<Gender>(
-                  initialValue: state.gender,
-                  items: const [
-                    DropdownMenuItem(value: Gender.male, child: Text('Male')),
-                    DropdownMenuItem(value: Gender.female, child: Text('Female')),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (v) => bloc.add(EmailUpdated(v)),
+                        decoration: const InputDecoration(labelText: 'Email'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<Gender>(
+                        initialValue: state.gender,
+                        items: const [
+                          DropdownMenuItem(value: Gender.male, child: Text('Male')),
+                          DropdownMenuItem(value: Gender.female, child: Text('Female')),
+                        ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            bloc.add(GenderUpdated(value));
+                          }
+                        },
+                        decoration: const InputDecoration(labelText: 'Gender'),
+                      ),
+                    ),
                   ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      bloc.add(GenderUpdated(value));
-                    }
-                  },
-                  decoration: const InputDecoration(labelText: 'Gender'),
                 ),
                 const SizedBox(height: 10),
                 OutlinedButton.icon(
@@ -313,6 +468,25 @@ class _IdentityStep extends StatelessWidget {
                   maxLines: 3,
                   onChanged: (v) => bloc.add(AddressUpdated(v)),
                   decoration: const InputDecoration(labelText: 'Address'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  onChanged: (v) => bloc.add(RegionUpdated(v)),
+                  decoration: const InputDecoration(labelText: 'Region'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  onChanged: (v) => bloc.add(CityUpdated(v)),
+                  decoration: const InputDecoration(labelText: 'City'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  maxLines: 2,
+                  onChanged: (v) => bloc.add(NotesUpdated(v)),
+                  decoration: const InputDecoration(
+                    labelText: 'Notes',
+                    hintText: 'e.g. Zakat support applicant',
+                  ),
                 ),
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
@@ -339,50 +513,31 @@ class _IdentityStep extends StatelessWidget {
           ),
         ],
       );
-    }
+  }
+}
 
-    return Column(
-      children: [
-        SectionCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Identity Verification', style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 8),
-              TextField(
-                onChanged: (v) => bloc.add(NationalIdUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Fayda National ID',
-                  hintText: '1234 - 5678 - 9012',
-                ),
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.camera_alt_outlined),
-                label: const Text('Scan ID Card'),
-              ),
-              const SizedBox(height: 12),
-              FilledButton(
-                onPressed: () => bloc.add(const IdentityVerificationRequested()),
-                child: const Text('Verify Identity'),
-              ),
-            ],
+class _FaydaVerificationBanner extends StatelessWidget {
+  const _FaydaVerificationBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return SectionCard(
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(strokeWidth: 2),
           ),
-        ),
-        const SizedBox(height: 12),
-        if (state.identityVerified)
-          const SectionCard(
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: CircleAvatar(child: Icon(Icons.verified_user)),
-              title: Text('Verified Profile'),
-              subtitle: Text('Abebe Kebede Tessema\nMale • May 12, 1985'),
-              isThreeLine: true,
-              trailing: Text('VERIFIED'),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Verifying with Fayda… Complete verification in the browser when it opens.',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -537,14 +692,34 @@ class _FooterActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BeneficiaryRegistrationBloc>();
+    final isManualIdentitySubmit = state.method == RegistrationMethod.manual &&
+        state.step == BeneficiaryRegistrationStep.identity;
     final isFinalStep = state.step == BeneficiaryRegistrationStep.disbursement;
+
     final canContinue = switch (state.step) {
-      BeneficiaryRegistrationStep.welcome => true,
+      BeneficiaryRegistrationStep.welcome =>
+        state.method != RegistrationMethod.fastTrack ||
+            (!state.isFaydaPosting && !state.awaitingFaydaSse),
       BeneficiaryRegistrationStep.identity => state.isIdentityStepComplete,
       BeneficiaryRegistrationStep.needs =>
         state.selectedCategories.isNotEmpty &&
             state.situationDescription.trim().isNotEmpty,
-      BeneficiaryRegistrationStep.disbursement => state.hasAcceptedCompliance,
+      BeneficiaryRegistrationStep.disbursement =>
+        state.hasAcceptedCompliance &&
+            state.accountOrMobileNumber.trim().isNotEmpty &&
+            state.legalName.trim().isNotEmpty,
+    };
+
+    final continueLabel = switch (state.step) {
+      BeneficiaryRegistrationStep.welcome when state.method == RegistrationMethod.fastTrack =>
+        state.isFaydaPosting || state.awaitingFaydaSse
+            ? 'Verifying with Fayda…'
+            : state.faydaVerificationComplete
+                ? 'Continue'
+                : 'Continue with Fayda',
+      BeneficiaryRegistrationStep.identity when isManualIdentitySubmit => 'Submit & Continue',
+      BeneficiaryRegistrationStep.disbursement => 'Finish',
+      _ => 'Continue',
     };
 
     return SafeArea(
@@ -576,16 +751,51 @@ class _FooterActions extends StatelessWidget {
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.textOnPrimary,
                 ),
-                onPressed: !canContinue
+                onPressed: !canContinue ||
+                        state.isFaydaPosting ||
+                        state.awaitingFaydaSse
                     ? null
                     : () {
                         if (isFinalStep) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Registration complete. Needs and disbursement details are saved locally.',
+                              ),
+                            ),
+                          );
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.go('/');
+                          }
+                          return;
+                        }
+                        if (isManualIdentitySubmit) {
                           bloc.add(const BeneficiarySubmissionRequested());
                         } else {
                           bloc.add(const RegistrationStepAdvanced());
                         }
                       },
-                child: Text(isFinalStep ? 'Submit Application' : 'Continue'),
+                child: isManualIdentitySubmit && state.isSubmitting
+                    ? const SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.textOnPrimary,
+                        ),
+                      )
+                    : state.isFaydaPosting
+                        ? const SizedBox(
+                            height: 22,
+                            width: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.textOnPrimary,
+                            ),
+                          )
+                        : Text(continueLabel),
               ),
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../app/theme/app_colors.dart';
+import '../../../../../app/widgets/app_logo.dart';
 
 class AwqafPortfolioPage extends StatelessWidget {
   const AwqafPortfolioPage({super.key});
@@ -9,7 +10,10 @@ class AwqafPortfolioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Mejlis Awqaf')),
+      appBar: AppBar(
+        leading: const AppBarBrandLeading(height: 28),
+        title: const Text('Awqaf'),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

@@ -3,8 +3,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/brand_atmosphere_background.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
+import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 
 class TotalCollectedHeroCard extends StatelessWidget {
   const TotalCollectedHeroCard({super.key, required this.theme});
@@ -19,7 +22,6 @@ class TotalCollectedHeroCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        gradient: PrimaryHero.gradient(scheme),
         boxShadow: [
           BoxShadow(
             color: scheme.shadow.withValues(alpha: 0.1),
@@ -28,99 +30,109 @@ class TotalCollectedHeroCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
         children: [
-          Text(
-            l10n.totalZakatCollected,
-            style: theme.textTheme.labelMedium?.copyWith(
-              letterSpacing: 1.2,
-              color: AppColors.textOnPrimary.withValues(alpha: 0.9),
-              fontWeight: FontWeight.w700,
-            ),
+          const Positioned.fill(
+            child: BrandAtmosphereBackground(),
           ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'ETB 12,842,300',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    color: AppColors.textOnPrimary,
-                    fontWeight: FontWeight.w800,
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.totalZakatCollected,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    letterSpacing: 1.2,
+                    color: AppColors.textOnPrimary.withValues(alpha: 0.9),
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.secondary.withValues(alpha: 0.22),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'ETB 12,842,300',
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          color: AppColors.textOnPrimary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.secondary.withValues(alpha: 0.22),
+                      ),
+                      child: Icon(
+                        Icons.stacked_line_chart_rounded,
+                        color: AppColors.secondary,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Icon(
-                  Icons.stacked_line_chart_rounded,
-                  color: AppColors.secondary,
+                const SizedBox(height: 14),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.thisMonth,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textOnPrimary.withValues(alpha: 0.88),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'ETB 1,120,000',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textOnPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.thisMonth,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textOnPrimary.withValues(alpha: 0.88),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.totalBeneficiariesSupported,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textOnPrimary.withValues(alpha: 0.88),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '4,982',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textOnPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(999),
+                  child: LinearProgressIndicator(
+                    value: 0.82,
+                    color: AppColors.secondary,
+                    backgroundColor: AppColors.textOnPrimary.withValues(alpha: 0.25),
+                    minHeight: 6,
                   ),
                 ),
-              ),
-              Text(
-                'ETB 1,120,000',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textOnPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.totalBeneficiariesSupported,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textOnPrimary.withValues(alpha: 0.88),
+                const SizedBox(height: 12),
+                Text(
+                  l10n.transparencyQuote,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textOnPrimary.withValues(alpha: 0.85),
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
-              ),
-              Text(
-                '4,982',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textOnPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              value: 0.82,
-              color: AppColors.secondary,
-              backgroundColor: AppColors.textOnPrimary.withValues(alpha: 0.25),
-              minHeight: 6,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.transparencyQuote,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.textOnPrimary.withValues(alpha: 0.85),
-              fontStyle: FontStyle.italic,
+              ],
             ),
           ),
         ],
@@ -311,7 +323,17 @@ class DonateSadaqahCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton.icon(
-              onPressed: () => context.go('/calculator'),
+              onPressed: () => context.push(
+                '/zakat/payment',
+                extra: ZakatPaymentArgs(
+                  activeTab: ZakatCategoryTab.wealth,
+                  amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
+                  overviewTitle: l10n.donateSadaqah,
+                  overviewPrimaryValue: l10n.supportCommunityNeeds,
+                  overviewDueLabel: 'Amount',
+                  overviewDueValue: 'Enter an amount',
+                ),
+              ),
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.textOnPrimary,
                 foregroundColor: AppColors.primary,

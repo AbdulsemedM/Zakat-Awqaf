@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/widgets/brand_atmosphere_background.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/utils/number_format.dart';
 import '../../bloc/impact_bloc.dart';
@@ -20,6 +22,7 @@ class ImpactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const AppBarBrandLeading(height: 28),
         title: Text(context.l10n.impactNationalImpact),
         actions: [
           IconButton(

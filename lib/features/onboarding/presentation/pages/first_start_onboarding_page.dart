@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/constants/startup_constants.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class FirstStartOnboardingPage extends StatefulWidget {
@@ -94,6 +95,8 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
               children: [
                 Row(
                   children: [
+                    const AppLogo(height: 36, borderRadius: BorderRadius.all(Radius.circular(8))),
+                    const SizedBox(width: 10),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,

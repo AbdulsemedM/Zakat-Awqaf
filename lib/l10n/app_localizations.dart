@@ -65,8 +65,7 @@ import 'app_localizations_so.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -74,8 +73,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -87,13 +85,12 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -101,7 +98,7 @@ abstract class AppLocalizations {
     Locale('ar'),
     Locale('en'),
     Locale('om'),
-    Locale('so'),
+    Locale('so')
   ];
 
   /// No description provided for @appTitle.
@@ -109,6 +106,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zakat & Awqaf Commission'**
   String get appTitle;
+
+  /// No description provided for @splashSlogan.
+  ///
+  /// In en, this message translates to:
+  /// **'For the sake of Allah, for the service of humanity'**
+  String get splashSlogan;
 
   /// No description provided for @navHome.
   ///
@@ -818,6 +821,102 @@ abstract class AppLocalizations {
   /// **'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.'**
   String get calcHowCropZakatNote;
 
+  /// No description provided for @calcWealthNisabHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab & wealth Zakat'**
+  String get calcWealthNisabHeading;
+
+  /// No description provided for @calcWealthNisabLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab threshold: {nisab}'**
+  String calcWealthNisabLine(String nisab);
+
+  /// No description provided for @calcWealthZakatDueLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth Zakat due (smaller amount on the card): {due}'**
+  String calcWealthZakatDueLine(String due);
+
+  /// No description provided for @calcHowWealthZakatWorksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How wealth Zakat is calculated'**
+  String get calcHowWealthZakatWorksTitle;
+
+  /// No description provided for @calcHowWealthZakatWorksBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is {grams} g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of {silverRate} ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.'**
+  String calcHowWealthZakatWorksBody(int grams, int silverRate);
+
+  /// No description provided for @calcHowWealthZakatNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.'**
+  String get calcHowWealthZakatNote;
+
+  /// No description provided for @calcWealthBreakdownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How the amounts above are calculated'**
+  String get calcWealthBreakdownTitle;
+
+  /// No description provided for @calcWealthTransLiquidsLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash + bank + mobile: {cash} + {bank} + {mobile} = {subtotal}'**
+  String calcWealthTransLiquidsLine(String cash, String bank, String mobile, String subtotal);
+
+  /// No description provided for @calcWealthTransBusinessLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Business assets (sum of rows): {business}'**
+  String calcWealthTransBusinessLine(String business);
+
+  /// No description provided for @calcWealthTransRollupLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Total assets: {liquids} + {business} + {gold} + {silver} = {total}'**
+  String calcWealthTransRollupLine(String liquids, String business, String gold, String silver, String total);
+
+  /// No description provided for @calcWealthTransNisabLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab: {grams} g × 24k ({price}/g) = {nisab}'**
+  String calcWealthTransNisabLine(String grams, String price, String nisab);
+
+  /// No description provided for @calcWealthTransGoldLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold: {grams} g × {karat} ({price}/g) = {value}'**
+  String calcWealthTransGoldLine(String grams, String karat, String price, String value);
+
+  /// No description provided for @calcWealthTransSilverLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver: {grams} g × {rate} ETB/g = {value}'**
+  String calcWealthTransSilverLine(String grams, String rate, String value);
+
+  /// No description provided for @calcWealthTransNetLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Net wealth (large amount on the card): total assets − liabilities ({liabilities}) = {net}'**
+  String calcWealthTransNetLine(String liabilities, String net);
+
+  /// No description provided for @calcWealthTransDueAbove.
+  ///
+  /// In en, this message translates to:
+  /// **'Because {net} is at or above nisab ({nisab}), Zakat due = {net} × 2.5% = {due}.'**
+  String calcWealthTransDueAbove(String net, String due, String nisab);
+
+  /// No description provided for @calcWealthTransDueBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'Because {net} is below nisab ({nisab}), wealth Zakat due = {due}.'**
+  String calcWealthTransDueBelow(String net, String nisab, String due);
+
   /// No description provided for @calcCropWeightKg.
   ///
   /// In en, this message translates to:
@@ -996,14 +1095,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Mixed irrigation: rain {rain}%, irrigated {irrig}%. Effective rate = {rate}%. Formula: {kg} × {rate2}% = {due}kg.'**
-  String calcCropTransMixed(
-    String rain,
-    String irrig,
-    String rate,
-    String kg,
-    String rate2,
-    String due,
-  );
+  String calcCropTransMixed(String rain, String irrig, String rate, String kg, String rate2, String due);
 
   /// No description provided for @calcCropTransRainFed.
   ///
@@ -1015,12 +1107,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Irrigated rate {rate}%. Formula: {kg} × {rate2}% = {due}kg.'**
-  String calcCropTransIrrigated(
-    String rate,
-    String kg,
-    String rate2,
-    String due,
-  );
+  String calcCropTransIrrigated(String rate, String kg, String rate2, String due);
 
   /// No description provided for @calcCamelNoDue.
   ///
@@ -1388,6 +1475,48 @@ abstract class AppLocalizations {
   /// **'You will be signed out of the app on this device.'**
   String get profileLogOutDialogBody;
 
+  /// No description provided for @loginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get loginTitle;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your registered phone number and password'**
+  String get loginSubtitle;
+
+  /// No description provided for @loginPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get loginPhoneLabel;
+
+  /// No description provided for @loginPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get loginPasswordLabel;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get loginButton;
+
+  /// No description provided for @loginPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get loginPhoneRequired;
+
+  /// No description provided for @loginPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get loginPasswordRequired;
+
   /// No description provided for @profileCancel.
   ///
   /// In en, this message translates to:
@@ -1605,8 +1734,7 @@ abstract class AppLocalizations {
   String get onboardingSubtitleCompassionInAction;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -1615,32 +1743,28 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['am', 'ar', 'en', 'om', 'so'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['am', 'ar', 'en', 'om', 'so'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'am':
-      return AppLocalizationsAm();
-    case 'ar':
-      return AppLocalizationsAr();
-    case 'en':
-      return AppLocalizationsEn();
-    case 'om':
-      return AppLocalizationsOm();
-    case 'so':
-      return AppLocalizationsSo();
+    case 'am': return AppLocalizationsAm();
+    case 'ar': return AppLocalizationsAr();
+    case 'en': return AppLocalizationsEn();
+    case 'om': return AppLocalizationsOm();
+    case 'so': return AppLocalizationsSo();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

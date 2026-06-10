@@ -11,10 +11,8 @@ class _LiveImpactCard extends StatelessWidget {
     final scheme = theme.colorScheme;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        gradient: PrimaryHero.gradient(scheme),
         boxShadow: [
           BoxShadow(
             color: scheme.shadow.withValues(alpha: 0.1),
@@ -23,75 +21,86 @@ class _LiveImpactCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withValues(alpha: 0.28),
-                  borderRadius: BorderRadius.circular(99),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+          const Positioned.fill(
+            child: BrandAtmosphereBackground(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    const _PulsingDot(),
-                    const SizedBox(width: 6),
-                    Text(
-                      context.l10n.impactLiveImpactStream,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: AppColors.onSecondary,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.8,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
                       ),
+                      decoration: BoxDecoration(
+                        color: AppColors.secondary.withValues(alpha: 0.28),
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const _PulsingDot(),
+                          const SizedBox(width: 6),
+                          Text(
+                            context.l10n.impactLiveImpactStream,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: AppColors.onSecondary,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.8,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.auto_graph_rounded,
+                      size: 18,
+                      color: AppColors.secondary,
                     ),
                   ],
                 ),
-              ),
-              const Spacer(),
-              Icon(
-                Icons.auto_graph_rounded,
-                size: 18,
-                color: AppColors.secondary,
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            context.l10n.impactDistributedFunds,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: AppColors.textOnPrimary.withValues(alpha: 0.84),
-              letterSpacing: 1,
+                const SizedBox(height: 12),
+                Text(
+                  context.l10n.impactDistributedFunds,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: AppColors.textOnPrimary.withValues(alpha: 0.84),
+                    letterSpacing: 1,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  context.l10n.impactEtbAmount(formatThousands(model.distributedFundsEtb)),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: AppColors.textOnPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    _MetricColumn(
+                      title: context.l10n.impactLivesTouched,
+                      value: formatThousands(model.livesTouched),
+                      theme: theme,
+                    ),
+                    const SizedBox(width: 26),
+                    _MetricColumn(
+                      title: context.l10n.impactActiveProjects,
+                      value: formatThousands(model.activeProjects),
+                      theme: theme,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            context.l10n.impactEtbAmount(formatThousands(model.distributedFundsEtb)),
-            style: theme.textTheme.headlineMedium?.copyWith(
-              color: AppColors.textOnPrimary,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              _MetricColumn(
-                title: context.l10n.impactLivesTouched,
-                value: formatThousands(model.livesTouched),
-                theme: theme,
-              ),
-              const SizedBox(width: 26),
-              _MetricColumn(
-                title: context.l10n.impactActiveProjects,
-                value: formatThousands(model.activeProjects),
-                theme: theme,
-              ),
-            ],
           ),
         ],
       ),

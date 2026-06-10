@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/widgets/brand_atmosphere_background.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../core/auth/auth_session_controller.dart';
 import '../../../../core/constants/startup_constants.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 
 class StartupSplashScreen extends StatefulWidget {
@@ -53,10 +57,18 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
     final prefs = await SharedPreferences.getInstance();
     final hasSeen = prefs.getBool(kWelcomeIntroCompletedKey) ?? false;
     final appMode = prefs.getString('app_mode');
+    final authSession = getIt<AuthSessionController>();
+    if (!authSession.initialized) {
+      await authSession.initialize();
+    }
     await Future<void>.delayed(const Duration(seconds: 3));
     if (!mounted) return;
     if (!hasSeen) {
       context.go('/onboarding');
+      return;
+    }
+    if (!authSession.isAuthenticated) {
+      context.go('/login');
       return;
     }
     context.go(appMode == 'awqaf' ? '/awqaf' : '/');
@@ -66,163 +78,83 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final screen = MediaQuery.sizeOf(context);
+    final w = screen.width;
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: const Alignment(-0.65, -0.75),
-            radius: 1.5,
-            colors: [
-              Color.lerp(AppColors.primary, Colors.white, 0.12)!,
-              Color.lerp(AppColors.primary, Colors.teal, 0.42)!,
-              Color.lerp(AppColors.primary, Colors.black, 0.38)!,
-            ],
-            stops: const [0.0, 0.62, 1.0],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          const Positioned.fill(
+            child: BrandAtmosphereBackground(),
           ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _GeometricPatternPainter(),
-                ),
-              ),
-              Positioned(
-                top: -screen.height * 0.12,
-                left: -screen.width * 0.22,
-                child: _AuroraBlob(
-                  width: screen.width * 0.9,
-                  height: screen.width * 0.9,
-                  color: Colors.white.withValues(alpha: 0.15),
-                ),
-              ),
-              Positioned(
-                top: screen.height * 0.2,
-                right: -screen.width * 0.24,
-                child: _AuroraBlob(
-                  width: screen.width * 0.74,
-                  height: screen.width * 0.84,
-                  color: Color.lerp(AppColors.primary, Colors.teal, 0.4)!
-                      .withValues(alpha: 0.35),
-                ),
-              ),
-              Positioned(
-                bottom: -screen.height * 0.08,
-                left: -screen.width * 0.18,
-                child: _AuroraBlob(
-                  width: screen.width * 0.72,
-                  height: screen.width * 0.68,
-                  color: Color.lerp(AppColors.primary, Colors.black, 0.15)!
-                      .withValues(alpha: 0.22),
-                ),
-              ),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withValues(alpha: 0.12),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Center(
-                child: FadeTransition(
-                  opacity: _fade,
-                  child: SlideTransition(
-                    position: _slide,
-                    child: ScaleTransition(
-                      scale: _scale,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28),
-                        child: Column(
-                          children: [
-                            const Spacer(flex: 2),
-                            Container(
-                              padding: const EdgeInsets.all(24),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Colors.white.withValues(alpha: 0.98),
-                                    Colors.white.withValues(alpha: 0.88),
+          SafeArea(
+            child: Stack(
+              children: [
+                Center(
+                  child: FadeTransition(
+                    opacity: _fade,
+                    child: SlideTransition(
+                      position: _slide,
+                      child: ScaleTransition(
+                        scale: _scale,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          child: Column(
+                            children: [
+                              const Spacer(flex: 2),
+                              SizedBox(
+                                height: w * 0.52,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    CustomPaint(
+                                      size: Size(w * 0.72, w * 0.5),
+                                      painter: _LogoOrbitRingsPainter(),
+                                    ),
+                                    AppLogo(
+                                      height: w * 0.34,
+                                      width: w * 0.58,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ],
                                 ),
-                                borderRadius: BorderRadius.circular(28),
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.55),
-                                  width: 1.5,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.22),
-                                    blurRadius: 36,
-                                    offset: const Offset(0, 16),
-                                  ),
-                                ],
                               ),
-                              child: Image.asset(
-                                'assets/images/Ethiopian_Islamic_Affairs_Supreme_Council.png',
-                                width: screen.width * 0.62,
-                                fit: BoxFit.contain,
+                              const Spacer(flex: 2),
+                              Text(
+                                l10n.appTitle,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                      color: AppColors.textOnPrimary,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 0.35,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.22),
+                                          blurRadius: 14,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
+                                    ),
                               ),
-                            ),
-                            const Spacer(flex: 2),
-                            Text(
-                              l10n.appTitle,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    color: AppColors.textOnPrimary,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 0.35,
-                                    shadows: [
-                                      Shadow(
-                                        color: Colors.black.withValues(alpha: 0.22),
-                                        blurRadius: 14,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Powered by',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.93),
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 0.4,
-                                  ),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 10,
+                              const SizedBox(height: 12),
+                              Text(
+                                l10n.splashSlogan,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      color: Colors.white.withValues(alpha: 0.94),
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.35,
+                                      letterSpacing: 0.2,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.92),
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.12),
-                                    blurRadius: 20,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ],
-                              ),
-                              child: Image.asset(
-                                'assets/images/Coopbank-Alhuda-Logo.png',
-                                width: screen.width * 0.52,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            const SizedBox(height: 24),
+                              const SizedBox(height: 24),
                           ],
                         ),
                       ),
@@ -233,88 +165,30 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
             ],
           ),
         ),
-      ),
-    );
+      ],
+    ),
+  );
   }
 }
 
-class _AuroraBlob extends StatelessWidget {
-  const _AuroraBlob({
-    required this.width,
-    required this.height,
-    required this.color,
-  });
-
-  final double width;
-  final double height;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(999),
-        gradient: RadialGradient(
-          colors: [color, color.withValues(alpha: 0)],
-          stops: const [0, 1],
-        ),
-      ),
-    );
-  }
-}
-
-class _GeometricPatternPainter extends CustomPainter {
+/// Thin decorative rings behind the logo focal point.
+class _LogoOrbitRingsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final linePaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.08)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
+    final c = Offset(size.width / 2, size.height / 2);
+    final base = math.min(size.width, size.height) * 0.52;
 
-    const spacing = 28.0;
-    for (double x = -size.height; x < size.width + size.height; x += spacing) {
-      canvas.drawLine(
-        Offset(x, 0),
-        Offset(x - size.height * 0.45, size.height),
-        linePaint,
-      );
+    void ring(double factor, Color color, double alpha) {
+      final p = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.05
+        ..color = color.withValues(alpha: alpha);
+      canvas.drawCircle(c, base * factor, p);
     }
 
-    final starPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.14)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.9;
-
-    for (double y = 90; y < size.height; y += 110) {
-      for (double x = 34; x < size.width; x += 78) {
-        _drawEightPointStar(canvas, Offset(x, y), 6, starPaint);
-      }
-    }
-  }
-
-  void _drawEightPointStar(Canvas canvas, Offset center, double radius, Paint paint) {
-    final path = Path();
-    for (int i = 0; i < 8; i++) {
-      final angle = (math.pi / 4) * i;
-      final point = Offset(
-        center.dx + math.cos(angle) * radius,
-        center.dy + math.sin(angle) * radius,
-      );
-      if (i == 0) {
-        path.moveTo(point.dx, point.dy);
-      } else {
-        path.lineTo(point.dx, point.dy);
-      }
-      final crossPoint = Offset(
-        center.dx + math.cos(angle + math.pi / 8) * (radius * 0.45),
-        center.dy + math.sin(angle + math.pi / 8) * (radius * 0.45),
-      );
-      path.lineTo(crossPoint.dx, crossPoint.dy);
-    }
-    path.close();
-    canvas.drawPath(path, paint);
+    ring(0.32, Colors.white, 0.11);
+    ring(0.44, AppColors.secondary, 0.15);
+    ring(0.56, Colors.white, 0.065);
   }
 
   @override

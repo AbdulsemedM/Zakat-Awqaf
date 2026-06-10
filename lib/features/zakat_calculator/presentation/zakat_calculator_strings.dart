@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:mejlis_digital_hub/core/common/utils/money_formatter.dart';
 import 'package:mejlis_digital_hub/features/zakat_calculator/bloc/zakat_calculator_state.dart';
 import 'package:mejlis_digital_hub/features/zakat_calculator/data/repository/exchange_rate_repository_impl.dart';
 import 'package:mejlis_digital_hub/l10n/app_localizations.dart';
@@ -10,6 +11,10 @@ final class ZakatCalculatorStrings {
   ZakatCalculatorStrings._();
 
   static const double cropNisabKg = 653.0;
+  /// Mirrors [ZakatCalculatorBloc._recompute] wealth nisab constant.
+  static const int wealthNisabGoldGrams = 85;
+  /// Mirrors [ZakatCalculatorBloc._recompute] silver reference per gram.
+  static const int wealthSilverReferenceEtbPerGram = 50;
   static const String _camelNoDueEnglish = 'No due';
 
   static bool camelHasDue(ZakatCalculatorInitial s) =>
@@ -140,6 +145,73 @@ final class ZakatCalculatorStrings {
     final advisory = livestockAdvisory(l, s);
     if (advisory.isNotEmpty) {
       lines.add(l.calcTransAdvisoryLine(advisory));
+    }
+    return lines.join('\n');
+  }
+
+  static String wealthTransparency(AppLocalizations l, ZakatCalculatorInitial s) {
+    final selectedGoldPriceEtb = switch (s.goldKarat) {
+      GoldKarat.k24 => s.platformGoldPricePerGram24kEtb,
+      GoldKarat.k22 => s.platformGoldPricePerGram22kEtb,
+      GoldKarat.k21 => s.platformGoldPricePerGram21kEtb,
+      GoldKarat.k18 => s.platformGoldPricePerGram18kEtb,
+      GoldKarat.k14 => s.platformGoldPricePerGram14kEtb,
+    };
+    final karatLabel = s.goldKarat.localizedLabel(l);
+    final rateStr = wealthSilverReferenceEtbPerGram.toStringAsFixed(2);
+    final liquidSubtotal = s.cashOnHand + s.bankBalance + s.mobileWallet;
+    final lines = <String>[
+      l.calcWealthTransLiquidsLine(
+        MoneyFormatter.etb(s.cashOnHand),
+        MoneyFormatter.etb(s.bankBalance),
+        MoneyFormatter.etb(s.mobileWallet),
+        MoneyFormatter.etb(liquidSubtotal),
+      ),
+      l.calcWealthTransBusinessLine(MoneyFormatter.etb(s.totalBusinessAssetsEtb)),
+      l.calcWealthTransGoldLine(
+        s.goldGrams.toStringAsFixed(2),
+        karatLabel,
+        MoneyFormatter.etb(selectedGoldPriceEtb),
+        MoneyFormatter.etb(s.goldValueEtb),
+      ),
+      l.calcWealthTransSilverLine(
+        s.silverGrams.toStringAsFixed(2),
+        rateStr,
+        MoneyFormatter.etb(s.silverValueEtb),
+      ),
+      l.calcWealthTransRollupLine(
+        MoneyFormatter.etb(liquidSubtotal),
+        MoneyFormatter.etb(s.totalBusinessAssetsEtb),
+        MoneyFormatter.etb(s.goldValueEtb),
+        MoneyFormatter.etb(s.silverValueEtb),
+        MoneyFormatter.etb(s.totalWealthEtb),
+      ),
+      l.calcWealthTransNetLine(
+        MoneyFormatter.etb(s.totalLiabilitiesEtb),
+        MoneyFormatter.etb(s.netWealthEtb),
+      ),
+      l.calcWealthTransNisabLine(
+        wealthNisabGoldGrams.toString(),
+        MoneyFormatter.etb(s.platformGoldPricePerGram24kEtb),
+        MoneyFormatter.etb(s.nisabThresholdEtb),
+      ),
+    ];
+    if (s.aboveNisab) {
+      lines.add(
+        l.calcWealthTransDueAbove(
+          MoneyFormatter.etb(s.netWealthEtb),
+          MoneyFormatter.etb(s.estimatedZakatDueEtb),
+          MoneyFormatter.etb(s.nisabThresholdEtb),
+        ),
+      );
+    } else {
+      lines.add(
+        l.calcWealthTransDueBelow(
+          MoneyFormatter.etb(s.netWealthEtb),
+          MoneyFormatter.etb(s.nisabThresholdEtb),
+          MoneyFormatter.etb(s.estimatedZakatDueEtb),
+        ),
+      );
     }
     return lines.join('\n');
   }

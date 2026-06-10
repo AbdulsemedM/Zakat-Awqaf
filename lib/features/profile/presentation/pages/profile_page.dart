@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
-import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/widgets/brand_atmosphere_background.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/utils/number_format.dart';
 import '../../bloc/profile_bloc.dart';

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -21,7 +22,10 @@ class ZakatCalculatorScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ZakatCalculatorBloc()..add(const ZakatCalculatorStarted()),
       child: Scaffold(
-        appBar: AppBar(title: Text(context.l10n.calcAppBarTitle)),
+        appBar: AppBar(
+          leading: const AppBarBrandLeading(height: 28),
+          title: Text(context.l10n.calcAppBarTitle),
+        ),
         body: BlocBuilder<ZakatCalculatorBloc, ZakatCalculatorState>(
           builder: (context, state) {
             final s = state as ZakatCalculatorInitial;
@@ -42,6 +46,10 @@ class ZakatCalculatorScreen extends StatelessWidget {
                   _CategoryPanel(state: s),
                   const SizedBox(height: 12),
                   _TabOverviewCard(state: s),
+                  if (s.activeTab == ZakatCategoryTab.wealth) ...[
+                    const SizedBox(height: 12),
+                    _WealthPostOverviewSection(state: s),
+                  ],
                   if (s.activeTab == ZakatCategoryTab.livestock) ...[
                     const SizedBox(height: 12),
                     _LivestockPostOverviewSection(state: s),
@@ -647,6 +655,40 @@ class _WealthPanel extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _WealthPostOverviewSection extends StatelessWidget {
+  const _WealthPostOverviewSection({required this.state});
+
+  final ZakatCalculatorInitial state;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.secondary.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.calcWealthBreakdownTitle,
+            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            ZakatCalculatorStrings.wealthTransparency(l10n, state),
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../models/zakat_certificate_args.dart';
 import '../models/zakat_checkout_method.dart';
@@ -106,7 +107,21 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Complete contribution'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const AppLogo(height: 26),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                'Complete contribution',
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

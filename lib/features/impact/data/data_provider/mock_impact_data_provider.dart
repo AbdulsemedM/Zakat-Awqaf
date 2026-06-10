@@ -34,7 +34,7 @@ class MockImpactDataProvider implements ImpactDataProvider {
         BarakaStory(
           name: "Sara's Degree",
           fallbackIcon: Icons.school_rounded,
-          accent: Color(0xFFD97706),
+          accent: Color(0xFFE28F35),
         ),
         BarakaStory(
           name: "Zubeida's Clinic",

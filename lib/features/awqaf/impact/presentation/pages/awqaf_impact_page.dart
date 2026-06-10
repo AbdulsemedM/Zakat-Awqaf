@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../app/theme/app_colors.dart';
+import '../../../../../app/widgets/app_logo.dart';
 
 class AwqafImpactPage extends StatelessWidget {
   const AwqafImpactPage({super.key});
@@ -9,7 +10,10 @@ class AwqafImpactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Awqaf Impact')),
+      appBar: AppBar(
+        leading: const AppBarBrandLeading(height: 28),
+        title: const Text('Awqaf Impact'),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

@@ -12,6 +12,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get appTitle => 'Zakat & Awqaf Commission';
 
   @override
+  String get splashSlogan =>
+      'For the sake of Allah, for the service of humanity';
+
+  @override
   String get navHome => 'መነሻ';
 
   @override
@@ -400,6 +404,95 @@ class AppLocalizationsAm extends AppLocalizations {
       'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.';
 
   @override
+  String get calcWealthNisabHeading => 'Nisab & wealth Zakat';
+
+  @override
+  String calcWealthNisabLine(String nisab) {
+    return 'Nisab threshold: $nisab';
+  }
+
+  @override
+  String calcWealthZakatDueLine(String due) {
+    return 'Wealth Zakat due (smaller amount on the card): $due';
+  }
+
+  @override
+  String get calcHowWealthZakatWorksTitle => 'How wealth Zakat is calculated';
+
+  @override
+  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
+    return 'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is $grams g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of $silverRate ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.';
+  }
+
+  @override
+  String get calcHowWealthZakatNote =>
+      'Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.';
+
+  @override
+  String get calcWealthBreakdownTitle => 'How the amounts above are calculated';
+
+  @override
+  String calcWealthTransLiquidsLine(
+    String cash,
+    String bank,
+    String mobile,
+    String subtotal,
+  ) {
+    return 'Cash + bank + mobile: $cash + $bank + $mobile = $subtotal';
+  }
+
+  @override
+  String calcWealthTransBusinessLine(String business) {
+    return 'Business assets (sum of rows): $business';
+  }
+
+  @override
+  String calcWealthTransRollupLine(
+    String liquids,
+    String business,
+    String gold,
+    String silver,
+    String total,
+  ) {
+    return 'Total assets: $liquids + $business + $gold + $silver = $total';
+  }
+
+  @override
+  String calcWealthTransNisabLine(String grams, String price, String nisab) {
+    return 'Nisab: $grams g × 24k ($price/g) = $nisab';
+  }
+
+  @override
+  String calcWealthTransGoldLine(
+    String grams,
+    String karat,
+    String price,
+    String value,
+  ) {
+    return 'Gold: $grams g × $karat ($price/g) = $value';
+  }
+
+  @override
+  String calcWealthTransSilverLine(String grams, String rate, String value) {
+    return 'Silver: $grams g × $rate ETB/g = $value';
+  }
+
+  @override
+  String calcWealthTransNetLine(String liabilities, String net) {
+    return 'Net wealth (large amount on the card): total assets − liabilities ($liabilities) = $net';
+  }
+
+  @override
+  String calcWealthTransDueAbove(String net, String due, String nisab) {
+    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × 2.5% = $due.';
+  }
+
+  @override
+  String calcWealthTransDueBelow(String net, String nisab, String due) {
+    return 'Because $net is below nisab ($nisab), wealth Zakat due = $due.';
+  }
+
+  @override
   String get calcCropWeightKg => 'Crop Weight (kg)';
 
   @override
@@ -742,6 +835,27 @@ class AppLocalizationsAm extends AppLocalizations {
   String get profileLogOutDialogBody => 'በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።';
 
   @override
+  String get loginTitle => 'Sign in';
+
+  @override
+  String get loginSubtitle => 'Use your registered phone number and password';
+
+  @override
+  String get loginPhoneLabel => 'Phone number';
+
+  @override
+  String get loginPasswordLabel => 'Password';
+
+  @override
+  String get loginButton => 'Sign in';
+
+  @override
+  String get loginPhoneRequired => 'Enter your phone number';
+
+  @override
+  String get loginPasswordRequired => 'Enter your password';
+
+  @override
   String get profileCancel => 'ሰርዝ';
 
   @override
@@ -856,12 +970,4 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get onboardingSubtitleEasyPayments =>
-      'በደህንነት እና በቀላሉ በሞባይል ተስማሚ ተሞክሮ ዘካትዎን ይክፈሉ።';
-
-  @override
-  String get onboardingTitleCompassionInAction => 'ርህራሄ በተግባር';
-
-  @override
-  String get onboardingSubtitleCompassionInAction =>
-      'ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።';
-}
+      'በደህንነት እና በቀላሉ በሞባይል ተስማሚ

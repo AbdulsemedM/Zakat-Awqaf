@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../data/zakat_certificate_pdf_builder.dart';
 import '../models/zakat_certificate_args.dart';
 
@@ -37,7 +38,15 @@ class ZakatCertificateScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Certificate'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const AppLogo(height: 26),
+            const SizedBox(width: 8),
+            const Text('Certificate'),
+          ],
+        ),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => context.go('/calculator'),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../app/settings/app_settings_controller.dart';
 import '../../../../../app/theme/app_colors.dart';
+import '../../../../../app/widgets/app_logo.dart';
 
 class AwqafHomePage extends StatelessWidget {
   const AwqafHomePage({super.key});
@@ -13,7 +14,8 @@ class AwqafHomePage extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mejlis Awqaf'),
+        leading: const AppBarBrandLeading(height: 28),
+        title: const Text('Awqaf'),
         actions: [
           PopupMenuButton<AppMode>(
             tooltip: 'Change mode',

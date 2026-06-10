@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/widgets/app_logo.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../widgets/home_widget.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
+        leading: const AppBarBrandLeading(height: 28),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

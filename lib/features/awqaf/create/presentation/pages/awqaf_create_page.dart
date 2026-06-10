@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../app/theme/app_colors.dart';
+import '../../../../../app/widgets/app_logo.dart';
 
 enum _WaqfInstrument { money, asset }
 
@@ -275,7 +276,10 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Mejlis Awqaf')),
+      appBar: AppBar(
+        leading: const AppBarBrandLeading(height: 28),
+        title: const Text('Awqaf'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),

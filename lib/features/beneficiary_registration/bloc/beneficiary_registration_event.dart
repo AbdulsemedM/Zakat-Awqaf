@@ -37,8 +37,28 @@ final class NationalIdUpdated extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [nationalId];
 }
 
-final class IdentityVerificationRequested extends BeneficiaryRegistrationEvent {
-  const IdentityVerificationRequested();
+final class FaydaRegistrationRequested extends BeneficiaryRegistrationEvent {
+  const FaydaRegistrationRequested();
+}
+
+final class FaydaSseCompletedSuccessfully extends BeneficiaryRegistrationEvent {
+  const FaydaSseCompletedSuccessfully();
+}
+
+final class FaydaSseStreamFinished extends BeneficiaryRegistrationEvent {
+  const FaydaSseStreamFinished();
+}
+
+final class FaydaSseConnectionFailed extends BeneficiaryRegistrationEvent {
+  const FaydaSseConnectionFailed(this.message);
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}
+
+final class FaydaSseRetryRequested extends BeneficiaryRegistrationEvent {
+  const FaydaSseRetryRequested();
 }
 
 final class FirstNameUpdated extends BeneficiaryRegistrationEvent {
@@ -111,6 +131,30 @@ final class BirthdateUpdated extends BeneficiaryRegistrationEvent {
 
 final class AddressUpdated extends BeneficiaryRegistrationEvent {
   const AddressUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class RegionUpdated extends BeneficiaryRegistrationEvent {
+  const RegionUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class CityUpdated extends BeneficiaryRegistrationEvent {
+  const CityUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class NotesUpdated extends BeneficiaryRegistrationEvent {
+  const NotesUpdated(this.value);
   final String value;
 
   @override

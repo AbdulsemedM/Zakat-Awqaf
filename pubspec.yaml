@@ -27,6 +27,7 @@ dependencies:
   flutter_config:
     path: packages/flutter_config
   url_launcher: ^6.3.2
+  webview_flutter: ^4.10.0
   persistent_bottom_nav_bar_v2: ^6.3.2
   image_picker: ^1.2.2
   pdf: ^3.12.0
@@ -40,6 +41,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
   build_runner: ^2.4.13
   injectable_generator: ^2.6.2
   freezed: ^2.5.7
@@ -62,3 +64,12 @@ flutter:
           weight: 600
         - asset: assets/fonts/static/Roboto-Bold.ttf
           weight: 700
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+  image_path: assets/images/logo.png
+  min_sdk_android: 21

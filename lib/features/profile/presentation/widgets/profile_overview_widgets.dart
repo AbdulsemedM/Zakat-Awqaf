@@ -12,94 +12,105 @@ class _ProfileHeroHeader extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(
-            16,
-            MediaQuery.of(context).padding.top + 12,
-            16,
-            48,
+        ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(24),
+            bottomRight: Radius.circular(24),
           ),
-          decoration: BoxDecoration(
-            gradient: PrimaryHero.gradient(scheme),
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(24),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
             children: [
-              Row(
-                children: [
-                  Text(
-                    context.l10n.appTitle,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: AppColors.textOnPrimary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(context.l10n.profileNoNewNotifications)),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.notifications_none_rounded,
-                      color: AppColors.secondary,
-                    ),
-                  ),
-                ],
+              const Positioned.fill(
+                child: BrandAtmosphereBackground(),
               ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  _Avatar(
-                    name: profile.name,
-                    asset: profile.avatarAsset,
-                    ringColor: AppColors.textOnPrimary,
-                    fillColor: AppColors.textOnPrimary.withValues(alpha: 0.16),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  MediaQuery.of(context).padding.top + 12,
+                  16,
+                  48,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Text(
-                          profile.name,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: AppColors.textOnPrimary,
-                            fontWeight: FontWeight.w800,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondary.withValues(alpha: 0.28),
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(
-                              color: AppColors.secondary,
-                            ),
-                          ),
+                        const AppLogo(height: 28, borderRadius: BorderRadius.all(Radius.circular(6))),
+                        const SizedBox(width: 10),
+                        Expanded(
                           child: Text(
-                            profile.roleLabel.toUpperCase(),
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: AppColors.onSecondary,
-                              letterSpacing: 1,
+                            context.l10n.appTitle,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: AppColors.textOnPrimary,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
+                        IconButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(context.l10n.profileNoNewNotifications)),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.notifications_none_rounded,
+                            color: AppColors.secondary,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        _Avatar(
+                          name: profile.name,
+                          asset: profile.avatarAsset,
+                          ringColor: AppColors.textOnPrimary,
+                          fillColor: AppColors.textOnPrimary.withValues(alpha: 0.16),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                profile.name,
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  color: AppColors.textOnPrimary,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondary.withValues(alpha: 0.28),
+                                  borderRadius: BorderRadius.circular(999),
+                                  border: Border.all(
+                                    color: AppColors.secondary,
+                                  ),
+                                ),
+                                child: Text(
+                                  profile.roleLabel.toUpperCase(),
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: AppColors.onSecondary,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
