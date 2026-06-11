@@ -5,12 +5,14 @@ class SetPasswordRequest {
     required this.phone,
     required this.password,
     required this.confirmPassword,
+    required this.passwordSetupToken,
   });
 
   final int beneficiaryId;
   final String phone;
   final String password;
   final String confirmPassword;
+  final String passwordSetupToken;
 
   Map<String, dynamic> toJson() => {
         'beneficiaryId': beneficiaryId,

@@ -123,6 +123,39 @@ class BeneficiaryRegistrationDataProviderImpl
     return BeneficiaryRegistrationResult(dto: dto, statusCode: status);
   }
 
+  @override
+  Future<BeneficiaryDto?> getBeneficiaryById(String beneficiaryId) async {
+    final id = beneficiaryId.trim();
+    if (id.isEmpty) {
+      return null;
+    }
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '$_beneficiariesPath/$id',
+      );
+      final status = response.statusCode ?? 0;
+      if (status != 200) {
+        return null;
+      }
+      final body = response.data;
+      if (body == null || body['success'] != true) {
+        return null;
+      }
+      final data = body['data'];
+      if (data is! Map) {
+        return null;
+      }
+      return BeneficiaryDto.fromJson(Map<String, dynamic>.from(data));
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        return null;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   BeneficiaryRegistrationException _mapDioException(DioException e) {
     final parsed = parseMobileErrorMessage(e.response?.data);
     if (parsed != null && parsed.isNotEmpty) {

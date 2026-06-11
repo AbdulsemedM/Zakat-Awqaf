@@ -43,7 +43,12 @@ final class FaydaRegistrationRequested extends BeneficiaryRegistrationEvent {
 }
 
 final class FaydaSseCompletedSuccessfully extends BeneficiaryRegistrationEvent {
-  const FaydaSseCompletedSuccessfully();
+  const FaydaSseCompletedSuccessfully({required this.passwordSetupToken});
+
+  final String passwordSetupToken;
+
+  @override
+  List<Object?> get props => [passwordSetupToken];
 }
 
 final class FaydaSseStreamFinished extends BeneficiaryRegistrationEvent {
@@ -60,6 +65,14 @@ final class FaydaSseConnectionFailed extends BeneficiaryRegistrationEvent {
 
 final class FaydaSseRetryRequested extends BeneficiaryRegistrationEvent {
   const FaydaSseRetryRequested();
+}
+
+final class FaydaVerificationPollRequested extends BeneficiaryRegistrationEvent {
+  const FaydaVerificationPollRequested();
+}
+
+final class FaydaSseReconnectRequested extends BeneficiaryRegistrationEvent {
+  const FaydaSseReconnectRequested();
 }
 
 final class FirstNameUpdated extends BeneficiaryRegistrationEvent {

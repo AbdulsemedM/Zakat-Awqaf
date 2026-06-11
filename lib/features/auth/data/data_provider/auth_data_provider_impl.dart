@@ -63,6 +63,9 @@ class AuthDataProviderImpl implements AuthDataProvider {
       final response = await _dio.post<Map<String, dynamic>>(
         _setPasswordPath,
         data: request.toJson(),
+        options: Options(
+          headers: {'X-Password-Setup-Token': request.passwordSetupToken},
+        ),
       );
       final status = response.statusCode ?? 0;
       if (status != 200) {

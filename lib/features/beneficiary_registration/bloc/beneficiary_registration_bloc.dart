@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -10,7 +11,9 @@ import 'package:mejlis_digital_hub/features/auth/data/repository/auth_repository
 
 import '../data/beneficiary_registration_exception.dart';
 import '../data/beneficiary_sse_client.dart';
+import '../data/fayda_verification_status.dart';
 import '../data/models/beneficiary_create_request.dart';
+import '../data/models/beneficiary_dto.dart';
 import '../data/models/company_beneficiary_create_request.dart';
 import '../data/national_id_generator.dart';
 import '../data/repository/beneficiary_registration_repository.dart';
@@ -35,6 +38,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<FaydaSseStreamFinished>(_onFaydaSseStreamFinished);
     on<FaydaSseConnectionFailed>(_onFaydaSseConnectionFailed);
     on<FaydaSseRetryRequested>(_onFaydaSseRetry);
+    on<FaydaVerificationPollRequested>(_onFaydaVerificationPollRequested);
+    on<FaydaSseReconnectRequested>(_onFaydaSseReconnectRequested);
     on<FirstNameUpdated>(_onFirstNameUpdated);
     on<FatherNameUpdated>(_onFatherNameUpdated);
     on<GrandFatherNameUpdated>(_onGrandFatherNameUpdated);
@@ -84,7 +89,14 @@ class BeneficiaryRegistrationBloc extends Bloc<
   static final _passwordSpecial = RegExp(r'[^A-Za-z0-9]');
 
   StreamSubscription<BeneficiarySseVerificationEvent>? _sseSubscription;
+  Timer? _faydaPollTimer;
+  Timer? _faydaSseReconnectTimer;
   bool _faydaSseMatched = false;
+  int _faydaSseReconnectAttempts = 0;
+
+  static const _faydaPollInterval = Duration(seconds: 8);
+  static const _faydaSseReconnectDelay = Duration(seconds: 3);
+  static const _maxFaydaSseReconnectAttempts = 5;
 
   BeneficiaryRegistrationInitial get _current =>
       state is BeneficiaryRegistrationInitial
@@ -93,7 +105,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
 
   @override
   Future<void> close() {
-    unawaited(_sseSubscription?.cancel());
+    _stopFaydaVerificationWatchers();
     return super.close();
   }
 
@@ -101,8 +113,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     BeneficiaryRegistrationStarted event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
+    _stopFaydaVerificationWatchers();
     emit(const BeneficiaryRegistrationInitial());
   }
 
@@ -142,9 +153,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return;
     }
 
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
+    _stopFaydaVerificationWatchers();
     _faydaSseMatched = false;
+    _faydaSseReconnectAttempts = 0;
 
     final postingBase = _current;
     final generatedId =
@@ -191,7 +202,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
         clearError: true,
       );
       emit(afterCreate);
-      _startSseSubscription(id);
+      _startFaydaVerificationWatch(id);
     } on BeneficiaryRegistrationException catch (e) {
       emit(
         postingBase.copyWith(
@@ -246,9 +257,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return;
     }
 
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
+    _stopFaydaVerificationWatchers();
     _faydaSseMatched = false;
+    _faydaSseReconnectAttempts = 0;
 
     emit(
       _current.copyWith(
@@ -256,7 +267,142 @@ class BeneficiaryRegistrationBloc extends Bloc<
         clearError: true,
       ),
     );
+    _startFaydaVerificationWatch(id);
+  }
+
+  void _stopFaydaVerificationWatchers() {
+    _faydaSseReconnectTimer?.cancel();
+    _faydaSseReconnectTimer = null;
+    _faydaPollTimer?.cancel();
+    _faydaPollTimer = null;
+    unawaited(_sseSubscription?.cancel());
+    _sseSubscription = null;
+  }
+
+  void _startFaydaVerificationWatch(String beneficiaryId) {
+    final id = beneficiaryId.trim();
+    if (id.isEmpty) {
+      return;
+    }
+
+    unawaited(_sseSubscription?.cancel());
+    _sseSubscription = null;
+    _faydaPollTimer?.cancel();
+    _faydaPollTimer = null;
+
     _startSseSubscription(id);
+    _startFaydaPolling();
+  }
+
+  void _startFaydaPolling() {
+    _faydaPollTimer?.cancel();
+    add(const FaydaVerificationPollRequested());
+    _faydaPollTimer = Timer.periodic(_faydaPollInterval, (_) {
+      if (!isClosed) {
+        add(const FaydaVerificationPollRequested());
+      }
+    });
+  }
+
+  void _scheduleFaydaSseReconnect() {
+    if (_faydaSseMatched || isClosed) {
+      return;
+    }
+    if (!_current.awaitingFaydaSse) {
+      return;
+    }
+    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
+      return;
+    }
+    if (_faydaSseReconnectTimer?.isActive == true) {
+      return;
+    }
+
+    _faydaSseReconnectTimer = Timer(_faydaSseReconnectDelay, () {
+      if (!isClosed) {
+        add(const FaydaSseReconnectRequested());
+      }
+    });
+  }
+
+  void _onFaydaSseReconnectRequested(
+    FaydaSseReconnectRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    if (_faydaSseMatched || !_current.awaitingFaydaSse) {
+      return;
+    }
+    final id = _current.createdBeneficiaryId?.trim();
+    if (id == null || id.isEmpty) {
+      return;
+    }
+    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
+      return;
+    }
+
+    _faydaSseReconnectAttempts++;
+    if (kDebugMode) {
+      debugPrint(
+        '[BeneficiarySse] Reconnect attempt $_faydaSseReconnectAttempts '
+        'for id=$id',
+      );
+    }
+    unawaited(_sseSubscription?.cancel());
+    _sseSubscription = null;
+    _startSseSubscription(id);
+  }
+
+  Future<void> _onFaydaVerificationPollRequested(
+    FaydaVerificationPollRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    if (_faydaSseMatched || !_current.awaitingFaydaSse) {
+      return;
+    }
+
+    final id = _current.createdBeneficiaryId?.trim();
+    if (id == null || id.isEmpty) {
+      return;
+    }
+
+    try {
+      final dto = await _repository.getBeneficiaryById(id);
+      if (dto == null) {
+        return;
+      }
+      _applyPolledBeneficiaryStatus(dto, emit);
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('[BeneficiarySse] Poll failed for id=$id: $e');
+      }
+    }
+  }
+
+  void _applyPolledBeneficiaryStatus(
+    BeneficiaryDto dto,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    if (_faydaSseMatched || !_current.awaitingFaydaSse) {
+      return;
+    }
+
+    final token = dto.passwordSetupToken?.trim() ?? '';
+    if (isFaydaVerificationReady(
+      passwordSetupToken: token,
+      verificationStatus: dto.verificationStatus,
+    )) {
+      add(FaydaSseCompletedSuccessfully(passwordSetupToken: token));
+      return;
+    }
+
+    final current = _current.registeredBeneficiary;
+    final shouldUpdateBeneficiary = current == null ||
+        (dto.phone?.trim().isNotEmpty == true &&
+            current.phone != dto.phone) ||
+        current.passwordSetupToken != dto.passwordSetupToken;
+    if (shouldUpdateBeneficiary) {
+      emit(_current.copyWith(registeredBeneficiary: dto, clearError: true));
+    }
   }
 
   void _startSseSubscription(String beneficiaryId) {
@@ -267,34 +413,48 @@ class BeneficiaryRegistrationBloc extends Bloc<
       );
     }
 
-    _faydaSseMatched = false;
-    _sseSubscription = _sseClient.watchBeneficiaryVerification(id).listen(
-      (sseEvent) {
-        if (kDebugMode) {
-          debugPrint(
-            '[BeneficiarySse] Event received: beneficiaryId=${sseEvent.beneficiaryId}, '
-            'status=${sseEvent.verificationStatus}',
-          );
-        }
-        if (sseEvent.beneficiaryId.trim() == id &&
-            sseEvent.isVerificationComplete) {
-          add(const FaydaSseCompletedSuccessfully());
-        }
-      },
-      onDone: () {
-        if (kDebugMode) {
-          debugPrint('[BeneficiarySse] Stream closed for id=$id');
-        }
-        add(const FaydaSseStreamFinished());
-      },
-      onError: (Object e, StackTrace _) {
-        if (kDebugMode) {
-          debugPrint('[BeneficiarySse] Connection error for id=$id: $e');
-        }
-        add(FaydaSseConnectionFailed(e.toString()));
-      },
-      cancelOnError: false,
-    );
+    _sseSubscription = _sseClient
+        .watchBeneficiaryVerification(id)
+        .handleError((Object e, StackTrace _) {
+          if (kDebugMode) {
+            debugPrint('[BeneficiarySse] Connection error for id=$id: $e');
+          }
+          add(FaydaSseConnectionFailed(_friendlyFaydaSseError(e)));
+        })
+        .listen(
+          (sseEvent) {
+            if (kDebugMode) {
+              debugPrint(
+                '[BeneficiarySse] Event received: beneficiaryId=${sseEvent.beneficiaryId}, '
+                'status=${sseEvent.verificationStatus}',
+              );
+            }
+            if (sseEvent.beneficiaryId.trim() == id &&
+                sseEvent.isVerificationComplete) {
+              add(
+                FaydaSseCompletedSuccessfully(
+                  passwordSetupToken:
+                      sseEvent.passwordSetupToken?.trim() ?? '',
+                ),
+              );
+            }
+          },
+          onDone: () {
+            if (kDebugMode) {
+              debugPrint('[BeneficiarySse] Stream closed for id=$id');
+            }
+            add(const FaydaSseStreamFinished());
+          },
+        );
+  }
+
+  String _friendlyFaydaSseError(Object error) {
+    if (error is DioException && error.type == DioExceptionType.receiveTimeout) {
+      return 'Still waiting for verification confirmation. '
+          'We will keep checking automatically.';
+    }
+    return 'Connection to verification updates was interrupted. '
+        'We will keep checking automatically.';
   }
 
   void _onFaydaSseSuccess(
@@ -302,14 +462,16 @@ class BeneficiaryRegistrationBloc extends Bloc<
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
     _faydaSseMatched = true;
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
+    _stopFaydaVerificationWatchers();
+    _faydaSseReconnectAttempts = 0;
+    final token = event.passwordSetupToken.trim();
     emit(
       _current.copyWith(
         awaitingFaydaSse: false,
         faydaVerificationComplete: true,
         isFaydaPosting: false,
         step: BeneficiaryRegistrationStep.setPassword,
+        passwordSetupToken: token.isNotEmpty ? token : null,
         clearError: true,
       ),
     );
@@ -326,14 +488,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (!_current.awaitingFaydaSse) {
       return;
     }
-    emit(
-      _current.copyWith(
-        awaitingFaydaSse: false,
-        isFaydaPosting: false,
-        errorMessage:
-            'Verification is still processing. If you completed Fayda in the browser, check back later or contact support.',
-      ),
-    );
+    if (kDebugMode) {
+      debugPrint('[BeneficiarySse] Stream closed; continuing poll fallback');
+    }
+    _scheduleFaydaSseReconnect();
   }
 
   void _onFaydaSseConnectionFailed(
@@ -346,13 +504,28 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (!_current.awaitingFaydaSse) {
       return;
     }
+
     unawaited(_sseSubscription?.cancel());
     _sseSubscription = null;
+    _scheduleFaydaSseReconnect();
+
+    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
+      emit(
+        _current.copyWith(
+          awaitingFaydaSse: false,
+          isFaydaPosting: false,
+          errorMessage:
+              'Verification is still processing. If you completed Fayda in the browser, tap Retry listening or contact support.',
+        ),
+      );
+      _stopFaydaVerificationWatchers();
+      return;
+    }
+
     emit(
       _current.copyWith(
-        awaitingFaydaSse: false,
         isFaydaPosting: false,
-        errorMessage: event.message,
+        clearError: true,
       ),
     );
   }
@@ -783,6 +956,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
           manualIdentitySubmitted: true,
           createdBeneficiaryId: result.dto.id,
           registeredBeneficiary: result.dto,
+          passwordSetupToken: result.dto.passwordSetupToken,
           step: BeneficiaryRegistrationStep.setPassword,
           clearError: true,
           clearPasswordFields: true,
@@ -899,6 +1073,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
           institutionRegistrationSubmitted: true,
           createdBeneficiaryId: dto.id,
           registeredBeneficiary: dto,
+          passwordSetupToken: dto.passwordSetupToken,
           companyDocumentUploadToken: dto.companyDocumentUploadToken,
           kycDocuments: dto.institutionRecommendedKycDocuments,
           institutionRequiredKycComplete:
@@ -1063,6 +1238,17 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return;
     }
 
+    final passwordSetupToken = _current.resolvedPasswordSetupToken;
+    if (passwordSetupToken == null || passwordSetupToken.isEmpty) {
+      emit(
+        _current.copyWith(
+          errorMessage:
+              'Session expired. Please restart registration to set your password.',
+        ),
+      );
+      return;
+    }
+
     emit(_current.copyWith(isSettingPassword: true, clearError: true));
 
     try {
@@ -1072,6 +1258,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
           phone: phone,
           password: _current.password,
           confirmPassword: _current.confirmPassword,
+          passwordSetupToken: passwordSetupToken,
         ),
       );
 

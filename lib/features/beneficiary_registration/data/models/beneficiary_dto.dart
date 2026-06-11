@@ -32,6 +32,9 @@ class BeneficiaryDto {
     this.caseStatus,
     this.bankName,
     this.accountNumber,
+    this.passwordSetupToken,
+    this.accountProvisioned,
+    this.credentialsDelivery,
     this.createdAt,
     this.updatedAt,
   });
@@ -66,6 +69,9 @@ class BeneficiaryDto {
   final String? caseStatus;
   final String? bankName;
   final String? accountNumber;
+  final String? passwordSetupToken;
+  final bool? accountProvisioned;
+  final String? credentialsDelivery;
   final String? createdAt;
   final String? updatedAt;
 
@@ -117,6 +123,9 @@ class BeneficiaryDto {
       caseStatus: json['caseStatus'] as String?,
       bankName: json['bankName'] as String?,
       accountNumber: json['accountNumber'] as String?,
+      passwordSetupToken: json['passwordSetupToken'] as String?,
+      accountProvisioned: json['accountProvisioned'] as bool?,
+      credentialsDelivery: json['credentialsDelivery'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
     );

@@ -1,4 +1,5 @@
 import '../models/beneficiary_create_request.dart';
+import '../models/beneficiary_dto.dart';
 import '../models/beneficiary_registration_result.dart';
 import '../models/company_beneficiary_create_request.dart';
 
@@ -17,4 +18,6 @@ abstract class BeneficiaryRegistrationRepository {
     required String documentCode,
     required String filePath,
   });
+
+  Future<BeneficiaryDto?> getBeneficiaryById(String beneficiaryId);
 }

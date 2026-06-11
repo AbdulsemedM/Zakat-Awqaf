@@ -82,6 +82,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.createdBeneficiaryId,
     this.verificationLink,
     this.registeredBeneficiary,
+    this.passwordSetupToken,
   });
 
   final BeneficiaryRegistrationStep step;
@@ -133,6 +134,15 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String? createdBeneficiaryId;
   final String? verificationLink;
   final BeneficiaryDto? registeredBeneficiary;
+  final String? passwordSetupToken;
+
+  String? get resolvedPasswordSetupToken {
+    final fromState = passwordSetupToken?.trim() ?? '';
+    if (fromState.isNotEmpty) {
+      return fromState;
+    }
+    return registeredBeneficiary?.passwordSetupToken?.trim();
+  }
 
   double get progressValue {
     switch (step) {
@@ -238,6 +248,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         createdBeneficiaryId,
         verificationLink,
         registeredBeneficiary,
+        passwordSetupToken,
       ];
 }
 
@@ -292,6 +303,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.createdBeneficiaryId,
     super.verificationLink,
     super.registeredBeneficiary,
+    super.passwordSetupToken,
   });
 
   BeneficiaryRegistrationInitial copyWith({
@@ -352,6 +364,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     String? createdBeneficiaryId,
     String? verificationLink,
     BeneficiaryDto? registeredBeneficiary,
+    String? passwordSetupToken,
     bool clearBeneficiaryMeta = false,
     bool clearFaydaProgress = false,
     bool clearInstitutionMeta = false,
@@ -448,6 +461,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       registeredBeneficiary: clearBeneficiaryMeta
           ? null
           : (registeredBeneficiary ?? this.registeredBeneficiary),
+      passwordSetupToken: clearBeneficiaryMeta || clearInstitutionMeta
+          ? null
+          : (passwordSetupToken ?? this.passwordSetupToken),
     );
   }
 }

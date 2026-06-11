@@ -6,27 +6,34 @@ import '../../../../app/theme/app_colors.dart';
 class IslamicOrnamentDecoration extends StatelessWidget {
   const IslamicOrnamentDecoration({super.key});
 
+  static const double _width = 110;
+  static const double _height = 90;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          top: -20,
-          right: -10,
-          child: _ornamentRing(size: 80, opacity: 0.25),
-        ),
-        Positioned(
-          top: 10,
-          right: 30,
-          child: _ornamentRing(size: 50, opacity: 0.18),
-        ),
-        Positioned(
-          top: -5,
-          right: 70,
-          child: _ornamentRing(size: 35, opacity: 0.12),
-        ),
-      ],
+    return SizedBox(
+      width: _width,
+      height: _height,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            top: -20,
+            right: -10,
+            child: _ornamentRing(size: 80, opacity: 0.25),
+          ),
+          Positioned(
+            top: 10,
+            right: 30,
+            child: _ornamentRing(size: 50, opacity: 0.18),
+          ),
+          Positioned(
+            top: -5,
+            right: 70,
+            child: _ornamentRing(size: 35, opacity: 0.12),
+          ),
+        ],
+      ),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,4 +11,9 @@ final GetIt getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: true,
 )
-void configureDependencies() => getIt.init();
+void configureDependencies() {
+  if (getIt.isRegistered<GoRouter>()) {
+    return;
+  }
+  getIt.init();
+}

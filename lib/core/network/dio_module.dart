@@ -1,23 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:injectable/injectable.dart';
 
 import '../auth/auth_interceptor.dart';
+import '../config/app_env.dart';
 import 'dio_logging_interceptor.dart';
 
 @module
 abstract class DioModule {
-  String _apiBaseUrl() =>
-      (FlutterConfig.get('API_BASE_URL') as String?)?.trim() ?? '';
+  String _apiBaseUrl() => AppEnv.apiBaseUrl;
 
-  String _authBaseUrl() {
-    final authUrl = (FlutterConfig.get('AUTH_API_BASE_URL') as String?)?.trim();
-    if (authUrl != null && authUrl.isNotEmpty) {
-      return authUrl;
-    }
-    return _apiBaseUrl();
-  }
+  String _authBaseUrl() => AppEnv.authApiBaseUrl;
 
   @lazySingleton
   Dio dio(AuthInterceptor authInterceptor) {
