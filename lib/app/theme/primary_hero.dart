@@ -17,4 +17,25 @@ abstract final class PrimaryHero {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
+
+  /// Zakat home hero gradient (160deg forest green sweep).
+  static const LinearGradient zakatHeroGradient = LinearGradient(
+    begin: Alignment(-0.5, -1),
+    end: Alignment(1, 1),
+    colors: [
+      AppColors.forestGreen,
+      AppColors.forestMid,
+      AppColors.forestLight,
+    ],
+    stops: [0.0, 0.6, 1.0],
+  );
+
+  static const LinearGradient sadaqahGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      AppColors.sadaqahGradientStart,
+      AppColors.warmGold,
+    ],
+  );
 }

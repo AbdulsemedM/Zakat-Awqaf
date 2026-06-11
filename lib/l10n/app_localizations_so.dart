@@ -37,11 +37,10 @@ class AppLocalizationsSo extends AppLocalizations {
   String get registerAcceptZakat => 'Isdiiwaangeli si aad u hesho Zakat';
 
   @override
-  String get urgentBeneficiaryNeeds =>
-      'Baahiyaha Degdegga ah ee Ka-faa\'iideystayaasha';
+  String get urgentBeneficiaryNeeds => 'Sababaha Degdegga ah';
 
   @override
-  String get viewAll => 'Dhammaan Arag';
+  String get viewAll => 'Dhammaan Arag →';
 
   @override
   String get totalZakatCollected => 'WADARTA ZAKADA LA URURIYAY';
@@ -58,7 +57,7 @@ class AppLocalizationsSo extends AppLocalizations {
       'Hufnaan, isla xisaabtan, iyo saameyn muuqata: sadaqadaadu waxay xoojisaa gargaar iyo awoodsiin qaran.';
 
   @override
-  String get payZakatCause => 'U bixi Zakat sababtan';
+  String get payZakatCause => 'Sii Zakat';
 
   @override
   String get zakatAlFitr => 'Zakat Al-Fitr';
@@ -70,8 +69,7 @@ class AppLocalizationsSo extends AppLocalizations {
   String get setReminder => 'Deji Xasuusin';
 
   @override
-  String get needQuickWayGive =>
-      'Ma u baahan tahay hab degdeg ah oo aad ku bixiso?';
+  String get needQuickWayGive => 'Bixin Degdeg ah';
 
   @override
   String get supportCommunityNeeds =>
@@ -81,12 +79,11 @@ class AppLocalizationsSo extends AppLocalizations {
   String get donateSadaqah => 'Bixi Sadaqo';
 
   @override
-  String get aboutCommission =>
-      'Ku saabsan Guddiga Zakada iyo Awqaafta Itoobiya';
+  String get aboutCommission => 'Guddiga Zakada iyo Awqaafta Itoobiya';
 
   @override
   String get aboutCommissionBody =>
-      'Guddiga Zakada iyo Awqaafta Itoobiya wuxuu isku dubbaridaa ururinta zakada iyo horumarinta awqaafta si kor loogu qaado bulshooyinka nugul iyadoo la adeegsanayo barnaamijyo hufan oo waafaqsan shareecada.';
+      'Isku dubbaridka ururinta zakada iyo horumarinta awqaafta si kor loogu qaado bulshooyinka nugul iyadoo la adeegsanayo barnaamijyo hufan oo waafaqsan shareecada oo ku baahsan Itoobiya.';
 
   @override
   String get chipTransparencyFirst => 'Hufnaan-hore';

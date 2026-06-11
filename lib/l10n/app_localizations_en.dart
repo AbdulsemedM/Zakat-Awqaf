@@ -28,7 +28,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navProfile => 'Profile';
 
   @override
-  String get homeCommissionTitle => 'Zakat and Awqaf Commission';
+  String get homeCommissionTitle => 'Zakat & Awqaf Commission';
 
   @override
   String get homeGreeting => 'Assalamu\'alaikum';
@@ -37,10 +37,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registerAcceptZakat => 'Register to Accept Zakat';
 
   @override
-  String get urgentBeneficiaryNeeds => 'Urgent Beneficiary Needs';
+  String get urgentBeneficiaryNeeds => 'Urgent Causes';
 
   @override
-  String get viewAll => 'View All';
+  String get viewAll => 'View all →';
 
   @override
   String get totalZakatCollected => 'TOTAL ZAKAT COLLECTED';
@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Transparent, accountable, and impactful: your giving powers nationwide relief and empowerment.';
 
   @override
-  String get payZakatCause => 'Pay Zakat to this cause';
+  String get payZakatCause => 'Give Zakat';
 
   @override
   String get zakatAlFitr => 'Zakat Al-Fitr';
@@ -68,7 +68,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setReminder => 'Set Reminder';
 
   @override
-  String get needQuickWayGive => 'Need a quick way to give?';
+  String get needQuickWayGive => 'Quick Giving';
 
   @override
   String get supportCommunityNeeds =>
@@ -78,11 +78,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get donateSadaqah => 'Donate Sadaqah';
 
   @override
-  String get aboutCommission => 'About Ethiopian Zakat and Awqaf Commission';
+  String get aboutCommission => 'Ethiopian Zakat & Awqaf Commission';
 
   @override
   String get aboutCommissionBody =>
-      'The Ethiopian Zakat and Awqaf Commission coordinates zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs.';
+      'Coordinating zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs across Ethiopia.';
 
   @override
   String get chipTransparencyFirst => 'Transparency-first';

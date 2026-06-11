@@ -226,7 +226,7 @@ class _HadithOfTheDayCard extends StatelessWidget {
         children: [
           Text(
             '\u201C',
-            style: TextStyle(
+            style: theme.textTheme.displayMedium?.copyWith(
               fontSize: 36,
               height: 1,
               color: AppColors.primary,

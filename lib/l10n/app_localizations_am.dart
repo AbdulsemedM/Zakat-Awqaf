@@ -28,7 +28,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get navProfile => 'መገለጫ';
 
   @override
-  String get homeCommissionTitle => 'የዘካትና ወቅፍ ኮሚሽን';
+  String get homeCommissionTitle => 'ዘካት እና ወቅፍ ኮሚሽን';
 
   @override
   String get homeGreeting => 'አሰላሙ ዓለይኩም';
@@ -37,10 +37,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get registerAcceptZakat => 'ዘካት ለመቀበል ይመዝገቡ';
 
   @override
-  String get urgentBeneficiaryNeeds => 'አስቸኳይ የተጠቃሚ ፍላጎቶች';
+  String get urgentBeneficiaryNeeds => 'አስቸኳይ ጉዳዮች';
 
   @override
-  String get viewAll => 'ሁሉንም ይመልከቱ';
+  String get viewAll => 'ሁሉንም ይመልከቱ →';
 
   @override
   String get totalZakatCollected => 'ጠቅላላ የተሰበሰበ ዘካት';
@@ -56,7 +56,7 @@ class AppLocalizationsAm extends AppLocalizations {
       'ግልጽ፣ ተጠያቂ እና ተፅዕኖ ያለው፤ ስጦታዎ ሀገር አቀፍ ድጋፍን እና ማበረታቻን ያበረታታል።';
 
   @override
-  String get payZakatCause => 'ለዚህ ምክንያት ዘካት ይክፈሉ';
+  String get payZakatCause => 'ዘካት ይስጡ';
 
   @override
   String get zakatAlFitr => 'ዘካት አልፊጥር';
@@ -68,7 +68,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get setReminder => 'ማስታወሻ ያዘጋጁ';
 
   @override
-  String get needQuickWayGive => 'ፈጣን መስጫ መንገድ ይፈልጋሉ?';
+  String get needQuickWayGive => 'ፈጣን መስጫ';
 
   @override
   String get supportCommunityNeeds => 'በሰደቃ የማህበረሰብ ፍላጎቶችን ወዲያውኑ ይደግፉ።';
@@ -77,11 +77,11 @@ class AppLocalizationsAm extends AppLocalizations {
   String get donateSadaqah => 'ሰደቃ ይስጡ';
 
   @override
-  String get aboutCommission => 'ስለ ኢትዮጵያ ዘካትና ወቅፍ ኮሚሽን';
+  String get aboutCommission => 'የኢትዮጵያ ዘካት እና ወቅፍ ኮሚሽን';
 
   @override
   String get aboutCommissionBody =>
-      'የኢትዮጵያ ዘካትና ወቅፍ ኮሚሽን የዘካት ስብስብን እና የወቅፍ ልማትን በማስተባበር ተጋላጭ ማህበረሰቦችን በግልጽነት እና ሸሪዓን በሚከተሉ ፕሮግራሞች ይደግፋል።';
+      'የዘካት ስብስብን እና የወቅፍ ልማትን በማስተባበር ተጋላጭ ማህበረሰቦችን በግልጽነት እና ሸሪዓን በሚከተሉ ፕሮግራሞች በኢትዮጵያ ዙሪያ ይደግፋል።';
 
   @override
   String get chipTransparencyFirst => 'ግልጽነት ቀዳሚ';

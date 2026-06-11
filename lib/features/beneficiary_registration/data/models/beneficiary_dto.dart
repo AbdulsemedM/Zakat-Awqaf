@@ -28,6 +28,10 @@ class BeneficiaryDto {
     this.institutionRecommendedKycDocuments = const [],
     this.institutionRequiredKycComplete,
     this.companyDocumentUploadToken,
+    this.nationality,
+    this.caseStatus,
+    this.bankName,
+    this.accountNumber,
     this.createdAt,
     this.updatedAt,
   });
@@ -58,6 +62,10 @@ class BeneficiaryDto {
   final List<InstitutionKycDocument> institutionRecommendedKycDocuments;
   final bool? institutionRequiredKycComplete;
   final String? companyDocumentUploadToken;
+  final String? nationality;
+  final String? caseStatus;
+  final String? bankName;
+  final String? accountNumber;
   final String? createdAt;
   final String? updatedAt;
 
@@ -105,6 +113,10 @@ class BeneficiaryDto {
           json['institutionRequiredKycComplete'] as bool?,
       companyDocumentUploadToken:
           json['companyDocumentUploadToken'] as String?,
+      nationality: json['nationality'] as String?,
+      caseStatus: json['caseStatus'] as String?,
+      bankName: json['bankName'] as String?,
+      accountNumber: json['accountNumber'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
     );

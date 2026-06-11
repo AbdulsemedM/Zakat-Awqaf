@@ -61,3 +61,16 @@ final class ProfileThemeSelected extends ProfileEvent {
 final class ProfileLoggedOut extends ProfileEvent {
   const ProfileLoggedOut();
 }
+
+final class ProfileBankAccountSaved extends ProfileEvent {
+  const ProfileBankAccountSaved({
+    required this.bankName,
+    required this.accountNumber,
+  });
+
+  final String bankName;
+  final String accountNumber;
+
+  @override
+  List<Object?> get props => [bankName, accountNumber];
+}

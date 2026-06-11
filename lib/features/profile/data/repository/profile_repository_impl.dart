@@ -14,6 +14,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<ProfileModel> loadProfile() => _dataProvider.fetchProfile();
 
   @override
+  Future<ProfileModel> updateBankAccount({
+    required String bankName,
+    required String accountNumber,
+  }) =>
+      _dataProvider.updateBankAccount(
+        bankName: bankName,
+        accountNumber: accountNumber,
+      );
+
+  @override
   Future<void> updateProfile(ProfileModel profile) =>
       _dataProvider.persistProfile(profile);
 }

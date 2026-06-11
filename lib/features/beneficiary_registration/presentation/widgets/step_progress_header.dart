@@ -20,7 +20,8 @@ class StepProgressHeader extends StatelessWidget {
     if (method == RegistrationMethod.institution) {
       return switch (step) {
         BeneficiaryRegistrationStep.institutionDetails => 0,
-        BeneficiaryRegistrationStep.institutionDocuments => 1,
+        BeneficiaryRegistrationStep.setPassword => 1,
+        BeneficiaryRegistrationStep.institutionDocuments => 2,
         BeneficiaryRegistrationStep.welcome => -1,
         BeneficiaryRegistrationStep.identity => -1,
         BeneficiaryRegistrationStep.needs => -1,
@@ -34,6 +35,7 @@ class StepProgressHeader extends StatelessWidget {
         BeneficiaryRegistrationStep.welcome => -1,
         BeneficiaryRegistrationStep.identity => -1,
         BeneficiaryRegistrationStep.institutionDetails => -1,
+        BeneficiaryRegistrationStep.setPassword => -1,
         BeneficiaryRegistrationStep.institutionDocuments => -1,
       };
     }
@@ -43,6 +45,7 @@ class StepProgressHeader extends StatelessWidget {
       BeneficiaryRegistrationStep.disbursement => 2,
       BeneficiaryRegistrationStep.welcome => -1,
       BeneficiaryRegistrationStep.institutionDetails => -1,
+      BeneficiaryRegistrationStep.setPassword => -1,
       BeneficiaryRegistrationStep.institutionDocuments => -1,
     };
   }
@@ -51,13 +54,15 @@ class StepProgressHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    if (step == BeneficiaryRegistrationStep.welcome) {
+    if (step == BeneficiaryRegistrationStep.welcome ||
+        (method != RegistrationMethod.institution &&
+            step == BeneficiaryRegistrationStep.setPassword)) {
       return const SizedBox(height: 8);
     }
 
     final labels = switch (method) {
       RegistrationMethod.fastTrack => ['Needs', 'Disburse'],
-      RegistrationMethod.institution => ['Details', 'Documents'],
+      RegistrationMethod.institution => ['Details', 'Password', 'Documents'],
       RegistrationMethod.manual => ['Identity', 'Needs', 'Verify'],
     };
     final activeIndex = _activeIndex(step, method);
@@ -121,11 +126,13 @@ class _StepCircle extends StatelessWidget {
           isActive ? AppColors.primary : scheme.surfaceContainerHighest,
       child: Text(
         '${index + 1}',
-        style: TextStyle(
-          fontSize: 11,
-          color: isActive ? AppColors.textOnPrimary : scheme.onSurfaceVariant,
-          fontWeight: FontWeight.w600,
-        ),
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              fontSize: 11,
+              color: isActive
+                  ? AppColors.textOnPrimary
+                  : scheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
       ),
     );
   }

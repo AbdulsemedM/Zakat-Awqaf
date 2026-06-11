@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mejlis_digital_hub/core/common/utils/phone_e164.dart';
+import 'package:mejlis_digital_hub/features/auth/data/auth_exception.dart';
+import 'package:mejlis_digital_hub/features/auth/data/models/set_password_request.dart';
+import 'package:mejlis_digital_hub/features/auth/data/repository/auth_repository.dart';
 
 import '../data/beneficiary_registration_exception.dart';
 import '../data/beneficiary_sse_client.dart';
@@ -19,8 +22,11 @@ class BeneficiaryRegistrationBloc extends Bloc<
     BeneficiaryRegistrationEvent,
     BeneficiaryRegistrationState
 > {
-  BeneficiaryRegistrationBloc(this._repository, this._sseClient)
-      : super(const BeneficiaryRegistrationInitial()) {
+  BeneficiaryRegistrationBloc(
+    this._repository,
+    this._sseClient,
+    this._authRepository,
+  ) : super(const BeneficiaryRegistrationInitial()) {
     on<BeneficiaryRegistrationStarted>(_onStarted);
     on<RegistrationMethodSelected>(_onMethodSelected);
     on<NationalIdUpdated>(_onNationalIdUpdated);
@@ -63,10 +69,19 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<InstitutionDocumentPicked>(_onInstitutionDocumentPicked);
     on<InstitutionDocumentUploadRequested>(_onInstitutionDocumentUploadRequested);
     on<InstitutionRegistrationFinished>(_onInstitutionRegistrationFinished);
+    on<PasswordUpdated>(_onPasswordUpdated);
+    on<ConfirmPasswordUpdated>(_onConfirmPasswordUpdated);
+    on<SetPasswordRequested>(_onSetPasswordRequested);
   }
 
   final BeneficiaryRegistrationRepository _repository;
   final BeneficiarySseClient _sseClient;
+  final AuthRepository _authRepository;
+
+  static final _passwordUppercase = RegExp(r'[A-Z]');
+  static final _passwordLowercase = RegExp(r'[a-z]');
+  static final _passwordDigit = RegExp(r'\d');
+  static final _passwordSpecial = RegExp(r'[^A-Za-z0-9]');
 
   StreamSubscription<BeneficiarySseVerificationEvent>? _sseSubscription;
   bool _faydaSseMatched = false;
@@ -294,8 +309,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
         awaitingFaydaSse: false,
         faydaVerificationComplete: true,
         isFaydaPosting: false,
-        submissionSuccess: true,
-        step: BeneficiaryRegistrationStep.needs,
+        step: BeneficiaryRegistrationStep.setPassword,
         clearError: true,
       ),
     );
@@ -583,6 +597,12 @@ class BeneficiaryRegistrationBloc extends Bloc<
         BeneficiaryRegistrationStep.welcome =>
           BeneficiaryRegistrationStep.institutionDetails,
         BeneficiaryRegistrationStep.institutionDetails =>
+          c.institutionRegistrationSubmitted
+              ? (c.passwordSetupComplete
+                  ? BeneficiaryRegistrationStep.institutionDocuments
+                  : BeneficiaryRegistrationStep.setPassword)
+              : BeneficiaryRegistrationStep.setPassword,
+        BeneficiaryRegistrationStep.setPassword =>
           BeneficiaryRegistrationStep.institutionDocuments,
         BeneficiaryRegistrationStep.institutionDocuments => null,
         BeneficiaryRegistrationStep.identity => null,
@@ -598,16 +618,21 @@ class BeneficiaryRegistrationBloc extends Bloc<
         BeneficiaryRegistrationStep.disbursement => null,
         BeneficiaryRegistrationStep.identity => null,
         BeneficiaryRegistrationStep.institutionDetails => null,
+        BeneficiaryRegistrationStep.setPassword => null,
         BeneficiaryRegistrationStep.institutionDocuments => null,
       };
     }
     return switch (c.step) {
       BeneficiaryRegistrationStep.welcome => BeneficiaryRegistrationStep.identity,
-      BeneficiaryRegistrationStep.identity => BeneficiaryRegistrationStep.needs,
+      BeneficiaryRegistrationStep.identity =>
+        c.manualIdentitySubmitted && !c.passwordSetupComplete
+            ? BeneficiaryRegistrationStep.setPassword
+            : BeneficiaryRegistrationStep.needs,
       BeneficiaryRegistrationStep.needs =>
         BeneficiaryRegistrationStep.disbursement,
       BeneficiaryRegistrationStep.disbursement => null,
       BeneficiaryRegistrationStep.institutionDetails => null,
+      BeneficiaryRegistrationStep.setPassword => null,
       BeneficiaryRegistrationStep.institutionDocuments => null,
     };
   }
@@ -617,8 +642,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return switch (c.step) {
         BeneficiaryRegistrationStep.institutionDetails =>
           BeneficiaryRegistrationStep.welcome,
-        BeneficiaryRegistrationStep.institutionDocuments =>
+        BeneficiaryRegistrationStep.setPassword =>
           BeneficiaryRegistrationStep.institutionDetails,
+        BeneficiaryRegistrationStep.institutionDocuments =>
+          BeneficiaryRegistrationStep.setPassword,
         BeneficiaryRegistrationStep.welcome => null,
         BeneficiaryRegistrationStep.identity => null,
         BeneficiaryRegistrationStep.needs => null,
@@ -627,6 +654,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     }
     if (c.method == RegistrationMethod.fastTrack) {
       return switch (c.step) {
+        BeneficiaryRegistrationStep.setPassword =>
+          BeneficiaryRegistrationStep.welcome,
         BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.welcome,
         BeneficiaryRegistrationStep.disbursement =>
           BeneficiaryRegistrationStep.needs,
@@ -637,6 +666,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
       };
     }
     return switch (c.step) {
+      BeneficiaryRegistrationStep.setPassword =>
+        BeneficiaryRegistrationStep.identity,
       BeneficiaryRegistrationStep.identity => BeneficiaryRegistrationStep.welcome,
       BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.identity,
       BeneficiaryRegistrationStep.disbursement =>
@@ -750,18 +781,17 @@ class BeneficiaryRegistrationBloc extends Bloc<
         _current.copyWith(
           isSubmitting: false,
           manualIdentitySubmitted: true,
-          submissionSuccess: true,
           createdBeneficiaryId: result.dto.id,
           registeredBeneficiary: result.dto,
-          step: BeneficiaryRegistrationStep.needs,
+          step: BeneficiaryRegistrationStep.setPassword,
           clearError: true,
+          clearPasswordFields: true,
         ),
       );
     } on BeneficiaryRegistrationException catch (e) {
       emit(
         _current.copyWith(
           isSubmitting: false,
-          submissionSuccess: false,
           errorMessage: e.message,
         ),
       );
@@ -769,7 +799,6 @@ class BeneficiaryRegistrationBloc extends Bloc<
       emit(
         _current.copyWith(
           isSubmitting: false,
-          submissionSuccess: false,
           errorMessage: e.toString(),
         ),
       );
@@ -868,22 +897,21 @@ class BeneficiaryRegistrationBloc extends Bloc<
         _current.copyWith(
           isSubmitting: false,
           institutionRegistrationSubmitted: true,
-          submissionSuccess: true,
           createdBeneficiaryId: dto.id,
           registeredBeneficiary: dto,
           companyDocumentUploadToken: dto.companyDocumentUploadToken,
           kycDocuments: dto.institutionRecommendedKycDocuments,
           institutionRequiredKycComplete:
               dto.institutionRequiredKycComplete ?? false,
-          step: BeneficiaryRegistrationStep.institutionDocuments,
+          step: BeneficiaryRegistrationStep.setPassword,
           clearError: true,
+          clearPasswordFields: true,
         ),
       );
     } on BeneficiaryRegistrationException catch (e) {
       emit(
         _current.copyWith(
           isSubmitting: false,
-          submissionSuccess: false,
           errorMessage: e.message,
         ),
       );
@@ -891,7 +919,6 @@ class BeneficiaryRegistrationBloc extends Bloc<
       emit(
         _current.copyWith(
           isSubmitting: false,
-          submissionSuccess: false,
           errorMessage: e.toString(),
         ),
       );
@@ -977,6 +1004,150 @@ class BeneficiaryRegistrationBloc extends Bloc<
     }
   }
 
+  void _onPasswordUpdated(
+    PasswordUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(_current.copyWith(password: event.value, clearError: true));
+  }
+
+  void _onConfirmPasswordUpdated(
+    ConfirmPasswordUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(_current.copyWith(confirmPassword: event.value, clearError: true));
+  }
+
+  Future<void> _onSetPasswordRequested(
+    SetPasswordRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    if (_current.step != BeneficiaryRegistrationStep.setPassword) {
+      return;
+    }
+    if (_current.passwordSetupComplete) {
+      if (_current.method == RegistrationMethod.institution) {
+        emit(
+          _current.copyWith(
+            step: BeneficiaryRegistrationStep.institutionDocuments,
+            clearError: true,
+          ),
+        );
+      }
+      return;
+    }
+
+    final validation = _validateSetPassword(_current);
+    if (validation != null) {
+      emit(_current.copyWith(errorMessage: validation));
+      return;
+    }
+
+    final beneficiaryId = int.tryParse(_current.createdBeneficiaryId?.trim() ?? '');
+    if (beneficiaryId == null) {
+      emit(
+        _current.copyWith(
+          errorMessage: 'Missing beneficiary reference. Please restart registration.',
+        ),
+      );
+      return;
+    }
+
+    final phone = _resolveSetPasswordPhone(_current);
+    if (phone == null) {
+      emit(
+        _current.copyWith(
+          errorMessage: 'Phone number is required to set your password.',
+        ),
+      );
+      return;
+    }
+
+    emit(_current.copyWith(isSettingPassword: true, clearError: true));
+
+    try {
+      await _authRepository.setBeneficiaryPassword(
+        SetPasswordRequest(
+          beneficiaryId: beneficiaryId,
+          phone: phone,
+          password: _current.password,
+          confirmPassword: _current.confirmPassword,
+        ),
+      );
+
+      if (_current.method == RegistrationMethod.institution) {
+        emit(
+          _current.copyWith(
+            isSettingPassword: false,
+            passwordSetupComplete: true,
+            submissionSuccess: true,
+            step: BeneficiaryRegistrationStep.institutionDocuments,
+            clearError: true,
+          ),
+        );
+      } else {
+        emit(
+          _current.copyWith(
+            isSettingPassword: false,
+            passwordSetupComplete: true,
+            submissionSuccess: true,
+            clearError: true,
+          ),
+        );
+      }
+    } on AuthException catch (e) {
+      emit(
+        _current.copyWith(
+          isSettingPassword: false,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        _current.copyWith(
+          isSettingPassword: false,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  String? _resolveSetPasswordPhone(BeneficiaryRegistrationInitial s) {
+    final fromState = PhoneE164.normalize(s.phoneNumber);
+    if (fromState != null) {
+      return fromState;
+    }
+    return PhoneE164.normalize(s.registeredBeneficiary?.phone ?? '');
+  }
+
+  String? _validateSetPassword(BeneficiaryRegistrationInitial s) {
+    final password = s.password;
+    final confirm = s.confirmPassword;
+
+    if (password.isEmpty || confirm.isEmpty) {
+      return 'Please enter and confirm your password.';
+    }
+    if (password != confirm) {
+      return 'Passwords do not match.';
+    }
+    if (password.length < 8) {
+      return 'Password must be at least 8 characters.';
+    }
+    if (!_passwordUppercase.hasMatch(password)) {
+      return 'Password must include an uppercase letter.';
+    }
+    if (!_passwordLowercase.hasMatch(password)) {
+      return 'Password must include a lowercase letter.';
+    }
+    if (!_passwordDigit.hasMatch(password)) {
+      return 'Password must include a number.';
+    }
+    if (!_passwordSpecial.hasMatch(password)) {
+      return 'Password must include a special character.';
+    }
+    return null;
+  }
+
   void _onInstitutionRegistrationFinished(
     InstitutionRegistrationFinished event,
     Emitter<BeneficiaryRegistrationState> emit,
@@ -1045,6 +1216,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
         return current.method == RegistrationMethod.institution &&
             current.isInstitutionDetailsComplete &&
             !current.isSubmitting;
+      case BeneficiaryRegistrationStep.setPassword:
+        return current.isSetPasswordStepComplete && !current.isSettingPassword;
       case BeneficiaryRegistrationStep.institutionDocuments:
         return current.institutionRequiredKycComplete &&
             current.uploadingDocumentCode == null;

@@ -8,6 +8,24 @@ enum AppThemePreference { light, dark }
 
 enum BeneficiaryStatus { approved, pending, rejected }
 
+enum FinancialInstitution {
+  hijraBank,
+  zamzamBank,
+  coopBank,
+  cbe,
+  teleBirr;
+
+  String get label => switch (this) {
+        FinancialInstitution.hijraBank => 'Hijra Bank',
+        FinancialInstitution.zamzamBank => 'Zamzam Bank',
+        FinancialInstitution.coopBank => 'Coop Bank',
+        FinancialInstitution.cbe => 'CBE',
+        FinancialInstitution.teleBirr => 'TeleBirr',
+      };
+
+  bool get isAvailable => this == FinancialInstitution.coopBank;
+}
+
 extension MadhhabX on Madhhab {
   String get label {
     switch (this) {
@@ -84,6 +102,11 @@ class ProfileModel extends Equatable {
     required this.totalZakatPaid,
     required this.activeEndowments,
     required this.beneficiariesHelped,
+    this.coopBankAccountNumber,
+    this.bankName,
+    this.nationalId,
+    this.region,
+    this.city,
   });
 
   final String name;
@@ -110,6 +133,11 @@ class ProfileModel extends Equatable {
   final double totalZakatPaid;
   final int activeEndowments;
   final int beneficiariesHelped;
+  final String? coopBankAccountNumber;
+  final String? bankName;
+  final String? nationalId;
+  final String? region;
+  final String? city;
 
   ProfileModel copyWith({
     String? name,
@@ -130,6 +158,12 @@ class ProfileModel extends Equatable {
     double? totalZakatPaid,
     int? activeEndowments,
     int? beneficiariesHelped,
+    String? coopBankAccountNumber,
+    bool clearCoopBankAccountNumber = false,
+    String? bankName,
+    String? nationalId,
+    String? region,
+    String? city,
   }) {
     return ProfileModel(
       name: name ?? this.name,
@@ -150,6 +184,13 @@ class ProfileModel extends Equatable {
       totalZakatPaid: totalZakatPaid ?? this.totalZakatPaid,
       activeEndowments: activeEndowments ?? this.activeEndowments,
       beneficiariesHelped: beneficiariesHelped ?? this.beneficiariesHelped,
+      coopBankAccountNumber: clearCoopBankAccountNumber
+          ? null
+          : (coopBankAccountNumber ?? this.coopBankAccountNumber),
+      bankName: bankName ?? this.bankName,
+      nationalId: nationalId ?? this.nationalId,
+      region: region ?? this.region,
+      city: city ?? this.city,
     );
   }
 
@@ -173,5 +214,10 @@ class ProfileModel extends Equatable {
         totalZakatPaid,
         activeEndowments,
         beneficiariesHelped,
+        coopBankAccountNumber,
+        bankName,
+        nationalId,
+        region,
+        city,
       ];
 }

@@ -36,10 +36,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get registerAcceptZakat => 'سجل لاستلام الزكاة';
 
   @override
-  String get urgentBeneficiaryNeeds => 'احتياجات المستفيدين العاجلة';
+  String get urgentBeneficiaryNeeds => 'الحالات العاجلة';
 
   @override
-  String get viewAll => 'عرض الكل';
+  String get viewAll => 'عرض الكل →';
 
   @override
   String get totalZakatCollected => 'إجمالي الزكاة المحصلة';
@@ -55,7 +55,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'بشفافية ومساءلة وأثر حقيقي: عطاؤك يدعم الإغاثة والتمكين على مستوى الوطن.';
 
   @override
-  String get payZakatCause => 'ادفع الزكاة لهذه الحالة';
+  String get payZakatCause => 'أعطِ الزكاة';
 
   @override
   String get zakatAlFitr => 'زكاة الفطر';
@@ -67,7 +67,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get setReminder => 'ضبط تذكير';
 
   @override
-  String get needQuickWayGive => 'تحتاج طريقة سريعة للتبرع؟';
+  String get needQuickWayGive => 'عطاء سريع';
 
   @override
   String get supportCommunityNeeds => 'ادعم احتياجات المجتمع فوراً بالصدقة.';
@@ -76,11 +76,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get donateSadaqah => 'تبرع بصدقة';
 
   @override
-  String get aboutCommission => 'حول هيئة الزكاة والأوقاف الإثيوبية';
+  String get aboutCommission => 'هيئة الزكاة والأوقاف الإثيوبية';
 
   @override
   String get aboutCommissionBody =>
-      'تنسق هيئة الزكاة والأوقاف الإثيوبية جمع الزكاة وتطوير الأوقاف لرفع المجتمعات الهشة عبر برامج شفافة ومتوافقة مع الشريعة.';
+      'تنسيق جمع الزكاة وتطوير الأوقاف لرفع المجتمعات الهشة عبر برامج شفافة ومتوافقة مع الشريعة في جميع أنحاء إثيوبيا.';
 
   @override
   String get chipTransparencyFirst => 'الشفافية أولاً';

@@ -37,10 +37,10 @@ class AppLocalizationsOm extends AppLocalizations {
   String get registerAcceptZakat => 'Zakaa fudhachuuf galmaa\'i';
 
   @override
-  String get urgentBeneficiaryNeeds => 'Fedhii Ariifachiisaa Fayyadamtootaa';
+  String get urgentBeneficiaryNeeds => 'Sababa Ariifachiisaa';
 
   @override
-  String get viewAll => 'Hunda Ilaali';
+  String get viewAll => 'Hunda Ilaali →';
 
   @override
   String get totalZakatCollected => 'WALITTI QABAMAA ZAKAA';
@@ -57,7 +57,7 @@ class AppLocalizationsOm extends AppLocalizations {
       'Iftoomina, itti gaafatamummaa fi bu\'a qabeessummaa: arjoomni kee gargaarsa biyyaalessaa ni cimsaa.';
 
   @override
-  String get payZakatCause => 'Sababa kanaaf Zakaa Kaffali';
+  String get payZakatCause => 'Zakaa Kenni';
 
   @override
   String get zakatAlFitr => 'Zakaa Al-Fitr';
@@ -69,7 +69,7 @@ class AppLocalizationsOm extends AppLocalizations {
   String get setReminder => 'Yaadachiisa kaa\'i';
 
   @override
-  String get needQuickWayGive => 'Karaa saffisaa itti kennitu barbaaddaa?';
+  String get needQuickWayGive => 'Kenna Saffisaa';
 
   @override
   String get supportCommunityNeeds =>
@@ -79,11 +79,11 @@ class AppLocalizationsOm extends AppLocalizations {
   String get donateSadaqah => 'Sadaqaa Kenni';
 
   @override
-  String get aboutCommission => 'Waa\'ee Komishinii Zakaa fi Awqaaf Itoophiyaa';
+  String get aboutCommission => 'Komishinii Zakaa fi Awqaaf Itoophiyaa';
 
   @override
   String get aboutCommissionBody =>
-      'Komishiniin Zakaa fi Awqaaf Itoophiyaa walitti qabama zakaa fi misooma awqaaf qindeessuun hawaasa miidhamoo ta\'an iftoominaan fi sagantaa shari\'aa wajjin walsimuun ni deeggarra.';
+      'Walitti qabama zakaa fi misooma awqaaf qindeessuun hawaasa miidhamoo ta\'an iftoominaan fi sagantaa shari\'aa wajjin walsimuun Itoophiyaa guutuu ni deeggarra.';
 
   @override
   String get chipTransparencyFirst => 'Iftoomina dura';

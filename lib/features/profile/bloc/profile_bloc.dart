@@ -17,6 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileLanguageSelected>(_onLanguageSelected);
     on<ProfileThemeSelected>(_onThemeSelected);
     on<ProfileLoggedOut>(_onLoggedOut);
+    on<ProfileBankAccountSaved>(_onBankAccountSaved);
   }
 
   final ProfileRepository _repository;
@@ -73,6 +74,35 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
+  Future<void> _onBankAccountSaved(
+    ProfileBankAccountSaved event,
+    Emitter<ProfileState> emit,
+  ) async {
+    final current = state;
+    if (current is! ProfileLoaded) return;
+
+    try {
+      final updated = await _repository.updateBankAccount(
+        bankName: event.bankName.trim(),
+        accountNumber: event.accountNumber.trim(),
+      );
+      emit(
+        ProfileLoaded(
+          updated,
+          feedbackMessage: 'Bank account updated',
+        ),
+      );
+    } catch (error) {
+      emit(
+        ProfileLoaded(
+          current.profile,
+          feedbackMessage: error.toString(),
+          feedbackIsError: true,
+        ),
+      );
+    }
+  }
+
   Future<void> _onLoggedOut(
     ProfileLoggedOut event,
     Emitter<ProfileState> emit,
@@ -88,7 +118,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final current = state;
     if (current is! ProfileLoaded) return;
     final next = update(current.profile);
-    emit(ProfileLoaded(next));
+    emit(ProfileLoaded(next, feedbackMessage: null));
     try {
       await _repository.updateProfile(next);
     } catch (_) {

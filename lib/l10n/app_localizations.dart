@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeCommissionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Zakat and Awqaf Commission'**
+  /// **'Zakat & Awqaf Commission'**
   String get homeCommissionTitle;
 
   /// No description provided for @homeGreeting.
@@ -161,13 +161,13 @@ abstract class AppLocalizations {
   /// No description provided for @urgentBeneficiaryNeeds.
   ///
   /// In en, this message translates to:
-  /// **'Urgent Beneficiary Needs'**
+  /// **'Urgent Causes'**
   String get urgentBeneficiaryNeeds;
 
   /// No description provided for @viewAll.
   ///
   /// In en, this message translates to:
-  /// **'View All'**
+  /// **'View all →'**
   String get viewAll;
 
   /// No description provided for @totalZakatCollected.
@@ -197,7 +197,7 @@ abstract class AppLocalizations {
   /// No description provided for @payZakatCause.
   ///
   /// In en, this message translates to:
-  /// **'Pay Zakat to this cause'**
+  /// **'Give Zakat'**
   String get payZakatCause;
 
   /// No description provided for @zakatAlFitr.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @needQuickWayGive.
   ///
   /// In en, this message translates to:
-  /// **'Need a quick way to give?'**
+  /// **'Quick Giving'**
   String get needQuickWayGive;
 
   /// No description provided for @supportCommunityNeeds.
@@ -239,13 +239,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutCommission.
   ///
   /// In en, this message translates to:
-  /// **'About Ethiopian Zakat and Awqaf Commission'**
+  /// **'Ethiopian Zakat & Awqaf Commission'**
   String get aboutCommission;
 
   /// No description provided for @aboutCommissionBody.
   ///
   /// In en, this message translates to:
-  /// **'The Ethiopian Zakat and Awqaf Commission coordinates zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs.'**
+  /// **'Coordinating zakat collection and awqaf development to uplift vulnerable communities through transparent, Shariah-aligned programs across Ethiopia.'**
   String get aboutCommissionBody;
 
   /// No description provided for @chipTransparencyFirst.

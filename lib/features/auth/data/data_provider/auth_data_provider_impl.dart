@@ -5,6 +5,7 @@ import '../../../beneficiary_registration/data/mobile_error_message.dart';
 import '../auth_exception.dart';
 import '../models/login_request.dart';
 import '../models/login_response_dto.dart';
+import '../models/set_password_request.dart';
 import 'auth_data_provider.dart';
 
 @LazySingleton(as: AuthDataProvider)
@@ -13,13 +14,14 @@ class AuthDataProviderImpl implements AuthDataProvider {
 
   final Dio _dio;
 
-  static const _path = 'api/auth/v1/login';
+  static const _loginPath = 'api/auth/v1/login';
+  static const _setPasswordPath = 'api/beneficiaries/v1/accounts/set-password';
 
   @override
   Future<LoginResponseDto> login(LoginRequest request) async {
     try {
       final response = await _dio.post<Map<String, dynamic>>(
-        _path,
+        _loginPath,
         data: request.toJson(),
       );
       final status = response.statusCode ?? 0;
@@ -44,6 +46,37 @@ class AuthDataProviderImpl implements AuthDataProvider {
         throw const AuthException('Missing access token in response');
       }
       return dto;
+    } on AuthException {
+      rethrow;
+    } on DioException catch (e) {
+      final parsed = parseMobileErrorMessage(e.response?.data);
+      if (parsed != null && parsed.isNotEmpty) {
+        throw AuthException(parsed);
+      }
+      throw AuthException(e.message ?? 'Network error');
+    }
+  }
+
+  @override
+  Future<void> setBeneficiaryPassword(SetPasswordRequest request) async {
+    try {
+      final response = await _dio.post<Map<String, dynamic>>(
+        _setPasswordPath,
+        data: request.toJson(),
+      );
+      final status = response.statusCode ?? 0;
+      if (status != 200) {
+        throw AuthException('Unexpected status: $status');
+      }
+      final body = response.data;
+      if (body == null) {
+        throw const AuthException('Empty response body');
+      }
+      if (body['success'] != true) {
+        throw AuthException(
+          parseMobileErrorMessage(body) ?? 'Password setup was not successful',
+        );
+      }
     } on AuthException {
       rethrow;
     } on DioException catch (e) {

@@ -17,6 +17,7 @@ import '../../data/models/profile_model.dart';
 part '../widgets/profile_settings_widgets.dart';
 part '../widgets/profile_overview_widgets.dart';
 part '../widgets/profile_actions_widgets.dart';
+part '../widgets/profile_payout_account_widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -25,7 +26,20 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
+        listenWhen: (previous, current) =>
+            current is ProfileLoaded && current.feedbackMessage != null,
+        listener: (context, state) {
+          if (state is! ProfileLoaded || state.feedbackMessage == null) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.feedbackMessage!),
+              backgroundColor: state.feedbackIsError
+                  ? Theme.of(context).colorScheme.error
+                  : null,
+            ),
+          );
+        },
         builder: (context, state) {
           return switch (state) {
             ProfileInitial() || ProfileLoading() =>
@@ -129,6 +143,16 @@ class _ProfileContent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _PersonalInfoCard(profile: profile),
+            ),
+            const SizedBox(height: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: _SectionHeader('Payout Account'),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _PayoutAccountSetupCard(profile: profile),
             ),
             const SizedBox(height: 16),
             Padding(

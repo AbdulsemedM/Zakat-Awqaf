@@ -204,6 +204,7 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final initials = _initials(name);
     return Stack(
       clipBehavior: Clip.none,
@@ -226,7 +227,7 @@ class _Avatar extends StatelessWidget {
           child: asset == null
               ? Text(
                   initials,
-                  style: TextStyle(
+                  style: theme.textTheme.headlineSmall?.copyWith(
                     color: ringColor,
                     fontWeight: FontWeight.w800,
                     fontSize: 22,

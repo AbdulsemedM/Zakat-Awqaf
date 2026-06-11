@@ -30,6 +30,19 @@ class MockProfileDataProvider implements ProfileDataProvider {
   }
 
   @override
+  Future<ProfileModel> updateBankAccount({
+    required String bankName,
+    required String accountNumber,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    _cached = _cached.copyWith(
+      bankName: bankName,
+      coopBankAccountNumber: accountNumber,
+    );
+    return _cached;
+  }
+
+  @override
   Future<void> persistProfile(ProfileModel profile) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
     _cached = profile;

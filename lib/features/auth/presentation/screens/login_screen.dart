@@ -102,10 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
           width: 1.4,
         ),
       ),
-      floatingLabelStyle: const TextStyle(
-        color: AppColors.primary,
-        fontWeight: FontWeight.w600,
-      ),
+      floatingLabelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: AppColors.primary,
+            fontWeight: FontWeight.w600,
+          ),
     );
   }
 
@@ -310,11 +310,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  child: const Text(
+                                                  child: Text(
                                                     '+251',
-                                                    style: TextStyle(
+                                                    style: theme
+                                                        .textTheme.labelLarge
+                                                        ?.copyWith(
                                                       color: AppColors.primary,
-                                                      fontWeight: FontWeight.w800,
+                                                      fontWeight:
+                                                          FontWeight.w800,
                                                       letterSpacing: 0.3,
                                                     ),
                                                   ),
@@ -433,10 +436,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   children: [
                                                     Text(
                                                       l10n.loginButton,
-                                                      style: const TextStyle(
+                                                      style: theme
+                                                          .textTheme.labelLarge
+                                                          ?.copyWith(
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 16,
+                                                        color: AppColors
+                                                            .textOnPrimary,
                                                       ),
                                                     ),
                                                     const SizedBox(width: 8),

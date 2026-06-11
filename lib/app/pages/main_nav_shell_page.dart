@@ -1,12 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../settings/app_settings_controller.dart';
 import '../../core/l10n/l10n.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_typography.dart';
+import '../widgets/zakat_themed.dart';
 
 class MainNavShellPage extends StatelessWidget {
   const MainNavShellPage({required this.navigationShell, super.key});
@@ -15,91 +18,182 @@ class MainNavShellPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final l10n = context.l10n;
     final appMode = context.watch<AppSettingsController>().appMode;
     final isAwqaf = appMode == AppMode.awqaf;
+
+    return Scaffold(
+      body: isAwqaf
+          ? navigationShell
+          : ZakatThemed(child: navigationShell),
+      bottomNavigationBar: isAwqaf
+          ? _AwqafBottomNav(
+              navigationShell: navigationShell,
+              appMode: appMode,
+            )
+          : _ZakatBottomNav(
+              navigationShell: navigationShell,
+              appMode: appMode,
+            ),
+    );
+  }
+}
+
+class _ZakatBottomNav extends StatelessWidget {
+  const _ZakatBottomNav({
+    required this.navigationShell,
+    required this.appMode,
+  });
+
+  final StatefulNavigationShell navigationShell;
+  final AppMode appMode;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final selectedIndex = navigationShell.currentIndex % 4;
-    final selectedBgColor = isAwqaf
-        ? AppColors.awqafSecondary.withValues(alpha: 0.34)
-        : AppColors.primary.withValues(alpha: 0.16);
-    final selectedFgColor = isAwqaf
-        ? AppColors.awqafPrimary
-        : AppColors.primary;
-    final unselectedFgColor = isAwqaf
-        ? AppColors.awqafSecondary
-        : AppColors.primary.withValues(alpha: 0.66);
     final items = <_NavItem>[
       _NavItem(
         label: l10n.navHome,
-        activeIcon: Icons.home_rounded,
-        inactiveIcon: Icons.home_outlined,
+        icon: TablerIcons.home,
       ),
       _NavItem(
-        label: isAwqaf ? 'Create' : l10n.navCalculator,
-        activeIcon: isAwqaf ? Icons.add_circle_rounded : Icons.calculate_rounded,
-        inactiveIcon: isAwqaf ? Icons.add_circle_outline_rounded : Icons.calculate_outlined,
+        label: l10n.navCalculator,
+        icon: TablerIcons.calculator,
       ),
       _NavItem(
-        label: isAwqaf ? 'Portfolio' : l10n.navImpact,
-        activeIcon: isAwqaf ? Icons.workspaces_rounded : Icons.auto_graph_rounded,
-        inactiveIcon: isAwqaf ? Icons.workspaces_outline : Icons.auto_graph_outlined,
+        label: l10n.navImpact,
+        icon: TablerIcons.trending_up,
       ),
       _NavItem(
-        label: isAwqaf ? 'Profile' : l10n.navProfile,
-        activeIcon: Icons.person_rounded,
-        inactiveIcon: Icons.person_outline_rounded,
+        label: l10n.navProfile,
+        icon: TablerIcons.user,
       ),
     ];
 
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: SafeArea(
+    return Container(
+      color: AppColors.forestGreen,
+      child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(22),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: scheme.surface.withValues(alpha: 0.92),
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(
-                    color: AppColors.secondary.withValues(alpha: 0.24),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: scheme.shadow.withValues(alpha: 0.12),
-                      blurRadius: 20,
-                      offset: const Offset(0, -6),
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Row(
+            children: [
+              for (var i = 0; i < items.length; i++)
+                Expanded(
+                  child: _ZakatNavButton(
+                    item: items[i],
+                    selected: selectedIndex == i,
+                    onTap: () => context.go(
+                      _destinationFor(itemIndex: i, appMode: appMode),
                     ),
-                  ],
+                  ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Row(
-                  children: [
-                    for (var i = 0; i < items.length; i++)
-                      Expanded(
-                        child: _NavButton(
-                          item: items[i],
-                          selected: selectedIndex == i,
-                          textTheme: textTheme,
-                          selectedBgColor: selectedBgColor,
-                          selectedFgColor: selectedFgColor,
-                          unselectedFgColor: unselectedFgColor,
-                          onTap: () => context.go(
-                            _destinationFor(
-                              itemIndex: i,
-                              appMode: appMode,
-                            ),
-                          ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ZakatNavButton extends StatelessWidget {
+  const _ZakatNavButton({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _NavItem item;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color =
+        selected ? AppColors.warmGold : AppColors.mintGreenMuted;
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(item.icon, color: color, size: 22),
+            const SizedBox(height: 2),
+            Text(
+              item.label,
+              style: AppTypography.label(
+                fontSize: 9,
+                color: color,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AwqafBottomNav extends StatelessWidget {
+  const _AwqafBottomNav({
+    required this.navigationShell,
+    required this.appMode,
+  });
+
+  final StatefulNavigationShell navigationShell;
+  final AppMode appMode;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final selectedIndex = navigationShell.currentIndex % 4;
+    final items = <_NavItem>[
+      const _NavItem(label: 'Home', icon: Icons.home_rounded),
+      const _NavItem(label: 'Create', icon: Icons.add_circle_rounded),
+      const _NavItem(label: 'Portfolio', icon: Icons.workspaces_rounded),
+      const _NavItem(label: 'Profile', icon: Icons.person_rounded),
+    ];
+
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(22),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: scheme.surface.withValues(alpha: 0.92),
+                borderRadius: BorderRadius.circular(22),
+                border: Border.all(
+                  color: AppColors.secondary.withValues(alpha: 0.24),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: scheme.shadow.withValues(alpha: 0.12),
+                    blurRadius: 20,
+                    offset: const Offset(0, -6),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                children: [
+                  for (var i = 0; i < items.length; i++)
+                    Expanded(
+                      child: _AwqafNavButton(
+                        item: items[i],
+                        selected: selectedIndex == i,
+                        textTheme: textTheme,
+                        onTap: () => context.go(
+                          _destinationFor(itemIndex: i, appMode: appMode),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           ),
@@ -107,63 +201,27 @@ class MainNavShellPage extends StatelessWidget {
       ),
     );
   }
-
-  String _destinationFor({
-    required int itemIndex,
-    required AppMode appMode,
-  }) {
-    if (appMode == AppMode.awqaf) {
-      return switch (itemIndex) {
-        0 => '/awqaf',
-        1 => '/awqaf/create',
-        2 => '/awqaf/portfolio',
-        3 => '/awqaf/profile',
-        _ => '/awqaf',
-      };
-    }
-    return switch (itemIndex) {
-      0 => '/',
-      1 => '/calculator',
-      2 => '/impact',
-      3 => '/profile',
-      _ => '/',
-    };
-  }
 }
 
-class _NavItem {
-  const _NavItem({
-    required this.label,
-    required this.activeIcon,
-    required this.inactiveIcon,
-  });
-
-  final String label;
-  final IconData activeIcon;
-  final IconData inactiveIcon;
-}
-
-class _NavButton extends StatelessWidget {
-  const _NavButton({
+class _AwqafNavButton extends StatelessWidget {
+  const _AwqafNavButton({
     required this.item,
     required this.selected,
     required this.textTheme,
-    required this.selectedBgColor,
-    required this.selectedFgColor,
-    required this.unselectedFgColor,
     required this.onTap,
   });
 
   final _NavItem item;
   final bool selected;
   final TextTheme textTheme;
-  final Color selectedBgColor;
-  final Color selectedFgColor;
-  final Color unselectedFgColor;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final selectedFgColor = AppColors.awqafPrimary;
+    final unselectedFgColor = AppColors.awqafSecondary;
+    final selectedBgColor = AppColors.awqafSecondary.withValues(alpha: 0.34);
+
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: onTap,
@@ -173,23 +231,22 @@ class _NavButton extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 3),
         padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
-          color: selected
-              ? selectedBgColor
-              : Colors.transparent,
+          color: selected ? selectedBgColor : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              selected ? item.activeIcon : item.inactiveIcon,
+              item.icon,
               color: selected ? selectedFgColor : unselectedFgColor,
               size: 21,
             ),
             const SizedBox(height: 1),
             Text(
               item.label,
-              style: (textTheme.labelSmall ?? const TextStyle(fontSize: 11)).copyWith(
+              style: (textTheme.labelSmall ?? const TextStyle(fontSize: 11))
+                  .copyWith(
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 color: selected ? selectedFgColor : unselectedFgColor,
               ),
@@ -199,4 +256,33 @@ class _NavButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class _NavItem {
+  const _NavItem({required this.label, required this.icon});
+
+  final String label;
+  final IconData icon;
+}
+
+String _destinationFor({
+  required int itemIndex,
+  required AppMode appMode,
+}) {
+  if (appMode == AppMode.awqaf) {
+    return switch (itemIndex) {
+      0 => '/awqaf',
+      1 => '/awqaf/create',
+      2 => '/awqaf/portfolio',
+      3 => '/awqaf/profile',
+      _ => '/awqaf',
+    };
+  }
+  return switch (itemIndex) {
+    0 => '/',
+    1 => '/calculator',
+    2 => '/impact',
+    3 => '/profile',
+    _ => '/',
+  };
 }

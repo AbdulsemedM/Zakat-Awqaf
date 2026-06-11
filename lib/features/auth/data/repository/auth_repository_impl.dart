@@ -4,6 +4,7 @@ import '../../../../core/auth/auth_session_controller.dart';
 import '../../../../core/auth/auth_token_storage.dart';
 import '../data_provider/auth_data_provider.dart';
 import '../models/login_request.dart';
+import '../models/set_password_request.dart';
 import 'auth_repository.dart';
 
 @LazySingleton(as: AuthRepository)
@@ -28,6 +29,11 @@ class AuthRepositoryImpl implements AuthRepository {
       expiresInSeconds: dto.expiresIn > 0 ? dto.expiresIn : 300,
     );
     _sessionController.markAuthenticated();
+  }
+
+  @override
+  Future<void> setBeneficiaryPassword(SetPasswordRequest request) {
+    return _dataProvider.setBeneficiaryPassword(request);
   }
 
   @override

@@ -20,7 +20,9 @@ class _SpiritualSettingsCard extends StatelessWidget {
                 .add(ProfileNisabAlertsToggled(v)),
             title: Text(
               context.l10n.profileNisabThresholdAlerts,
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             subtitle: Text(
               context.l10n.profileNisabThresholdAlertsSubtitle,
@@ -83,7 +85,9 @@ class _SettingsSecurityCard extends StatelessWidget {
                   .add(ProfileBiometricToggled(v)),
               title: Text(
                 context.l10n.profileBiometricLogin,
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               subtitle: Text(
                 context.l10n.profileBiometricSubtitle,
@@ -108,7 +112,9 @@ class _SettingsSecurityCard extends StatelessWidget {
               ),
               title: Text(
                 context.l10n.profileChangePin,
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               trailing: Icon(
                 Icons.chevron_right_rounded,

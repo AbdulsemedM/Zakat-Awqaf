@@ -302,3 +302,23 @@ final class InstitutionDocumentUploadRequested extends BeneficiaryRegistrationEv
 final class InstitutionRegistrationFinished extends BeneficiaryRegistrationEvent {
   const InstitutionRegistrationFinished();
 }
+
+final class PasswordUpdated extends BeneficiaryRegistrationEvent {
+  const PasswordUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class ConfirmPasswordUpdated extends BeneficiaryRegistrationEvent {
+  const ConfirmPasswordUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class SetPasswordRequested extends BeneficiaryRegistrationEvent {
+  const SetPasswordRequested();
+}

@@ -10,6 +10,7 @@ enum BeneficiaryRegistrationStep {
   needs,
   disbursement,
   institutionDetails,
+  setPassword,
   institutionDocuments,
 }
 
@@ -67,6 +68,10 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.uploadingDocumentCode,
     this.institutionRegistrationSubmitted = false,
     this.institutionRequiredKycComplete = false,
+    this.password = '',
+    this.confirmPassword = '',
+    this.isSettingPassword = false,
+    this.passwordSetupComplete = false,
     this.errorMessage,
     this.submissionSuccess = false,
     this.isSubmitting = false,
@@ -114,6 +119,10 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String? uploadingDocumentCode;
   final bool institutionRegistrationSubmitted;
   final bool institutionRequiredKycComplete;
+  final String password;
+  final String confirmPassword;
+  final bool isSettingPassword;
+  final bool passwordSetupComplete;
   final String? errorMessage;
   final bool submissionSuccess;
   final bool isSubmitting;
@@ -132,12 +141,20 @@ sealed class BeneficiaryRegistrationState extends Equatable {
       case BeneficiaryRegistrationStep.identity:
       case BeneficiaryRegistrationStep.institutionDetails:
         return 0.5;
+      case BeneficiaryRegistrationStep.setPassword:
+        return 0.65;
       case BeneficiaryRegistrationStep.needs:
       case BeneficiaryRegistrationStep.institutionDocuments:
         return 0.75;
       case BeneficiaryRegistrationStep.disbursement:
         return 1.0;
     }
+  }
+
+  bool get isSetPasswordStepComplete {
+    return password.trim().isNotEmpty &&
+        confirmPassword.trim().isNotEmpty &&
+        password == confirmPassword;
   }
 
   bool get isIdentityStepComplete {
@@ -207,6 +224,10 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         uploadingDocumentCode,
         institutionRegistrationSubmitted,
         institutionRequiredKycComplete,
+        password,
+        confirmPassword,
+        isSettingPassword,
+        passwordSetupComplete,
         errorMessage,
         submissionSuccess,
         isSubmitting,
@@ -257,6 +278,10 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.uploadingDocumentCode,
     super.institutionRegistrationSubmitted,
     super.institutionRequiredKycComplete,
+    super.password,
+    super.confirmPassword,
+    super.isSettingPassword,
+    super.passwordSetupComplete,
     super.errorMessage,
     super.submissionSuccess,
     super.isSubmitting,
@@ -311,6 +336,11 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     bool clearUploadingDocumentCode = false,
     bool? institutionRegistrationSubmitted,
     bool? institutionRequiredKycComplete,
+    String? password,
+    String? confirmPassword,
+    bool? isSettingPassword,
+    bool? passwordSetupComplete,
+    bool clearPasswordFields = false,
     String? errorMessage,
     bool clearError = false,
     bool? submissionSuccess,
@@ -387,6 +417,12 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
           ? false
           : (institutionRequiredKycComplete ??
               this.institutionRequiredKycComplete),
+      password: clearPasswordFields ? '' : (password ?? this.password),
+      confirmPassword:
+          clearPasswordFields ? '' : (confirmPassword ?? this.confirmPassword),
+      isSettingPassword: isSettingPassword ?? this.isSettingPassword,
+      passwordSetupComplete:
+          passwordSetupComplete ?? this.passwordSetupComplete,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       submissionSuccess: clearBeneficiaryMeta
           ? false

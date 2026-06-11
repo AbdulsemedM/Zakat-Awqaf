@@ -18,12 +18,18 @@ final class ProfileLoading extends ProfileState {
 }
 
 final class ProfileLoaded extends ProfileState {
-  const ProfileLoaded(this.profile);
+  const ProfileLoaded(
+    this.profile, {
+    this.feedbackMessage,
+    this.feedbackIsError = false,
+  });
 
   final ProfileModel profile;
+  final String? feedbackMessage;
+  final bool feedbackIsError;
 
   @override
-  List<Object?> get props => [profile];
+  List<Object?> get props => [profile, feedbackMessage, feedbackIsError];
 }
 
 final class ProfileError extends ProfileState {

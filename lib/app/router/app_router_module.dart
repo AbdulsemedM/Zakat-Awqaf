@@ -26,6 +26,7 @@ import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart
 import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_payment_screen.dart';
 import '../pages/main_nav_shell_page.dart';
+import '../widgets/zakat_themed.dart';
 
 @module
 abstract class AppRouterModule {
@@ -118,14 +119,17 @@ abstract class AppRouterModule {
       ),
       GoRoute(
         path: '/zakat/summary',
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) =>
+            const ZakatThemed(child: HomeScreen()),
       ),
       GoRoute(
         path: '/beneficiary-registration',
-        builder: (context, state) => BlocProvider(
-          create: (_) => getIt<BeneficiaryRegistrationBloc>()
-            ..add(const BeneficiaryRegistrationStarted()),
-          child: const BeneficiaryRegistrationScreen(),
+        builder: (context, state) => ZakatThemed(
+          child: BlocProvider(
+            create: (_) => getIt<BeneficiaryRegistrationBloc>()
+              ..add(const BeneficiaryRegistrationStarted()),
+            child: const BeneficiaryRegistrationScreen(),
+          ),
         ),
       ),
 
@@ -134,11 +138,13 @@ abstract class AppRouterModule {
         builder: (context, state) {
           final extra = state.extra;
           if (extra is! ZakatPaymentArgs) {
-            return Scaffold(
-              body: Center(child: Text(context.l10n.missingPaymentDetails)),
+            return ZakatThemed(
+              child: Scaffold(
+                body: Center(child: Text(context.l10n.missingPaymentDetails)),
+              ),
             );
           }
-          return ZakatPaymentScreen(args: extra);
+          return ZakatThemed(child: ZakatPaymentScreen(args: extra));
         },
       ),
       GoRoute(
@@ -146,11 +152,13 @@ abstract class AppRouterModule {
         builder: (context, state) {
           final extra = state.extra;
           if (extra is! ZakatCertificateArgs) {
-            return Scaffold(
-              body: Center(child: Text(context.l10n.missingCertificateDetails)),
+            return ZakatThemed(
+              child: Scaffold(
+                body: Center(child: Text(context.l10n.missingCertificateDetails)),
+              ),
             );
           }
-          return ZakatCertificateScreen(args: extra);
+          return ZakatThemed(child: ZakatCertificateScreen(args: extra));
         },
       ),
     ],

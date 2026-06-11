@@ -74,22 +74,18 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
         ),
         BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
           listenWhen: (previous, current) =>
-              current.submissionSuccess && !previous.submissionSuccess,
+              current.passwordSetupComplete &&
+              !previous.passwordSetupComplete &&
+              current.method != RegistrationMethod.institution,
           listener: (context, state) {
-            final id = state.createdBeneficiaryId;
-            final status = state.registeredBeneficiary?.verificationStatus;
-            final buffer = StringBuffer();
-            if (id != null && id.isNotEmpty) {
-              buffer.write('Application submitted. Reference: $id');
-            } else {
-              buffer.write('Application submitted successfully.');
-            }
-            if (status != null && status.trim().isNotEmpty) {
-              buffer.write(' Status: ${status.trim()}.');
-            }
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(buffer.toString())),
+              const SnackBar(
+                content: Text(
+                  'Password set successfully. Welcome to Mejlis Digital Hub.',
+                ),
+              ),
             );
+            context.go('/');
           },
         ),
       ],
@@ -102,7 +98,9 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.primary, width: 1.4),
                 ),
-                labelStyle: const TextStyle(color: AppColors.primary),
+                labelStyle: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.primary,
+                ),
               ),
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: OutlinedButton.styleFrom(
@@ -200,6 +198,8 @@ class _StepContent extends StatelessWidget {
         return _DisbursementStep(state: state);
       case BeneficiaryRegistrationStep.institutionDetails:
         return _InstitutionDetailsStep(state: state);
+      case BeneficiaryRegistrationStep.setPassword:
+        return _SetPasswordStep(state: state);
       case BeneficiaryRegistrationStep.institutionDocuments:
         return _InstitutionDocumentsStep(state: state);
     }
@@ -259,16 +259,22 @@ class _WelcomeStep extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        const SectionCard(
+        SectionCard(
           child: Column(
             children: [
-              Icon(Icons.lock_outline, size: 28),
-              SizedBox(height: 8),
-              Text('Encrypted & Private', style: TextStyle(fontWeight: FontWeight.w700)),
-              SizedBox(height: 4),
+              const Icon(Icons.lock_outline, size: 28),
+              const SizedBox(height: 8),
+              Text(
+                'Encrypted & Private',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: 4),
               Text(
                 'Your data is secured and handled in line with privacy standards.',
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -1068,6 +1074,123 @@ class _InstitutionDocumentsStep extends StatelessWidget {
   }
 }
 
+class _SetPasswordStep extends StatefulWidget {
+  const _SetPasswordStep({required this.state});
+
+  final BeneficiaryRegistrationState state;
+
+  @override
+  State<_SetPasswordStep> createState() => _SetPasswordStepState();
+}
+
+class _SetPasswordStepState extends State<_SetPasswordStep> {
+  bool _obscurePassword = true;
+  bool _obscureConfirm = true;
+
+  bool get _needsPhoneInput {
+    final phone = widget.state.phoneNumber.trim();
+    final dtoPhone = widget.state.registeredBeneficiary?.phone?.trim() ?? '';
+    return phone.isEmpty && dtoPhone.isEmpty;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<BeneficiaryRegistrationBloc>();
+    final state = widget.state;
+    final displayPhone = state.phoneNumber.trim().isNotEmpty
+        ? state.phoneNumber
+        : (state.registeredBeneficiary?.phone ?? '');
+
+    return Column(
+      children: [
+        SectionCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Create Your Password',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Use your phone number and this password to sign in to your account.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              if (state.createdBeneficiaryId != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Reference: ${state.createdBeneficiaryId}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+              const SizedBox(height: 16),
+              if (_needsPhoneInput)
+                TextField(
+                  keyboardType: TextInputType.phone,
+                  onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
+                  decoration: const InputDecoration(
+                    labelText: 'Phone Number',
+                    hintText: '+251911223344 or 0911223344',
+                  ),
+                )
+              else
+                TextFormField(
+                  initialValue: displayPhone,
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Phone Number',
+                  ),
+                ),
+              const SizedBox(height: 12),
+              TextField(
+                obscureText: _obscurePassword,
+                onChanged: (v) => bloc.add(PasswordUpdated(v)),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: IconButton(
+                    onPressed: () => setState(
+                      () => _obscurePassword = !_obscurePassword,
+                    ),
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                obscureText: _obscureConfirm,
+                onChanged: (v) => bloc.add(ConfirmPasswordUpdated(v)),
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  suffixIcon: IconButton(
+                    onPressed: () => setState(
+                      () => _obscureConfirm = !_obscureConfirm,
+                    ),
+                    icon: Icon(
+                      _obscureConfirm
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Password must be at least 8 characters and include uppercase, '
+                'lowercase, a number, and a special character.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _FooterActions extends StatelessWidget {
   const _FooterActions({required this.state});
   final BeneficiaryRegistrationState state;
@@ -1084,6 +1207,8 @@ class _FooterActions extends StatelessWidget {
     final isInstitutionFinish =
         state.method == RegistrationMethod.institution &&
             state.step == BeneficiaryRegistrationStep.institutionDocuments;
+    final isSetPasswordStep =
+        state.step == BeneficiaryRegistrationStep.setPassword;
 
     final canContinue = switch (state.step) {
       BeneficiaryRegistrationStep.welcome =>
@@ -1092,6 +1217,8 @@ class _FooterActions extends StatelessWidget {
       BeneficiaryRegistrationStep.identity => state.isIdentityStepComplete,
       BeneficiaryRegistrationStep.institutionDetails =>
         state.isInstitutionDetailsComplete,
+      BeneficiaryRegistrationStep.setPassword =>
+        state.isSetPasswordStepComplete && !state.isSettingPassword,
       BeneficiaryRegistrationStep.institutionDocuments =>
         state.institutionRequiredKycComplete &&
             state.uploadingDocumentCode == null,
@@ -1114,6 +1241,9 @@ class _FooterActions extends StatelessWidget {
       BeneficiaryRegistrationStep.identity when isManualIdentitySubmit => 'Submit & Continue',
       BeneficiaryRegistrationStep.institutionDetails when isInstitutionDetailsSubmit =>
         'Submit & Continue',
+      BeneficiaryRegistrationStep.setPassword when state.method == RegistrationMethod.institution =>
+        'Set Password & Continue',
+      BeneficiaryRegistrationStep.setPassword => 'Set Password & Finish',
       BeneficiaryRegistrationStep.institutionDocuments => 'Finish',
       BeneficiaryRegistrationStep.disbursement => 'Finish',
       _ => 'Continue',
@@ -1151,9 +1281,14 @@ class _FooterActions extends StatelessWidget {
                 onPressed: !canContinue ||
                         state.isFaydaPosting ||
                         state.awaitingFaydaSse ||
-                        state.uploadingDocumentCode != null
+                        state.uploadingDocumentCode != null ||
+                        state.isSettingPassword
                     ? null
                     : () {
+                        if (isSetPasswordStep) {
+                          bloc.add(const SetPasswordRequested());
+                          return;
+                        }
                         if (isInstitutionFinish) {
                           bloc.add(const InstitutionRegistrationFinished());
                           final id = state.createdBeneficiaryId;
@@ -1203,8 +1338,10 @@ class _FooterActions extends StatelessWidget {
                           bloc.add(const RegistrationStepAdvanced());
                         }
                       },
-                child: (isManualIdentitySubmit || isInstitutionDetailsSubmit) &&
-                        state.isSubmitting
+                child: (isManualIdentitySubmit ||
+                            isInstitutionDetailsSubmit ||
+                            isSetPasswordStep) &&
+                        (state.isSubmitting || state.isSettingPassword)
                     ? const SizedBox(
                         height: 22,
                         width: 22,

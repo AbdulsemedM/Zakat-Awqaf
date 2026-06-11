@@ -1,10 +1,7 @@
-import 'package:injectable/injectable.dart';
-
 import '../../../../core/auth/auth_token_storage.dart';
 import '../models/profile_model.dart';
 import 'profile_data_provider.dart';
 
-@LazySingleton(as: ProfileDataProvider)
 class SessionProfileDataProvider implements ProfileDataProvider {
   SessionProfileDataProvider(this._tokenStorage);
 
@@ -49,6 +46,19 @@ class SessionProfileDataProvider implements ProfileDataProvider {
       beneficiaryStatus: user.isBeneficiary
           ? BeneficiaryStatus.approved
           : BeneficiaryStatus.pending,
+    );
+    return _cached;
+  }
+
+  @override
+  Future<ProfileModel> updateBankAccount({
+    required String bankName,
+    required String accountNumber,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    _cached = _cached.copyWith(
+      bankName: bankName,
+      coopBankAccountNumber: accountNumber,
     );
     return _cached;
   }
