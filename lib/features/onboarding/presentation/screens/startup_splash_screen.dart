@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/widgets/app_logo.dart';
-import '../../../../app/widgets/brand_atmosphere_background.dart';
+import '../../../../app/widgets/splash_atmosphere_background.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/auth/auth_session_controller.dart';
 import '../../../../core/constants/startup_constants.dart';
@@ -23,9 +22,8 @@ class StartupSplashScreen extends StatefulWidget {
 class _StartupSplashScreenState extends State<StartupSplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation<double> _fade;
-  late final Animation<Offset> _slide;
-  late final Animation<double> _scale;
+  late final Animation<double> _contentFade;
+  late final Animation<double> _contentScale;
 
   @override
   void initState() {
@@ -34,15 +32,16 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
-    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic);
-    _slide = Tween<Offset>(
-      begin: const Offset(0, 0.2),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-    _scale = Tween<double>(
-      begin: 0.94,
+    _contentFade = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    );
+    _contentScale = Tween<double>(
+      begin: 0.96,
       end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
+    ).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
     _controller.forward();
     WidgetsBinding.instance.addPostFrameCallback((_) => _routeFromSplash());
   }
@@ -70,123 +69,177 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
     context.go(appMode == 'awqaf' ? '/awqaf' : '/');
   }
 
+  (String, String) _splitTitle(String title) {
+    const suffix = ' Commission';
+    if (title.endsWith(suffix)) {
+      return (title.substring(0, title.length - suffix.length), 'Commission');
+    }
+    final words = title.split(' ');
+    if (words.length < 2) {
+      return (title, '');
+    }
+    return (words.sublist(0, words.length - 1).join(' '), words.last);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final screen = MediaQuery.sizeOf(context);
     final w = screen.width;
+    final backdropSize = w * 0.78;
+    final logoSize = w * 0.34;
+    final (titleLine1, titleLine2) = _splitTitle(l10n.appTitle);
+    const titleColor = Color(0xFFD8F0E4);
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           const Positioned.fill(
-            child: BrandAtmosphereBackground(),
+            child: SplashAtmosphereBackground(),
           ),
           SafeArea(
             child: Stack(
               children: [
-                Center(
+                Align(
+                  alignment: const Alignment(0, -0.06),
                   child: FadeTransition(
-                    opacity: _fade,
-                    child: SlideTransition(
-                      position: _slide,
-                      child: ScaleTransition(
-                        scale: _scale,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28),
-                          child: Column(
-                            children: [
-                              const Spacer(flex: 2),
-                              SizedBox(
-                                height: w * 0.52,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    CustomPaint(
-                                      size: Size(w * 0.72, w * 0.5),
-                                      painter: _LogoOrbitRingsPainter(),
-                                    ),
-                                    AppLogo(
-                                      height: w * 0.34,
-                                      width: w * 0.58,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ],
+                    opacity: _contentFade,
+                    child: ScaleTransition(
+                      scale: _contentScale,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: backdropSize,
+                              height: backdropSize,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                clipBehavior: Clip.none,
+                                children: [
+                                  SplashLogoBackdrop(size: backdropSize),
+                                  AppLogo(
+                                    height: logoSize,
+                                    width: logoSize,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            _SplashTitleDivider(width: w * 0.42),
+                            const SizedBox(height: 22),
+                            Text(
+                              titleLine1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Playfair Display',
+                                fontSize: w < 360 ? 28 : 32,
+                                fontWeight: FontWeight.w700,
+                                color: titleColor,
+                                height: 1.15,
+                                letterSpacing: 0.2,
+                              ),
+                            ),
+                            if (titleLine2.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                titleLine2,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Playfair Display',
+                                  fontSize: w < 360 ? 28 : 32,
+                                  fontWeight: FontWeight.w700,
+                                  color: titleColor,
+                                  height: 1.15,
+                                  letterSpacing: 0.2,
                                 ),
                               ),
-                              const Spacer(flex: 2),
-                              Text(
-                                l10n.appTitle,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: AppColors.textOnPrimary,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 0.35,
-                                      shadows: [
-                                        Shadow(
-                                          color: Colors.black.withValues(alpha: 0.22),
-                                          blurRadius: 14,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
+                            ],
+                            const SizedBox(height: 16),
+                            Text(
+                              l10n.splashSlogan,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontSize: w < 360 ? 13 : 14,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.italic,
+                                color: AppColors.mintGreen.withValues(alpha: 0.85),
+                                height: 1.45,
+                                letterSpacing: 0.1,
                               ),
-                              const SizedBox(height: 12),
-                              Text(
-                                l10n.splashSlogan,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                      color: Colors.white.withValues(alpha: 0.94),
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.35,
-                                      letterSpacing: 0.2,
-                                      shadows: [
-                                        Shadow(
-                                          color: Colors.black.withValues(alpha: 0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                              ),
-                              const SizedBox(height: 24),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: screen.height * 0.06),
+                    child: FadeTransition(
+                      opacity: _contentFade,
+                      child: Container(
+                        width: 44,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: AppColors.warmGold,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }
 
-/// Thin decorative rings behind the logo focal point.
-class _LogoOrbitRingsPainter extends CustomPainter {
+class _SplashTitleDivider extends StatelessWidget {
+  const _SplashTitleDivider({required this.width});
+
+  final double width;
+
   @override
-  void paint(Canvas canvas, Size size) {
-    final c = Offset(size.width / 2, size.height / 2);
-    final base = math.min(size.width, size.height) * 0.52;
-
-    void ring(double factor, Color color, double alpha) {
-      final p = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.05
-        ..color = color.withValues(alpha: alpha);
-      canvas.drawCircle(c, base * factor, p);
-    }
-
-    ring(0.32, Colors.white, 0.11);
-    ring(0.44, AppColors.secondary, 0.15);
-    ring(0.56, Colors.white, 0.065);
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: 8,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 0.6,
+              color: AppColors.warmGold.withValues(alpha: 0.35),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Container(
+            width: 5,
+            height: 5,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.warmGold.withValues(alpha: 0.7),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Container(
+              height: 0.6,
+              color: AppColors.warmGold.withValues(alpha: 0.35),
+            ),
+          ),
+        ],
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
