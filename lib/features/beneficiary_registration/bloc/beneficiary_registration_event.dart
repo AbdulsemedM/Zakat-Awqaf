@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../data/models/asnaf_category.dart';
 import '../data/models/institution_subtype.dart';
 import 'beneficiary_registration_state.dart';
 
@@ -67,8 +68,8 @@ final class FaydaSseRetryRequested extends BeneficiaryRegistrationEvent {
   const FaydaSseRetryRequested();
 }
 
-final class FaydaVerificationPollRequested extends BeneficiaryRegistrationEvent {
-  const FaydaVerificationPollRequested();
+final class FaydaVerificationTimedOut extends BeneficiaryRegistrationEvent {
+  const FaydaVerificationTimedOut();
 }
 
 final class FaydaSseReconnectRequested extends BeneficiaryRegistrationEvent {
@@ -175,8 +176,8 @@ final class NotesUpdated extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [value];
 }
 
-final class AsnafCategoryToggled extends BeneficiaryRegistrationEvent {
-  const AsnafCategoryToggled(this.category);
+final class AsnafCategorySelected extends BeneficiaryRegistrationEvent {
+  const AsnafCategorySelected(this.category);
   final AsnafCategory category;
 
   @override
@@ -314,6 +315,10 @@ final class InstitutionDocumentUploadRequested extends BeneficiaryRegistrationEv
 
 final class InstitutionRegistrationFinished extends BeneficiaryRegistrationEvent {
   const InstitutionRegistrationFinished();
+}
+
+final class DisbursementRegistrationFinished extends BeneficiaryRegistrationEvent {
+  const DisbursementRegistrationFinished();
 }
 
 final class PasswordUpdated extends BeneficiaryRegistrationEvent {

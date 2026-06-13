@@ -83,6 +83,16 @@ class AuthDataProviderImpl implements AuthDataProvider {
     } on AuthException {
       rethrow;
     } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        throw const AuthException(
+          'Your password setup link has expired. Please restart registration or contact support.',
+        );
+      }
+      if (e.response?.statusCode == 401) {
+        throw const AuthException(
+          'Password setup was rejected. Please restart registration or contact support.',
+        );
+      }
       final parsed = parseMobileErrorMessage(e.response?.data);
       if (parsed != null && parsed.isNotEmpty) {
         throw AuthException(parsed);

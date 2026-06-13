@@ -93,8 +93,6 @@ class BeneficiarySseVerificationEvent {
   final String verificationStatus;
   final String? passwordSetupToken;
 
-  bool get isVerificationComplete => isFaydaVerificationReady(
-        passwordSetupToken: passwordSetupToken,
-        verificationStatus: verificationStatus,
-      );
+  bool get isVerificationComplete =>
+      isFaydaVerificationReady(passwordSetupToken: passwordSetupToken);
 }

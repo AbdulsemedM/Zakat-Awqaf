@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../data/models/asnaf_category.dart';
 import '../data/models/beneficiary_dto.dart';
 import '../data/models/institution_kyc_document.dart';
 import '../data/models/institution_subtype.dart';
@@ -18,24 +19,13 @@ enum RegistrationMethod { fastTrack, manual, institution }
 
 enum Gender { male, female }
 
-enum AsnafCategory {
-  fakir,
-  miskin,
-  amil,
-  muallaf,
-  riqab,
-  gharimin,
-  fisabilillah,
-  ibnSabil,
-}
-
 enum PayoutMethod { telebirrWallet, mPesa, coopbank }
 
 sealed class BeneficiaryRegistrationState extends Equatable {
   const BeneficiaryRegistrationState({
     required this.step,
     required this.method,
-    required this.selectedCategories,
+    this.selectedCategory,
     required this.payoutMethod,
     this.nationalId = '',
     this.generatedNationalId,
@@ -87,7 +77,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
 
   final BeneficiaryRegistrationStep step;
   final RegistrationMethod method;
-  final Set<AsnafCategory> selectedCategories;
+  final AsnafCategory? selectedCategory;
   final PayoutMethod payoutMethod;
   final String nationalId;
   final String? generatedNationalId;
@@ -182,7 +172,8 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         address.trim().isNotEmpty &&
         region.trim().isNotEmpty &&
         city.trim().isNotEmpty &&
-        notes.trim().isNotEmpty;
+        notes.trim().isNotEmpty &&
+        selectedCategory != null;
   }
 
   bool get isInstitutionDetailsComplete {
@@ -201,7 +192,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   List<Object?> get props => [
         step,
         method,
-        selectedCategories,
+        selectedCategory,
         payoutMethod,
         nationalId,
         generatedNationalId,
@@ -256,7 +247,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
   const BeneficiaryRegistrationInitial({
     super.step = BeneficiaryRegistrationStep.welcome,
     super.method = RegistrationMethod.fastTrack,
-    super.selectedCategories = const {},
+    super.selectedCategory,
     super.payoutMethod = PayoutMethod.telebirrWallet,
     super.nationalId,
     super.generatedNationalId,
@@ -309,7 +300,8 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
   BeneficiaryRegistrationInitial copyWith({
     BeneficiaryRegistrationStep? step,
     RegistrationMethod? method,
-    Set<AsnafCategory>? selectedCategories,
+    AsnafCategory? selectedCategory,
+    bool clearSelectedCategory = false,
     PayoutMethod? payoutMethod,
     String? nationalId,
     String? generatedNationalId,
@@ -372,7 +364,9 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     return BeneficiaryRegistrationInitial(
       step: step ?? this.step,
       method: method ?? this.method,
-      selectedCategories: selectedCategories ?? this.selectedCategories,
+      selectedCategory: clearSelectedCategory
+          ? null
+          : (selectedCategory ?? this.selectedCategory),
       payoutMethod: payoutMethod ?? this.payoutMethod,
       nationalId: nationalId ?? this.nationalId,
       generatedNationalId: clearGeneratedNationalId

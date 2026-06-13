@@ -12,9 +12,9 @@ import '../../../../app/widgets/app_logo.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
+import '../../data/models/asnaf_category.dart';
 import '../../data/models/institution_subtype.dart';
 import '../pages/fayda_verification_webview_page.dart';
-import '../widgets/asnaf_category_tile.dart';
 import '../widgets/payout_method_tile.dart';
 import '../widgets/section_card.dart';
 import '../widgets/step_progress_header.dart';
@@ -46,7 +46,8 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
           listenWhen: (previous, current) =>
               current.errorMessage != null &&
               current.errorMessage!.isNotEmpty &&
-              current.errorMessage != previous.errorMessage,
+              current.errorMessage != previous.errorMessage &&
+              !current.passwordSetupComplete,
           listener: (context, state) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorMessage!)),
@@ -82,6 +83,48 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               const SnackBar(
                 content: Text(
                   'Password set successfully. Welcome to Mejlis Digital Hub.',
+                ),
+              ),
+            );
+            context.go('/');
+          },
+        ),
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) =>
+              current.submissionSuccess &&
+              !previous.submissionSuccess &&
+              current.method == RegistrationMethod.institution,
+          listener: (context, state) {
+            final id = state.createdBeneficiaryId;
+            final status = state.registeredBeneficiary?.verificationStatus;
+            final buffer = StringBuffer();
+            if (id != null && id.isNotEmpty) {
+              buffer.write(
+                'Institution registration complete. Reference: $id',
+              );
+            } else {
+              buffer.write('Institution registration complete.');
+            }
+            if (status != null && status.trim().isNotEmpty) {
+              buffer.write(' Status: ${status.trim()}.');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(buffer.toString())),
+            );
+            context.go('/');
+          },
+        ),
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) =>
+              current.submissionSuccess &&
+              !previous.submissionSuccess &&
+              current.method == RegistrationMethod.fastTrack &&
+              current.step == BeneficiaryRegistrationStep.disbursement,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Registration complete. Needs and disbursement details are saved locally.',
                 ),
               ),
             );
@@ -503,6 +546,27 @@ class _IdentityStep extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'City'),
                 ),
                 const SizedBox(height: 10),
+                DropdownButtonFormField<AsnafCategory>(
+                  key: ValueKey(state.selectedCategory),
+                  initialValue: state.selectedCategory,
+                  items: AsnafCategory.values
+                      .map(
+                        (category) => DropdownMenuItem(
+                          value: category,
+                          child: Text(category.label),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      bloc.add(AsnafCategorySelected(value));
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Beneficiary Category',
+                  ),
+                ),
+                const SizedBox(height: 10),
                 TextField(
                   maxLines: 2,
                   onChanged: (v) => bloc.add(NotesUpdated(v)),
@@ -569,17 +633,6 @@ class _NeedsStep extends StatelessWidget {
   const _NeedsStep({required this.state});
   final BeneficiaryRegistrationState state;
 
-  static const Map<AsnafCategory, String> _labels = {
-    AsnafCategory.fakir: 'Fakir',
-    AsnafCategory.miskin: 'Miskin',
-    AsnafCategory.amil: 'Amil',
-    AsnafCategory.muallaf: 'Muallaf',
-    AsnafCategory.riqab: 'Riqab',
-    AsnafCategory.gharimin: 'Gharimin',
-    AsnafCategory.fisabilillah: 'Fisabilillah',
-    AsnafCategory.ibnSabil: 'Ibnus Sabil',
-  };
-
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BeneficiaryRegistrationBloc>();
@@ -589,24 +642,8 @@ class _NeedsStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Category Assessment', style: Theme.of(context).textTheme.titleLarge),
+              Text('Needs Assessment', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
-              GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 1.5,
-                children: _labels.entries.map((entry) {
-                  return AsnafCategoryTile(
-                    label: entry.value,
-                    selected: state.selectedCategories.contains(entry.key),
-                    onTap: () => bloc.add(AsnafCategoryToggled(entry.key)),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 16),
               TextField(
                 maxLines: 4,
                 onChanged: (v) => bloc.add(SituationDescriptionUpdated(v)),
@@ -1087,19 +1124,10 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
 
-  bool get _needsPhoneInput {
-    final phone = widget.state.phoneNumber.trim();
-    final dtoPhone = widget.state.registeredBeneficiary?.phone?.trim() ?? '';
-    return phone.isEmpty && dtoPhone.isEmpty;
-  }
-
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final state = widget.state;
-    final displayPhone = state.phoneNumber.trim().isNotEmpty
-        ? state.phoneNumber
-        : (state.registeredBeneficiary?.phone ?? '');
 
     return Column(
       children: [
@@ -1113,7 +1141,7 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Use your phone number and this password to sign in to your account.',
+                'Choose a secure password for your account. You will use it to sign in after registration.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               if (state.createdBeneficiaryId != null) ...[
@@ -1124,24 +1152,6 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
                 ),
               ],
               const SizedBox(height: 16),
-              if (_needsPhoneInput)
-                TextField(
-                  keyboardType: TextInputType.phone,
-                  onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    hintText: '+251911223344 or 0911223344',
-                  ),
-                )
-              else
-                TextFormField(
-                  initialValue: displayPhone,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                  ),
-                ),
-              const SizedBox(height: 12),
               TextField(
                 obscureText: _obscurePassword,
                 onChanged: (v) => bloc.add(PasswordUpdated(v)),
@@ -1223,8 +1233,7 @@ class _FooterActions extends StatelessWidget {
         state.institutionRequiredKycComplete &&
             state.uploadingDocumentCode == null,
       BeneficiaryRegistrationStep.needs =>
-        state.selectedCategories.isNotEmpty &&
-            state.situationDescription.trim().isNotEmpty,
+        state.situationDescription.trim().isNotEmpty,
       BeneficiaryRegistrationStep.disbursement =>
         state.hasAcceptedCompliance &&
             state.accountOrMobileNumber.trim().isNotEmpty &&
@@ -1291,43 +1300,10 @@ class _FooterActions extends StatelessWidget {
                         }
                         if (isInstitutionFinish) {
                           bloc.add(const InstitutionRegistrationFinished());
-                          final id = state.createdBeneficiaryId;
-                          final status =
-                              state.registeredBeneficiary?.verificationStatus;
-                          final buffer = StringBuffer();
-                          if (id != null && id.isNotEmpty) {
-                            buffer.write(
-                              'Institution registration complete. Reference: $id',
-                            );
-                          } else {
-                            buffer.write('Institution registration complete.');
-                          }
-                          if (status != null && status.trim().isNotEmpty) {
-                            buffer.write(' Status: ${status.trim()}.');
-                          }
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(buffer.toString())),
-                          );
-                          if (context.canPop()) {
-                            context.pop();
-                          } else {
-                            context.go('/');
-                          }
                           return;
                         }
                         if (isFinalStep) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Registration complete. Needs and disbursement details are saved locally.',
-                              ),
-                            ),
-                          );
-                          if (context.canPop()) {
-                            context.pop();
-                          } else {
-                            context.go('/');
-                          }
+                          bloc.add(const DisbursementRegistrationFinished());
                           return;
                         }
                         if (isManualIdentitySubmit) {

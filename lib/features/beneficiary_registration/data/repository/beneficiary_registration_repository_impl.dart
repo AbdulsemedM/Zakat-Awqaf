@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 
 import '../data_provider/beneficiary_registration_data_provider.dart';
 import '../models/beneficiary_create_request.dart';
-import '../models/beneficiary_dto.dart';
 import '../models/beneficiary_registration_result.dart';
 import '../models/company_beneficiary_create_request.dart';
 import 'beneficiary_registration_repository.dart';
@@ -41,10 +40,5 @@ class BeneficiaryRegistrationRepositoryImpl
       documentCode: documentCode,
       filePath: filePath,
     );
-  }
-
-  @override
-  Future<BeneficiaryDto?> getBeneficiaryById(String beneficiaryId) {
-    return _dataProvider.getBeneficiaryById(beneficiaryId);
   }
 }

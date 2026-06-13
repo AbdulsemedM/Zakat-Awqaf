@@ -12,6 +12,7 @@ import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../bloc/zakat_calculator_bloc.dart';
 import '../../bloc/zakat_calculator_event.dart';
 import '../../bloc/zakat_calculator_state.dart';
+import '../widgets/calc_emphasis_text.dart';
 import '../zakat_calculator_strings.dart';
 
 class ZakatCalculatorScreen extends StatelessWidget {
@@ -145,15 +146,15 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1NisabTitle, style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1NisabTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
             const SizedBox(height: 4),
             Text(
               l10n.calcStep1NisabBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 4),
-            Text(
-              l10n.calcNisabGoldFormula(
+            CalcEmphasisText(
+              text: l10n.calcNisabGoldFormula(
                 '85',
                 _money(state.platformGoldPricePerGram24kEtb),
                 _money(state.nisabThresholdEtb),
@@ -177,9 +178,10 @@ class _Step1Card extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                l10n.calcNisabThresholdBanner(_money(state.nisabThresholdEtb)),
+              child: CalcEmphasisText(
+                text: l10n.calcNisabThresholdBanner(_money(state.nisabThresholdEtb)),
                 style: theme.textTheme.titleSmall,
+                emphasizeAll: true,
               ),
             ),
           ],
@@ -189,15 +191,15 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1LivestockTitle, style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1LivestockTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
             const SizedBox(height: 4),
             Text(
               l10n.calcStep1LivestockBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
-            Text(
-              l10n.calcStep1LivestockNisabNote,
+            CalcEmphasisText(
+              text: l10n.calcStep1LivestockNisabNote,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -226,10 +228,10 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1CropTitle, style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep1CropTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
             const SizedBox(height: 4),
-            Text(
-              l10n.calcStep1CropBody,
+            CalcEmphasisText(
+              text: l10n.calcStep1CropBody,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
@@ -240,11 +242,11 @@ class _Step1Card extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                '${l10n.calcCropLineThreshold(state.cropKg.toStringAsFixed(2), isAboveNisab ? l10n.calcRelationGte : l10n.calcRelationLt)}\n'
-                '${l10n.calcCropLineIrrigation(ZakatCalculatorStrings.cropModeLabel(l10n, state.cropIrrigationMode))}\n'
-                '${l10n.calcCropLineEffectiveRate(ratePercent)}\n'
-                '${l10n.calcCropLineFormula(formulaInner)}',
+              child: CalcEmphasisText(
+                text: '${l10n.calcCropLineThreshold(state.cropKg.toStringAsFixed(2), isAboveNisab ? l10n.calcRelationGte : l10n.calcRelationLt)}\n'
+                    '${l10n.calcCropLineIrrigation(ZakatCalculatorStrings.cropModeLabel(l10n, state.cropIrrigationMode))}\n'
+                    '${l10n.calcCropLineEffectiveRate(ratePercent)}\n'
+                    '${l10n.calcCropLineFormula(formulaInner)}',
                 style: theme.textTheme.titleSmall,
               ),
             ),
@@ -424,11 +426,11 @@ class _WealthPanel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep2EnterAssets, style: theme.textTheme.titleMedium),
+            Text(l10n.calcStep2EnterAssets, style: CalcTextStyles.stepTitle(theme.textTheme)),
             const SizedBox(height: 4),
             Text(l10n.calcStep2EnterAssetsBody, style: theme.textTheme.bodySmall),
             const SizedBox(height: 12),
-            Text(l10n.calcCashBankSavings, style: theme.textTheme.titleSmall),
+            Text(l10n.calcCashBankSavings, style: CalcTextStyles.sectionTitle(theme.textTheme)),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -463,7 +465,7 @@ class _WealthPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcBusinessAssets, style: theme.textTheme.titleSmall),
+            Text(l10n.calcBusinessAssets, style: CalcTextStyles.sectionTitle(theme.textTheme)),
             const SizedBox(height: 8),
             ...List.generate(state.businessAssets.length, (index) {
               final item = state.businessAssets[index];
@@ -536,7 +538,7 @@ class _WealthPanel extends StatelessWidget {
               label: Text(l10n.calcAddBusinessAsset),
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcGoldSilver, style: theme.textTheme.titleSmall),
+            Text(l10n.calcGoldSilver, style: CalcTextStyles.sectionTitle(theme.textTheme)),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -583,7 +585,7 @@ class _WealthPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcLiabilities, style: theme.textTheme.titleSmall),
+            Text(l10n.calcLiabilities, style: CalcTextStyles.sectionTitle(theme.textTheme)),
             const SizedBox(height: 8),
             ...List.generate(state.liabilities.length, (index) {
               final item = state.liabilities[index];
@@ -684,8 +686,8 @@ class _WealthPostOverviewSection extends StatelessWidget {
             style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
-          Text(
-            ZakatCalculatorStrings.wealthTransparency(l10n, state),
+          CalcEmphasisText(
+            text: ZakatCalculatorStrings.wealthTransparency(l10n, state),
             style: theme.textTheme.bodySmall,
           ),
         ],
@@ -784,12 +786,13 @@ class _LivestockPostOverviewSection extends StatelessWidget {
             children: [
               Text(
                 l10n.calcLivestockSummaryHeading,
-                style: theme.textTheme.titleSmall,
+                style: CalcTextStyles.sectionTitle(theme.textTheme),
               ),
               const SizedBox(height: 4),
-              Text(
-                ZakatCalculatorStrings.livestockSummary(l10n, state),
+              CalcEmphasisText(
+                text: ZakatCalculatorStrings.livestockSummary(l10n, state),
                 style: theme.textTheme.bodyMedium,
+                emphasizeAll: true,
               ),
             ],
           ),
@@ -802,8 +805,8 @@ class _LivestockPostOverviewSection extends StatelessWidget {
             color: AppColors.secondary.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(
-            ZakatCalculatorStrings.livestockTransparency(l10n, state),
+          child: CalcEmphasisText(
+            text: ZakatCalculatorStrings.livestockTransparency(l10n, state),
             style: theme.textTheme.bodySmall,
           ),
         ),
@@ -910,19 +913,20 @@ class _CropPostOverviewSection extends StatelessWidget {
             children: [
               Text(
                 l10n.calcCropNisabHeading,
-                style: theme.textTheme.titleSmall,
+                style: CalcTextStyles.sectionTitle(theme.textTheme),
               ),
               const SizedBox(height: 4),
-              Text(
-                l10n.calcEffectiveCropRateLine(
+              CalcEmphasisText(
+                text: l10n.calcEffectiveCropRateLine(
                   (state.cropEffectiveRate * 100).toStringAsFixed(2),
                 ),
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: 2),
-              Text(
-                l10n.calcCropZakatDueKgLine(state.cropZakatDueKg.toStringAsFixed(2)),
+              CalcEmphasisText(
+                text: l10n.calcCropZakatDueKgLine(state.cropZakatDueKg.toStringAsFixed(2)),
                 style: theme.textTheme.bodyMedium,
+                emphasizeAll: true,
               ),
             ],
           ),
@@ -946,13 +950,13 @@ class _CropPostOverviewSection extends StatelessWidget {
                 style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 6),
-              Text(
-                l10n.calcHowCropZakatWorksBody,
+              CalcEmphasisText(
+                text: l10n.calcHowCropZakatWorksBody,
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 4),
-              Text(
-                l10n.calcHowCropZakatNote,
+              CalcEmphasisText(
+                text: l10n.calcHowCropZakatNote,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -968,8 +972,8 @@ class _CropPostOverviewSection extends StatelessWidget {
             color: AppColors.secondary.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(
-            ZakatCalculatorStrings.cropTransparency(l10n, state),
+          child: CalcEmphasisText(
+            text: ZakatCalculatorStrings.cropTransparency(l10n, state),
             style: theme.textTheme.bodySmall,
           ),
         ),

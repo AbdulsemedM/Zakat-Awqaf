@@ -17,7 +17,9 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
     required this.city,
     required this.addressLine,
     required this.beneficiaryType,
+    required this.category,
     required this.notes,
+    this.profilePicturePath,
   });
 
   final String fullName;
@@ -29,7 +31,9 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
   final String city;
   final String addressLine;
   final String beneficiaryType;
+  final String category;
   final String notes;
+  final String? profilePicturePath;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -42,6 +46,7 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
         'city': city.trim(),
         'addressLine': addressLine.trim(),
         'beneficiaryType': beneficiaryType.trim(),
+        'category': category.trim(),
         'notes': notes.trim(),
       };
 }

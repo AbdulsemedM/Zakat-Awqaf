@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
@@ -25,10 +27,33 @@ class BeneficiaryRegistrationDataProviderImpl
     BeneficiaryRegistrationRequest request,
   ) async {
     try {
-      final response = await _dio.post<Map<String, dynamic>>(
-        _beneficiariesPath,
-        data: request.toJson(),
-      );
+      final Response<Map<String, dynamic>> response;
+      switch (request) {
+        case FullBeneficiaryCreateRequest(:final profilePicturePath):
+          final formMap = <String, dynamic>{
+            'data': MultipartFile.fromString(
+              jsonEncode(request.toJson()),
+              contentType: DioMediaType.parse('application/json'),
+            ),
+          };
+          final picturePath = profilePicturePath?.trim();
+          if (picturePath != null && picturePath.isNotEmpty) {
+            formMap['profilePicture'] = await MultipartFile.fromFile(
+              picturePath,
+              filename: p.basename(picturePath),
+            );
+          }
+          response = await _dio.post<Map<String, dynamic>>(
+            _beneficiariesPath,
+            data: FormData.fromMap(formMap),
+            options: Options(contentType: 'multipart/form-data'),
+          );
+        case NationalIdBeneficiaryCreateRequest():
+          response = await _dio.post<Map<String, dynamic>>(
+            _beneficiariesPath,
+            data: request.toJson(),
+          );
+      }
       final status = response.statusCode ?? 0;
       if (status < 200 || status > 202) {
         throw BeneficiaryRegistrationException(
@@ -121,39 +146,6 @@ class BeneficiaryRegistrationDataProviderImpl
     }
     final dto = BeneficiaryDto.fromJson(Map<String, dynamic>.from(data));
     return BeneficiaryRegistrationResult(dto: dto, statusCode: status);
-  }
-
-  @override
-  Future<BeneficiaryDto?> getBeneficiaryById(String beneficiaryId) async {
-    final id = beneficiaryId.trim();
-    if (id.isEmpty) {
-      return null;
-    }
-    try {
-      final response = await _dio.get<Map<String, dynamic>>(
-        '$_beneficiariesPath/$id',
-      );
-      final status = response.statusCode ?? 0;
-      if (status != 200) {
-        return null;
-      }
-      final body = response.data;
-      if (body == null || body['success'] != true) {
-        return null;
-      }
-      final data = body['data'];
-      if (data is! Map) {
-        return null;
-      }
-      return BeneficiaryDto.fromJson(Map<String, dynamic>.from(data));
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) {
-        return null;
-      }
-      return null;
-    } catch (_) {
-      return null;
-    }
   }
 
   BeneficiaryRegistrationException _mapDioException(DioException e) {
