@@ -12,12 +12,12 @@ class _LiveImpactCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
             color: scheme.shadow.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -28,7 +28,7 @@ class _LiveImpactCard extends StatelessWidget {
             child: BrandAtmosphereBackground(),
           ),
           Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -67,7 +67,7 @@ class _LiveImpactCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 Text(
                   context.l10n.impactDistributedFunds,
                   style: theme.textTheme.labelMedium?.copyWith(
@@ -78,12 +78,17 @@ class _LiveImpactCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   context.l10n.impactEtbAmount(formatThousands(model.distributedFundsEtb)),
-                  style: theme.textTheme.headlineMedium?.copyWith(
+                  style: theme.textTheme.displaySmall?.copyWith(
                     color: AppColors.textOnPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 14),
+                Divider(
+                  color: AppColors.textOnPrimary.withValues(alpha: 0.25),
+                  height: 1,
+                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     _MetricColumn(
@@ -227,68 +232,111 @@ class _GeographicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _ImpactMapCard(theme: theme, model: model);
+  }
+}
+
+class _ImpactMapCard extends StatefulWidget {
+  const _ImpactMapCard({required this.theme, required this.model});
+
+  final ThemeData theme;
+  final ImpactModel model;
+
+  @override
+  State<_ImpactMapCard> createState() => _ImpactMapCardState();
+}
+
+class _ImpactMapCardState extends State<_ImpactMapCard> {
+  late MapRegion _selectedRegion;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedRegion = widget.model.regions.firstWhere(
+      (region) => region.isLabeled,
+      orElse: () => widget.model.regions.first,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = widget.theme;
     final scheme = theme.colorScheme;
     return Card(
       elevation: 0,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                const mapHeight = 170.0;
-                final width = constraints.maxWidth;
-                return Container(
-                  width: double.infinity,
-                  height: mapHeight,
-                  decoration: BoxDecoration(
-                    color: scheme.surfaceContainerHigh,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: scheme.outlineVariant),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 10,
-                        top: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondary.withValues(alpha: 0.28),
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                          child: Text(
-                            model.regionName,
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.5,
-                            ),
+            SizedBox(
+              width: double.infinity,
+              height: 210,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Stack(
+                  children: [
+                    FlutterMap(
+                      options: const MapOptions(
+                        initialCenter: LatLng(9.145, 40.4897),
+                        initialZoom: 5.5,
+                        minZoom: 4.5,
+                        maxZoom: 13,
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'mejlis_digital_hub',
+                        ),
+                        MarkerLayer(
+                          markers: [
+                            for (final region in widget.model.regions)
+                              Marker(
+                                point: LatLng(region.latitude, region.longitude),
+                                width: 48,
+                                height: 48,
+                                child: _MapPin(
+                                  active: _selectedRegion == region,
+                                  onTap: () {
+                                    setState(() => _selectedRegion = region);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          context.l10n.impactRegionImpactComingSoon(region.name),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: scheme.surface.withValues(alpha: 0.92),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          _selectedRegion.name,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary,
                           ),
                         ),
                       ),
-                      Center(
-                        child: Icon(
-                          Icons.map_outlined,
-                          size: 88,
-                          color: scheme.outline.withValues(alpha: 0.4),
-                        ),
-                      ),
-                      for (final region in model.regions)
-                        _RegionPin(
-                          region: region,
-                          left: region.xPercent * width - 24,
-                          top: region.yPercent * mapHeight - 24,
-                          color: scheme.primary,
-                          labelColor: scheme.onSurface,
-                        ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 8),
             Row(
@@ -314,72 +362,32 @@ class _GeographicCard extends StatelessWidget {
   }
 }
 
-class _RegionPin extends StatelessWidget {
-  const _RegionPin({
-    required this.region,
-    required this.left,
-    required this.top,
-    required this.color,
-    required this.labelColor,
-  });
+class _MapPin extends StatelessWidget {
+  const _MapPin({required this.active, required this.onTap});
 
-  final MapRegion region;
-  final double left;
-  final double top;
-  final Color color;
-  final Color labelColor;
+  final bool active;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Positioned(
-      left: left,
-      top: top,
-      child: GestureDetector(
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.impactRegionImpactComingSoon(region.name))),
-          );
-        },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-                border: Border.all(color: Colors.white, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.4),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-            ),
-            if (region.isLabeled) ...[
-              const SizedBox(height: 2),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6,
-                  vertical: 1,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.85),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  region.name,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: labelColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Center(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          width: active ? 16 : 12,
+          height: active ? 16 : 12,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.35),
+                blurRadius: 10,
               ),
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -499,6 +507,7 @@ class _ProjectCard extends StatelessWidget {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: InkWell(
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -511,7 +520,7 @@ class _ProjectCard extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 110,
+              height: 120,
               decoration: BoxDecoration(
                 gradient: project.imageAsset == null
                     ? PrimaryHero.gradient(scheme)
@@ -645,7 +654,7 @@ class _PersonalBarakaCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         color: AppColors.secondary,
       ),
       child: Column(

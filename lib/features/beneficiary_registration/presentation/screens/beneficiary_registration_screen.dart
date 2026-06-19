@@ -138,8 +138,29 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
           return Theme(
             data: theme.copyWith(
               inputDecorationTheme: theme.inputDecorationTheme.copyWith(
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.primary, width: 1.4),
+                filled: true,
+                fillColor: theme.colorScheme.surfaceContainerLowest.withValues(
+                  alpha: 0.9,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 14,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.outlineVariant.withValues(alpha: 0.8),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.primary, width: 1.4),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.outlineVariant.withValues(alpha: 0.8),
+                  ),
                 ),
                 labelStyle: theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.primary,
@@ -153,9 +174,11 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               ),
             ),
             child: Scaffold(
+              backgroundColor: theme.colorScheme.surface,
               appBar: AppBar(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.textOnPrimary,
+                elevation: 0,
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
@@ -190,24 +213,38 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
                 ),
               ),
               body: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      StepProgressHeader(
-                        step: state.step,
-                        method: state.method,
-                      ),
-                      if (state.method == RegistrationMethod.fastTrack &&
-                          state.step == BeneficiaryRegistrationStep.welcome &&
-                          (state.isFaydaPosting || state.awaitingFaydaSse)) ...[
-                        const SizedBox(height: 16),
-                        const _FaydaVerificationBanner(),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColors.primary.withValues(alpha: 0.11),
+                        Theme.of(context).colorScheme.surface,
                       ],
-                      const SizedBox(height: 16),
-                      _StepContent(state: state),
-                    ],
+                    ),
+                  ),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _RegistrationHeroBanner(state: state),
+                        const SizedBox(height: 12),
+                        StepProgressHeader(
+                          step: state.step,
+                          method: state.method,
+                        ),
+                        if (state.method == RegistrationMethod.fastTrack &&
+                            state.step == BeneficiaryRegistrationStep.welcome &&
+                            (state.isFaydaPosting || state.awaitingFaydaSse)) ...[
+                          const SizedBox(height: 16),
+                          const _FaydaVerificationBanner(),
+                        ],
+                        const SizedBox(height: 16),
+                        _StepContent(state: state),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -215,6 +252,90 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _RegistrationHeroBanner extends StatelessWidget {
+  const _RegistrationHeroBanner({required this.state});
+
+  final BeneficiaryRegistrationState state;
+
+  String get _methodTitle => switch (state.method) {
+        RegistrationMethod.fastTrack => 'Fast-Track with Fayda',
+        RegistrationMethod.manual => 'Manual Registration',
+        RegistrationMethod.institution => 'Institution Registration',
+      };
+
+  String get _methodDescription => switch (state.method) {
+        RegistrationMethod.fastTrack =>
+          'Securely verify identity with National ID and continue in minutes.',
+        RegistrationMethod.manual =>
+          'Share your information and supporting details for trusted review.',
+        RegistrationMethod.institution =>
+          'Register your organization and submit required compliance documents.',
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primary,
+            AppColors.primary.withValues(alpha: 0.86),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.24),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: AppColors.textOnPrimary.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(
+              Icons.volunteer_activism_outlined,
+              color: AppColors.textOnPrimary,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _methodTitle,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppColors.textOnPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  _methodDescription,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textOnPrimary.withValues(alpha: 0.95),
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1258,13 +1379,36 @@ class _FooterActions extends StatelessWidget {
       _ => 'Continue',
     };
 
+    final scheme = Theme.of(context).colorScheme;
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+      top: false,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+        decoration: BoxDecoration(
+          color: scheme.surface.withValues(alpha: 0.92),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: scheme.outlineVariant.withValues(alpha: 0.55),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.08),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Row(
           children: [
             Expanded(
               child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
                 onPressed: () {
                   if (state.step == BeneficiaryRegistrationStep.welcome) {
                     if (context.canPop()) {
@@ -1284,6 +1428,10 @@ class _FooterActions extends StatelessWidget {
               flex: 2,
               child: FilledButton(
                 style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.textOnPrimary,
                 ),

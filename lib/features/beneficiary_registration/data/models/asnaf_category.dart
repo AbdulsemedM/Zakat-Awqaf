@@ -1,29 +1,35 @@
 enum AsnafCategory {
-  fakir,
-  miskin,
-  amil,
+  poor,
+  needy,
+  zakatAdministrator,
   muallaf,
-  riqab,
-  gharimin,
-  fisabilillah,
-  ibnSabil,
+  freeingCaptives,
+  debtor,
+  fiSabilillah,
+  strandedTraveler,
 }
 
 extension AsnafCategoryApi on AsnafCategory {
   String get apiValue => switch (this) {
-        AsnafCategory.ibnSabil => 'ibn_sabil',
-        _ => name,
+        AsnafCategory.poor => 'poor',
+        AsnafCategory.needy => 'needy',
+        AsnafCategory.zakatAdministrator => 'zakat_administrator',
+        AsnafCategory.muallaf => 'muallaf',
+        AsnafCategory.freeingCaptives => 'freeing_captives',
+        AsnafCategory.debtor => 'debtor',
+        AsnafCategory.fiSabilillah => 'fi_sabilillah',
+        AsnafCategory.strandedTraveler => 'stranded_traveler',
       };
 
   String get label => switch (this) {
-        AsnafCategory.fakir => 'Fakir',
-        AsnafCategory.miskin => 'Miskin',
-        AsnafCategory.amil => 'Amil',
+        AsnafCategory.poor => 'Poor',
+        AsnafCategory.needy => 'Needy',
+        AsnafCategory.zakatAdministrator => 'Zakat Administrator',
         AsnafCategory.muallaf => 'Muallaf',
-        AsnafCategory.riqab => 'Riqab',
-        AsnafCategory.gharimin => 'Gharimin',
-        AsnafCategory.fisabilillah => 'Fisabilillah',
-        AsnafCategory.ibnSabil => 'Ibnus Sabil',
+        AsnafCategory.freeingCaptives => 'Freeing Captives',
+        AsnafCategory.debtor => 'Debtor',
+        AsnafCategory.fiSabilillah => 'Fi Sabilillah',
+        AsnafCategory.strandedTraveler => 'Stranded Traveler',
       };
 
   static AsnafCategory? fromApiValue(String? value) {

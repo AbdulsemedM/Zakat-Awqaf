@@ -1277,8 +1277,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (password != confirm) {
       return 'Passwords do not match.';
     }
-    if (password.length < 8) {
-      return 'Password must be at least 8 characters.';
+    if (password.length < 10) {
+      return 'Password must be at least 10 characters.';
     }
     if (!_passwordUppercase.hasMatch(password)) {
       return 'Password must include an uppercase letter.';

@@ -67,41 +67,76 @@ class StepProgressHeader extends StatelessWidget {
     };
     final activeIndex = _activeIndex(step, method);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final hasFiniteWidth = constraints.maxWidth.isFinite;
-        final indicatorWidth = hasFiniteWidth
-            ? constraints.maxWidth
-            : 240.0;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
+      decoration: BoxDecoration(
+        color: scheme.surface.withValues(alpha: 0.78),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: scheme.outlineVariant.withValues(alpha: 0.55)),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final hasFiniteWidth = constraints.maxWidth.isFinite;
+          final indicatorWidth = hasFiniteWidth ? constraints.maxWidth : 240.0;
 
-        return Center(
-          child: SizedBox(
-            width: indicatorWidth,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                for (var index = 0; index < labels.length; index++) ...[
-                  _StepCircle(
-                    index: index,
-                    activeIndex: activeIndex,
-                    scheme: scheme,
+          return Center(
+            child: SizedBox(
+              width: indicatorWidth,
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      for (var index = 0; index < labels.length; index++) ...[
+                        _StepCircle(
+                          index: index,
+                          activeIndex: activeIndex,
+                          scheme: scheme,
+                        ),
+                        if (index < labels.length - 1)
+                          Expanded(
+                            child: Container(
+                              height: 2,
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              color: index < activeIndex
+                                  ? AppColors.primary
+                                  : scheme.outlineVariant,
+                            ),
+                          ),
+                      ],
+                    ],
                   ),
-                  if (index < labels.length - 1)
-                    Expanded(
-                      child: Container(
-                        height: 2,
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        color: index < activeIndex
-                            ? AppColors.primary
-                            : scheme.outlineVariant,
-                      ),
-                    ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      for (var index = 0; index < labels.length; index++)
+                        Expanded(
+                          child: Text(
+                            labels[index],
+                            textAlign: index == 0
+                                ? TextAlign.left
+                                : index == labels.length - 1
+                                    ? TextAlign.right
+                                    : TextAlign.center,
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  fontWeight: index <= activeIndex
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
+                                  color: index <= activeIndex
+                                      ? AppColors.primary
+                                      : scheme.onSurfaceVariant,
+                                ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

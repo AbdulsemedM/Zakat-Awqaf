@@ -39,6 +39,8 @@ dependencies:
   shared_preferences: ^2.5.3
   lottie: ^3.3.1
   flutter_tabler_icons: ^1.43.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:

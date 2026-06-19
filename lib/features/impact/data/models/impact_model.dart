@@ -19,24 +19,21 @@ extension AwqafStatusX on AwqafStatus {
 class MapRegion extends Equatable {
   const MapRegion({
     required this.name,
-    required this.xPercent,
-    required this.yPercent,
+    required this.latitude,
+    required this.longitude,
     this.isLabeled = false,
   });
 
   final String name;
 
-  /// 0..1 horizontal position inside the map box.
-  final double xPercent;
-
-  /// 0..1 vertical position inside the map box.
-  final double yPercent;
+  final double latitude;
+  final double longitude;
 
   /// When true, the region's name is rendered next to its pin.
   final bool isLabeled;
 
   @override
-  List<Object?> get props => [name, xPercent, yPercent, isLabeled];
+  List<Object?> get props => [name, latitude, longitude, isLabeled];
 }
 
 class BarakaStory extends Equatable {

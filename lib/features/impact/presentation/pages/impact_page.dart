@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
@@ -122,12 +124,12 @@ class _ImpactContent extends StatelessWidget {
     final scheme = theme.colorScheme;
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _LiveImpactCard(theme: theme, model: model),
-          const SizedBox(height: 14),
+          const SizedBox(height: 18),
           SizedBox(
             width: double.infinity,
             child: Row(
@@ -136,13 +138,22 @@ class _ImpactContent extends StatelessWidget {
                   context.l10n.impactGeographicReach,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  model.regionName,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurfaceVariant,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: scheme.surfaceContainerHigh,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    model.regionName,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ],
@@ -150,16 +161,17 @@ class _ImpactContent extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           _GeographicCard(theme: theme, model: model),
-          const SizedBox(height: 14),
+          const SizedBox(height: 18),
           Text(
             context.l10n.impactBarakaStories,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
             ),
           ),
           const SizedBox(height: 8),
           _StoriesRow(stories: model.barakaStories),
-          const SizedBox(height: 14),
+          const SizedBox(height: 18),
           SizedBox(
             width: double.infinity,
             child: Row(
@@ -168,6 +180,7 @@ class _ImpactContent extends StatelessWidget {
                   context.l10n.impactActiveAwqafProjects,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
                   ),
                 ),
                 const Spacer(),

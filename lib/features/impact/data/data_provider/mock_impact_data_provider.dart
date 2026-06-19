@@ -17,13 +17,13 @@ class MockImpactDataProvider implements ImpactDataProvider {
       regions: [
         MapRegion(
           name: 'Addis Ababa',
-          xPercent: 0.45,
-          yPercent: 0.62,
+          latitude: 8.9806,
+          longitude: 38.7578,
           isLabeled: true,
         ),
-        MapRegion(name: 'Mekelle', xPercent: 0.78, yPercent: 0.22),
-        MapRegion(name: 'Bahir Dar', xPercent: 0.40, yPercent: 0.32),
-        MapRegion(name: 'Harar', xPercent: 0.86, yPercent: 0.55),
+        MapRegion(name: 'Mekelle', latitude: 13.4967, longitude: 39.4753),
+        MapRegion(name: 'Bahir Dar', latitude: 11.5742, longitude: 37.3614),
+        MapRegion(name: 'Harar', latitude: 9.3139, longitude: 42.1182),
       ],
       barakaStories: [
         BarakaStory(

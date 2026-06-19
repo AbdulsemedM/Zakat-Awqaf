@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,53 +56,54 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   InputDecoration _fieldDecoration({
-    required String label,
     required String hint,
     IconData? prefixIcon,
-    Widget? prefix,
+    String? prefixText,
     Widget? suffix,
   }) {
     return InputDecoration(
-      labelText: label,
       hintText: hint,
       prefixIcon: prefixIcon != null
-          ? Icon(prefixIcon, color: AppColors.primary)
+          ? Icon(prefixIcon, color: AppColors.primary.withValues(alpha: 0.9))
           : null,
-      prefix: prefix,
+      prefixText: prefixText,
+      prefixStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+            color: AppColors.primary,
+            fontWeight: FontWeight.w700,
+          ),
       suffixIcon: suffix,
       filled: true,
-      fillColor: Colors.white.withValues(alpha: 0.94),
+      fillColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: AppColors.primary.withValues(alpha: 0.12)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          color: AppColors.primary.withValues(alpha: 0.12),
+          color: AppColors.primary.withValues(alpha: 0.16),
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(color: AppColors.primary, width: 1.4),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
           color: Theme.of(context).colorScheme.error.withValues(alpha: 0.7),
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
           color: Theme.of(context).colorScheme.error,
           width: 1.4,
         ),
       ),
-      floatingLabelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w600,
+      hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: const Color(0xFF839287),
           ),
     );
   }
@@ -114,12 +113,34 @@ class _LoginScreenState extends State<LoginScreen> {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final screenWidth = MediaQuery.sizeOf(context).width;
+    final double logoSize = screenWidth.clamp(320.0, 430.0).toDouble() * 0.26;
 
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           const Positioned.fill(child: BrandAtmosphereBackground()),
+          const Positioned(
+            top: 132,
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: Center(
+                child: SizedBox(
+                  width: 230,
+                  height: 230,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.fromBorderSide(
+                        BorderSide(color: Color(0x24FFFFFF), width: 1),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           SafeArea(
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
@@ -140,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: SingleChildScrollView(
                     padding: EdgeInsets.fromLTRB(
                       24,
-                      widget.embeddedInProfile ? 16 : 24,
+                      widget.embeddedInProfile ? 12 : 28,
                       24,
                       24,
                     ),
@@ -152,35 +173,54 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(18),
+                              width: logoSize,
+                              height: logoSize,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white.withValues(alpha: 0.14),
+                                color: Colors.white.withValues(alpha: 0.08),
                                 border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.22),
+                                  color: Colors.white.withValues(alpha: 0.18),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.12),
-                                    blurRadius: 24,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ],
                               ),
-                              child: AppLogo(
-                                height: screenWidth * 0.16,
-                                width: screenWidth * 0.34,
-                                fit: BoxFit.contain,
+                              child: Center(
+                                child: Container(
+                                  width: logoSize * 0.68,
+                                  height: logoSize * 0.68,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color.lerp(AppColors.primary, Colors.black, 0.2)!,
+                                        Color.lerp(AppColors.primary, Colors.black, 0.52)!,
+                                      ],
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(alpha: 0.22),
+                                        blurRadius: 22,
+                                        offset: const Offset(0, 8),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: AppLogo(
+                                      height: logoSize * 0.24,
+                                      width: logoSize * 0.40,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 22),
+                            const SizedBox(height: 26),
                             Text(
                               l10n.loginTitle,
                               textAlign: TextAlign.center,
-                              style: theme.textTheme.headlineSmall?.copyWith(
+                              style: theme.textTheme.displaySmall?.copyWith(
                                 color: AppColors.textOnPrimary,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.2,
+                                fontWeight: FontWeight.w600,
                                 shadows: [
                                   Shadow(
                                     color: Colors.black.withValues(alpha: 0.2),
@@ -195,227 +235,159 @@ class _LoginScreenState extends State<LoginScreen> {
                               l10n.loginSubtitle,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.9),
+                                color: Colors.white.withValues(alpha: 0.78),
                                 height: 1.4,
                               ),
                             ),
-                            const SizedBox(height: 28),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(22),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(22),
-                                    color: Colors.white.withValues(alpha: 0.9),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: 0.65),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withValues(alpha: 0.14),
-                                        blurRadius: 28,
-                                        offset: const Offset(0, 12),
-                                      ),
-                                    ],
+                            const SizedBox(height: 30),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color(0xFFF3F6F1),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.28),
+                                    blurRadius: 34,
+                                    offset: const Offset(0, 16),
                                   ),
-                                  padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 40,
-                                            height: 40,
+                                ],
+                              ),
+                              padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  TextFormField(
+                                    controller: _phoneController,
+                                    keyboardType: TextInputType.phone,
+                                    textInputAction: TextInputAction.next,
+                                    enabled: !isLoading,
+                                    inputFormatters: [
+                                      _EthiopianLocalPhoneInputFormatter(),
+                                    ],
+                                    decoration: _fieldDecoration(
+                                      hint: l10n.loginPhoneLabel,
+                                      prefixIcon: Icons.phone_outlined,
+                                      prefixText:
+                                          '+${PhoneE164.ethiopiaCountryCode} ',
+                                    ),
+                                    validator: (value) {
+                                      final digits = _localPhoneDigits(value ?? '');
+                                      if (digits.isEmpty) {
+                                        return l10n.loginPhoneRequired;
+                                      }
+                                      if (!RegExp(r'^9\d{8}$').hasMatch(digits)) {
+                                        return l10n.loginPhoneInvalid;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 14),
+                                  TextFormField(
+                                    controller: _passwordController,
+                                    obscureText: _obscurePassword,
+                                    textInputAction: TextInputAction.done,
+                                    enabled: !isLoading,
+                                    onFieldSubmitted: (_) => _submit(),
+                                    decoration: _fieldDecoration(
+                                      hint: l10n.loginPasswordLabel,
+                                      prefixIcon: Icons.lock_outline_rounded,
+                                      suffix: IconButton(
+                                        onPressed: isLoading
+                                            ? null
+                                            : () => setState(
+                                                  () => _obscurePassword = !_obscurePassword,
+                                                ),
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: AppColors.primary.withValues(alpha: 0.58),
+                                        ),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return l10n.loginPasswordRequired;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: InkWell(
+                                      onTap: () {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Forgot password coming soon'),
+                                          ),
+                                        );
+                                      },
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 6,
+                                          vertical: 4,
+                                        ),
+                                        child: Text(
+                                          'Forgot password?',
+                                          style: theme.textTheme.labelLarge?.copyWith(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 14),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color.lerp(AppColors.primary, Colors.black, 0.12)!,
+                                          Color.lerp(AppColors.primary, Colors.black, 0.32)!,
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.primary.withValues(alpha: 0.35),
+                                          blurRadius: 16,
+                                          offset: const Offset(0, 8),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: [
+                                        Positioned(
+                                          left: 12,
+                                          right: 12,
+                                          bottom: 0,
+                                          child: Container(
+                                            height: 3,
                                             decoration: BoxDecoration(
-                                              color: AppColors.primary
-                                                  .withValues(alpha: 0.12),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            child: const Icon(
-                                              Icons.person_outline_rounded,
-                                              color: AppColors.primary,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  l10n.loginTitle,
-                                                  style: theme
-                                                      .textTheme.titleMedium
-                                                      ?.copyWith(
-                                                    fontWeight: FontWeight.w800,
-                                                    color: AppColors.primary,
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 2),
-                                                Text(
-                                                  l10n.loginSubtitle,
-                                                  style: theme
-                                                      .textTheme.bodySmall
-                                                      ?.copyWith(
-                                                    color: theme.colorScheme
-                                                        .onSurfaceVariant,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 22),
-                                      TextFormField(
-                                        controller: _phoneController,
-                                        keyboardType: TextInputType.phone,
-                                        textInputAction: TextInputAction.next,
-                                        enabled: !isLoading,
-                                        inputFormatters: [
-                                          _EthiopianLocalPhoneInputFormatter(),
-                                        ],
-                                        decoration: _fieldDecoration(
-                                          label: l10n.loginPhoneLabel,
-                                          hint: '923974838',
-                                          prefixIcon: Icons.phone_outlined,
-                                          prefix: Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 4,
-                                              right: 4,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 6,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.primary
-                                                        .withValues(alpha: 0.1),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      8,
-                                                    ),
-                                                    border: Border.all(
-                                                      color: AppColors.primary
-                                                          .withValues(
-                                                        alpha: 0.18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    '+251',
-                                                    style: theme
-                                                        .textTheme.labelLarge
-                                                        ?.copyWith(
-                                                      color: AppColors.primary,
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                      letterSpacing: 0.3,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Container(
-                                                  width: 1,
-                                                  height: 22,
-                                                  color: AppColors.primary
-                                                      .withValues(alpha: 0.18),
-                                                ),
-                                              ],
+                                              borderRadius: BorderRadius.circular(99),
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  AppColors.secondary,
+                                                  Color.lerp(AppColors.secondary, Colors.white, 0.3)!,
+                                                  AppColors.secondary,
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        validator: (value) {
-                                          final digits =
-                                              _localPhoneDigits(value ?? '');
-                                          if (digits.isEmpty) {
-                                            return l10n.loginPhoneRequired;
-                                          }
-                                          if (!RegExp(r'^9\d{8}$')
-                                              .hasMatch(digits)) {
-                                            return l10n.loginPhoneInvalid;
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                      const SizedBox(height: 14),
-                                      TextFormField(
-                                        controller: _passwordController,
-                                        obscureText: _obscurePassword,
-                                        textInputAction: TextInputAction.done,
-                                        enabled: !isLoading,
-                                        onFieldSubmitted: (_) => _submit(),
-                                        decoration: _fieldDecoration(
-                                          label: l10n.loginPasswordLabel,
-                                          hint: '••••••••',
-                                          prefixIcon: Icons.lock_outline_rounded,
-                                          suffix: IconButton(
-                                            onPressed: isLoading
-                                                ? null
-                                                : () => setState(
-                                                      () => _obscurePassword =
-                                                          !_obscurePassword,
-                                                    ),
-                                            icon: Icon(
-                                              _obscurePassword
-                                                  ? Icons.visibility_outlined
-                                                  : Icons
-                                                      .visibility_off_outlined,
-                                              color: AppColors.primary
-                                                  .withValues(alpha: 0.7),
-                                            ),
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return l10n.loginPasswordRequired;
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                      const SizedBox(height: 22),
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              AppColors.primary,
-                                              Color.lerp(
-                                                AppColors.primary,
-                                                AppColors.secondary,
-                                                0.35,
-                                              )!,
-                                            ],
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: AppColors.primary
-                                                  .withValues(alpha: 0.35),
-                                              blurRadius: 16,
-                                              offset: const Offset(0, 6),
-                                            ),
-                                          ],
-                                        ),
-                                        child: FilledButton(
+                                        FilledButton(
                                           style: FilledButton.styleFrom(
                                             backgroundColor: Colors.transparent,
                                             shadowColor: Colors.transparent,
-                                            foregroundColor:
-                                                AppColors.textOnPrimary,
-                                            minimumSize:
-                                                const Size.fromHeight(50),
+                                            foregroundColor: AppColors.textOnPrimary,
+                                            minimumSize: const Size.fromHeight(56),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(14),
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                           ),
                                           onPressed: isLoading ? null : _submit,
@@ -423,41 +395,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ? const SizedBox(
                                                   height: 22,
                                                   width: 22,
-                                                  child:
-                                                      CircularProgressIndicator(
+                                                  child: CircularProgressIndicator(
                                                     strokeWidth: 2,
-                                                    color:
-                                                        AppColors.textOnPrimary,
+                                                    color: AppColors.textOnPrimary,
                                                   ),
                                                 )
                                               : Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       l10n.loginButton,
-                                                      style: theme
-                                                          .textTheme.labelLarge
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 16,
-                                                        color: AppColors
-                                                            .textOnPrimary,
+                                                      style: theme.textTheme.titleMedium?.copyWith(
+                                                        fontWeight: FontWeight.w700,
+                                                        color: AppColors.textOnPrimary,
                                                       ),
                                                     ),
-                                                    const SizedBox(width: 8),
+                                                    const SizedBox(width: 10),
                                                     const Icon(
                                                       Icons.arrow_forward_rounded,
-                                                      size: 18,
+                                                      size: 20,
                                                     ),
                                                   ],
                                                 ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                             const SizedBox(height: 18),
@@ -473,7 +437,42 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   l10n.loginSecureNote,
                                   style: theme.textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.82),
+                                    color: Colors.white.withValues(alpha: 0.72),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'New to Baraka? ',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.72),
+                                  ),
+                                ),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(8),
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Create account coming soon'),
+                                      ),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 3,
+                                      vertical: 2,
+                                    ),
+                                    child: Text(
+                                      'Create an account',
+                                      style: theme.textTheme.bodySmall?.copyWith(
+                                        color: const Color(0xFFF0CD7E),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
