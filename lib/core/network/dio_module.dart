@@ -12,6 +12,8 @@ abstract class DioModule {
 
   String _authBaseUrl() => AppEnv.authApiBaseUrl;
 
+  String _paymentsBaseUrl() => AppEnv.paymentsApiBaseUrl;
+
   @lazySingleton
   Dio dio(AuthInterceptor authInterceptor) {
     final dio = Dio(
@@ -43,6 +45,26 @@ abstract class DioModule {
       ),
     );
 
+    if (kDebugMode) {
+      dio.interceptors.add(DioLoggingInterceptor());
+    }
+
+    return dio;
+  }
+
+  @Named('paymentsDio')
+  @lazySingleton
+  Dio paymentsDio(AuthInterceptor authInterceptor) {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: _paymentsBaseUrl(),
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        headers: const {'Content-Type': 'application/json'},
+      ),
+    );
+
+    dio.interceptors.add(authInterceptor);
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }

@@ -21,6 +21,7 @@ import '../../features/profile/presentation/screens/profile_auth_gate_screen.dar
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
 import '../../core/di/injection.dart';
 import '../../core/l10n/l10n.dart';
+import '../../features/donation/presentation/screens/international_donation_screen.dart';
 import '../../features/zakat_payment/presentation/models/zakat_certificate_args.dart';
 import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
@@ -146,6 +147,12 @@ abstract class AppRouterModule {
           }
           return ZakatThemed(child: ZakatPaymentScreen(args: extra));
         },
+      ),
+      GoRoute(
+        path: '/donation/international',
+        builder: (context, state) => const ZakatThemed(
+          child: InternationalDonationScreen(),
+        ),
       ),
       GoRoute(
         path: '/zakat/certificate',

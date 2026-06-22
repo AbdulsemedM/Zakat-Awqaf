@@ -1775,6 +1775,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support beneficiaries and projects with clarity, trust, and baraka.'**
   String get onboardingSubtitleCompassionInAction;
+
+  /// No description provided for @donationCurrencySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to give?'**
+  String get donationCurrencySheetTitle;
+
+  /// No description provided for @donationCurrencySheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose local ETB payment or international card payment.'**
+  String get donationCurrencySheetSubtitle;
+
+  /// No description provided for @donationLocalPaymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local payment (ETB)'**
+  String get donationLocalPaymentTitle;
+
+  /// No description provided for @donationLocalPaymentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.'**
+  String get donationLocalPaymentSubtitle;
+
+  /// No description provided for @donationInternationalPaymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'International payment'**
+  String get donationInternationalPaymentTitle;
+
+  /// No description provided for @donationInternationalPaymentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay from anywhere with your card and billing address.'**
+  String get donationInternationalPaymentSubtitle;
+
+  /// No description provided for @donationInternationalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'International Sadaqah'**
+  String get donationInternationalTitle;
+
+  /// No description provided for @donationInternationalSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support communities from anywhere in the world.'**
+  String get donationInternationalSubtitle;
+
+  /// No description provided for @donationAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation amount'**
+  String get donationAmountLabel;
+
+  /// No description provided for @donationAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'0.00'**
+  String get donationAmountHint;
+
+  /// No description provided for @donationAmountHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount is settled in Ethiopian Birr (ETB).'**
+  String get donationAmountHelper;
+
+  /// No description provided for @donationAnonymousLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Give anonymously'**
+  String get donationAnonymousLabel;
+
+  /// No description provided for @donationAnonymousSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name will not be shown publicly.'**
+  String get donationAnonymousSubtitle;
+
+  /// No description provided for @donationDonorSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details'**
+  String get donationDonorSectionTitle;
+
+  /// No description provided for @donationFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get donationFullNameLabel;
+
+  /// No description provided for @donationPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get donationPhoneLabel;
+
+  /// No description provided for @donationEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get donationEmailLabel;
+
+  /// No description provided for @donationBillingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing address'**
+  String get donationBillingSectionTitle;
+
+  /// No description provided for @donationAddress1Label.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line 1'**
+  String get donationAddress1Label;
+
+  /// No description provided for @donationAddress2Label.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line 2 (optional)'**
+  String get donationAddress2Label;
+
+  /// No description provided for @donationCountryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get donationCountryLabel;
+
+  /// No description provided for @donationCountryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Country name'**
+  String get donationCountryOther;
+
+  /// No description provided for @donationAdminAreaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'State / Province'**
+  String get donationAdminAreaLabel;
+
+  /// No description provided for @donationLocalityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get donationLocalityLabel;
+
+  /// No description provided for @donationPostalCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get donationPostalCodeLabel;
+
+  /// No description provided for @donationContinueToPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to payment'**
+  String get donationContinueToPayment;
+
+  /// No description provided for @donationSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing…'**
+  String get donationSubmitting;
+
+  /// No description provided for @donationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your Sadaqah.'**
+  String get donationSuccess;
+
+  /// No description provided for @donationValidationPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number in international format (e.g. +15551234567).'**
+  String get donationValidationPhone;
+
+  /// No description provided for @donationPaymentWebViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete payment'**
+  String get donationPaymentWebViewTitle;
+
+  /// No description provided for @donationSelectCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Select country'**
+  String get donationSelectCountry;
+
+  /// No description provided for @donationSearchCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Search countries'**
+  String get donationSearchCountry;
+
+  /// No description provided for @donationSelectState.
+  ///
+  /// In en, this message translates to:
+  /// **'Select state / province'**
+  String get donationSelectState;
+
+  /// No description provided for @donationSearchState.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or abbreviation'**
+  String get donationSearchState;
 }
 
 class _AppLocalizationsDelegate

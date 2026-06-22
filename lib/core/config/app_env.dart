@@ -18,6 +18,11 @@ abstract final class AppEnv {
     return auth.isNotEmpty ? auth : apiBaseUrl;
   }
 
+  static String get paymentsApiBaseUrl {
+    final payments = _resolve('PAYMENTS_API_BASE_URL');
+    return payments.isNotEmpty ? payments : apiBaseUrl;
+  }
+
   /// Load `.env` from the app asset bundle (debug) and native [FlutterConfig].
   static Future<void> load() async {
     if (kDebugMode) {

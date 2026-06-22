@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../core/l10n/l10n.dart';
-import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
-import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
+import '../../../donation/presentation/widgets/donation_currency_sheet.dart';
 
 class DonateSadaqahCard extends StatelessWidget {
   const DonateSadaqahCard({super.key});
@@ -54,17 +52,7 @@ class DonateSadaqahCard extends StatelessWidget {
             color: AppColors.textOnPrimary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(10),
             child: InkWell(
-              onTap: () => context.push(
-                '/zakat/payment',
-                extra: ZakatPaymentArgs(
-                  activeTab: ZakatCategoryTab.wealth,
-                  amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
-                  overviewTitle: l10n.donateSadaqah,
-                  overviewPrimaryValue: l10n.supportCommunityNeeds,
-                  overviewDueLabel: 'Amount',
-                  overviewDueValue: 'Enter an amount',
-                ),
-              ),
+              onTap: () => showDonationCurrencySheet(context),
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: double.infinity,

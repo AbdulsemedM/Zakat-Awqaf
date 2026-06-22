@@ -34,6 +34,14 @@ import '../../features/beneficiary_registration/data/repository/beneficiary_regi
     as _i585;
 import '../../features/beneficiary_registration/data/repository/beneficiary_registration_repository_impl.dart'
     as _i744;
+import '../../features/donation/data/data_provider/donation_data_provider.dart'
+    as _i495;
+import '../../features/donation/data/data_provider/donation_data_provider_impl.dart'
+    as _i271;
+import '../../features/donation/data/repository/donation_repository.dart'
+    as _i488;
+import '../../features/donation/data/repository/donation_repository_impl.dart'
+    as _i477;
 import '../../features/impact/bloc/impact_bloc.dart' as _i239;
 import '../../features/impact/data/data_provider/impact_data_provider.dart'
     as _i141;
@@ -91,6 +99,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dio(gh<_i53.AuthInterceptor>()),
     );
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.paymentsDio(gh<_i53.AuthInterceptor>()),
+      instanceName: 'paymentsDio',
+    );
     gh.lazySingleton<_i723.AuthDataProvider>(
       () => _i379.AuthDataProviderImpl(gh<_i361.Dio>(instanceName: 'authDio')),
     );
@@ -99,6 +111,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i583.GoRouter>(
       () => appRouterModule.router(gh<_i543.AuthSessionController>()),
+    );
+    gh.lazySingleton<_i495.DonationDataProvider>(
+      () => _i271.DonationDataProviderImpl(
+        gh<_i361.Dio>(instanceName: 'paymentsDio'),
+      ),
+    );
+    gh.lazySingleton<_i488.DonationRepository>(
+      () => _i477.DonationRepositoryImpl(gh<_i495.DonationDataProvider>()),
     );
     gh.lazySingleton<_i365.ProfileDataProvider>(
       () => _i196.RemoteProfileDataProvider(

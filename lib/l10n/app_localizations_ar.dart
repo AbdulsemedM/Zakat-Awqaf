@@ -986,4 +986,113 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get onboardingSubtitleCompassionInAction =>
       'ادعم المستفيدين والمشاريع بوضوح وثقة وبركة.';
+
+  @override
+  String get donationCurrencySheetTitle => 'How would you like to give?';
+
+  @override
+  String get donationCurrencySheetSubtitle =>
+      'Choose local ETB payment or international card payment.';
+
+  @override
+  String get donationLocalPaymentTitle => 'Local payment (ETB)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.';
+
+  @override
+  String get donationInternationalPaymentTitle => 'International payment';
+
+  @override
+  String get donationInternationalPaymentSubtitle =>
+      'Pay from anywhere with your card and billing address.';
+
+  @override
+  String get donationInternationalTitle => 'International Sadaqah';
+
+  @override
+  String get donationInternationalSubtitle =>
+      'Support communities from anywhere in the world.';
+
+  @override
+  String get donationAmountLabel => 'Donation amount';
+
+  @override
+  String get donationAmountHint => '0.00';
+
+  @override
+  String get donationAmountHelper =>
+      'Amount is settled in Ethiopian Birr (ETB).';
+
+  @override
+  String get donationAnonymousLabel => 'Give anonymously';
+
+  @override
+  String get donationAnonymousSubtitle =>
+      'Your name will not be shown publicly.';
+
+  @override
+  String get donationDonorSectionTitle => 'Your details';
+
+  @override
+  String get donationFullNameLabel => 'Full name';
+
+  @override
+  String get donationPhoneLabel => 'Phone';
+
+  @override
+  String get donationEmailLabel => 'Email';
+
+  @override
+  String get donationBillingSectionTitle => 'Billing address';
+
+  @override
+  String get donationAddress1Label => 'Address line 1';
+
+  @override
+  String get donationAddress2Label => 'Address line 2 (optional)';
+
+  @override
+  String get donationCountryLabel => 'Country';
+
+  @override
+  String get donationCountryOther => 'Country name';
+
+  @override
+  String get donationAdminAreaLabel => 'State / Province';
+
+  @override
+  String get donationLocalityLabel => 'City';
+
+  @override
+  String get donationPostalCodeLabel => 'Postal code';
+
+  @override
+  String get donationContinueToPayment => 'Continue to payment';
+
+  @override
+  String get donationSubmitting => 'Processing…';
+
+  @override
+  String get donationSuccess => 'Thank you for your Sadaqah.';
+
+  @override
+  String get donationValidationPhone =>
+      'Enter a valid phone number in international format (e.g. +15551234567).';
+
+  @override
+  String get donationPaymentWebViewTitle => 'Complete payment';
+
+  @override
+  String get donationSelectCountry => 'Select country';
+
+  @override
+  String get donationSearchCountry => 'Search countries';
+
+  @override
+  String get donationSelectState => 'Select state / province';
+
+  @override
+  String get donationSearchState => 'Search by name or abbreviation';
 }
