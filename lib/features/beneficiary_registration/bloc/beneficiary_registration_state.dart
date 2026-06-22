@@ -28,6 +28,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.selectedCategory,
     required this.payoutMethod,
     this.nationalId = '',
+    this.registrationCode = '',
     this.generatedNationalId,
     this.firstName = '',
     this.fatherName = '',
@@ -80,6 +81,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final AsnafCategory? selectedCategory;
   final PayoutMethod payoutMethod;
   final String nationalId;
+  final String registrationCode;
   final String? generatedNationalId;
   final String firstName;
   final String fatherName;
@@ -169,9 +171,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         email.trim().isNotEmpty &&
         gender != null &&
         birthdate != null &&
-        address.trim().isNotEmpty &&
-        region.trim().isNotEmpty &&
-        city.trim().isNotEmpty &&
+        registrationCode.trim().isNotEmpty &&
         notes.trim().isNotEmpty &&
         selectedCategory != null;
   }
@@ -195,6 +195,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         selectedCategory,
         payoutMethod,
         nationalId,
+        registrationCode,
         generatedNationalId,
         firstName,
         fatherName,
@@ -250,6 +251,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.selectedCategory,
     super.payoutMethod = PayoutMethod.telebirrWallet,
     super.nationalId,
+    super.registrationCode,
     super.generatedNationalId,
     super.firstName,
     super.fatherName,
@@ -304,6 +306,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     bool clearSelectedCategory = false,
     PayoutMethod? payoutMethod,
     String? nationalId,
+    String? registrationCode,
     String? generatedNationalId,
     bool clearGeneratedNationalId = false,
     String? firstName,
@@ -369,6 +372,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
           : (selectedCategory ?? this.selectedCategory),
       payoutMethod: payoutMethod ?? this.payoutMethod,
       nationalId: nationalId ?? this.nationalId,
+      registrationCode: registrationCode ?? this.registrationCode,
       generatedNationalId: clearGeneratedNationalId
           ? null
           : (generatedNationalId ?? this.generatedNationalId),

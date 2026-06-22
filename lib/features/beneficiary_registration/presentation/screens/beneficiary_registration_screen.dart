@@ -422,6 +422,18 @@ class _WelcomeStep extends StatelessWidget {
             ],
           ),
         ),
+        if (state.method == RegistrationMethod.fastTrack) ...[
+          const SizedBox(height: 12),
+          SectionCard(
+            child: TextField(
+              onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
+              decoration: const InputDecoration(
+                labelText: 'Registration code',
+                hintText: 'EZW-A1B2-C3D4',
+              ),
+            ),
+          ),
+        ],
         const SizedBox(height: 12),
         SectionCard(
           child: Column(
@@ -565,6 +577,14 @@ class _IdentityStep extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12),
+                TextField(
+                  onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
+                  decoration: const InputDecoration(
+                    labelText: 'Registration code',
+                    hintText: 'EZW-A1B2-C3D4',
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -649,22 +669,6 @@ class _IdentityStep extends StatelessWidget {
                   },
                   icon: const Icon(Icons.calendar_today_outlined),
                   label: Text(birthdateText),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  maxLines: 3,
-                  onChanged: (v) => bloc.add(AddressUpdated(v)),
-                  decoration: const InputDecoration(labelText: 'Address'),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  onChanged: (v) => bloc.add(RegionUpdated(v)),
-                  decoration: const InputDecoration(labelText: 'Region'),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  onChanged: (v) => bloc.add(CityUpdated(v)),
-                  decoration: const InputDecoration(labelText: 'City'),
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<AsnafCategory>(
@@ -1342,9 +1346,13 @@ class _FooterActions extends StatelessWidget {
         state.step == BeneficiaryRegistrationStep.setPassword;
 
     final canContinue = switch (state.step) {
-      BeneficiaryRegistrationStep.welcome =>
-        state.method != RegistrationMethod.fastTrack ||
-            (!state.isFaydaPosting && !state.awaitingFaydaSse),
+      BeneficiaryRegistrationStep.welcome => switch (state.method) {
+          RegistrationMethod.fastTrack =>
+            state.registrationCode.trim().isNotEmpty &&
+                !state.isFaydaPosting &&
+                !state.awaitingFaydaSse,
+          _ => true,
+        },
       BeneficiaryRegistrationStep.identity => state.isIdentityStepComplete,
       BeneficiaryRegistrationStep.institutionDetails =>
         state.isInstitutionDetailsComplete,

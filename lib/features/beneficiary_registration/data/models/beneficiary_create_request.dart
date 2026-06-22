@@ -13,9 +13,7 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
     required this.email,
     required this.dateOfBirth,
     required this.gender,
-    required this.region,
-    required this.city,
-    required this.addressLine,
+    required this.registrationCode,
     required this.beneficiaryType,
     required this.category,
     required this.notes,
@@ -27,9 +25,7 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
   final String email;
   final String dateOfBirth;
   final String gender;
-  final String region;
-  final String city;
-  final String addressLine;
+  final String registrationCode;
   final String beneficiaryType;
   final String category;
   final String notes;
@@ -42,23 +38,26 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
         'email': email.trim(),
         'dateOfBirth': dateOfBirth.trim(),
         'gender': gender.trim(),
-        'region': region.trim(),
-        'city': city.trim(),
-        'addressLine': addressLine.trim(),
+        'registrationCode': registrationCode.trim(),
         'beneficiaryType': beneficiaryType.trim(),
         'category': category.trim(),
         'notes': notes.trim(),
       };
 }
 
-/// Mode B — national ID / Fayda path (expect HTTP 202). Body is only `nationalId`.
+/// Mode B — national ID / Fayda path (expect HTTP 202).
 final class NationalIdBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest {
-  const NationalIdBeneficiaryCreateRequest({required this.nationalId});
+  const NationalIdBeneficiaryCreateRequest({
+    required this.registrationCode,
+    required this.nationalId,
+  });
 
+  final String registrationCode;
   final String nationalId;
 
   @override
   Map<String, dynamic> toJson() => {
+        'registrationCode': registrationCode.trim(),
         'nationalId': nationalId.trim(),
       };
 }

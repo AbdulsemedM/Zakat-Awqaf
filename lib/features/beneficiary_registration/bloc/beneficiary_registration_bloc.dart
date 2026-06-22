@@ -33,6 +33,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<BeneficiaryRegistrationStarted>(_onStarted);
     on<RegistrationMethodSelected>(_onMethodSelected);
     on<NationalIdUpdated>(_onNationalIdUpdated);
+    on<RegistrationCodeUpdated>(_onRegistrationCodeUpdated);
     on<FaydaRegistrationRequested>(_onFaydaRequested);
     on<FaydaSseCompletedSuccessfully>(_onFaydaSseSuccess);
     on<FaydaSseStreamFinished>(_onFaydaSseStreamFinished);
@@ -140,6 +141,13 @@ class BeneficiaryRegistrationBloc extends Bloc<
     emit(_current.copyWith(nationalId: event.nationalId, clearError: true));
   }
 
+  void _onRegistrationCodeUpdated(
+    RegistrationCodeUpdated event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) {
+    emit(_current.copyWith(registrationCode: event.value, clearError: true));
+  }
+
   Future<void> _onFaydaRequested(
     FaydaRegistrationRequested event,
     Emitter<BeneficiaryRegistrationState> emit,
@@ -159,6 +167,14 @@ class BeneficiaryRegistrationBloc extends Bloc<
     _faydaSseReconnectAttempts = 0;
 
     final postingBase = _current;
+    if (postingBase.registrationCode.trim().isEmpty) {
+      emit(
+        postingBase.copyWith(
+          errorMessage: 'Please enter your registration code.',
+        ),
+      );
+      return;
+    }
     final generatedId =
         postingBase.generatedNationalId ?? generateFaydaNationalId();
 
@@ -173,7 +189,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
 
     try {
       final result = await _repository.register(
-        NationalIdBeneficiaryCreateRequest(nationalId: generatedId),
+        NationalIdBeneficiaryCreateRequest(
+          registrationCode: postingBase.registrationCode.trim(),
+          nationalId: generatedId,
+        ),
       );
       if (result.statusCode != 202) {
         throw BeneficiaryRegistrationException(
@@ -963,9 +982,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
       email: s.email.trim(),
       dateOfBirth: dateOfBirth,
       gender: genderStr,
-      region: s.region.trim(),
-      city: s.city.trim(),
-      addressLine: s.address.trim(),
+      registrationCode: s.registrationCode.trim(),
       beneficiaryType: 'individual',
       category: s.selectedCategory!.apiValue,
       notes: s.notes.trim(),

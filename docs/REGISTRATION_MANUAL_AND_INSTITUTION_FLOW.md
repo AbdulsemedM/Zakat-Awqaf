@@ -132,9 +132,7 @@ Do not attach Bearer token on:
 | Email | |
 | Gender | `male` \| `female` |
 | Birthdate | Format `YYYY-MM-DD` |
-| Address | Maps to `addressLine` |
-| Region | |
-| City | |
+| Registration code | e.g. `EZW-A1B2-C3D4` |
 | Beneficiary category | Dropdown — see values below |
 | Notes | |
 
@@ -176,9 +174,7 @@ Do not attach Bearer token on:
   "email": "user@example.com",
   "dateOfBirth": "1994-10-16",
   "gender": "male",
-  "region": "Addis Ababa",
-  "city": "Addis Ababa",
-  "addressLine": "Bole, Woreda 03",
+  "registrationCode": "EZW-A1B2-C3D4",
   "beneficiaryType": "individual",
   "category": "poor",
   "notes": "Zakat support applicant"

@@ -39,6 +39,14 @@ final class NationalIdUpdated extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [nationalId];
 }
 
+final class RegistrationCodeUpdated extends BeneficiaryRegistrationEvent {
+  const RegistrationCodeUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
 final class FaydaRegistrationRequested extends BeneficiaryRegistrationEvent {
   const FaydaRegistrationRequested();
 }
