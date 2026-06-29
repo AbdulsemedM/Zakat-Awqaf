@@ -1107,4 +1107,373 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get donationNoMatchesFound => 'No matches found';
+
+  @override
+  String get changeAppModeTooltip => 'Change mode';
+
+  @override
+  String get switchedToAwqafMode => 'Switched to Awqaf mode';
+
+  @override
+  String get switchToAwqaf => 'Switch to Awqaf';
+
+  @override
+  String get switchedToZakatMode => 'Switched to Zakat mode';
+
+  @override
+  String get switchToZakat => 'Switch to Zakat';
+
+  @override
+  String get loginForgotPassword => 'Forgot password?';
+
+  @override
+  String get loginForgotPasswordComingSoon => 'Forgot password coming soon';
+
+  @override
+  String get loginNewToBaraka => 'New to Baraka? ';
+
+  @override
+  String get loginCreateAccount => 'Create an account';
+
+  @override
+  String get loginCreateAccountComingSoon => 'Create account coming soon';
+
+  @override
+  String get profileDisbursementIntro =>
+      'Choose where you want to receive disbursements.';
+
+  @override
+  String get profileCoopAccountLabel => 'Coop Bank Account Number';
+
+  @override
+  String get profileCoopAccountHint => 'Enter your account number';
+
+  @override
+  String get profileCoopAccountRequired =>
+      'Please enter your Coop Bank account number.';
+
+  @override
+  String get profileSaveAccount => 'Save Account';
+
+  @override
+  String get faydaIdentityVerification => 'Identity verification';
+
+  @override
+  String get commonBack => 'Back';
+
+  @override
+  String get commonContinue => 'Continue';
+
+  @override
+  String get commonFinish => 'Finish';
+
+  @override
+  String get commonTakePhoto => 'Take Photo';
+
+  @override
+  String get commonChooseGallery => 'Choose from Gallery';
+
+  @override
+  String get commonChooseFile => 'Choose File';
+
+  @override
+  String get regTitle => 'Beneficiary Registration';
+
+  @override
+  String get regMethodFastTrack => 'Fast-Track with Fayda';
+
+  @override
+  String get regMethodManual => 'Manual Registration';
+
+  @override
+  String get regMethodInstitution => 'Institution Registration';
+
+  @override
+  String get regMethodFastTrackDesc =>
+      'Securely verify identity with National ID and continue in minutes.';
+
+  @override
+  String get regMethodManualDesc =>
+      'Share your information and supporting details for trusted review.';
+
+  @override
+  String get regMethodInstitutionDesc =>
+      'Register your organization and submit required compliance documents.';
+
+  @override
+  String get regSecureIdentityTitle => 'Secure Identity Verification';
+
+  @override
+  String get regChooseMethodSubtitle =>
+      'Choose your preferred registration method to begin your journey.';
+
+  @override
+  String get regFastTrackFaydaTitle => 'Fast-Track with National ID (Fayda)';
+
+  @override
+  String get regFastTrackFaydaSubtitle =>
+      'Authenticate using your national digital ID.';
+
+  @override
+  String get regManualTitle => 'Manual Registration';
+
+  @override
+  String get regManualSubtitle => 'Upload supporting documentation for review.';
+
+  @override
+  String get regInstitutionCardTitle => 'Register as Institution';
+
+  @override
+  String get regInstitutionCardSubtitle =>
+      'Company, NGO, cooperative, or government entity.';
+
+  @override
+  String get regRegistrationCodeLabel => 'Registration code';
+
+  @override
+  String get regRegistrationCodeHint => 'EZW-A1B2-C3D4';
+
+  @override
+  String get regEncryptedPrivate => 'Encrypted & Private';
+
+  @override
+  String get regEncryptedPrivateBody =>
+      'Your data is secured and handled in line with privacy standards.';
+
+  @override
+  String get regVerificationInterrupted => 'Verification interrupted';
+
+  @override
+  String get regReopenVerification => 'Reopen verification';
+
+  @override
+  String get regRetryListening => 'Retry listening';
+
+  @override
+  String get regCameraPermissionError =>
+      'Could not open camera/gallery. Please check permissions.';
+
+  @override
+  String get regSelectBirthdate => 'Select birthdate';
+
+  @override
+  String get regManualIdentityTitle => 'Manual Identity Registration';
+
+  @override
+  String get regFirstName => 'First Name';
+
+  @override
+  String get regLastName => 'Last Name';
+
+  @override
+  String get regGrandfatherName => 'Grandfather\'s Name';
+
+  @override
+  String get regPhoneNumber => 'Phone Number';
+
+  @override
+  String get regPhoneHint => '+251911223344 or 0911223344';
+
+  @override
+  String get regEmail => 'Email';
+
+  @override
+  String get regGender => 'Gender';
+
+  @override
+  String get regMale => 'Male';
+
+  @override
+  String get regFemale => 'Female';
+
+  @override
+  String get regBeneficiaryCategory => 'Beneficiary Category';
+
+  @override
+  String get regNotes => 'Notes';
+
+  @override
+  String get regNotesHint => 'e.g. Zakat support applicant';
+
+  @override
+  String get regUploadProfilePicture => 'Upload Profile Picture';
+
+  @override
+  String get regVerifyingFaydaBanner =>
+      'Verifying with Fayda… Complete verification in the browser when it opens.';
+
+  @override
+  String get regNeedsAssessment => 'Needs Assessment';
+
+  @override
+  String get regSituationLabel => 'Describe your current situation';
+
+  @override
+  String get regSituationHint =>
+      'Explain hardship, dependents, and urgent needs...';
+
+  @override
+  String get regUploadProof => 'Upload Proof';
+
+  @override
+  String get regDisbursementSetup => 'Disbursement Setup';
+
+  @override
+  String get regTelebirrTitle => 'Telebirr Wallet';
+
+  @override
+  String get regTelebirrSubtitle => 'Instant mobile money transfer';
+
+  @override
+  String get regMpesaTitle => 'M-Pesa';
+
+  @override
+  String get regMpesaSubtitle => 'Secure mobile payment network';
+
+  @override
+  String get regCoopbankTitle => 'Coopbank Account';
+
+  @override
+  String get regCoopbankSubtitle => 'Direct bank deposit';
+
+  @override
+  String get regAccountOrMobile => 'Account or Mobile Number';
+
+  @override
+  String get regFullLegalName => 'Full Legal Name';
+
+  @override
+  String get regAgreementTitle => 'Agreement & Sharia Compliance';
+
+  @override
+  String get regAgreementBody =>
+      'I declare information is truthful and will use aid according to policy.';
+
+  @override
+  String get regInstitutionRegistration => 'Institution Registration';
+
+  @override
+  String get regInstitutionType => 'Institution Type';
+
+  @override
+  String get regLegalName => 'Legal Name';
+
+  @override
+  String get regTradingName => 'Trading Name';
+
+  @override
+  String get regTradeRegistrationNumber => 'Trade Registration Number';
+
+  @override
+  String get regTin => 'Tax Identification Number (TIN)';
+
+  @override
+  String get regVatOptional => 'VAT Registration Number (optional)';
+
+  @override
+  String get regRegion => 'Region';
+
+  @override
+  String get regCity => 'City';
+
+  @override
+  String get regAddress => 'Address';
+
+  @override
+  String get regNotesOptional => 'Notes (optional)';
+
+  @override
+  String get regAuthorityDocTitle => 'Authority to act document required';
+
+  @override
+  String get regAuthorityDocBody =>
+      'Enable if someone other than a registered signatory submits.';
+
+  @override
+  String get regFilePickError =>
+      'Could not pick file. Please check permissions.';
+
+  @override
+  String get regUploadKycTitle => 'Upload KYC Documents';
+
+  @override
+  String get regUploadKycBody =>
+      'Upload each required document. You can finish once all required documents are uploaded.';
+
+  @override
+  String regReference(Object id) {
+    return 'Reference: $id';
+  }
+
+  @override
+  String get regNoDocumentsRequired => 'No documents required at this time.';
+
+  @override
+  String get regRequired => 'Required';
+
+  @override
+  String get regOptional => 'Optional';
+
+  @override
+  String regSelectedFile(Object name) {
+    return 'Selected: $name';
+  }
+
+  @override
+  String get regUploaded => 'Uploaded';
+
+  @override
+  String get regUpload => 'Upload';
+
+  @override
+  String get regCreatePasswordTitle => 'Create Your Password';
+
+  @override
+  String get regCreatePasswordBody =>
+      'Choose a secure password for your account. You will use it to sign in after registration.';
+
+  @override
+  String get regPassword => 'Password';
+
+  @override
+  String get regConfirmPassword => 'Confirm Password';
+
+  @override
+  String get regPasswordRules =>
+      'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
+
+  @override
+  String get regPasswordSuccess =>
+      'Password set successfully. Welcome to Mejlis Digital Hub.';
+
+  @override
+  String regInstitutionComplete(Object id) {
+    return 'Institution registration complete. Reference: $id';
+  }
+
+  @override
+  String get regInstitutionCompleteGeneric =>
+      'Institution registration complete.';
+
+  @override
+  String get regCompleteLocal =>
+      'Registration complete. Needs and disbursement details are saved locally.';
+
+  @override
+  String get regContinueWithFayda => 'Continue with Fayda';
+
+  @override
+  String get regVerifyingFayda => 'Verifying with Fayda…';
+
+  @override
+  String get regSubmitContinue => 'Submit & Continue';
+
+  @override
+  String get regSetPasswordContinue => 'Set Password & Continue';
+
+  @override
+  String get regSetPasswordFinish => 'Set Password & Finish';
+
+  @override
+  String get navAwqaf => 'Awqaf';
 }

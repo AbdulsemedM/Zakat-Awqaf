@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../core/l10n/l10n.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_state.dart';
 
@@ -49,7 +50,7 @@ class _FaydaVerificationWebViewPageState
 
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Identity verification'),
+              title: Text(context.l10n.faydaIdentityVerification),
             ),
             body: Stack(
               children: [

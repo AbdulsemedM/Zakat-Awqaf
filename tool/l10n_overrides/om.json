@@ -181,7 +181,7 @@
   "calcCropTransRainFed": "Sadarkaan rooba sooramu {rate}%. Foormulaa: {kg} × {rate2}% = {due}kg.",
   "calcCropTransIrrigated": "Sadarkaa jallisii {rate}%. Foormulaa: {kg} × {rate2}% = {due}kg.",
   "calcCamelNoDue": "Hin qabu",
-  "calcCamelSheepN": "{lakkoofsa, dachaa, tokko{1 sheep} kan biraa{{count} hoolaa}}",
+  "calcCamelSheepN": "{count, plural, one{1 hoolaa} other{{count} hoolaa}}",
   "calcCamel1BintMakhad": "1 bint makhad jedhamuun beekama",
   "calcCamel1BintLabun": "1 bint labun jedhamuun beekama",
   "calcCamel1Hiqqah": "1 hiqqaa",

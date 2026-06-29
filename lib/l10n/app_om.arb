@@ -1,8 +1,8 @@
 {
   "@@locale": "om",
-  "appTitle": "Zakat & Awqaf Commission",
-  "splashSlogan": "For the sake of Allah, for the service of humanity",
-  "splashWaqfByLabel": "A Waqf by",
+  "appTitle": "Komishinii Zakaa fi Awqaaf",
+  "splashSlogan": "Rabbiif jecha, tajaajila dhala namaatiif",
+  "splashWaqfByLabel": "A Waaqeffannaa by",
   "splashWaqfByTitle": "Coop Bank Alhuda",
   "navHome": "Mana",
   "navCalculator": "Herregaa",
@@ -64,7 +64,9 @@
   "profileEditFieldComingSoon": "{field} gulaaluun yeroo dhihoo dhufa",
   "@profileEditFieldComingSoon": {
     "placeholders": {
-      "field": {"type": "String"}
+      "field": {
+        "type": "String"
+      }
     }
   },
   "profileNisabThresholdAlerts": "Beeksisa daangaa Nisaab",
@@ -94,14 +96,14 @@
   "profileLogOutDialogTitle": "Ba'uu barbaaddaa?",
   "profileLogOutDialogBody": "Meeshaa kana irratti app keessaa ni baata.",
   "loginTitle": "Sign in",
-  "loginSubtitle": "Use your registered phone number and password",
-  "loginPhoneLabel": "Phone number",
-  "loginPasswordLabel": "Password",
+  "loginSubtitle": "Lakkoofsa bilbilaa fi jecha icciitii galmaa'e fayyadamaa",
+  "loginPhoneLabel": "Lakkoofsa bilbilaa",
+  "loginPasswordLabel": "Jecha iccitii",
   "loginButton": "Sign in",
-  "loginPhoneRequired": "Enter your phone number",
-  "loginPhoneInvalid": "Enter a valid 9-digit mobile number (e.g. 923974838)",
-  "loginSecureNote": "Your sign-in is encrypted and secure",
-  "loginPasswordRequired": "Enter your password",
+  "loginPhoneRequired": "Lakkoofsa bilbilaa keessan galchaa",
+  "loginPhoneInvalid": "Lakkoofsa moobaayilaa dijiitii 9 sirrii ta'e galchi (fkn 923974838)",
+  "loginSecureNote": "Galmeen kee icciitii fi nageenya qaba",
+  "loginPasswordRequired": "Jecha icciitii keessan galchaa",
   "profileCancel": "Haqi",
   "profileHadithOfTheDay": "Hadiisa Guyyaa",
   "profileHadithQuote": "\"Gaaddisi amanaa guyyaa qiyaamaa sadaqaa isaa ta'a.\"",
@@ -118,7 +120,9 @@
   "impactEtbAmount": "{amount} ETB",
   "@impactEtbAmount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactLivesTouched": "Jireenyota Tuqaman",
@@ -127,31 +131,41 @@
   "impactRegionImpactComingSoon": "Bu'aan {region} yeroo dhihoo dhufa",
   "@impactRegionImpactComingSoon": {
     "placeholders": {
-      "region": {"type": "String"}
+      "region": {
+        "type": "String"
+      }
     }
   },
   "impactStoryComingSoon": "Seenaa {name} yeroo dhihoo dhufa",
   "@impactStoryComingSoon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "impactProjectDetailsComingSoon": "Bal'inni {title} yeroo dhihoo dhufa",
   "@impactProjectDetailsComingSoon": {
     "placeholders": {
-      "title": {"type": "String"}
+      "title": {
+        "type": "String"
+      }
     }
   },
   "impactPercentFunded": "{percent}% guutameera",
   "@impactPercentFunded": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "impactEtbLeft": "{amount} ETB hafa",
   "@impactEtbLeft": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactSeeYourPersonalBaraka": "Barakaa Dhuunfaa Kee Ilaali",
@@ -168,38 +182,685 @@
   "onboardingSubtitleEasyPayments": "Muuxannoo amansiisaa fi mobaayilii irratti salphaan zakaa kee kaffali.",
   "onboardingTitleCompassionInAction": "Rahmata Hojii Keessatti",
   "onboardingSubtitleCompassionInAction": "Ifaafi amanamummaadhaan fayyadamtootaa fi pirojektoota deeggari.",
-  "donationCurrencySheetTitle": "How would you like to give?",
-  "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
-  "donationLocalPaymentTitle": "Local payment (ETB)",
-  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.",
-  "donationInternationalPaymentTitle": "International payment",
-  "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
-  "donationInternationalTitle": "International Sadaqah",
-  "donationInternationalSubtitle": "Support communities from anywhere in the world.",
-  "donationAmountLabel": "Donation amount",
+  "donationCurrencySheetTitle": "Akkamitti kennuu barbaadda?",
+  "donationCurrencySheetSubtitle": "Kaffaltii ETB biyya keessaa ykn kaffaltii kaardii idil-addunyaa filadhu.",
+  "donationLocalPaymentTitle": "Kaffaltii biyya keessaa (ETB) .",
+  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, fi karra Itoophiyaa biroo.",
+  "donationInternationalPaymentTitle": "Kaffaltii idil-addunyaa",
+  "donationInternationalPaymentSubtitle": "Kaardii fi teessoo kaffaltii keessaniin bakka kamirraayyuu kaffalaa.",
+  "donationInternationalTitle": "Sadaqaan Idil Addunyaa",
+  "donationInternationalSubtitle": "Hawaasa addunyaa bakka kamirraayyuu deeggaru.",
+  "donationAmountLabel": "Maallaqa arjooma",
   "donationAmountHint": "0.00",
-  "donationAmountHelper": "Amount is settled in Ethiopian Birr (ETB).",
-  "donationAnonymousLabel": "Give anonymously",
-  "donationAnonymousSubtitle": "Your name will not be shown publicly.",
-  "donationDonorSectionTitle": "Your details",
-  "donationFullNameLabel": "Full name",
-  "donationPhoneLabel": "Phone",
-  "donationEmailLabel": "Email",
-  "donationBillingSectionTitle": "Billing address",
-  "donationAddress1Label": "Address line 1",
-  "donationAddress2Label": "Address line 2 (optional)",
-  "donationCountryLabel": "Country",
-  "donationCountryOther": "Country name",
-  "donationAdminAreaLabel": "State / Province",
-  "donationLocalityLabel": "City",
-  "donationPostalCodeLabel": "Postal code",
-  "donationContinueToPayment": "Continue to payment",
-  "donationSubmitting": "Processing…",
-  "donationSuccess": "Thank you for your Sadaqah.",
-  "donationValidationPhone": "Enter a valid phone number in international format (e.g. +15551234567).",
-  "donationPaymentWebViewTitle": "Complete payment",
-  "donationSelectCountry": "Select country",
-  "donationSearchCountry": "Search countries",
-  "donationSelectState": "Select state / province",
-  "donationSearchState": "Search by name or abbreviation"
+  "donationAmountHelper": "Maallaqni Birrii Itiyoophiyaan (ETB) qulqulleeffama.",
+  "donationAnonymousLabel": "Maqaa osoo hin beekin kenni",
+  "donationAnonymousSubtitle": "Maqaan kee ifatti hin mul'atu.",
+  "donationDonorSectionTitle": "Bal'ina keessan",
+  "donationFullNameLabel": "Maqaa guutuu",
+  "donationPhoneLabel": "Bilbila",
+  "donationEmailLabel": "Imeelii",
+  "donationBillingSectionTitle": "Teessoo kaffaltii",
+  "donationAddress1Label": "Sarara teessoo 1.1",
+  "donationAddress2Label": "Sarara teessoo 2 (dirqama) .",
+  "donationCountryLabel": "Biyya",
+  "donationCountryOther": "Maqaa biyyaa",
+  "donationAdminAreaLabel": "Naannoo / Naannoo",
+  "donationLocalityLabel": "Magaalaa",
+  "donationPostalCodeLabel": "Koodii poostaa",
+  "donationContinueToPayment": "Kaffaltii itti fufaa",
+  "donationSubmitting": "Adeemsa hojii...",
+  "donationSuccess": "Sadaqa keessaniif galatoomaa.",
+  "donationValidationPhone": "Lakkoofsa bilbilaa sirrii ta'e bifa idil-addunyaatiin galchi (fkn +15551234567).",
+  "donationPaymentWebViewTitle": "Kaffaltii guutuu",
+  "donationSelectCountry": "Biyya filadhu",
+  "donationSearchCountry": "Biyyoota barbaadi",
+  "donationSelectState": "Naannoo / bulchiinsa filadhu",
+  "donationSearchState": "Maqaa ykn gabaabduu barbaadi",
+  "donationNoMatchesFound": "Walsimsiisaa hin argamne",
+  "calcAppBarTitle": "Shallaggii Zakaa",
+  "calcPayYourZakat": "Zakaa Keessan Bafadhaa",
+  "calcTabWealth": "Qabeenya",
+  "calcTabLivestock": "Beeylada",
+  "calcTabCrops": "Midhaan",
+  "calcStep1NisabTitle": "Tarkaanfii 1: Ulaagaa Nisab",
+  "calcStep1NisabBody": "Zakaan kan kaffalamu yoo qabeenyi qulqulluun kee ulaagaa irra darbeedha. Nisab gatii warqee 85g platform 24k irratti hundaa'a.",
+  "calcNisabGoldFormula": "{grams} × {price} = {total} .",
+  "@calcNisabGoldFormula": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcNisabThresholdBanner": "Ulaagaa Nisab (saffisa waltajjii, warqee 85g walqixa): {amount} .",
+  "@calcNisabThresholdBanner": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "calcUsdEtb": "USD/ETB",
+  "calcFxLive": "Sadarkaa jijjiirraa kallattiin fayyadamuu",
+  "calcFxCache": "Sadarkaa jijjiirraa kaached fayyadamuu",
+  "calcFxFallback": "Sadarkaa jijjiirraa fallback fayyadamuu",
+  "calcTimestampUnavailable": "chaappaan yeroo hin jiru",
+  "calcStep1LivestockTitle": "Tarkaanfii 1: Mala iskeelii horii",
+  "calcStep1LivestockBody": "Zakaan beeyladaa kan shallagamu madaallii lakkoofsa mataa fiizikaalaatiin (% gatii miti).",
+  "calcStep1LivestockNisabNote": "Ulaagaa Nisab: Hoolaa/Re’ee 40, Loon 30, Gaala 5. Loon walnyaatinsa 30/40 fayyadama; gaalli sadarkaa sadarkaa hordofu.",
+  "calcAdvisoryPrefix": "Gorsaa: {text} .",
+  "@calcAdvisoryPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcArabicTermDefinitionsTitle": "Hiika Jechoota Afaan Arabaa",
+  "calcArabicDefTabi": "re’ee waggaa tokkoo",
+  "calcArabicDefMusinnah": "re’ee waggaa lamaa",
+  "calcArabicDefBintMakhad": "gaala dubaraa waggaa tokkoo",
+  "calcArabicDefBintLabun": "gaala dubaraa waggaa lamaa",
+  "calcArabicDefHiqqah": "gaala dubaraa waggaa sadii",
+  "calcArabicDefJadhah": "gaala dubaraa waggaa afur",
+  "calcStep1CropTitle": "Tarkaanfii 1: Shallaggii midhaanii (Ushr).",
+  "calcStep1CropBody": "Zakaan midhaanii yeroo sassaabamuu qaba. Nisab 653kg dha. Saffisni %10 (roobaan kan sooramu), %5 (jallisii), ykn makaadhaaf ulfaataadha.",
+  "calcCropLineThreshold": "{kg} kg {relation} 653 kg",
+  "@calcCropLineThreshold": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineIrrigation": "Haala jallisii: {mode} .",
+  "@calcCropLineIrrigation": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineEffectiveRate": "Sadarkaa bu'a qabeessa: {rate}%",
+  "@calcCropLineEffectiveRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineFormula": "Foormulaa: {line} .",
+  "@calcCropLineFormula": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "calcRelationGte": "≥",
+  "calcRelationLt": "<",
+  "calcOverviewNetWorthTitle": "Haala Waliigalaa Qabeenya Qulqulluu",
+  "calcOverviewLivestockTitle": "Haala Waliigalaa Beeyladaa",
+  "calcOverviewCropTitle": "Haala Waliigalaa Midhaanii",
+  "calcBadgeAboveNisab": "Nisab olitti",
+  "calcBadgeBelowNisab": "Nisab gadiitti",
+  "calcBadgeZakatDue": "Zakaa Duumee",
+  "calcBadgeNoDue": "No Due",
+  "calcZakatDueLabel": "Zakaa Duumee",
+  "calcLivestockDueLabel": "Beeylada Due",
+  "calcCropZakatDueLabel": "Midhaan Zakaa Guutuu",
+  "calcAnimalsCount": "{count} bineensota",
+  "@calcAnimalsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcKgHarvest": "{kg} kg sassaabbii",
+  "@calcKgHarvest": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLivestockTermsFootnote": "Jechoonni akka tabi', musinnah, bint makhad, bint labun, hiqqah, fi jadhah bal'inaan Beeylada keessatti akka armaan gadiitti ibsamaniiru.",
+  "calcStep2EnterAssets": "Tarkaanfii 2ffaa: Qabeenya Keessan Galchi",
+  "calcStep2EnterAssetsBody": "Gatii qabeenya keetii ETB keessatti galchi",
+  "calcCashBankSavings": "Qusannoo Maallaqaa fi Baankii",
+  "calcCashOnHand": "Maallaqa Harkaa",
+  "calcBankBalance": "Hafnaan Baankii",
+  "calcMobileWallet": "Wallet Mobaayilaa",
+  "calcBusinessAssets": "Qabeenya Daldalaa",
+  "calcFieldDescription": "Ibsa",
+  "calcFieldType": "Akaakuu",
+  "calcAmountEtb": "Maallaqa (ETB) .",
+  "calcAddBusinessAsset": "Qabeenya daldalaa dabaluu",
+  "calcGoldSilver": "Warqee & Meetii",
+  "calcGoldGrams": "Warqee (giraama) .",
+  "calcGoldKarat": "Warqee Karat",
+  "calcSilverGrams": "Meetii (giraama) .",
+  "calcLiabilities": "Itti gaafatamummaa",
+  "calcAddLiability": "Itti gaafatamummaa itti dabali",
+  "calcAssetInventory": "Eeruu",
+  "calcAssetReceivable": "Fudhatama kan qabu",
+  "calcAssetOther": "Kan biraa",
+  "calcLiabilityShortTermDebt": "Liqaa yeroo gabaabaa",
+  "calcLiabilityPayable": "Kaffaltii kan qabu",
+  "calcLiabilityOther": "Kan biraa",
+  "calcLivestockSheepGoats": "Hoolaa / Re'ee",
+  "calcLivestockCattle": "Loon",
+  "calcLivestockCamels": "Gaala",
+  "calcPastureFedTitle": "Waggaa keessaa harka caalu dheedichaan kan sooramu",
+  "calcPastureFedSubtitle": "Gorsa qofa; shallaggii hin ugguru",
+  "calcHawlTitle": "Waggaa ji'aa tokko xumure (hawl) .",
+  "calcHawlSubtitle": "Gorsa qofa; shallaggii hin ugguru",
+  "calcWorkAnimalsTitle": "Hojiif kan oolu (qottoo/geejjibaa) .",
+  "calcWorkAnimalsSubtitle": "Gorsa qofa; shallaggii hin ugguru",
+  "calcLivestockSummaryHeading": "Cuunfaa beeyladaa",
+  "calcCropNisabHeading": "Nisab & midhaan irraa kan ka'e",
+  "calcEffectiveCropRateLine": "Sadarkaa midhaan bu’a qabeessa: {percent}% .",
+  "@calcEffectiveCropRateLine": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropZakatDueKgLine": "Zakaa midhaanii kaffalamuu qabu: {kg} kg",
+  "@calcCropZakatDueKgLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowCropZakatWorksTitle": "Zakaan midhaan akkamitti akka hojjetu",
+  "calcHowCropZakatWorksBody": "Nisab: 653kg. Sadarkaa: roobaan kan nyaatame %10, kan jallisiin misoomu 5%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).",
+  "calcHowCropZakatNote": "Hubachiisa: App seera kana bal'inaan hojiirra oolcha salphaa ta'eef. Ejjennoo hayyootaa bal’ina gosa midhaanii fi hir’ina baasii irratti garaagarummaa qaba; dhimmoota adda ta’aniif hayyoota gahumsa qaban mariisisuu.",
+  "calcWealthNisabHeading": "Nisab & qabeenya Zakaa",
+  "calcWealthNisabLine": "Ulaagaa Nisab: {nisab} .",
+  "@calcWealthNisabLine": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthZakatDueLine": "Qabeenya Zakaa kaffalamuu qabu (kaardii irratti maallaqa xiqqaa): {due} .",
+  "@calcWealthZakatDueLine": {
+    "placeholders": {
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowWealthZakatWorksTitle": "Akkamitti qabeenyi Zakaan shallagama",
+  "calcHowWealthZakatWorksBody": "Maallaqa harka jiru, hafnaan baankii, boorsaa moobaayilaa, qabeenya daldalaa, fi gatii warqee fi meetii itti daballa. Nisab warqee {grams} g gatii app’n giraama tokkoof 24k ta’een. Warqeen ati qabdu kaaraatii filatteef saffisa appii fayyadamuun gatii kennama. Meetiin wabii dhaabbataa {silverRate} ETB giraama tokkoof fayyadama. Dirqamni ati galchitu qabeenya qulqulluu argachuuf hir’ifama. Qabeenyi qulqulluun nisaab irratti yookiin isaa ol yoo ta’e, Zakaan kaffalamuu qabu qabeenya qulqulluu irraa %2.5 ta’a.",
+  "@calcHowWealthZakatWorksBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "silverRate": {
+        "type": "int"
+      }
+    }
+  },
+  "calcHowWealthZakatNote": "Hubachiisa: Hayyoonni qabeenyi kam akka zakaa ta’u, liqiin qabeenya akkamitti akka hir’isu, bara ji’aa (hawl) yoom akka raawwatamuu fi bal’ina biroo irratti garaagarummaa qabu. Iskiriiniin kun tilmaama barnootaati-haala kee hayyoota gahumsa qaban waliin mirkaneessi.",
+  "calcWealthBreakdownTitle": "Akkaataa maallaqni armaan olii itti shallagamu",
+  "calcWealthTransLiquidsLine": "Maallaqa + baankii + moobaayila: {cash} + {bank} + {mobile} = {subtotal} .",
+  "@calcWealthTransLiquidsLine": {
+    "placeholders": {
+      "cash": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "mobile": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransBusinessLine": "Qabeenya daldalaa (walitti qabama tarreewwanii): {business} .",
+  "@calcWealthTransBusinessLine": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransRollupLine": "Qabeenya waliigalaa: {liquids} + {business} + {gold} + {silver} = {total} .",
+  "@calcWealthTransRollupLine": {
+    "placeholders": {
+      "liquids": {
+        "type": "String"
+      },
+      "business": {
+        "type": "String"
+      },
+      "gold": {
+        "type": "String"
+      },
+      "silver": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNisabLine": "Nisab: {grams} g × 24k ({price}/g) = {nisab} .",
+  "@calcWealthTransNisabLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransGoldLine": "Warqee: {grams} g × {karat} ({price}/g) = {value} .",
+  "@calcWealthTransGoldLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransSilverLine": "Meetii: {grams} g × {rate} ETB/g = {value} .",
+  "@calcWealthTransSilverLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNetLine": "Qabeenya qulqulluu (maallaqa guddaa kaardii irratti): qabeenya waliigalaa − dirqama ({liabilities}) = {net} .",
+  "@calcWealthTransNetLine": {
+    "placeholders": {
+      "liabilities": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueAbove": "{net} nisab ({nisab}) irratti ykn isaa ol waan ta'eef, Zakaa kaffalamuu = {net} × 2.5% = {due}.",
+  "@calcWealthTransDueAbove": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueBelow": "Sababni isaas {net} nisaaba ({nisab}) gadi waan ta'eef, qabeenyi Zakaa kaffalamuu = {due}.",
+  "@calcWealthTransDueBelow": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropWeightKg": "Ulfaatina Midhaanii (kg) .",
+  "calcCropModeRainFed": "Roobaan kan sooramu",
+  "calcCropModeIrrigated": "Jallisii",
+  "calcCropModeMixed": "Walmakaa",
+  "calcRainFedSharePct": "Qooda rooba soorame % .",
+  "calcIrrigatedSharePct": "Qooda jallisii % .",
+  "calcGoldK24": "24k",
+  "calcGoldK22": "22k",
+  "calcGoldK21": "21k",
+  "calcGoldK18": "18k",
+  "calcGoldK14": "14k",
+  "calcMethodologyPlaceholder": "Qabiyyee mala Zakaa iddoo.",
+  "calcPayBlockedWealth": "Qabeenyi Zakaan hin kaffalamu (nisab gadi ykn zeeroo ETB kaffalamuu qabu). Galtee kee sirreessaa.",
+  "calcPayBlockedLivestock": "Lakkoofsa ammaa keessaniif Zakaan beeyladaa tokkollee hin kaffalamu.",
+  "calcPayBlockedCrops": "Zakaan midhaanii ammallee yeroon isaa hin geenye (nisab midhaan sassaabuu gadi ykn zeeroo kg yeroon isaa kaffalamuu qaba).",
+  "calcCertCropDueLine": "Zakaa midhaanii kaffalamuu qabu: {kg} kg",
+  "@calcCertCropDueLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcBulletSeparator": " • ",
+  "calcLsSheepGoats": "Hoolota/Re'ee: {count} hoolaa",
+  "@calcLsSheepGoats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCattle": "Loon: {tabi} tabii' + {musinnah} musinnah",
+  "@calcLsCattle": {
+    "placeholders": {
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCamels": "Gaalota: {description} .",
+  "@calcLsCamels": {
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLsNone": "Lakkoofsa amma jiruun beeylada kaffalamuu qabu hin jiru",
+  "calcTransSheep": "Ulaagaa Hoolotaa/Re'ee: {head} >= 40 => hoolaa {due} yeroon isaa ga'e.",
+  "@calcTransSheep": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCattle": "Ulaagaa loon: {head} >= 30 => sababa {tabi} tabii', {musinnah} musinnah (walmakaa 30/40).",
+  "@calcTransCattle": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCamel": "Ulaagaa gaala: {head} >= 5 => sababa {due}.",
+  "@calcTransCamel": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcTransAdvisoryLine": "Gorsaa: {text} .",
+  "@calcTransAdvisoryLine": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcAdvNotPasture": "Waggaa irra caalaan dheedichaa kan hin sooramne: hayyoota waliin wal’aansa daldalaa/daldalaa ilaali.",
+  "calcAdvHawl": "Hawl hin xumuramne: hayyoonni baay’een zakaa beeyladaatiif waggaa ji’aa tokko barbaadu.",
+  "calcAdvWork": "Bineensonni hojii akkaataa adda addaatiin zakaa beeyladaa irraa bilisa ta’u.",
+  "calcCropTransBelow": "Sassaabni {kg}kg Nisaaba ({nisab} kg) gadi waan ta'eef Zakaan midhaan kamiyyuu hin kaffalamu.",
+  "@calcCropTransBelow": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransMixed": "Jallisii walmakaa: rooba {rain}%, jallisii {irrig}%. Sadarkaa bu'a qabeessa = {rate}%. Foormulaa: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransMixed": {
+    "placeholders": {
+      "rain": {
+        "type": "String"
+      },
+      "irrig": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransRainFed": "Sadarkaan rooba sooramu {rate}%. Foormulaa: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransRainFed": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransIrrigated": "Sadarkaa jallisii {rate}%. Foormulaa: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransIrrigated": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCamelNoDue": "Hin qabu",
+  "calcCamelSheepN": "{count, plural, one{1 hoolaa} other{{count} hoolaa}}",
+  "@calcCamelSheepN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamel1BintMakhad": "1 bint makhad jedhamuun beekama",
+  "calcCamel1BintLabun": "1 bint labun jedhamuun beekama",
+  "calcCamel1Hiqqah": "1 hiqqaa",
+  "calcCamel1Jadhah": "1 jadhah",
+  "calcCamel2BintLabun": "2 bint labun jedhamuun beekama",
+  "calcCamel2Hiqqah": "2 hiqqaa",
+  "calcCamelCombo": "{hiqqah} hiqqah + {bintLabun} bint labun",
+  "@calcCamelCombo": {
+    "placeholders": {
+      "hiqqah": {
+        "type": "int"
+      },
+      "bintLabun": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelApproxBintLabun": "{count} bint labun (tilmaamaan walnyaatinsa) .",
+  "@calcCamelApproxBintLabun": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "changeAppModeTooltip": "Haalata jijjiiri",
+  "switchedToAwqafMode": "Gara haala Awqaf tti jijjiirame",
+  "switchToAwqaf": "Gara Awqaf tti jijjiiraa",
+  "switchedToZakatMode": "Gara haala Zakaatti jijjiirame",
+  "switchToZakat": "Gara Zakaatti jijjiiraa",
+  "loginForgotPassword": "Jecha icciitii dagattee?",
+  "loginForgotPasswordComingSoon": "Password dagadhee yeroo dhiyootti dhufa",
+  "loginNewToBaraka": "New to Baraka? ",
+  "loginCreateAccount": "Akkaawuntii uumuu",
+  "loginCreateAccountComingSoon": "Akkaawuntii uumuu yeroo dhiyootti",
+  "profileDisbursementIntro": "Bakka kaffaltii argachuu barbaaddu filadhu.",
+  "profileCoopAccountLabel": "Lakkoofsa Herrega Baankii Coop",
+  "profileCoopAccountHint": "Lakkoofsa herrega keessanii galchaa",
+  "profileCoopAccountRequired": "Mee lakkoofsa herrega Coop Bank keessanii galchaa.",
+  "profileSaveAccount": "Herrega Qusachuu",
+  "faydaIdentityVerification": "Eenyummaa mirkaneessuu",
+  "commonBack": "Dugda",
+  "commonContinue": "Itti fufuu",
+  "commonFinish": "Xumuruu",
+  "commonTakePhoto": "Suuraa Fudhadhaa",
+  "commonChooseGallery": "Gallery keessaa filadhu",
+  "commonChooseFile": "Faayilii filadhu",
+  "regTitle": "Galmee Fayyadamtootaa",
+  "regMethodFastTrack": "Faayidaa waliin Saffisaa",
+  "regMethodManual": "Galmee Maanuwaalii",
+  "regMethodInstitution": "Galmee Dhaabbilee",
+  "regMethodFastTrackDesc": "Eenyummaa Biyyaalessaatiin haala nageenya qabuun mirkaneessuu fi daqiiqaa muraasa keessatti itti fufuu.",
+  "regMethodManualDesc": "Odeeffannoo fi ibsa deeggarsaa keessan gamaaggama amanamaa ta'eef qoodaa.",
+  "regMethodInstitutionDesc": "Dhaabbata keessan galmeessuun sanadoota walsimannaa barbaachisan galchaa.",
+  "regSecureIdentityTitle": "Mirkaneessa Eenyummaa Nageenya Qabu",
+  "regChooseMethodSubtitle": "Imala kee jalqabuuf mala galmee filatte filadhu.",
+  "regFastTrackFaydaTitle": "Saffisaan ID Biyyaalessaa (Fayda) waliin",
+  "regFastTrackFaydaSubtitle": "ID dijitaalaa biyyoolessaa keessan fayyadamuun mirkaneessuu.",
+  "regManualTitle": "Galmee Maanuwaalii",
+  "regManualSubtitle": "Galmee deeggarsaa olkaa'i gamaaggamaaf.",
+  "regInstitutionCardTitle": "Akka Dhaabbataatti Galmaa'uu",
+  "regInstitutionCardSubtitle": "Dhaabbata, dhaabbata miti mootummaa, waldaa hojii gamtaa, ykn dhaabbata mootummaa.",
+  "regRegistrationCodeLabel": "Koodii galmee",
+  "regRegistrationCodeHint": "EZW-A1B2-C3D4",
+  "regEncryptedPrivate": "Icciitii & Dhuunfaa",
+  "regEncryptedPrivateBody": "Daataan keessan kan eegamee fi ulaagaa icciitii wajjin walsimuun kan qabamudha.",
+  "regVerificationInterrupted": "Mirkaneessi addaan cite",
+  "regReopenVerification": "Mirkaneessuu irra deebi'ii banaa",
+  "regRetryListening": "Irra deebi'ii dhaggeeffachuu yaali",
+  "regCameraPermissionError": "Kaameeraa/galma banachuu hin dandeenye. Mee hayyama ilaalaa.",
+  "regSelectBirthdate": "Guyyaa dhalootaa filadhu",
+  "regManualIdentityTitle": "Galmee Eenyummaa Harkaan",
+  "regFirstName": "Maqaa jalqabaa",
+  "regLastName": "Maqaa akaakayyuu",
+  "regGrandfatherName": "Maqaa Akaakayyuu",
+  "regPhoneNumber": "Lakkoofsa Bilbilaa",
+  "regPhoneHint": "+251911223344 or 0911223344",
+  "regEmail": "Imeelii",
+  "regGender": "Koorniyaa",
+  "regMale": "Dhiira",
+  "regFemale": "Dhalaa",
+  "regBeneficiaryCategory": "Ramaddii Fayyadamtootaa",
+  "regNotes": "Hubachiisa",
+  "regNotesHint": "fkn. Iyyataa deeggarsa Zakaa",
+  "regUploadProfilePicture": "Suuraa Profaayilii Olkaa'i",
+  "regVerifyingFaydaBanner": "Fayda waliin mirkaneessuu... Yeroo banamu browser keessatti mirkaneessuu guutuu.",
+  "regNeedsAssessment": "Madaallii Fedhii",
+  "regSituationLabel": "Haala yeroo ammaa keessa jirtu ibsi",
+  "regSituationHint": "Rakkoo, hirkattoota, fi fedhii hatattamaa ibsi...",
+  "regUploadProof": "Ragaa Olkaa'uu",
+  "regDisbursementSetup": "Qophii Kaffaltii",
+  "regTelebirrTitle": "Telebirr Wallaggaa",
+  "regTelebirrSubtitle": "Maallaqa mobaayilaan battalumatti dabarsuu",
+  "regMpesaTitle": "M-Pesa jedhamuun beekama",
+  "regMpesaSubtitle": "Neetworkiin kaffaltii moobaayilaa nageenya qabu",
+  "regCoopbankTitle": "Coopbank Account",
+  "regCoopbankSubtitle": "Direct bank deposit",
+  "regAccountOrMobile": "Herrega ykn Lakkoofsa Mobaayilaa",
+  "regFullLegalName": "Maqaa Seeraa Guutuu",
+  "regAgreementTitle": "Waliigaltee & Shari'aa Ulaagaa",
+  "regAgreementBody": "Odeeffannoon dhugaa ta'uu isaa fi akkaataa imaammataatti gargaarsa akka fayyadamu nan labsa.",
+  "regInstitutionRegistration": "Galmee Dhaabbilee",
+  "regInstitutionType": "Gosa Dhaabbataa",
+  "regLegalName": "Maqaa Seeraa",
+  "regTradingName": "Maqaa Daldalaa",
+  "regTradeRegistrationNumber": "Lakkoofsa Galmee Daldalaa",
+  "regTin": "Lakkoofsa Eenyummaa Gibiraa (TIN) .",
+  "regVatOptional": "Lakkoofsa Galmee VAT (dirqama) .",
+  "regRegion": "Naannoo",
+  "regCity": "Magaalaa",
+  "regAddress": "Teessoo",
+  "regNotesOptional": "Yaadannoo (dirqama) .",
+  "regAuthorityDocTitle": "Aangoo hojii sanada barbaachisu",
+  "regAuthorityDocBody": "Yoo namni mallatteessaa galmaa'e malee namni biraa dhiheesse dandeessisi.",
+  "regFilePickError": "Faayilii fudhachuu hin dandeenye. Mee hayyama ilaalaa.",
+  "regUploadKycTitle": "Sanadoota KYC olkaa'aa",
+  "regUploadKycBody": "Upload each required document. You can finish once all required documents are uploaded.",
+  "regReference": "Wabii: {id} .",
+  "regNoDocumentsRequired": "Yeroo kanatti sanadoonni hin barbaachisu.",
+  "regRequired": "Kan barbaadamu",
+  "regOptional": "Dirqama kan hinta'in",
+  "regSelectedFile": "Filatame: {name} .",
+  "regUploaded": "Olkaa'ameera",
+  "regUpload": "Olkaa'i",
+  "regCreatePasswordTitle": "Password Keessan Uumuu",
+  "regCreatePasswordBody": "Akkaawuntii keessaniif jecha icciitii nageenya qabu filadhaa. Erga galmooftanii booda galmaa'uuf itti fayyadamtu.",
+  "regPassword": "Jecha iccitii",
+  "regConfirmPassword": "Password Mirkaneessi",
+  "regPasswordRules": "Jechi icciitii yoo xiqqaate arfiilee 8 ta'uu fi qubee guddaa, qubee xiqqaa, lakkoofsa, fi arfii addaa of keessaa qabaachuu qaba.",
+  "regPasswordSuccess": "Password milkaa'inaan saaguu. Baga gara Mejlis Digital Hub dhuftan.",
+  "regInstitutionComplete": "Galmeen dhaabbilee xumurameera. Wabii: {id} .",
+  "regInstitutionCompleteGeneric": "Galmeen dhaabbilee xumurameera.",
+  "regCompleteLocal": "Galmeen xumurameera. Fedhii fi ibsi kaffaltii naannootti ni kuufama.",
+  "regContinueWithFayda": "Faaydaa waliin itti fufaa",
+  "regVerifyingFayda": "Fayya waliin mirkaneessaa...",
+  "regSubmitContinue": "Galchuu & Itti Fufa",
+  "regSetPasswordContinue": "Password Saagi & Itti fufi",
+  "regSetPasswordFinish": "Password & Finish Saagi",
+  "navAwqaf": "Awqaf"
 }

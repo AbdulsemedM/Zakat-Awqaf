@@ -181,7 +181,7 @@
   "calcCropTransRainFed": "معدل البعلية {rate}%. الصيغة: {kg} × {rate2}% = {due}kg.",
   "calcCropTransIrrigated": "معدل الري {rate}%. الصيغة: {kg} × {rate2}% = {due}kg.",
   "calcCamelNoDue": "لا مستحق",
-  "calcCamelSheepN": "{عدد، جمع، واحد{1 sheep} آخر{{count} خروف}}",
+  "calcCamelSheepN": "{count, plural, one{1 خروف} other{{count} خروف}}",
   "calcCamel1BintMakhad": "1 بنت مخاض",
   "calcCamel1BintLabun": "1 بنت لبن",
   "calcCamel1Hiqqah": "1 حقة",

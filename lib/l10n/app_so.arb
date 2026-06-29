@@ -1,8 +1,8 @@
 {
   "@@locale": "so",
-  "appTitle": "Zakat & Awqaf Commission",
-  "splashSlogan": "For the sake of Allah, for the service of humanity",
-  "splashWaqfByLabel": "A Waqf by",
+  "appTitle": "Komishanka Sakada & Awqaafta",
+  "splashSlogan": "Allaah dartiis, u adeegidda bini'aadmiga",
+  "splashWaqfByLabel": "Waqf by",
   "splashWaqfByTitle": "Coop Bank Alhuda",
   "navHome": "Hoyga",
   "navCalculator": "Xisaabiye",
@@ -64,7 +64,9 @@
   "profileEditFieldComingSoon": "Wax-ka-beddelka {field} dhawaan ayuu imanayaa",
   "@profileEditFieldComingSoon": {
     "placeholders": {
-      "field": {"type": "String"}
+      "field": {
+        "type": "String"
+      }
     }
   },
   "profileNisabThresholdAlerts": "Digniinaha xadka Nisab",
@@ -93,15 +95,15 @@
   "profileLogOutSubtitle": "Dhamee fadhigaaga hadda",
   "profileLogOutDialogTitle": "Ma ka baxaysaa?",
   "profileLogOutDialogBody": "Waxaad ka bixi doontaa app-ka qalabkan.",
-  "loginTitle": "Sign in",
-  "loginSubtitle": "Use your registered phone number and password",
-  "loginPhoneLabel": "Phone number",
-  "loginPasswordLabel": "Password",
-  "loginButton": "Sign in",
-  "loginPhoneRequired": "Enter your phone number",
-  "loginPhoneInvalid": "Enter a valid 9-digit mobile number (e.g. 923974838)",
-  "loginSecureNote": "Your sign-in is encrypted and secure",
-  "loginPasswordRequired": "Enter your password",
+  "loginTitle": "Soo gal",
+  "loginSubtitle": "Isticmaal lambarka taleefankaaga diiwaangashan iyo eraygaaga sirta ah",
+  "loginPhoneLabel": "Lambarka taleefanka",
+  "loginPasswordLabel": "Furaha",
+  "loginButton": "Soo gal",
+  "loginPhoneRequired": "Geli lambarka taleefankaaga",
+  "loginPhoneInvalid": "Geli nambarka gacanta oo 9-god ah oo ansax ah (tusaale 923974838)",
+  "loginSecureNote": "Soo gelidaadu waa sir oo ammaan ah",
+  "loginPasswordRequired": "Geli eraygaaga sirta ah",
   "profileCancel": "Jooji",
   "profileHadithOfTheDay": "Xadiiska Maanta",
   "profileHadithQuote": "\"Hadhka mu’minka maalinta qiyaame wuxuu ahaanayaa sadaqadiisa.\"",
@@ -118,7 +120,9 @@
   "impactEtbAmount": "{amount} ETB",
   "@impactEtbAmount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactLivesTouched": "NOLOLAL LA TAABTAY",
@@ -127,31 +131,41 @@
   "impactRegionImpactComingSoon": "Saameynta {region} dhawaan ayay imanaysaa",
   "@impactRegionImpactComingSoon": {
     "placeholders": {
-      "region": {"type": "String"}
+      "region": {
+        "type": "String"
+      }
     }
   },
   "impactStoryComingSoon": "Sheekada {name} dhawaan ayay imanaysaa",
   "@impactStoryComingSoon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "impactProjectDetailsComingSoon": "Faahfaahinta {title} dhawaan ayay imanaysaa",
   "@impactProjectDetailsComingSoon": {
     "placeholders": {
-      "title": {"type": "String"}
+      "title": {
+        "type": "String"
+      }
     }
   },
   "impactPercentFunded": "{percent}% la maalgeliyey",
   "@impactPercentFunded": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "impactEtbLeft": "{amount} ETB ayaa hadhay",
   "@impactEtbLeft": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactSeeYourPersonalBaraka": "Arag Barakadaada Shaqsiga ah",
@@ -168,38 +182,685 @@
   "onboardingSubtitleEasyPayments": "Si dhakhso leh ugu bixi Zakada adigoo adeegsanaya khibrad ammaan ah oo mobile-friendly ah.",
   "onboardingTitleCompassionInAction": "Naxariis Ficil ah",
   "onboardingSubtitleCompassionInAction": "Ku taageer ka-faa'iideystayaasha iyo mashaariicda si cad, kalsooni leh, kuna dheehan barako.",
-  "donationCurrencySheetTitle": "How would you like to give?",
-  "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
-  "donationLocalPaymentTitle": "Local payment (ETB)",
-  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.",
-  "donationInternationalPaymentTitle": "International payment",
-  "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
-  "donationInternationalTitle": "International Sadaqah",
-  "donationInternationalSubtitle": "Support communities from anywhere in the world.",
-  "donationAmountLabel": "Donation amount",
+  "donationCurrencySheetTitle": "Sideed u jeclaan lahayd inaad wax siiso?",
+  "donationCurrencySheetSubtitle": "Dooro lacag bixinta ETB ee gudaha ama bixinta kaadhka caalamiga ah.",
+  "donationLocalPaymentTitle": "Lacag bixinta maxaliga ah (ETB)",
+  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, iyo albaabada kale ee Itoobiya.",
+  "donationInternationalPaymentTitle": "Lacag bixinta caalamiga ah",
+  "donationInternationalPaymentSubtitle": "Meel kasta ku bixi kaarkaada iyo ciwaanka qaansheegtaada.",
+  "donationInternationalTitle": "Sadaqah caalami ah",
+  "donationInternationalSubtitle": "Taageer bulshooyinka meel kasta oo ay adduunka ka joogaan.",
+  "donationAmountLabel": "Qadarka deeqda",
   "donationAmountHint": "0.00",
-  "donationAmountHelper": "Amount is settled in Ethiopian Birr (ETB).",
-  "donationAnonymousLabel": "Give anonymously",
-  "donationAnonymousSubtitle": "Your name will not be shown publicly.",
-  "donationDonorSectionTitle": "Your details",
-  "donationFullNameLabel": "Full name",
-  "donationPhoneLabel": "Phone",
-  "donationEmailLabel": "Email",
-  "donationBillingSectionTitle": "Billing address",
-  "donationAddress1Label": "Address line 1",
-  "donationAddress2Label": "Address line 2 (optional)",
-  "donationCountryLabel": "Country",
-  "donationCountryOther": "Country name",
-  "donationAdminAreaLabel": "State / Province",
-  "donationLocalityLabel": "City",
-  "donationPostalCodeLabel": "Postal code",
-  "donationContinueToPayment": "Continue to payment",
-  "donationSubmitting": "Processing…",
-  "donationSuccess": "Thank you for your Sadaqah.",
-  "donationValidationPhone": "Enter a valid phone number in international format (e.g. +15551234567).",
-  "donationPaymentWebViewTitle": "Complete payment",
-  "donationSelectCountry": "Select country",
-  "donationSearchCountry": "Search countries",
-  "donationSelectState": "Select state / province",
-  "donationSearchState": "Search by name or abbreviation"
+  "donationAmountHelper": "Lacagta waxa lagu dejiyaa Birta Itoobiya (ETB).",
+  "donationAnonymousLabel": "Si qarsoodi ah u bixi",
+  "donationAnonymousSubtitle": "Magacaaga si guud looma muujin doono.",
+  "donationDonorSectionTitle": "Faahfaahintaada",
+  "donationFullNameLabel": "Magaca buuxa",
+  "donationPhoneLabel": "Taleefanka",
+  "donationEmailLabel": "iimaylka",
+  "donationBillingSectionTitle": "Cinwaanka biilasha",
+  "donationAddress1Label": "Xariiqa ciwaanka 1",
+  "donationAddress2Label": "Sadarka ciwaanka 2 (ikhtiyaar)",
+  "donationCountryLabel": "Dalka",
+  "donationCountryOther": "Magaca dalka",
+  "donationAdminAreaLabel": "Gobolka / Gobolka",
+  "donationLocalityLabel": "Magaalada",
+  "donationPostalCodeLabel": "Koodhka boostada",
+  "donationContinueToPayment": "Sii wad bixinta",
+  "donationSubmitting": "Hagaajinta…",
+  "donationSuccess": "Waad ku mahadsan tahay Sadaqadaada.",
+  "donationValidationPhone": "Geli nambar taleefoon ansax ah oo qaab caalami ah ( tusaale +15551234567).",
+  "donationPaymentWebViewTitle": "Bixinta dhamaystiran",
+  "donationSelectCountry": "Dalka dooro",
+  "donationSearchCountry": "Raadi wadamada",
+  "donationSelectState": "Dooro gobol/gobol",
+  "donationSearchState": "Ku raadi magaca ama soo gaabinta",
+  "donationNoMatchesFound": "Wax u dhigma lama helin",
+  "calcAppBarTitle": "Xisaabiyaha Sakada",
+  "calcPayYourZakat": "Bixi Sakadaada",
+  "calcTabWealth": "Maalka",
+  "calcTabLivestock": "Xoolaha",
+  "calcTabCrops": "Dalagga",
+  "calcStep1NisabTitle": "Tallaabada 1: Xadka Nisab",
+  "calcStep1NisabBody": "Sakadu waxay ku xiran tahay haddii hantidaada saafiga ah ay dhaafto xadka. Nisab waxay ku salaysan tahay 85g ee madal 24k qiimaha dahabka ah.",
+  "calcNisabGoldFormula": "{grams}_ × {price} = {total}",
+  "@calcNisabGoldFormula": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcNisabThresholdBanner": "Xadka Nisab (heerka goobta, 85g dahab u dhigma): {amount}",
+  "@calcNisabThresholdBanner": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "calcUsdEtb": "USD/ETB",
+  "calcFxLive": "Isticmaalka sarifka tooska ah",
+  "calcFxCache": "Isticmaalka sarifka kaydsan",
+  "calcFxFallback": "Isticmaalka qiimaha sarifka dib u dhaca",
+  "calcTimestampUnavailable": "timestamp lama heli karo",
+  "calcStep1LivestockTitle": "Tallaabada 1: Habka cabbirka xoolaha",
+  "calcStep1LivestockBody": "Sakada xoolaha waxaa lagu xisaabiyaa miisaanka madaxa-tirinta (ma aha % qiimaha).",
+  "calcStep1LivestockNisabNote": "Marinka Nisab: Idaha/Riyaha 40, Lo'da 30, Geela 5. Lo'du waxay isticmaashaa 30/40 isku-dar ah; geelu waxa ay raacaan heerarka kala duwan.",
+  "calcAdvisoryPrefix": "La-talin: {text}_",
+  "@calcAdvisoryPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcArabicTermDefinitionsTitle": "Qeexitaanno Erayga Carabiga",
+  "calcArabicDefTabi": "dibi hal sano jir ah",
+  "calcArabicDefMusinnah": "sac laba jir ah",
+  "calcArabicDefBintMakhad": "hasha hal sano jirta",
+  "calcArabicDefBintLabun": "hasha oo laba jir ah",
+  "calcArabicDefHiqqah": "hasha oo saddex jir ah",
+  "calcArabicDefJadhah": "hasha afar jir ah",
+  "calcStep1CropTitle": "Talaabada 1: Dalagyada (Ushr) xisaabinta",
+  "calcStep1CropBody": "Sakada dalagga waxay ku egtahay xilliga goosashada. Nisab waa 653kg. Heerku waa 10% (Roob-quut), 5% (waraabka la waraabiyo), ama lagu miisaamay isku darka.",
+  "calcCropLineThreshold": "{kg}_ kg {relation} 653 kg",
+  "@calcCropLineThreshold": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineIrrigation": "Habka waraabka: {mode}_",
+  "@calcCropLineIrrigation": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineEffectiveRate": "Qiimaha waxtarka leh: {rate}_%",
+  "@calcCropLineEffectiveRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineFormula": "Formula: {line}_",
+  "@calcCropLineFormula": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "calcRelationGte": "≥",
+  "calcRelationLt": "<",
+  "calcOverviewNetWorthTitle": "Dulmarka Net Worth",
+  "calcOverviewLivestockTitle": "Dulmarka Xoolaha",
+  "calcOverviewCropTitle": "Dulmarka Dalagga",
+  "calcBadgeAboveNisab": "Korka Nisab",
+  "calcBadgeBelowNisab": "Hoosta Nisab",
+  "calcBadgeZakatDue": "Sakada oo la rabo",
+  "calcBadgeNoDue": "Maya Due",
+  "calcZakatDueLabel": "Sakada oo la rabo",
+  "calcLivestockDueLabel": "Qiimaha Xoolaha",
+  "calcCropZakatDueLabel": "Dalagyada Sakada oo la rabo",
+  "calcAnimalsCount": "{count}_ xoolaha",
+  "@calcAnimalsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcKgHarvest": "{kg}_ kg goosashada",
+  "@calcKgHarvest": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLivestockTermsFootnote": "Shuruudaha ay ka midka yihiin tabi', musinnah, bint makhad, bint labun, xiqqah, iyo jadhah ayaa lagu sharaxay hoos tafaasiisha Xoolaha.",
+  "calcStep2EnterAssets": "Tallaabada 2: Geli Hantidaada",
+  "calcStep2EnterAssetsBody": "Geli qiimaha hantidaada ETB",
+  "calcCashBankSavings": "Lacag caddaan ah & Keydka Bankiga",
+  "calcCashOnHand": "Lacag caddaan ah oo gacanta ku jirta",
+  "calcBankBalance": "Balance-ka",
+  "calcMobileWallet": "Jeebka gacanta",
+  "calcBusinessAssets": "Hantida Ganacsiga",
+  "calcFieldDescription": "Sharaxaada",
+  "calcFieldType": "Nooca",
+  "calcAmountEtb": "Qadarka (ETB)",
+  "calcAddBusinessAsset": "Ku dar hantida ganacsiga",
+  "calcGoldSilver": "Dahab & Qalin",
+  "calcGoldGrams": "Dahab (gram)",
+  "calcGoldKarat": "Dahab Karaat",
+  "calcSilverGrams": "Silver (gram)",
+  "calcLiabilities": "Waajibaadka",
+  "calcAddLiability": "Ku dar masuuliyad",
+  "calcAssetInventory": "Alaabada",
+  "calcAssetReceivable": "La qaadan karo",
+  "calcAssetOther": "Mid kale",
+  "calcLiabilityShortTermDebt": "Deynta muddada gaaban",
+  "calcLiabilityPayable": "La bixin karo",
+  "calcLiabilityOther": "Mid kale",
+  "calcLivestockSheepGoats": "Idaha/Riyaha",
+  "calcLivestockCattle": "Lo'da",
+  "calcLivestockCamels": "Geela",
+  "calcPastureFedTitle": "Daaq la quudiyo sanadka intiisa badan",
+  "calcPastureFedSubtitle": "La-talin kaliya; ma xannibo xisaabinta",
+  "calcHawlTitle": "Dhammaatay hal sano oo dayaxeed (Hawl)",
+  "calcHawlSubtitle": "La-talin kaliya; ma xannibo xisaabinta",
+  "calcWorkAnimalsTitle": "Loo isticmaalo shaqada (xaaqid/gaadiid)",
+  "calcWorkAnimalsSubtitle": "La-talin kaliya; ma xannibo xisaabinta",
+  "calcLivestockSummaryHeading": "Xoolaha oo kooban",
+  "calcCropNisabHeading": "Nisab & dalagga la rabo",
+  "calcEffectiveCropRateLine": "Heerka dalagga ee waxtarka leh: {percent}_%",
+  "@calcEffectiveCropRateLine": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropZakatDueKgLine": "Sakada dalagga ee la rabo: {kg}_ kg",
+  "@calcCropZakatDueKgLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowCropZakatWorksTitle": "Sida sakada dalagga u shaqeyso",
+  "calcHowCropZakatWorksBody": "Nisab: 653kg. Heerarka: roobka lagu quudiyo 10%, waraabinta 5%, isku dhafan = kala qaybsanaan miisaan leh. Sakadu waxay ku beegan tahay xilliga goosashada (wax sanadle ah oo la beero ma jirto).",
+  "calcHowCropZakatNote": "Fiiro gaar ah: Appku wuxuu u dabaqaa xeerarkan si guud si ay u fududaato. Jagooyinka aqoon-yahanku way ku kala duwan yihiin baaxadda nooca dalagga iyo dhimista kharashyada; la tasho aqoonyahanno aqoon u leh kiisas gaar ah.",
+  "calcWealthNisabHeading": "Nisaab & Maal Sakada",
+  "calcWealthNisabLine": "Xadka Nisab: {nisab}_",
+  "@calcWealthNisabLine": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthZakatDueLine": "Sakada maalka ah ee la leeyahay ( qadar yar oo kaadhka saaran): {due}",
+  "@calcWealthZakatDueLine": {
+    "placeholders": {
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowWealthZakatWorksTitle": "Sida hantida Zakada loo xisaabiyo",
+  "calcHowWealthZakatWorksBody": "Waxaan ku darnaa lacag caddaan ah oo gacanta ku jirta, hadhaaga bangiga, boorsooyinka mobilada, hantida ganacsiga, iyo qiimaha dahabka iyo qalinka. Nisab waa {grams} g oo dahab ah 24k qiimaha appka garaamkii. Dahabka aad haysato waxaa lagu qiimeeyaa iyadoo la isticmaalayo qiimaha app ee karatka aad doorato. Silver waxay isticmaashaa tixraac go'an oo ah {silverRate} ETB garaamkii. Deymaha aad gasho waa laga jaray si aad u hesho hanti saafi ah. Haddii hantida saafiga ahi ay ka sarreyso nisaab ama ka sareeyso, Zakadu waa 2.5% hantida saafiga ah.",
+  "@calcHowWealthZakatWorksBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "silverRate": {
+        "type": "int"
+      }
+    }
+  },
+  "calcHowWealthZakatNote": "Fiiro gaar ah: Culimadu waxay ku kala duwan yihiin hantida sakada lagu bixin karo, sida daymaha loo dhimo hantida, marka la qabanayo sanadka (Hawl) iyo tafaasiil kale. Shaashadani waa qiyaas waxbarasho - ka xaqiiji xaaladaada aqoonyahano aqoon leh.",
+  "calcWealthBreakdownTitle": "Sida loo xisaabiyo cadadka kore",
+  "calcWealthTransLiquidsLine": "Lacag caddaan ah + bangiga + mobilada: {cash}_ + {bank} + {mobile} = {subtotal}",
+  "@calcWealthTransLiquidsLine": {
+    "placeholders": {
+      "cash": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "mobile": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransBusinessLine": "Hantida ganacsiga (wadarta safafka): {business}",
+  "@calcWealthTransBusinessLine": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransRollupLine": "Wadarta hantida: {liquids}_ + {business} + {gold} + {silver} = {total}",
+  "@calcWealthTransRollupLine": {
+    "placeholders": {
+      "liquids": {
+        "type": "String"
+      },
+      "business": {
+        "type": "String"
+      },
+      "gold": {
+        "type": "String"
+      },
+      "silver": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNisabLine": "Nisab: {grams}_ g × 24k ({price}/g) = {nisab}",
+  "@calcWealthTransNisabLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransGoldLine": "Dahab: {grams} g × {karat} ({price}/g) = {value}",
+  "@calcWealthTransGoldLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransSilverLine": "Lacag: {grams} g × {rate} ETB/g = {value}",
+  "@calcWealthTransSilverLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNetLine": "Hantida saafiga ah (qadar badan oo kaadhka ku jirta): wadarta hantida - deymaha ({liabilities}) = {net}",
+  "@calcWealthTransNetLine": {
+    "placeholders": {
+      "liabilities": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueAbove": "Sababtoo ah {net} waa nisab ama ka sareeya ({nisab}), Sakada la leeyahay = {net} × 2.5% = {due}.",
+  "@calcWealthTransDueAbove": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueBelow": "Sababtoo ah {net} waxay ka hooseysaa nisab ({nisab}), Sakada maalka ee la rabo = {due}.",
+  "@calcWealthTransDueBelow": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropWeightKg": "Miisaanka Dalagga (kg)",
+  "calcCropModeRainFed": "Roobab lagu quudiyo",
+  "calcCropModeIrrigated": "Waraabka",
+  "calcCropModeMixed": "Isku dhafan",
+  "calcRainFedSharePct": "Saamiga roobka lagu quudiyo %",
+  "calcIrrigatedSharePct": "Qaybta waraabka %",
+  "calcGoldK24": "24k",
+  "calcGoldK22": "22k",
+  "calcGoldK21": "21k",
+  "calcGoldK18": "18k",
+  "calcGoldK14": "14k",
+  "calcMethodologyPlaceholder": "Habka Sakada meel hayaha nuxurka.",
+  "calcPayBlockedWealth": "Sakada maalka ah ee laguma leeyahay (wax ka hooseeya nisab ama eber ETB ee la leeyahay). Hagaajin gelintaada",
+  "calcPayBlockedLivestock": "Ma jirto Sakada Xoolaha oo lagugu leeyahay tiradaada hadda.",
+  "calcPayBlockedCrops": "Sakada dalagga weli lama bixin (wax ka hooseeya nisab goosashada ama eber kg ee la filayo).",
+  "calcCertCropDueLine": "Sakada dalagga ee la rabo: {kg}_ kg",
+  "@calcCertCropDueLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcBulletSeparator": " • ",
+  "calcLsSheepGoats": "Idaha/Riyaha: {count} idaha",
+  "@calcLsSheepGoats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCattle": "Lo'da: {tabi} tabi' + {musinnah} musinnah",
+  "@calcLsCattle": {
+    "placeholders": {
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCamels": "Geela: {description}_",
+  "@calcLsCamels": {
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLsNone": "Ma jiraan wax xoolo ah oo loo haysto marka la eego tirada hadda",
+  "calcTransSheep": "Meesha Idaha/Riyaha: {head} >= 40 => {due} lax ah.",
+  "@calcTransSheep": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCattle": "Xadka lo'da: {head}_ >= 30 => la'aanta {tabi} tabi', {musinnah} musinnah (isku darka 30/40).",
+  "@calcTransCattle": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCamel": "Meesha geela: {head}_ >= 5 => la rabo {due}.",
+  "@calcTransCamel": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcTransAdvisoryLine": "La-talin: {text}_",
+  "@calcTransAdvisoryLine": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcAdvNotPasture": "Aan daaq la quudin inta badan sanadka: ka hubi ganacsiga/daawaynta ganacsiga culimada.",
+  "calcAdvHawl": "Hawl aan la dhamaystirin: culimo badan ayaa u baahan sakada xoolaha hal sano oo dayaxa.",
+  "calcAdvWork": "Xoolaha shaqadu caadi ahaan waa laga dhaafay sakada xoolaha.",
+  "calcCropTransBelow": "Goynta {kg}kg waxay ka hoosaysaa Nisab ({nisab} kg), markaa sakada dalagga lagama rabo.",
+  "@calcCropTransBelow": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransMixed": "Waraabka isku dhafan: roobka {rain}%, waraabka {irrig}%. Heerka waxtarka leh = {rate}%. Formula: {kg}_ × {rate2}% = {due}kg.",
+  "@calcCropTransMixed": {
+    "placeholders": {
+      "rain": {
+        "type": "String"
+      },
+      "irrig": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransRainFed": "Heerka roobka lagu quudiyo {rate}%. Formula: {kg}_ × {rate2}% = {due}kg.",
+  "@calcCropTransRainFed": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransIrrigated": "Heerka waraabka {rate}%. Formula: {kg}_ × {rate2}% = {due}kg.",
+  "@calcCropTransIrrigated": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCamelNoDue": "Xaq uma laha",
+  "calcCamelSheepN": "{count, plural, one{1 ido} other{{count} ido}}",
+  "@calcCamelSheepN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamel1BintMakhad": "1 bint makhad",
+  "calcCamel1BintLabun": "1 bint labuun",
+  "calcCamel1Hiqqah": "1 xiqqaah",
+  "calcCamel1Jadhah": "1 jaadka",
+  "calcCamel2BintLabun": "2 bint labuun",
+  "calcCamel2Hiqqah": "2 xiqqaah",
+  "calcCamelCombo": "{hiqqah}_ xiqqah + {bintLabun} bint labuun",
+  "@calcCamelCombo": {
+    "placeholders": {
+      "hiqqah": {
+        "type": "int"
+      },
+      "bintLabun": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelApproxBintLabun": "{count}_ bint labuun (ku dhawaad ​​isku darka)",
+  "@calcCamelApproxBintLabun": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "changeAppModeTooltip": "Beddel qaabka",
+  "switchedToAwqafMode": "Loo bedelay qaabka Awqaafta",
+  "switchToAwqaf": "U beddelo Awqaafta",
+  "switchedToZakatMode": "Loo beddelay qaabka Sakada",
+  "switchToZakat": "U beddelo Sakada",
+  "loginForgotPassword": "Ilmaamay erayga sirta ah?",
+  "loginForgotPasswordComingSoon": "Illowday erayga sirta ah ee soo socda dhawaan",
+  "loginNewToBaraka": "New to Baraka? ",
+  "loginCreateAccount": "Samee xisaab",
+  "loginCreateAccountComingSoon": "Abuur akoon dhawaan",
+  "profileDisbursementIntro": "Dooro meesha aad rabto inaad ka hesho lacag bixinta.",
+  "profileCoopAccountLabel": "Coop Number Account Bank",
+  "profileCoopAccountHint": "Geli lambarka akoonkaaga",
+  "profileCoopAccountRequired": "Fadlan geli lambarkaaga koontada Coop Bank",
+  "profileSaveAccount": "Keydso Akoonka",
+  "faydaIdentityVerification": "Xaqiijinta aqoonsiga",
+  "commonBack": "Dib u noqo",
+  "commonContinue": "Sii wad",
+  "commonFinish": "dhame",
+  "commonTakePhoto": "Sawir qaad",
+  "commonChooseGallery": "Ka dooro Gallery",
+  "commonChooseFile": "Dooro File",
+  "regTitle": "Diiwaangelinta ka faa'iidaystayaasha",
+  "regMethodFastTrack": "Dhaqso-track leh Fayda",
+  "regMethodManual": "Diiwaangelinta gacanta",
+  "regMethodInstitution": "Diiwaangelinta Hay'adaha",
+  "regMethodFastTrackDesc": "Si sugan ugu xaqiiji aqoonsiga aqoonsiga qaranka oo ku sii wad daqiiqado gudahood.",
+  "regMethodManualDesc": "La wadaag macluumaadkaaga iyo faahfaahinta taageerada si dib u eegis la aamini karo.",
+  "regMethodInstitutionDesc": "Diiwaangeli ururkaaga oo soo gudbi dukumentiyada u hoggaansanaanta ee loo baahan yahay.",
+  "regSecureIdentityTitle": "Xaqiijinta Aqoonsiga Sugan",
+  "regChooseMethodSubtitle": "Dooro habka diiwaangelinta ee aad doorbidayso si aad u bilowdo safarkaaga.",
+  "regFastTrackFaydaTitle": "Dhaqso-track leh aqoonsi qaran (Fayda)",
+  "regFastTrackFaydaSubtitle": "Xaqiiji adigoo isticmaalaya aqoonsiga dhijitaalka ah ee qaranka",
+  "regManualTitle": "Diiwaangelinta gacanta",
+  "regManualSubtitle": "Soo rar dukumeenti taageeraya dib u eegista",
+  "regInstitutionCardTitle": "Isku diwaangeli machad ahaan",
+  "regInstitutionCardSubtitle": "Shirkad, NGO, iskaashato, ama hay'ad dawladeed.",
+  "regRegistrationCodeLabel": "Koodhka diiwaangelinta",
+  "regRegistrationCodeHint": "EZW-A1B2-C3D4",
+  "regEncryptedPrivate": "Sir & Gaar ah",
+  "regEncryptedPrivateBody": "Xogtaada waa la xafiday waxaana loo maamulay si waafaqsan heerarka qarsoodiga.",
+  "regVerificationInterrupted": "Xaqiijinta ayaa hakad gashay",
+  "regReopenVerification": "Dib u fur xaqiijinta",
+  "regRetryListening": "Isku day dhegeysiga",
+  "regCameraPermissionError": "Ma furi karo kamarad/Gallery Fadlan hubi ogolaanshaha",
+  "regSelectBirthdate": "Dooro taariikhda dhalashada",
+  "regManualIdentityTitle": "Diiwaangelinta Aqoonsiga Buugga",
+  "regFirstName": "Magaca Hore",
+  "regLastName": "Magaca Dambe",
+  "regGrandfatherName": "Magaca Awoowe",
+  "regPhoneNumber": "Lambarka Taleefanka",
+  "regPhoneHint": "+251911223344 or 0911223344",
+  "regEmail": "iimaylka",
+  "regGender": "Jinsiga",
+  "regMale": "Lab",
+  "regFemale": "Dheddig",
+  "regBeneficiaryCategory": "Qaybta ka faa'iidaystayaasha",
+  "regNotes": "Xusuusin",
+  "regNotesHint": "tusaale. Codsadaha taageerada sakada",
+  "regUploadProfilePicture": "Soo rar sawirka Profile",
+  "regVerifyingFaydaBanner": "Xaqiijinta Fayda… Xaqiijinta dhammaystiran ee browserka marka uu furmo.",
+  "regNeedsAssessment": "Wuxuu u baahan yahay Qiimayn",
+  "regSituationLabel": "Sharax xaaladdaada hadda",
+  "regSituationHint": "Sharax dhibka, dadka ku tiirsan, iyo baahiyaha degdega ah...",
+  "regUploadProof": "Soo rar caddayn",
+  "regDisbursementSetup": "Dejinta Lacag bixinta",
+  "regTelebirrTitle": "Telebirr Wallet",
+  "regTelebirrSubtitle": "Xawaaladaha moobilka degdega ah",
+  "regMpesaTitle": "M-Pesa",
+  "regMpesaSubtitle": "Shabakad lacag-bixineed mobilada oo sugan",
+  "regCoopbankTitle": "Koontada Coopbank",
+  "regCoopbankSubtitle": "Debaajiga tooska ah ee bangiga",
+  "regAccountOrMobile": "Account ama Mobile Number",
+  "regFullLegalName": "Magaca Sharciga oo Buuxa",
+  "regAgreementTitle": "Heshiiska & Ku Dhaqanka Shareecada",
+  "regAgreementBody": "Waxaan cadeynayaa in macluumaadka uu yahay mid run ah oo aan u adeegsan doono gargaarka si waafaqsan siyaasadda.",
+  "regInstitutionRegistration": "Diiwaangelinta Hay'adaha",
+  "regInstitutionType": "Nooca Hay'adda",
+  "regLegalName": "Magaca Sharci",
+  "regTradingName": "Magaca Ganacsiga",
+  "regTradeRegistrationNumber": "Lambarka Diiwaangelinta Ganacsiga",
+  "regTin": "Lambarka Aqoonsiga Canshuurta (TIN)",
+  "regVatOptional": "Lambarka Diiwaangelinta VAT (ikhtiyaar)",
+  "regRegion": "Gobolka",
+  "regCity": "Magaalada",
+  "regAddress": "Cinwaanka",
+  "regNotesOptional": "Xusuusin (ikhtiyaar)",
+  "regAuthorityDocTitle": "Awoodda ku-dhaqanka dukumentiga ayaa loo baahan yahay",
+  "regAuthorityDocBody": "Daree haddii qof aan ahayn saxiixe diiwaangashan uu soo gudbiyo.",
+  "regFilePickError": "Ma dooran karo faylka Fadlan hubi ogolaanshaha",
+  "regUploadKycTitle": "Soo rar dukumeentiyada KYC",
+  "regUploadKycBody": "Soo rar dukumeenti kasta oo loo baahan yahay. Waad dhammayn kartaa marka dhammaan dukumeentiyada loo baahan yahay la soo geliyo.",
+  "regReference": "Tixraac: _PH_0__",
+  "regNoDocumentsRequired": "Wax dukumeenti ah looma baahna wakhtigan.",
+  "regRequired": "Loo baahan yahay",
+  "regOptional": "Ikhtiyaar ah",
+  "regSelectedFile": "la doortay: _PH_0__",
+  "regUploaded": "La soo galiyay",
+  "regUpload": "Soo rar",
+  "regCreatePasswordTitle": "Samee eraygaaga sirta ah",
+  "regCreatePasswordBody": "Dooro furaha sirta ah ee xisaabtaada Waxaad u isticmaali doontaa inaad ku soo gasho diiwaangelinta ka dib.",
+  "regPassword": "Furaha",
+  "regConfirmPassword": "Xaqiiji erayga sirta ah",
+  "regPasswordRules": "Furaha sirta ah waa in uu ahaadaa ugu yaraan 8 xaraf oo ay ku jiraan far waaweyn, far yar, lambar, iyo xarfo gaar ah.",
+  "regPasswordSuccess": "Si guul leh ayaa loo dejiyay erayga sirta ah Ku Soo Dhawoow Mejlis Digital Hub.",
+  "regInstitutionComplete": "Diiwaangelinta hay'adda oo dhammaatay. Tixraac: _PH_0__",
+  "regInstitutionCompleteGeneric": "Diiwaangelinta hay'adda oo dhammaatay.",
+  "regCompleteLocal": "Diiwaangelintu way dhammaatay. Baahiyaha iyo faahfaahinta bixinta waxa lagu kaydiyaa gudaha.",
+  "regContinueWithFayda": "Ku sii wad Fayda",
+  "regVerifyingFayda": "Xaqiijinta Fayda...",
+  "regSubmitContinue": "Gudbi oo sii wad",
+  "regSetPasswordContinue": "Deji erayga sirta ah oo sii wad",
+  "regSetPasswordFinish": "Deji erayga sirta ah oo dhame",
+  "navAwqaf": "Awqaf"
 }

@@ -47,15 +47,23 @@
   "calcNisabGoldFormula": "{grams} × {price} = {total}",
   "@calcNisabGoldFormula": {
     "placeholders": {
-      "grams": {"type": "String"},
-      "price": {"type": "String"},
-      "total": {"type": "String"}
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
   "calcNisabThresholdBanner": "Nisab threshold (platform rate, 85g gold equivalent): {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "calcUsdEtb": "USD/ETB",
@@ -69,7 +77,9 @@
   "calcAdvisoryPrefix": "Advisory: {text}",
   "@calcAdvisoryPrefix": {
     "placeholders": {
-      "text": {"type": "String"}
+      "text": {
+        "type": "String"
+      }
     }
   },
   "calcArabicTermDefinitionsTitle": "Arabic Term Definitions",
@@ -84,26 +94,36 @@
   "calcCropLineThreshold": "{kg} kg {relation} 653 kg",
   "@calcCropLineThreshold": {
     "placeholders": {
-      "kg": {"type": "String"},
-      "relation": {"type": "String"}
+      "kg": {
+        "type": "String"
+      },
+      "relation": {
+        "type": "String"
+      }
     }
   },
   "calcCropLineIrrigation": "Irrigation mode: {mode}",
   "@calcCropLineIrrigation": {
     "placeholders": {
-      "mode": {"type": "String"}
+      "mode": {
+        "type": "String"
+      }
     }
   },
   "calcCropLineEffectiveRate": "Effective rate: {rate}%",
   "@calcCropLineEffectiveRate": {
     "placeholders": {
-      "rate": {"type": "String"}
+      "rate": {
+        "type": "String"
+      }
     }
   },
   "calcCropLineFormula": "Formula: {line}",
   "@calcCropLineFormula": {
     "placeholders": {
-      "line": {"type": "String"}
+      "line": {
+        "type": "String"
+      }
     }
   },
   "calcRelationGte": "≥",
@@ -121,13 +141,17 @@
   "calcAnimalsCount": "{count} animals",
   "@calcAnimalsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "calcKgHarvest": "{kg} kg harvest",
   "@calcKgHarvest": {
     "placeholders": {
-      "kg": {"type": "String"}
+      "kg": {
+        "type": "String"
+      }
     }
   },
   "calcLivestockTermsFootnote": "Terms like tabi', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.",
@@ -168,13 +192,17 @@
   "calcEffectiveCropRateLine": "Effective crop rate: {percent}%",
   "@calcEffectiveCropRateLine": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "calcCropZakatDueKgLine": "Crop Zakat due: {kg} kg",
   "@calcCropZakatDueKgLine": {
     "placeholders": {
-      "kg": {"type": "String"}
+      "kg": {
+        "type": "String"
+      }
     }
   },
   "calcHowCropZakatWorksTitle": "How crop Zakat works",
@@ -184,21 +212,29 @@
   "calcWealthNisabLine": "Nisab threshold: {nisab}",
   "@calcWealthNisabLine": {
     "placeholders": {
-      "nisab": {"type": "String"}
+      "nisab": {
+        "type": "String"
+      }
     }
   },
   "calcWealthZakatDueLine": "Wealth Zakat due (smaller amount on the card): {due}",
   "@calcWealthZakatDueLine": {
     "placeholders": {
-      "due": {"type": "String"}
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcHowWealthZakatWorksTitle": "How wealth Zakat is calculated",
   "calcHowWealthZakatWorksBody": "We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is {grams} g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of {silverRate} ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.",
   "@calcHowWealthZakatWorksBody": {
     "placeholders": {
-      "grams": {"type": "int"},
-      "silverRate": {"type": "int"}
+      "grams": {
+        "type": "int"
+      },
+      "silverRate": {
+        "type": "int"
+      }
     }
   },
   "calcHowWealthZakatNote": "Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.",
@@ -206,74 +242,130 @@
   "calcWealthTransLiquidsLine": "Cash + bank + mobile: {cash} + {bank} + {mobile} = {subtotal}",
   "@calcWealthTransLiquidsLine": {
     "placeholders": {
-      "cash": {"type": "String"},
-      "bank": {"type": "String"},
-      "mobile": {"type": "String"},
-      "subtotal": {"type": "String"}
+      "cash": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "mobile": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransBusinessLine": "Business assets (sum of rows): {business}",
   "@calcWealthTransBusinessLine": {
     "placeholders": {
-      "business": {"type": "String"}
+      "business": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransRollupLine": "Total assets: {liquids} + {business} + {gold} + {silver} = {total}",
   "@calcWealthTransRollupLine": {
     "placeholders": {
-      "liquids": {"type": "String"},
-      "business": {"type": "String"},
-      "gold": {"type": "String"},
-      "silver": {"type": "String"},
-      "total": {"type": "String"}
+      "liquids": {
+        "type": "String"
+      },
+      "business": {
+        "type": "String"
+      },
+      "gold": {
+        "type": "String"
+      },
+      "silver": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransNisabLine": "Nisab: {grams} g × 24k ({price}/g) = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
-      "grams": {"type": "String"},
-      "price": {"type": "String"},
-      "nisab": {"type": "String"}
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransGoldLine": "Gold: {grams} g × {karat} ({price}/g) = {value}",
   "@calcWealthTransGoldLine": {
     "placeholders": {
-      "grams": {"type": "String"},
-      "karat": {"type": "String"},
-      "price": {"type": "String"},
-      "value": {"type": "String"}
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransSilverLine": "Silver: {grams} g × {rate} ETB/g = {value}",
   "@calcWealthTransSilverLine": {
     "placeholders": {
-      "grams": {"type": "String"},
-      "rate": {"type": "String"},
-      "value": {"type": "String"}
+      "grams": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransNetLine": "Net wealth (large amount on the card): total assets − liabilities ({liabilities}) = {net}",
   "@calcWealthTransNetLine": {
     "placeholders": {
-      "liabilities": {"type": "String"},
-      "net": {"type": "String"}
+      "liabilities": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransDueAbove": "Because {net} is at or above nisab ({nisab}), Zakat due = {net} × 2.5% = {due}.",
   "@calcWealthTransDueAbove": {
     "placeholders": {
-      "net": {"type": "String"},
-      "due": {"type": "String"},
-      "nisab": {"type": "String"}
+      "net": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
     }
   },
   "calcWealthTransDueBelow": "Because {net} is below nisab ({nisab}), wealth Zakat due = {due}.",
   "@calcWealthTransDueBelow": {
     "placeholders": {
-      "net": {"type": "String"},
-      "nisab": {"type": "String"},
-      "due": {"type": "String"}
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcCropWeightKg": "Crop Weight (kg)",
@@ -294,56 +386,82 @@
   "calcCertCropDueLine": "Crop Zakat due: {kg} kg",
   "@calcCertCropDueLine": {
     "placeholders": {
-      "kg": {"type": "String"}
+      "kg": {
+        "type": "String"
+      }
     }
   },
   "calcBulletSeparator": " • ",
   "calcLsSheepGoats": "Sheep/Goats: {count} sheep",
   "@calcLsSheepGoats": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "calcLsCattle": "Cattle: {tabi} tabi' + {musinnah} musinnah",
   "@calcLsCattle": {
     "placeholders": {
-      "tabi": {"type": "int"},
-      "musinnah": {"type": "int"}
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
     }
   },
   "calcLsCamels": "Camels: {description}",
   "@calcLsCamels": {
     "placeholders": {
-      "description": {"type": "String"}
+      "description": {
+        "type": "String"
+      }
     }
   },
   "calcLsNone": "No livestock due under current counts",
   "calcTransSheep": "Sheep/Goats threshold: {head} >= 40 => due {due} sheep.",
   "@calcTransSheep": {
     "placeholders": {
-      "head": {"type": "int"},
-      "due": {"type": "int"}
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
     }
   },
   "calcTransCattle": "Cattle threshold: {head} >= 30 => due {tabi} tabi', {musinnah} musinnah (30/40 combination).",
   "@calcTransCattle": {
     "placeholders": {
-      "head": {"type": "int"},
-      "tabi": {"type": "int"},
-      "musinnah": {"type": "int"}
+      "head": {
+        "type": "int"
+      },
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
     }
   },
   "calcTransCamel": "Camel threshold: {head} >= 5 => due {due}.",
   "@calcTransCamel": {
     "placeholders": {
-      "head": {"type": "int"},
-      "due": {"type": "String"}
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcTransAdvisoryLine": "Advisory: {text}",
   "@calcTransAdvisoryLine": {
     "placeholders": {
-      "text": {"type": "String"}
+      "text": {
+        "type": "String"
+      }
     }
   },
   "calcAdvNotPasture": "Not pasture-fed most of the year: check trade/business treatment with scholars.",
@@ -352,44 +470,78 @@
   "calcCropTransBelow": "Harvest {kg}kg is below Nisab ({nisab} kg), so no crop Zakat is due.",
   "@calcCropTransBelow": {
     "placeholders": {
-      "kg": {"type": "String"},
-      "nisab": {"type": "String"}
+      "kg": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
     }
   },
   "calcCropTransMixed": "Mixed irrigation: rain {rain}%, irrigated {irrig}%. Effective rate = {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
   "@calcCropTransMixed": {
     "placeholders": {
-      "rain": {"type": "String"},
-      "irrig": {"type": "String"},
-      "rate": {"type": "String"},
-      "kg": {"type": "String"},
-      "rate2": {"type": "String"},
-      "due": {"type": "String"}
+      "rain": {
+        "type": "String"
+      },
+      "irrig": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcCropTransRainFed": "Rain-fed rate {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
   "@calcCropTransRainFed": {
     "placeholders": {
-      "rate": {"type": "String"},
-      "kg": {"type": "String"},
-      "rate2": {"type": "String"},
-      "due": {"type": "String"}
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcCropTransIrrigated": "Irrigated rate {rate}%. Formula: {kg} × {rate2}% = {due}kg.",
   "@calcCropTransIrrigated": {
     "placeholders": {
-      "rate": {"type": "String"},
-      "kg": {"type": "String"},
-      "rate2": {"type": "String"},
-      "due": {"type": "String"}
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
     }
   },
   "calcCamelNoDue": "No due",
   "calcCamelSheepN": "{count, plural, one{1 sheep} other{{count} sheep}}",
   "@calcCamelSheepN": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "calcCamel1BintMakhad": "1 bint makhad",
@@ -401,14 +553,20 @@
   "calcCamelCombo": "{hiqqah} hiqqah + {bintLabun} bint labun",
   "@calcCamelCombo": {
     "placeholders": {
-      "hiqqah": {"type": "int"},
-      "bintLabun": {"type": "int"}
+      "hiqqah": {
+        "type": "int"
+      },
+      "bintLabun": {
+        "type": "int"
+      }
     }
   },
   "calcCamelApproxBintLabun": "{count} bint labun (approximate combo)",
   "@calcCamelApproxBintLabun": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "profileLoadErrorTitle": "Could not load your profile",
@@ -438,7 +596,9 @@
   "profileEditFieldComingSoon": "Edit {field} coming soon",
   "@profileEditFieldComingSoon": {
     "placeholders": {
-      "field": {"type": "String"}
+      "field": {
+        "type": "String"
+      }
     }
   },
   "profileNisabThresholdAlerts": "Nisab Threshold Alerts",
@@ -492,7 +652,9 @@
   "impactEtbAmount": "{amount} ETB",
   "@impactEtbAmount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactLivesTouched": "LIVES TOUCHED",
@@ -501,31 +663,41 @@
   "impactRegionImpactComingSoon": "{region} impact coming soon",
   "@impactRegionImpactComingSoon": {
     "placeholders": {
-      "region": {"type": "String"}
+      "region": {
+        "type": "String"
+      }
     }
   },
   "impactStoryComingSoon": "{name} story coming soon",
   "@impactStoryComingSoon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "impactProjectDetailsComingSoon": "{title} details coming soon",
   "@impactProjectDetailsComingSoon": {
     "placeholders": {
-      "title": {"type": "String"}
+      "title": {
+        "type": "String"
+      }
     }
   },
   "impactPercentFunded": "{percent}% Funded",
   "@impactPercentFunded": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "impactEtbLeft": "{amount} ETB Left",
   "@impactEtbLeft": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactSeeYourPersonalBaraka": "See Your Personal Baraka",
@@ -576,5 +748,119 @@
   "donationSearchCountry": "Search countries",
   "donationSelectState": "Select state / province",
   "donationSearchState": "Search by name or abbreviation",
-  "donationNoMatchesFound": "No matches found"
+  "donationNoMatchesFound": "No matches found",
+  "changeAppModeTooltip": "Change mode",
+  "switchedToAwqafMode": "Switched to Awqaf mode",
+  "switchToAwqaf": "Switch to Awqaf",
+  "switchedToZakatMode": "Switched to Zakat mode",
+  "switchToZakat": "Switch to Zakat",
+  "loginForgotPassword": "Forgot password?",
+  "loginForgotPasswordComingSoon": "Forgot password coming soon",
+  "loginNewToBaraka": "New to Baraka? ",
+  "loginCreateAccount": "Create an account",
+  "loginCreateAccountComingSoon": "Create account coming soon",
+  "profileDisbursementIntro": "Choose where you want to receive disbursements.",
+  "profileCoopAccountLabel": "Coop Bank Account Number",
+  "profileCoopAccountHint": "Enter your account number",
+  "profileCoopAccountRequired": "Please enter your Coop Bank account number.",
+  "profileSaveAccount": "Save Account",
+  "faydaIdentityVerification": "Identity verification",
+  "commonBack": "Back",
+  "commonContinue": "Continue",
+  "commonFinish": "Finish",
+  "commonTakePhoto": "Take Photo",
+  "commonChooseGallery": "Choose from Gallery",
+  "commonChooseFile": "Choose File",
+  "regTitle": "Beneficiary Registration",
+  "regMethodFastTrack": "Fast-Track with Fayda",
+  "regMethodManual": "Manual Registration",
+  "regMethodInstitution": "Institution Registration",
+  "regMethodFastTrackDesc": "Securely verify identity with National ID and continue in minutes.",
+  "regMethodManualDesc": "Share your information and supporting details for trusted review.",
+  "regMethodInstitutionDesc": "Register your organization and submit required compliance documents.",
+  "regSecureIdentityTitle": "Secure Identity Verification",
+  "regChooseMethodSubtitle": "Choose your preferred registration method to begin your journey.",
+  "regFastTrackFaydaTitle": "Fast-Track with National ID (Fayda)",
+  "regFastTrackFaydaSubtitle": "Authenticate using your national digital ID.",
+  "regManualTitle": "Manual Registration",
+  "regManualSubtitle": "Upload supporting documentation for review.",
+  "regInstitutionCardTitle": "Register as Institution",
+  "regInstitutionCardSubtitle": "Company, NGO, cooperative, or government entity.",
+  "regRegistrationCodeLabel": "Registration code",
+  "regRegistrationCodeHint": "EZW-A1B2-C3D4",
+  "regEncryptedPrivate": "Encrypted & Private",
+  "regEncryptedPrivateBody": "Your data is secured and handled in line with privacy standards.",
+  "regVerificationInterrupted": "Verification interrupted",
+  "regReopenVerification": "Reopen verification",
+  "regRetryListening": "Retry listening",
+  "regCameraPermissionError": "Could not open camera/gallery. Please check permissions.",
+  "regSelectBirthdate": "Select birthdate",
+  "regManualIdentityTitle": "Manual Identity Registration",
+  "regFirstName": "First Name",
+  "regLastName": "Last Name",
+  "regGrandfatherName": "Grandfather's Name",
+  "regPhoneNumber": "Phone Number",
+  "regPhoneHint": "+251911223344 or 0911223344",
+  "regEmail": "Email",
+  "regGender": "Gender",
+  "regMale": "Male",
+  "regFemale": "Female",
+  "regBeneficiaryCategory": "Beneficiary Category",
+  "regNotes": "Notes",
+  "regNotesHint": "e.g. Zakat support applicant",
+  "regUploadProfilePicture": "Upload Profile Picture",
+  "regVerifyingFaydaBanner": "Verifying with Fayda… Complete verification in the browser when it opens.",
+  "regNeedsAssessment": "Needs Assessment",
+  "regSituationLabel": "Describe your current situation",
+  "regSituationHint": "Explain hardship, dependents, and urgent needs...",
+  "regUploadProof": "Upload Proof",
+  "regDisbursementSetup": "Disbursement Setup",
+  "regTelebirrTitle": "Telebirr Wallet",
+  "regTelebirrSubtitle": "Instant mobile money transfer",
+  "regMpesaTitle": "M-Pesa",
+  "regMpesaSubtitle": "Secure mobile payment network",
+  "regCoopbankTitle": "Coopbank Account",
+  "regCoopbankSubtitle": "Direct bank deposit",
+  "regAccountOrMobile": "Account or Mobile Number",
+  "regFullLegalName": "Full Legal Name",
+  "regAgreementTitle": "Agreement & Sharia Compliance",
+  "regAgreementBody": "I declare information is truthful and will use aid according to policy.",
+  "regInstitutionRegistration": "Institution Registration",
+  "regInstitutionType": "Institution Type",
+  "regLegalName": "Legal Name",
+  "regTradingName": "Trading Name",
+  "regTradeRegistrationNumber": "Trade Registration Number",
+  "regTin": "Tax Identification Number (TIN)",
+  "regVatOptional": "VAT Registration Number (optional)",
+  "regRegion": "Region",
+  "regCity": "City",
+  "regAddress": "Address",
+  "regNotesOptional": "Notes (optional)",
+  "regAuthorityDocTitle": "Authority to act document required",
+  "regAuthorityDocBody": "Enable if someone other than a registered signatory submits.",
+  "regFilePickError": "Could not pick file. Please check permissions.",
+  "regUploadKycTitle": "Upload KYC Documents",
+  "regUploadKycBody": "Upload each required document. You can finish once all required documents are uploaded.",
+  "regReference": "Reference: {id}",
+  "regNoDocumentsRequired": "No documents required at this time.",
+  "regRequired": "Required",
+  "regOptional": "Optional",
+  "regSelectedFile": "Selected: {name}",
+  "regUploaded": "Uploaded",
+  "regUpload": "Upload",
+  "regCreatePasswordTitle": "Create Your Password",
+  "regCreatePasswordBody": "Choose a secure password for your account. You will use it to sign in after registration.",
+  "regPassword": "Password",
+  "regConfirmPassword": "Confirm Password",
+  "regPasswordRules": "Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.",
+  "regPasswordSuccess": "Password set successfully. Welcome to Mejlis Digital Hub.",
+  "regInstitutionComplete": "Institution registration complete. Reference: {id}",
+  "regInstitutionCompleteGeneric": "Institution registration complete.",
+  "regCompleteLocal": "Registration complete. Needs and disbursement details are saved locally.",
+  "regContinueWithFayda": "Continue with Fayda",
+  "regVerifyingFayda": "Verifying with Fayda…",
+  "regSubmitContinue": "Submit & Continue",
+  "regSetPasswordContinue": "Set Password & Continue",
+  "regSetPasswordFinish": "Set Password & Finish",
+  "navAwqaf": "Awqaf"
 }

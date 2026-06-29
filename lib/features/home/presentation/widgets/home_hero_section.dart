@@ -39,7 +39,7 @@ class HomeHeroSection extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: PopupMenuButton<AppMode>(
-                      tooltip: 'Change mode',
+                      tooltip: l10n.changeAppModeTooltip,
                       icon: const Icon(
                         TablerIcons.switch_horizontal,
                         color: AppColors.mintGreenMuted,
@@ -53,16 +53,16 @@ class HomeHeroSection extends StatelessWidget {
                         await controller.setAppMode(AppMode.awqaf);
                         if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Switched to Awqaf mode'),
+                          SnackBar(
+                            content: Text(l10n.switchedToAwqafMode),
                           ),
                         );
                         context.go('/awqaf');
                       },
-                      itemBuilder: (context) => const [
+                      itemBuilder: (context) => [
                         PopupMenuItem(
                           value: AppMode.awqaf,
-                          child: Text('Switch to Awqaf'),
+                          child: Text(l10n.switchToAwqaf),
                         ),
                       ],
                     ),

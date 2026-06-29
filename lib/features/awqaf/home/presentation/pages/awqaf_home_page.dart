@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../../app/settings/app_settings_controller.dart';
 import '../../../../../app/theme/app_colors.dart';
 import '../../../../../app/widgets/app_logo.dart';
+import '../../../../../core/l10n/l10n.dart';
 
 class AwqafHomePage extends StatelessWidget {
   const AwqafHomePage({super.key});
@@ -12,13 +13,14 @@ class AwqafHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         leading: const AppBarBrandLeading(height: 28),
-        title: const Text('Awqaf'),
+        title: Text(l10n.navAwqaf),
         actions: [
           PopupMenuButton<AppMode>(
-            tooltip: 'Change mode',
+            tooltip: l10n.changeAppModeTooltip,
             icon: const Icon(Icons.swap_horiz),
             onSelected: (mode) async {
               if (mode != AppMode.zakat) return;
@@ -26,14 +28,14 @@ class AwqafHomePage extends StatelessWidget {
               await controller.setAppMode(AppMode.zakat);
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Switched to Zakat mode')),
+                SnackBar(content: Text(l10n.switchedToZakatMode)),
               );
               context.go('/');
             },
-            itemBuilder: (context) => const [
+            itemBuilder: (context) => [
               PopupMenuItem(
                 value: AppMode.zakat,
-                child: Text('Switch to Zakat'),
+                child: Text(l10n.switchToZakat),
               ),
             ],
           ),

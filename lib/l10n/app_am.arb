@@ -1,8 +1,8 @@
 {
   "@@locale": "am",
-  "appTitle": "Zakat & Awqaf Commission",
-  "splashSlogan": "For the sake of Allah, for the service of humanity",
-  "splashWaqfByLabel": "A Waqf by",
+  "appTitle": "ዘካት እና አውቃፍ ኮሚሽን",
+  "splashSlogan": "ለአላህ ብሎ ለሰው ልጅ አገልግሎት",
+  "splashWaqfByLabel": "ዋቅፍ በ",
   "splashWaqfByTitle": "Coop Bank Alhuda",
   "navHome": "መነሻ",
   "navCalculator": "ማስያ",
@@ -64,7 +64,9 @@
   "profileEditFieldComingSoon": "{field} ማስተካከያ በቅርቡ ይመጣል",
   "@profileEditFieldComingSoon": {
     "placeholders": {
-      "field": {"type": "String"}
+      "field": {
+        "type": "String"
+      }
     }
   },
   "profileNisabThresholdAlerts": "የኒሳብ ገደብ ማሳወቂያዎች",
@@ -93,15 +95,15 @@
   "profileLogOutSubtitle": "የአሁኑን ክፍለ ጊዜ ያቁሙ",
   "profileLogOutDialogTitle": "ልትወጡ ነው?",
   "profileLogOutDialogBody": "በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።",
-  "loginTitle": "Sign in",
-  "loginSubtitle": "Use your registered phone number and password",
-  "loginPhoneLabel": "Phone number",
-  "loginPasswordLabel": "Password",
-  "loginButton": "Sign in",
-  "loginPhoneRequired": "Enter your phone number",
-  "loginPhoneInvalid": "Enter a valid 9-digit mobile number (e.g. 923974838)",
-  "loginSecureNote": "Your sign-in is encrypted and secure",
-  "loginPasswordRequired": "Enter your password",
+  "loginTitle": "ይግቡ",
+  "loginSubtitle": "የእርስዎን የተመዘገበ ስልክ ቁጥር እና የይለፍ ቃል ይጠቀሙ",
+  "loginPhoneLabel": "ስልክ ቁጥር",
+  "loginPasswordLabel": "የይለፍ ቃል",
+  "loginButton": "ይግቡ",
+  "loginPhoneRequired": "ስልክ ቁጥርህን አስገባ",
+  "loginPhoneInvalid": "የሚሰራ ባለ 9-አሃዝ የሞባይል ቁጥር ያስገቡ (ለምሳሌ 923974838)",
+  "loginSecureNote": "መግባትህ የተመሰጠረ እና ደህንነቱ የተጠበቀ ነው።",
+  "loginPasswordRequired": "የይለፍ ቃልዎን ያስገቡ",
   "profileCancel": "ሰርዝ",
   "profileHadithOfTheDay": "የዛሬ ሐዲስ",
   "profileHadithQuote": "\"በትንሣኤ ቀን የአማኙ ጥላ ሰደቃው ነው።\"",
@@ -118,7 +120,9 @@
   "impactEtbAmount": "{amount} ብር",
   "@impactEtbAmount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactLivesTouched": "የተነኩ ሕይወቶች",
@@ -127,31 +131,41 @@
   "impactRegionImpactComingSoon": "የ{region} ተፅዕኖ በቅርቡ ይመጣል",
   "@impactRegionImpactComingSoon": {
     "placeholders": {
-      "region": {"type": "String"}
+      "region": {
+        "type": "String"
+      }
     }
   },
   "impactStoryComingSoon": "የ{name} ታሪክ በቅርቡ ይመጣል",
   "@impactStoryComingSoon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "impactProjectDetailsComingSoon": "የ{title} ዝርዝሮች በቅርቡ ይመጣሉ",
   "@impactProjectDetailsComingSoon": {
     "placeholders": {
-      "title": {"type": "String"}
+      "title": {
+        "type": "String"
+      }
     }
   },
   "impactPercentFunded": "{percent}% ተሸፍኗል",
   "@impactPercentFunded": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "impactEtbLeft": "{amount} ብር ይቀራል",
   "@impactEtbLeft": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactSeeYourPersonalBaraka": "የግል በረከትዎን ይመልከቱ",
@@ -168,38 +182,685 @@
   "onboardingSubtitleEasyPayments": "በደህንነት እና በቀላሉ በሞባይል ተስማሚ ተሞክሮ ዘካትዎን ይክፈሉ።",
   "onboardingTitleCompassionInAction": "ርህራሄ በተግባር",
   "onboardingSubtitleCompassionInAction": "ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።",
-  "donationCurrencySheetTitle": "How would you like to give?",
-  "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
-  "donationLocalPaymentTitle": "Local payment (ETB)",
-  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.",
-  "donationInternationalPaymentTitle": "International payment",
-  "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
-  "donationInternationalTitle": "International Sadaqah",
-  "donationInternationalSubtitle": "Support communities from anywhere in the world.",
-  "donationAmountLabel": "Donation amount",
+  "donationCurrencySheetTitle": "እንዴት መስጠት ይፈልጋሉ?",
+  "donationCurrencySheetSubtitle": "የሀገር ውስጥ የኢቲቢ ክፍያ ወይም የአለምአቀፍ ካርድ ክፍያ ይምረጡ።",
+  "donationLocalPaymentTitle": "የአካባቢ ክፍያ (ኢ.ቲ.ቢ.)",
+  "donationLocalPaymentSubtitle": "ቴሌቢር፣ ንግድ ባንክ ብር፣ ኤም-ፔሳ እና ሌሎች የኢትዮጵያ መግቢያ መንገዶች።",
+  "donationInternationalPaymentTitle": "ዓለም አቀፍ ክፍያ",
+  "donationInternationalPaymentSubtitle": "ከየትኛውም ቦታ ሆነው በካርድዎ እና በክፍያ አድራሻዎ ይክፈሉ።",
+  "donationInternationalTitle": "ዓለም አቀፍ ሰዳቃ",
+  "donationInternationalSubtitle": "በዓለም ላይ ከየትኛውም ቦታ ሆነው ማህበረሰቦችን ይደግፉ።",
+  "donationAmountLabel": "የመዋጮ መጠን",
   "donationAmountHint": "0.00",
-  "donationAmountHelper": "Amount is settled in Ethiopian Birr (ETB).",
-  "donationAnonymousLabel": "Give anonymously",
-  "donationAnonymousSubtitle": "Your name will not be shown publicly.",
-  "donationDonorSectionTitle": "Your details",
-  "donationFullNameLabel": "Full name",
-  "donationPhoneLabel": "Phone",
-  "donationEmailLabel": "Email",
-  "donationBillingSectionTitle": "Billing address",
-  "donationAddress1Label": "Address line 1",
-  "donationAddress2Label": "Address line 2 (optional)",
-  "donationCountryLabel": "Country",
-  "donationCountryOther": "Country name",
-  "donationAdminAreaLabel": "State / Province",
-  "donationLocalityLabel": "City",
-  "donationPostalCodeLabel": "Postal code",
-  "donationContinueToPayment": "Continue to payment",
-  "donationSubmitting": "Processing…",
-  "donationSuccess": "Thank you for your Sadaqah.",
-  "donationValidationPhone": "Enter a valid phone number in international format (e.g. +15551234567).",
-  "donationPaymentWebViewTitle": "Complete payment",
-  "donationSelectCountry": "Select country",
-  "donationSearchCountry": "Search countries",
-  "donationSelectState": "Select state / province",
-  "donationSearchState": "Search by name or abbreviation"
+  "donationAmountHelper": "መጠኑ በኢትዮጵያ ብር (ኢቲቢ) ተቀምጧል።",
+  "donationAnonymousLabel": "ስም-አልባ ስጡ",
+  "donationAnonymousSubtitle": "ስምህ በይፋ አይታይም።",
+  "donationDonorSectionTitle": "ዝርዝሮችህ",
+  "donationFullNameLabel": "ሙሉ ስም",
+  "donationPhoneLabel": "ስልክ",
+  "donationEmailLabel": "ኢሜይል",
+  "donationBillingSectionTitle": "የመክፈያ አድራሻ",
+  "donationAddress1Label": "የአድራሻ መስመር 1",
+  "donationAddress2Label": "አድራሻ መስመር 2 (አማራጭ)",
+  "donationCountryLabel": "ሀገር",
+  "donationCountryOther": "የሀገር ስም",
+  "donationAdminAreaLabel": "ግዛት / ክልል",
+  "donationLocalityLabel": "ከተማ",
+  "donationPostalCodeLabel": "የፖስታ መላኪያ ኮድ",
+  "donationContinueToPayment": "መክፈሉን ይቀጥሉ",
+  "donationSubmitting": "በማስሄድ ላይ…",
+  "donationSuccess": "ስለ ሰደቃህ አመሰግናለሁ።",
+  "donationValidationPhone": "የሚሰራ ስልክ ቁጥር በአለምአቀፍ ቅርጸት አስገባ (ለምሳሌ +15551234567)።",
+  "donationPaymentWebViewTitle": "ሙሉ ክፍያ",
+  "donationSelectCountry": "አገር ይምረጡ",
+  "donationSearchCountry": "አገሮችን ይፈልጉ",
+  "donationSelectState": "ግዛት/አውራጃ ይምረጡ",
+  "donationSearchState": "በስም ወይም በምህፃረ ቃል ይፈልጉ",
+  "donationNoMatchesFound": "ምንም ተዛማጅ አልተገኙም።",
+  "calcAppBarTitle": "ዘካት ካልኩሌተር",
+  "calcPayYourZakat": "ዘካህን ክፈል።",
+  "calcTabWealth": "ሀብት",
+  "calcTabLivestock": "የእንስሳት እርባታ",
+  "calcTabCrops": "ሰብሎች",
+  "calcStep1NisabTitle": "ደረጃ 1፡ የኒሳብ ገደብ",
+  "calcStep1NisabBody": "የእርስዎ የተጣራ ሀብት ከደረጃው ካለፈ ዘካት መከፈል አለበት። ኒሳብ በ 85g መድረክ 24k የወርቅ ዋጋ ላይ የተመሰረተ ነው።",
+  "calcNisabGoldFormula": "{grams}_ × {price}_ = {total}",
+  "@calcNisabGoldFormula": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcNisabThresholdBanner": "የኒሳብ ገደብ (የመድረክ ደረጃ፣ 85ግ ወርቅ አቻ)፦ {amount}",
+  "@calcNisabThresholdBanner": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "calcUsdEtb": "USD/ETB",
+  "calcFxLive": "የቀጥታ የምንዛሬ ተመን መጠቀም",
+  "calcFxCache": "የተሸጎጠ የምንዛሬ ተመንን በመጠቀም",
+  "calcFxFallback": "የውድቀት ምንዛሬ ተመንን በመጠቀም",
+  "calcTimestampUnavailable": "የጊዜ ማህተም የለም።",
+  "calcStep1LivestockTitle": "ደረጃ 1፡ የከብት እርባታ ዘዴ",
+  "calcStep1LivestockBody": "የእንስሳት ዘካት የሚሰላው በአካላዊ የራስ ቆጠራ ሚዛኖች (የዋጋ % ሳይሆን) ነው።",
+  "calcStep1LivestockNisabNote": "የኒሳብ ገደቦች፡ በግ/ፍየል 40፣ከብቶች 30፣ ግመሎች 5.ከብቶች 30/40 ጥምር ይጠቀማሉ። ግመሎች የደረጃ ደረጃዎችን ይከተላሉ.",
+  "calcAdvisoryPrefix": "ምክር፡ {text}_",
+  "@calcAdvisoryPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcArabicTermDefinitionsTitle": "የአረብኛ ቃል ፍቺዎች",
+  "calcArabicDefTabi": "የአንድ አመት ጥጃ",
+  "calcArabicDefMusinnah": "የሁለት አመት ላም",
+  "calcArabicDefBintMakhad": "የአንድ አመት ሴት ግመል",
+  "calcArabicDefBintLabun": "የሁለት አመት ሴት ግመል",
+  "calcArabicDefHiqqah": "የሶስት አመት ሴት ግመል",
+  "calcArabicDefJadhah": "የአራት አመት ሴት ግመል",
+  "calcStep1CropTitle": "ደረጃ 1፡ የሰብል (Ushr) ስሌት",
+  "calcStep1CropBody": "የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ 653 ኪ.ግ. መጠኑ 10% (ዝናብ-የተበላ)፣ 5% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።",
+  "calcCropLineThreshold": "{kg}_ ኪግ {relation}_ 653 ኪ.ግ",
+  "@calcCropLineThreshold": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineIrrigation": "የመስኖ ሁነታ፡ {mode}_",
+  "@calcCropLineIrrigation": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineEffectiveRate": "ውጤታማ ዋጋ፡ {rate}_%",
+  "@calcCropLineEffectiveRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineFormula": "ቀመር፡ {line}_",
+  "@calcCropLineFormula": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "calcRelationGte": "≥",
+  "calcRelationLt": "<",
+  "calcOverviewNetWorthTitle": "የተጣራ ዎርዝ አጠቃላይ እይታ",
+  "calcOverviewLivestockTitle": "የእንስሳት አጠቃላይ እይታ",
+  "calcOverviewCropTitle": "አጠቃላይ እይታን ይከርክሙ",
+  "calcBadgeAboveNisab": "ከኒሳብ በላይ",
+  "calcBadgeBelowNisab": "ከኒሳብ በታች",
+  "calcBadgeZakatDue": "ዘካት ክፍያ",
+  "calcBadgeNoDue": "ምንም ክፍያ የለም።",
+  "calcZakatDueLabel": "ዘካት ክፍያ",
+  "calcLivestockDueLabel": "የከብት እርባታ",
+  "calcCropZakatDueLabel": "ዘካት የሚከፈልበት ጊዜ ይከርክሙ",
+  "calcAnimalsCount": "{count}_ እንስሳት",
+  "@calcAnimalsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcKgHarvest": "{kg}_ ኪ.ግ መከር",
+  "@calcKgHarvest": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLivestockTermsFootnote": "እንደ ታቢእ፣ ሙሲናህ፣ ቢንት ማክሃድ፣ ቢንት ላቡን፣ ሂቃህ እና ጃድሃህ የመሳሰሉ ቃላት በቁም እንስሳት ዝርዝር ውስጥ ከዚህ በታች ተብራርተዋል።",
+  "calcStep2EnterAssets": "ደረጃ 2: የእርስዎን ንብረቶች ያስገቡ",
+  "calcStep2EnterAssetsBody": "የንብረቶችህን ዋጋ በETB አስገባ",
+  "calcCashBankSavings": "ጥሬ ገንዘብ እና የባንክ ቁጠባዎች",
+  "calcCashOnHand": "ገንዘብ በእጅ ላይ",
+  "calcBankBalance": "የባንክ ሂሳብ",
+  "calcMobileWallet": "የሞባይል ቦርሳ",
+  "calcBusinessAssets": "የንግድ ንብረቶች",
+  "calcFieldDescription": "መግለጫ",
+  "calcFieldType": "ዓይነት",
+  "calcAmountEtb": "መጠን (ኢቲቢ)",
+  "calcAddBusinessAsset": "የንግድ ንብረት ያክሉ",
+  "calcGoldSilver": "ወርቅ እና ብር",
+  "calcGoldGrams": "ወርቅ (ግራም)",
+  "calcGoldKarat": "ወርቅ ካራት",
+  "calcSilverGrams": "ብር (ግራም)",
+  "calcLiabilities": "ተጠያቂነቶች",
+  "calcAddLiability": "ተጠያቂነትን ጨምር",
+  "calcAssetInventory": "ቆጠራ",
+  "calcAssetReceivable": "የሚቀበል",
+  "calcAssetOther": "ሌላ",
+  "calcLiabilityShortTermDebt": "የአጭር ጊዜ ዕዳ",
+  "calcLiabilityPayable": "የሚከፈል",
+  "calcLiabilityOther": "ሌላ",
+  "calcLivestockSheepGoats": "በግ / ፍየሎች",
+  "calcLivestockCattle": "ከብት",
+  "calcLivestockCamels": "ግመሎች",
+  "calcPastureFedTitle": "አብዛኛውን አመት በግጦሽ ይመገባል።",
+  "calcPastureFedSubtitle": "ምክር ብቻ; ስሌትን አያግድም።",
+  "calcHawlTitle": "የተጠናቀቀው አንድ የጨረቃ ዓመት (ሀውል)",
+  "calcHawlSubtitle": "ምክር ብቻ; ስሌትን አያግድም።",
+  "calcWorkAnimalsTitle": "ለስራ (ማረሻ/መጓጓዣ) ጥቅም ላይ ይውላል",
+  "calcWorkAnimalsSubtitle": "ምክር ብቻ; ስሌትን አያግድም።",
+  "calcLivestockSummaryHeading": "የእንስሳት እርባታ ማጠቃለያ",
+  "calcCropNisabHeading": "የኒሳብ እና የመከር ጊዜ",
+  "calcEffectiveCropRateLine": "ውጤታማ የሰብል መጠን፡ {percent}_%",
+  "@calcEffectiveCropRateLine": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropZakatDueKgLine": "የሚከፈልበት ዘካ: {kg}_ ኪ.ግ",
+  "@calcCropZakatDueKgLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowCropZakatWorksTitle": "የሰብል ዘካት እንዴት እንደሚሰራ",
+  "calcHowCropZakatWorksBody": "ኒሳብ፡ 653 ኪ.ግ. ተመኖች፡- በዝናብ መመገብ 10%፣ በመስኖ 5%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።",
+  "calcHowCropZakatNote": "ማሳሰቢያ፡ መተግበሪያ እነዚህን ህጎች ለቀላልነት በሰፊው ይተገበራል። ምሁራዊ የስራ መደቦች በሰብል አይነት ስፋት እና በወጪ ተቀናሾች ላይ ይለያያሉ; ለተወሰኑ ጉዳዮች ብቁ ምሁራንን አማክር።",
+  "calcWealthNisabHeading": "ንሰብ & ሃብት ዘካት",
+  "calcWealthNisabLine": "የኒሳብ ገደብ፡ {nisab}_",
+  "@calcWealthNisabLine": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthZakatDueLine": "የሀብት ዘካት (በካርዱ ላይ ያለው አነስተኛ መጠን)፡ {due}",
+  "@calcWealthZakatDueLine": {
+    "placeholders": {
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowWealthZakatWorksTitle": "ዘካት ሀብት እንዴት እንደሚሰላ",
+  "calcHowWealthZakatWorksBody": "በእጃችን ላይ ጥሬ ገንዘብ፣ የባንክ ሒሳቦች፣ የሞባይል ቦርሳዎች፣ የንግድ ሥራ ንብረቶች እና የወርቅ እና የብር ዋጋ እንጨምራለን። ኒሳብ {grams} ግራም ወርቅ በመተግበሪያው 24k ዋጋ ግራም ነው። የያዙት ወርቅ የሚለካው ለመረጡት የካራት የመተግበሪያውን ዋጋ በመጠቀም ነው። ብር በአንድ ግራም {silverRate} ETB ቋሚ ማጣቀሻ ይጠቀማል። የተጣራ ሀብት ለማግኘት የሚያስገቧቸው ዕዳዎች ይቀነሳሉ። የተጣራ ሀብት በኒሳብ ወይም ከዚያ በላይ ከሆነ, የዘካ ክፍያ ከተጣራ ሀብት 2.5% ነው.",
+  "@calcHowWealthZakatWorksBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "silverRate": {
+        "type": "int"
+      }
+    }
+  },
+  "calcHowWealthZakatNote": "ማሳሰቢያ፡- ሊቃውንት የየትኞቹ ንብረቶች ዘካ እንደሚሆኑ፣ ዕዳዎች ሀብትን እንዴት እንደሚቀነሱ፣ የጨረቃ ዓመት (ሀውል) በሚውልበት ጊዜ እና ሌሎች ዝርዝሮች ይለያያሉ። ይህ ማያ ገጽ ትምህርታዊ ግምት ነው - ሁኔታዎን ብቃት ካላቸው ምሁራን ጋር ያረጋግጡ።",
+  "calcWealthBreakdownTitle": "ከላይ ያሉት መጠኖች እንዴት እንደሚሰሉ",
+  "calcWealthTransLiquidsLine": "ጥሬ ገንዘብ + ባንክ + ሞባይል፡ {cash} + {bank} + {mobile} = {subtotal}",
+  "@calcWealthTransLiquidsLine": {
+    "placeholders": {
+      "cash": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "mobile": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransBusinessLine": "የንግድ ንብረቶች (የረድፎች ድምር): {business}_",
+  "@calcWealthTransBusinessLine": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransRollupLine": "ጠቅላላ ንብረቶች፡ {liquids}_ + {business} + {gold} + {silver} = {total}",
+  "@calcWealthTransRollupLine": {
+    "placeholders": {
+      "liquids": {
+        "type": "String"
+      },
+      "business": {
+        "type": "String"
+      },
+      "gold": {
+        "type": "String"
+      },
+      "silver": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNisabLine": "ኒሳብ፡ {grams}_ g × 24k ({price}/ግ) = {nisab}",
+  "@calcWealthTransNisabLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransGoldLine": "ወርቅ፡ {grams}_ g × {karat}_ ({price}/ግ) = {value}",
+  "@calcWealthTransGoldLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransSilverLine": "ብር፡ {grams}_ g × {rate}_ ኢቲቢ/ግ = {value}",
+  "@calcWealthTransSilverLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNetLine": "የተጣራ ሀብት (በካርዱ ላይ ትልቅ መጠን)፡ ጠቅላላ ንብረቶች - እዳዎች ({liabilities}) = {net}",
+  "@calcWealthTransNetLine": {
+    "placeholders": {
+      "liabilities": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueAbove": "ምክንያቱም {net}_ በኒሳብ ({nisab}) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = {net} × 2.5% = {due}።",
+  "@calcWealthTransDueAbove": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueBelow": "ምክንያቱም {net}_ ከኒሳብ በታች ነው ({nisab})፣ የሀብት ዘካት ክፍያ = {due}።",
+  "@calcWealthTransDueBelow": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropWeightKg": "የሰብል ክብደት (ኪግ)",
+  "calcCropModeRainFed": "በዝናብ የተሞላ",
+  "calcCropModeIrrigated": "መስኖ የገባ",
+  "calcCropModeMixed": "የተቀላቀለ",
+  "calcRainFedSharePct": "በዝናብ ላይ የተመሰረተ ድርሻ %",
+  "calcIrrigatedSharePct": "የመስኖ ድርሻ %",
+  "calcGoldK24": "24k",
+  "calcGoldK22": "22k",
+  "calcGoldK21": "21k",
+  "calcGoldK18": "18k",
+  "calcGoldK14": "14k",
+  "calcMethodologyPlaceholder": "የዘካት ዘዴ ይዘት ቦታ ያዥ።",
+  "calcPayBlockedWealth": "ዘካት ምንም አይነት ሀብት አይከፈልም ​​(ከኒሳብ በታች ወይም ከዜሮ ኢቲቢ ክፍያ በታች)። ግብዓቶችዎን ያስተካክሉ።",
+  "calcPayBlockedLivestock": "ለአሁኑ ቆጠራዎ ምንም የእንስሳት ዘካት አይከፈልበትም።",
+  "calcPayBlockedCrops": "የሰብል ዘካት ገና አልገባም (ከመከር ኒሳብ በታች ወይም ከዜሮ ኪሎ ግራም በታች)።",
+  "calcCertCropDueLine": "የሚከፈልበት ዘካ: {kg}_ ኪ.ግ",
+  "@calcCertCropDueLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcBulletSeparator": " • ",
+  "calcLsSheepGoats": "በግ/ፍየሎች፡{count} በግ",
+  "@calcLsSheepGoats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCattle": "ከብት፡ {tabi}_ ታቢ' + {musinnah} ሙሲናህ",
+  "@calcLsCattle": {
+    "placeholders": {
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCamels": "ግመሎች፡ {description}_",
+  "@calcLsCamels": {
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLsNone": "አሁን ባለው ቆጠራ ምክንያት ምንም የቤት እንስሳ የለም።",
+  "calcTransSheep": "የበግ/የፍየል ደጃፍ፡_ {head}_ >= 40=የሚገባው {due} በግ።",
+  "@calcTransSheep": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCattle": "የከብት እርከን፡_ {head}_ >= 30 => የሚከፈልበት {tabi} ታቢዕ፣ {musinnah} ሙሲና (30/40 ጥምር)።",
+  "@calcTransCattle": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCamel": "የግመል ገደብ፡_ {head}_ >= 5=\\u003e {due}።",
+  "@calcTransCamel": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcTransAdvisoryLine": "ምክር፡ {text}_",
+  "@calcTransAdvisoryLine": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcAdvNotPasture": "አብዛኛውን አመት በግጦሽ የማይመገብ፡ ንግድ/የንግድ አያያዝ ከምሁራን ጋር ያረጋግጡ።",
+  "calcAdvHawl": "ኸል አልተጠናቀቀም፡ ብዙ ሊቃውንት ለከብቶች ዘካ አንድ የጨረቃ አመት ይፈልጋሉ።",
+  "calcAdvWork": "የስራ እንስሳት በተለምዶ ከእንስሳት ዘካ ነፃ ናቸው።",
+  "calcCropTransBelow": "መኸር {kg}_ኪሎ ከኒሳብ ({nisab} ኪሎ ግራም) በታች ነው፣ ስለዚህ ምንም የሰብል ዘካት መከፈል የለበትም።",
+  "@calcCropTransBelow": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransMixed": "የተቀላቀለ መስኖ፡ ዝናብ {rain}%፣ መስኖ {irrig}%. ውጤታማ ተመን = {rate}_%. ቀመር፡ {kg}_ × {rate2}% = {due}ኪሎ",
+  "@calcCropTransMixed": {
+    "placeholders": {
+      "rain": {
+        "type": "String"
+      },
+      "irrig": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransRainFed": "በዝናብ-የተመገብን መጠን {rate}_%. ፎርሙላ፡ {kg}_ × {rate2}% = {due}ኪሎ",
+  "@calcCropTransRainFed": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransIrrigated": "የመስኖ መጠን {rate}%. ፎርሙላ፡ {kg}_ × {rate2}% = {due}ኪሎ",
+  "@calcCropTransIrrigated": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCamelNoDue": "ምንም ክፍያ የለም።",
+  "calcCamelSheepN": "{count, plural, one{1 በግ} other{{count} በግ}}",
+  "@calcCamelSheepN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamel1BintMakhad": "1 ቢንት ማክሃድ",
+  "calcCamel1BintLabun": "1 ቢንት ላቡን",
+  "calcCamel1Hiqqah": "1 ሂቃህ",
+  "calcCamel1Jadhah": "1 ጃዳህ",
+  "calcCamel2BintLabun": "2 ቢንት ላቡን",
+  "calcCamel2Hiqqah": "2 ሂቃህ",
+  "calcCamelCombo": "{hiqqah}_ ሂቃህ + {bintLabun} ቢንት ላቡን",
+  "@calcCamelCombo": {
+    "placeholders": {
+      "hiqqah": {
+        "type": "int"
+      },
+      "bintLabun": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelApproxBintLabun": "{count}_ ቢንት ላቡን (ግምታዊ ጥምር)",
+  "@calcCamelApproxBintLabun": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "changeAppModeTooltip": "ሁነታን ቀይር",
+  "switchedToAwqafMode": "ወደ Awqaf ሁነታ ተቀይሯል።",
+  "switchToAwqaf": "ወደ Awqaf ቀይር",
+  "switchedToZakatMode": "ወደ ዘካት ሁነታ ተቀይሯል።",
+  "switchToZakat": "ወደ ዘካት ቀይር",
+  "loginForgotPassword": "የይለፍ ቃል ረሱ?",
+  "loginForgotPasswordComingSoon": "የይለፍ ቃል ረሳው በቅርቡ ይመጣል",
+  "loginNewToBaraka": "New to Baraka? ",
+  "loginCreateAccount": "መለያ ፍጠር",
+  "loginCreateAccountComingSoon": "በቅርቡ መለያ ይፍጠሩ",
+  "profileDisbursementIntro": "ወጭዎችን የት መቀበል እንደሚፈልጉ ይምረጡ።",
+  "profileCoopAccountLabel": "Coop የባንክ ሂሳብ ቁጥር",
+  "profileCoopAccountHint": "የመለያ ቁጥርዎን ያስገቡ",
+  "profileCoopAccountRequired": "እባክዎ የ Coop ባንክ መለያ ቁጥርዎን ያስገቡ።",
+  "profileSaveAccount": "መለያ አስቀምጥ",
+  "faydaIdentityVerification": "የማንነት ማረጋገጫ",
+  "commonBack": "ተመለስ",
+  "commonContinue": "ቀጥል",
+  "commonFinish": "ጨርስ",
+  "commonTakePhoto": "ፎቶ አንሳ",
+  "commonChooseGallery": "ከጋለሪ ይምረጡ",
+  "commonChooseFile": "ፋይል ይምረጡ",
+  "regTitle": "የተጠቃሚዎች ምዝገባ",
+  "regMethodFastTrack": "ፈጣን-ትራክ ከፋይዳ ጋር",
+  "regMethodManual": "በእጅ ምዝገባ",
+  "regMethodInstitution": "የተቋማት ምዝገባ",
+  "regMethodFastTrackDesc": "በብሔራዊ መታወቂያ ማንነትን ደህንነቱ በተጠበቀ ሁኔታ ያረጋግጡ እና በደቂቃዎች ውስጥ ይቀጥሉ።",
+  "regMethodManualDesc": "ለታማኝ ግምገማ መረጃዎን እና ደጋፊ ዝርዝሮችዎን ያጋሩ።",
+  "regMethodInstitutionDesc": "ድርጅትዎን ያስመዝግቡ እና አስፈላጊ ሰነዶችን ያቅርቡ።",
+  "regSecureIdentityTitle": "ደህንነቱ የተጠበቀ የማንነት ማረጋገጫ",
+  "regChooseMethodSubtitle": "ጉዞዎን ለመጀመር የመረጡትን የመመዝገቢያ ዘዴ ይምረጡ።",
+  "regFastTrackFaydaTitle": "ፈጣን ዱካ በብሔራዊ መታወቂያ (ፋይዳ)",
+  "regFastTrackFaydaSubtitle": "ብሄራዊ ዲጂታል መታወቂያዎን በመጠቀም ያረጋግጡ።",
+  "regManualTitle": "በእጅ ምዝገባ",
+  "regManualSubtitle": "ለግምገማ ደጋፊ ሰነዶችን ይስቀሉ።",
+  "regInstitutionCardTitle": "እንደ ተቋም ይመዝገቡ",
+  "regInstitutionCardSubtitle": "ኩባንያ፣ መንግሥታዊ ያልሆነ ድርጅት፣ የሕብረት ሥራ ወይም የመንግሥት አካል።",
+  "regRegistrationCodeLabel": "የምዝገባ ኮድ",
+  "regRegistrationCodeHint": "EZW-A1B2-C3D4",
+  "regEncryptedPrivate": "የተመሰጠረ እና የግል",
+  "regEncryptedPrivateBody": "የእርስዎ ውሂብ የተጠበቀ እና የሚስተናገደው ከግላዊነት ደረጃዎች ጋር በሚስማማ መንገድ ነው።",
+  "regVerificationInterrupted": "ማረጋገጥ ተቋርጧል",
+  "regReopenVerification": "ማረጋገጫን እንደገና ክፈት",
+  "regRetryListening": "ለማዳመጥ እንደገና ይሞክሩ",
+  "regCameraPermissionError": "ካሜራ/ጋለሪ መክፈት አልተቻለም። እባክዎ ፈቃዶችን ያረጋግጡ።",
+  "regSelectBirthdate": "የልደት ቀን ይምረጡ",
+  "regManualIdentityTitle": "በእጅ የማንነት ምዝገባ",
+  "regFirstName": "የመጀመሪያ ስም",
+  "regLastName": "የአያት ስም",
+  "regGrandfatherName": "የአያት ስም",
+  "regPhoneNumber": "ስልክ ቁጥር",
+  "regPhoneHint": "+251911223344 or 0911223344",
+  "regEmail": "ኢሜይል",
+  "regGender": "ጾታ",
+  "regMale": "ወንድ",
+  "regFemale": "ሴት",
+  "regBeneficiaryCategory": "ተጠቃሚ ምድብ",
+  "regNotes": "ማስታወሻዎች",
+  "regNotesHint": "ለምሳሌ. ዘካት ድጋፍ አመልካች",
+  "regUploadProfilePicture": "የመገለጫ ሥዕል ስቀል",
+  "regVerifyingFaydaBanner": "በፋይዳ ማረጋገጥ… በአሳሹ ውስጥ ሙሉ ማረጋገጫ ሲከፈት።",
+  "regNeedsAssessment": "ግምገማ ያስፈልገዋል",
+  "regSituationLabel": "አሁን ያለዎትን ሁኔታ ይግለጹ",
+  "regSituationHint": "ችግርን፣ ጥገኞችን፣ እና አስቸኳይ ፍላጎቶችን ያብራሩ...",
+  "regUploadProof": "የመስቀል ማረጋገጫ",
+  "regDisbursementSetup": "የወጪ ማዋቀር",
+  "regTelebirrTitle": "Telebirr Wallet",
+  "regTelebirrSubtitle": "ፈጣን የሞባይል ገንዘብ ማስተላለፍ",
+  "regMpesaTitle": "ኤም-ፔሳ",
+  "regMpesaSubtitle": "ደህንነቱ የተጠበቀ የሞባይል ክፍያ አውታረ መረብ",
+  "regCoopbankTitle": "Coopbank መለያ",
+  "regCoopbankSubtitle": "ቀጥተኛ የባንክ ተቀማጭ",
+  "regAccountOrMobile": "መለያ ወይም የሞባይል ቁጥር",
+  "regFullLegalName": "ሙሉ ህጋዊ ስም",
+  "regAgreementTitle": "ስምምነት እና የሸሪዓ ተገዢነት",
+  "regAgreementBody": "መረጃው እውነት መሆኑን አውጃለሁ እናም በፖሊሲው መሰረት እርዳታን እጠቀማለሁ.",
+  "regInstitutionRegistration": "የተቋማት ምዝገባ",
+  "regInstitutionType": "ተቋም ዓይነት",
+  "regLegalName": "ህጋዊ ስም",
+  "regTradingName": "የንግድ ስም",
+  "regTradeRegistrationNumber": "የንግድ ምዝገባ ቁጥር",
+  "regTin": "የግብር መለያ ቁጥር (ቲን)",
+  "regVatOptional": "የተጨማሪ እሴት ታክስ መመዝገቢያ ቁጥር (አማራጭ)",
+  "regRegion": "ክልል",
+  "regCity": "ከተማ",
+  "regAddress": "አድራሻ",
+  "regNotesOptional": "ማስታወሻዎች (አማራጭ)",
+  "regAuthorityDocTitle": "ሰነድ ለመስራት ስልጣን ያስፈልጋል",
+  "regAuthorityDocBody": "ከተመዘገበ ፈራሚ ሌላ ሰው ካቀረበ አንቃ።",
+  "regFilePickError": "ፋይል መምረጥ አልተቻለም። እባክዎ ፈቃዶችን ያረጋግጡ።",
+  "regUploadKycTitle": "የKYC ሰነዶችን ይስቀሉ።",
+  "regUploadKycBody": "እያንዳንዱን አስፈላጊ ሰነድ ስቀል። ሁሉም አስፈላጊ ሰነዶች ከተሰቀሉ በኋላ መጨረስ ይችላሉ።",
+  "regReference": "ዋቢ፡ _PH_0__",
+  "regNoDocumentsRequired": "በዚህ ጊዜ ምንም ሰነዶች አያስፈልጉም.",
+  "regRequired": "ያስፈልጋል",
+  "regOptional": "አማራጭ",
+  "regSelectedFile": "የተመረጠው፡ _PH_0__",
+  "regUploaded": "ተጭኗል",
+  "regUpload": "ስቀል",
+  "regCreatePasswordTitle": "የይለፍ ቃልዎን ይፍጠሩ",
+  "regCreatePasswordBody": "ለመለያዎ ደህንነቱ የተጠበቀ የይለፍ ቃል ይምረጡ። ከምዝገባ በኋላ ለመግባት ይጠቀሙበታል።",
+  "regPassword": "የይለፍ ቃል",
+  "regConfirmPassword": "የይለፍ ቃል ያረጋግጡ",
+  "regPasswordRules": "የይለፍ ቃል ቢያንስ 8 ቁምፊዎች መሆን አለበት እና አቢይ ሆሄያት፣ ንዑስ ሆሄያት፣ ቁጥር እና ልዩ ቁምፊ ማካተት አለበት።",
+  "regPasswordSuccess": "የይለፍ ቃል በተሳካ ሁኔታ ተቀናብሯል። እንኳን ወደ መጅሊስ ዲጂታል መገናኛ በደህና መጡ።",
+  "regInstitutionComplete": "የተቋሙ ምዝገባ ተጠናቋል። ዋቢ፡ _PH_0__",
+  "regInstitutionCompleteGeneric": "የተቋሙ ምዝገባ ተጠናቋል።",
+  "regCompleteLocal": "ምዝገባው ተጠናቅቋል። ፍላጎቶች እና የክፍያ ዝርዝሮች በአገር ውስጥ ተቀምጠዋል።",
+  "regContinueWithFayda": "በፋይዳ ይቀጥሉ",
+  "regVerifyingFayda": "በፋይዳ በማረጋገጥ ላይ…",
+  "regSubmitContinue": "አስረክብ እና ቀጥል",
+  "regSetPasswordContinue": "የይለፍ ቃል ያዘጋጁ እና ይቀጥሉ",
+  "regSetPasswordFinish": "የይለፍ ቃል አዘጋጅ እና ጨርስ",
+  "navAwqaf": "አውቃፍ"
 }

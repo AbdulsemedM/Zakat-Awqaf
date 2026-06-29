@@ -9,14 +9,13 @@ class AppLocalizationsAm extends AppLocalizations {
   AppLocalizationsAm([String locale = 'am']) : super(locale);
 
   @override
-  String get appTitle => 'Zakat & Awqaf Commission';
+  String get appTitle => 'ዘካት እና አውቃፍ ኮሚሽን';
 
   @override
-  String get splashSlogan =>
-      'For the sake of Allah, for the service of humanity';
+  String get splashSlogan => 'ለአላህ ብሎ ለሰው ልጅ አገልግሎት';
 
   @override
-  String get splashWaqfByLabel => 'A Waqf by';
+  String get splashWaqfByLabel => 'ዋቅፍ በ';
 
   @override
   String get splashWaqfByTitle => 'Coop Bank Alhuda';
@@ -123,114 +122,114 @@ class AppLocalizationsAm extends AppLocalizations {
   String get missingCertificateDetails => 'የምስክር ወረቀት ዝርዝር የለም።';
 
   @override
-  String get calcAppBarTitle => 'Zakat Calculator';
+  String get calcAppBarTitle => 'ዘካት ካልኩሌተር';
 
   @override
-  String get calcPayYourZakat => 'Pay Your Zakat';
+  String get calcPayYourZakat => 'ዘካህን ክፈል።';
 
   @override
-  String get calcTabWealth => 'Wealth';
+  String get calcTabWealth => 'ሀብት';
 
   @override
-  String get calcTabLivestock => 'Livestock';
+  String get calcTabLivestock => 'የእንስሳት እርባታ';
 
   @override
-  String get calcTabCrops => 'Crops';
+  String get calcTabCrops => 'ሰብሎች';
 
   @override
-  String get calcStep1NisabTitle => 'Step 1: Nisab threshold';
+  String get calcStep1NisabTitle => 'ደረጃ 1፡ የኒሳብ ገደብ';
 
   @override
   String get calcStep1NisabBody =>
-      'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.';
+      'የእርስዎ የተጣራ ሀብት ከደረጃው ካለፈ ዘካት መከፈል አለበት። ኒሳብ በ 85g መድረክ 24k የወርቅ ዋጋ ላይ የተመሰረተ ነው።';
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
-    return '$grams × $price = $total';
+    return '${grams}_ × ${price}_ = $total';
   }
 
   @override
   String calcNisabThresholdBanner(String amount) {
-    return 'Nisab threshold (platform rate, 85g gold equivalent): $amount';
+    return 'የኒሳብ ገደብ (የመድረክ ደረጃ፣ 85ግ ወርቅ አቻ)፦ $amount';
   }
 
   @override
   String get calcUsdEtb => 'USD/ETB';
 
   @override
-  String get calcFxLive => 'Using live exchange rate';
+  String get calcFxLive => 'የቀጥታ የምንዛሬ ተመን መጠቀም';
 
   @override
-  String get calcFxCache => 'Using cached exchange rate';
+  String get calcFxCache => 'የተሸጎጠ የምንዛሬ ተመንን በመጠቀም';
 
   @override
-  String get calcFxFallback => 'Using fallback exchange rate';
+  String get calcFxFallback => 'የውድቀት ምንዛሬ ተመንን በመጠቀም';
 
   @override
-  String get calcTimestampUnavailable => 'timestamp unavailable';
+  String get calcTimestampUnavailable => 'የጊዜ ማህተም የለም።';
 
   @override
-  String get calcStep1LivestockTitle => 'Step 1: Livestock scale method';
+  String get calcStep1LivestockTitle => 'ደረጃ 1፡ የከብት እርባታ ዘዴ';
 
   @override
   String get calcStep1LivestockBody =>
-      'Livestock Zakat is calculated by physical head-count scales (not % of value).';
+      'የእንስሳት ዘካት የሚሰላው በአካላዊ የራስ ቆጠራ ሚዛኖች (የዋጋ % ሳይሆን) ነው።';
 
   @override
   String get calcStep1LivestockNisabNote =>
-      'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.';
+      'የኒሳብ ገደቦች፡ በግ/ፍየል 40፣ከብቶች 30፣ ግመሎች 5.ከብቶች 30/40 ጥምር ይጠቀማሉ። ግመሎች የደረጃ ደረጃዎችን ይከተላሉ.';
 
   @override
   String calcAdvisoryPrefix(String text) {
-    return 'Advisory: $text';
+    return 'ምክር፡ ${text}_';
   }
 
   @override
-  String get calcArabicTermDefinitionsTitle => 'Arabic Term Definitions';
+  String get calcArabicTermDefinitionsTitle => 'የአረብኛ ቃል ፍቺዎች';
 
   @override
-  String get calcArabicDefTabi => 'one-year-old calf';
+  String get calcArabicDefTabi => 'የአንድ አመት ጥጃ';
 
   @override
-  String get calcArabicDefMusinnah => 'two-year-old cow';
+  String get calcArabicDefMusinnah => 'የሁለት አመት ላም';
 
   @override
-  String get calcArabicDefBintMakhad => 'one-year-old she-camel';
+  String get calcArabicDefBintMakhad => 'የአንድ አመት ሴት ግመል';
 
   @override
-  String get calcArabicDefBintLabun => 'two-year-old she-camel';
+  String get calcArabicDefBintLabun => 'የሁለት አመት ሴት ግመል';
 
   @override
-  String get calcArabicDefHiqqah => 'three-year-old she-camel';
+  String get calcArabicDefHiqqah => 'የሶስት አመት ሴት ግመል';
 
   @override
-  String get calcArabicDefJadhah => 'four-year-old she-camel';
+  String get calcArabicDefJadhah => 'የአራት አመት ሴት ግመል';
 
   @override
-  String get calcStep1CropTitle => 'Step 1: Crop (Ushr) calculation';
+  String get calcStep1CropTitle => 'ደረጃ 1፡ የሰብል (Ushr) ስሌት';
 
   @override
   String get calcStep1CropBody =>
-      'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.';
+      'የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ 653 ኪ.ግ. መጠኑ 10% (ዝናብ-የተበላ)፣ 5% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።';
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
-    return '$kg kg $relation 653 kg';
+    return '${kg}_ ኪግ ${relation}_ 653 ኪ.ግ';
   }
 
   @override
   String calcCropLineIrrigation(String mode) {
-    return 'Irrigation mode: $mode';
+    return 'የመስኖ ሁነታ፡ ${mode}_';
   }
 
   @override
   String calcCropLineEffectiveRate(String rate) {
-    return 'Effective rate: $rate%';
+    return 'ውጤታማ ዋጋ፡ ${rate}_%';
   }
 
   @override
   String calcCropLineFormula(String line) {
-    return 'Formula: $line';
+    return 'ቀመር፡ ${line}_';
   }
 
   @override
@@ -240,202 +239,199 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcRelationLt => '<';
 
   @override
-  String get calcOverviewNetWorthTitle => 'Net Worth Overview';
+  String get calcOverviewNetWorthTitle => 'የተጣራ ዎርዝ አጠቃላይ እይታ';
 
   @override
-  String get calcOverviewLivestockTitle => 'Livestock Overview';
+  String get calcOverviewLivestockTitle => 'የእንስሳት አጠቃላይ እይታ';
 
   @override
-  String get calcOverviewCropTitle => 'Crop Overview';
+  String get calcOverviewCropTitle => 'አጠቃላይ እይታን ይከርክሙ';
 
   @override
-  String get calcBadgeAboveNisab => 'Above Nisab';
+  String get calcBadgeAboveNisab => 'ከኒሳብ በላይ';
 
   @override
-  String get calcBadgeBelowNisab => 'Below Nisab';
+  String get calcBadgeBelowNisab => 'ከኒሳብ በታች';
 
   @override
-  String get calcBadgeZakatDue => 'Zakat Due';
+  String get calcBadgeZakatDue => 'ዘካት ክፍያ';
 
   @override
-  String get calcBadgeNoDue => 'No Due';
+  String get calcBadgeNoDue => 'ምንም ክፍያ የለም።';
 
   @override
-  String get calcZakatDueLabel => 'Zakat Due';
+  String get calcZakatDueLabel => 'ዘካት ክፍያ';
 
   @override
-  String get calcLivestockDueLabel => 'Livestock Due';
+  String get calcLivestockDueLabel => 'የከብት እርባታ';
 
   @override
-  String get calcCropZakatDueLabel => 'Crop Zakat Due';
+  String get calcCropZakatDueLabel => 'ዘካት የሚከፈልበት ጊዜ ይከርክሙ';
 
   @override
   String calcAnimalsCount(int count) {
-    return '$count animals';
+    return '${count}_ እንስሳት';
   }
 
   @override
   String calcKgHarvest(String kg) {
-    return '$kg kg harvest';
+    return '${kg}_ ኪ.ግ መከር';
   }
 
   @override
   String get calcLivestockTermsFootnote =>
-      'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.';
+      'እንደ ታቢእ፣ ሙሲናህ፣ ቢንት ማክሃድ፣ ቢንት ላቡን፣ ሂቃህ እና ጃድሃህ የመሳሰሉ ቃላት በቁም እንስሳት ዝርዝር ውስጥ ከዚህ በታች ተብራርተዋል።';
 
   @override
-  String get calcStep2EnterAssets => 'Step 2: Enter Your Assets';
+  String get calcStep2EnterAssets => 'ደረጃ 2: የእርስዎን ንብረቶች ያስገቡ';
 
   @override
-  String get calcStep2EnterAssetsBody =>
-      'Enter the value of your assets in ETB';
+  String get calcStep2EnterAssetsBody => 'የንብረቶችህን ዋጋ በETB አስገባ';
 
   @override
-  String get calcCashBankSavings => 'Cash & Bank Savings';
+  String get calcCashBankSavings => 'ጥሬ ገንዘብ እና የባንክ ቁጠባዎች';
 
   @override
-  String get calcCashOnHand => 'Cash on Hand';
+  String get calcCashOnHand => 'ገንዘብ በእጅ ላይ';
 
   @override
-  String get calcBankBalance => 'Bank Balance';
+  String get calcBankBalance => 'የባንክ ሂሳብ';
 
   @override
-  String get calcMobileWallet => 'Mobile Wallet';
+  String get calcMobileWallet => 'የሞባይል ቦርሳ';
 
   @override
-  String get calcBusinessAssets => 'Business Assets';
+  String get calcBusinessAssets => 'የንግድ ንብረቶች';
 
   @override
-  String get calcFieldDescription => 'Description';
+  String get calcFieldDescription => 'መግለጫ';
 
   @override
-  String get calcFieldType => 'Type';
+  String get calcFieldType => 'ዓይነት';
 
   @override
-  String get calcAmountEtb => 'Amount (ETB)';
+  String get calcAmountEtb => 'መጠን (ኢቲቢ)';
 
   @override
-  String get calcAddBusinessAsset => 'Add business asset';
+  String get calcAddBusinessAsset => 'የንግድ ንብረት ያክሉ';
 
   @override
-  String get calcGoldSilver => 'Gold & Silver';
+  String get calcGoldSilver => 'ወርቅ እና ብር';
 
   @override
-  String get calcGoldGrams => 'Gold (grams)';
+  String get calcGoldGrams => 'ወርቅ (ግራም)';
 
   @override
-  String get calcGoldKarat => 'Gold Karat';
+  String get calcGoldKarat => 'ወርቅ ካራት';
 
   @override
-  String get calcSilverGrams => 'Silver (grams)';
+  String get calcSilverGrams => 'ብር (ግራም)';
 
   @override
-  String get calcLiabilities => 'Liabilities';
+  String get calcLiabilities => 'ተጠያቂነቶች';
 
   @override
-  String get calcAddLiability => 'Add liability';
+  String get calcAddLiability => 'ተጠያቂነትን ጨምር';
 
   @override
-  String get calcAssetInventory => 'Inventory';
+  String get calcAssetInventory => 'ቆጠራ';
 
   @override
-  String get calcAssetReceivable => 'Receivable';
+  String get calcAssetReceivable => 'የሚቀበል';
 
   @override
-  String get calcAssetOther => 'Other';
+  String get calcAssetOther => 'ሌላ';
 
   @override
-  String get calcLiabilityShortTermDebt => 'Short-term debt';
+  String get calcLiabilityShortTermDebt => 'የአጭር ጊዜ ዕዳ';
 
   @override
-  String get calcLiabilityPayable => 'Payable';
+  String get calcLiabilityPayable => 'የሚከፈል';
 
   @override
-  String get calcLiabilityOther => 'Other';
+  String get calcLiabilityOther => 'ሌላ';
 
   @override
-  String get calcLivestockSheepGoats => 'Sheep / Goats';
+  String get calcLivestockSheepGoats => 'በግ / ፍየሎች';
 
   @override
-  String get calcLivestockCattle => 'Cattle';
+  String get calcLivestockCattle => 'ከብት';
 
   @override
-  String get calcLivestockCamels => 'Camels';
+  String get calcLivestockCamels => 'ግመሎች';
 
   @override
-  String get calcPastureFedTitle => 'Pasture-fed most of the year';
+  String get calcPastureFedTitle => 'አብዛኛውን አመት በግጦሽ ይመገባል።';
 
   @override
-  String get calcPastureFedSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcPastureFedSubtitle => 'ምክር ብቻ; ስሌትን አያግድም።';
 
   @override
-  String get calcHawlTitle => 'Completed one lunar year (hawl)';
+  String get calcHawlTitle => 'የተጠናቀቀው አንድ የጨረቃ ዓመት (ሀውል)';
 
   @override
-  String get calcHawlSubtitle => 'Advisory only; does not block calculation';
+  String get calcHawlSubtitle => 'ምክር ብቻ; ስሌትን አያግድም።';
 
   @override
-  String get calcWorkAnimalsTitle => 'Used for work (plowing/transport)';
+  String get calcWorkAnimalsTitle => 'ለስራ (ማረሻ/መጓጓዣ) ጥቅም ላይ ይውላል';
 
   @override
-  String get calcWorkAnimalsSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcWorkAnimalsSubtitle => 'ምክር ብቻ; ስሌትን አያግድም።';
 
   @override
-  String get calcLivestockSummaryHeading => 'Livestock summary';
+  String get calcLivestockSummaryHeading => 'የእንስሳት እርባታ ማጠቃለያ';
 
   @override
-  String get calcCropNisabHeading => 'Nisab & crop due';
+  String get calcCropNisabHeading => 'የኒሳብ እና የመከር ጊዜ';
 
   @override
   String calcEffectiveCropRateLine(String percent) {
-    return 'Effective crop rate: $percent%';
+    return 'ውጤታማ የሰብል መጠን፡ ${percent}_%';
   }
 
   @override
   String calcCropZakatDueKgLine(String kg) {
-    return 'Crop Zakat due: $kg kg';
+    return 'የሚከፈልበት ዘካ: ${kg}_ ኪ.ግ';
   }
 
   @override
-  String get calcHowCropZakatWorksTitle => 'How crop Zakat works';
+  String get calcHowCropZakatWorksTitle => 'የሰብል ዘካት እንዴት እንደሚሰራ';
 
   @override
   String get calcHowCropZakatWorksBody =>
-      'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
+      'ኒሳብ፡ 653 ኪ.ግ. ተመኖች፡- በዝናብ መመገብ 10%፣ በመስኖ 5%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።';
 
   @override
   String get calcHowCropZakatNote =>
-      'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.';
+      'ማሳሰቢያ፡ መተግበሪያ እነዚህን ህጎች ለቀላልነት በሰፊው ይተገበራል። ምሁራዊ የስራ መደቦች በሰብል አይነት ስፋት እና በወጪ ተቀናሾች ላይ ይለያያሉ; ለተወሰኑ ጉዳዮች ብቁ ምሁራንን አማክር።';
 
   @override
-  String get calcWealthNisabHeading => 'Nisab & wealth Zakat';
+  String get calcWealthNisabHeading => 'ንሰብ & ሃብት ዘካት';
 
   @override
   String calcWealthNisabLine(String nisab) {
-    return 'Nisab threshold: $nisab';
+    return 'የኒሳብ ገደብ፡ ${nisab}_';
   }
 
   @override
   String calcWealthZakatDueLine(String due) {
-    return 'Wealth Zakat due (smaller amount on the card): $due';
+    return 'የሀብት ዘካት (በካርዱ ላይ ያለው አነስተኛ መጠን)፡ $due';
   }
 
   @override
-  String get calcHowWealthZakatWorksTitle => 'How wealth Zakat is calculated';
+  String get calcHowWealthZakatWorksTitle => 'ዘካት ሀብት እንዴት እንደሚሰላ';
 
   @override
   String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is $grams g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of $silverRate ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.';
+    return 'በእጃችን ላይ ጥሬ ገንዘብ፣ የባንክ ሒሳቦች፣ የሞባይል ቦርሳዎች፣ የንግድ ሥራ ንብረቶች እና የወርቅ እና የብር ዋጋ እንጨምራለን። ኒሳብ $grams ግራም ወርቅ በመተግበሪያው 24k ዋጋ ግራም ነው። የያዙት ወርቅ የሚለካው ለመረጡት የካራት የመተግበሪያውን ዋጋ በመጠቀም ነው። ብር በአንድ ግራም $silverRate ETB ቋሚ ማጣቀሻ ይጠቀማል። የተጣራ ሀብት ለማግኘት የሚያስገቧቸው ዕዳዎች ይቀነሳሉ። የተጣራ ሀብት በኒሳብ ወይም ከዚያ በላይ ከሆነ, የዘካ ክፍያ ከተጣራ ሀብት 2.5% ነው.';
   }
 
   @override
   String get calcHowWealthZakatNote =>
-      'Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.';
+      'ማሳሰቢያ፡- ሊቃውንት የየትኞቹ ንብረቶች ዘካ እንደሚሆኑ፣ ዕዳዎች ሀብትን እንዴት እንደሚቀነሱ፣ የጨረቃ ዓመት (ሀውል) በሚውልበት ጊዜ እና ሌሎች ዝርዝሮች ይለያያሉ። ይህ ማያ ገጽ ትምህርታዊ ግምት ነው - ሁኔታዎን ብቃት ካላቸው ምሁራን ጋር ያረጋግጡ።';
 
   @override
-  String get calcWealthBreakdownTitle => 'How the amounts above are calculated';
+  String get calcWealthBreakdownTitle => 'ከላይ ያሉት መጠኖች እንዴት እንደሚሰሉ';
 
   @override
   String calcWealthTransLiquidsLine(
@@ -444,12 +440,12 @@ class AppLocalizationsAm extends AppLocalizations {
     String mobile,
     String subtotal,
   ) {
-    return 'Cash + bank + mobile: $cash + $bank + $mobile = $subtotal';
+    return 'ጥሬ ገንዘብ + ባንክ + ሞባይል፡ $cash + $bank + $mobile = $subtotal';
   }
 
   @override
   String calcWealthTransBusinessLine(String business) {
-    return 'Business assets (sum of rows): $business';
+    return 'የንግድ ንብረቶች (የረድፎች ድምር): ${business}_';
   }
 
   @override
@@ -460,12 +456,12 @@ class AppLocalizationsAm extends AppLocalizations {
     String silver,
     String total,
   ) {
-    return 'Total assets: $liquids + $business + $gold + $silver = $total';
+    return 'ጠቅላላ ንብረቶች፡ ${liquids}_ + $business + $gold + $silver = $total';
   }
 
   @override
   String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'Nisab: $grams g × 24k ($price/g) = $nisab';
+    return 'ኒሳብ፡ ${grams}_ g × 24k ($price/ግ) = $nisab';
   }
 
   @override
@@ -475,46 +471,46 @@ class AppLocalizationsAm extends AppLocalizations {
     String price,
     String value,
   ) {
-    return 'Gold: $grams g × $karat ($price/g) = $value';
+    return 'ወርቅ፡ ${grams}_ g × ${karat}_ ($price/ግ) = $value';
   }
 
   @override
   String calcWealthTransSilverLine(String grams, String rate, String value) {
-    return 'Silver: $grams g × $rate ETB/g = $value';
+    return 'ብር፡ ${grams}_ g × ${rate}_ ኢቲቢ/ግ = $value';
   }
 
   @override
   String calcWealthTransNetLine(String liabilities, String net) {
-    return 'Net wealth (large amount on the card): total assets − liabilities ($liabilities) = $net';
+    return 'የተጣራ ሀብት (በካርዱ ላይ ትልቅ መጠን)፡ ጠቅላላ ንብረቶች - እዳዎች ($liabilities) = $net';
   }
 
   @override
   String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × 2.5% = $due.';
+    return 'ምክንያቱም ${net}_ በኒሳብ ($nisab) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = $net × 2.5% = $due።';
   }
 
   @override
   String calcWealthTransDueBelow(String net, String nisab, String due) {
-    return 'Because $net is below nisab ($nisab), wealth Zakat due = $due.';
+    return 'ምክንያቱም ${net}_ ከኒሳብ በታች ነው ($nisab)፣ የሀብት ዘካት ክፍያ = $due።';
   }
 
   @override
-  String get calcCropWeightKg => 'Crop Weight (kg)';
+  String get calcCropWeightKg => 'የሰብል ክብደት (ኪግ)';
 
   @override
-  String get calcCropModeRainFed => 'Rain-fed';
+  String get calcCropModeRainFed => 'በዝናብ የተሞላ';
 
   @override
-  String get calcCropModeIrrigated => 'Irrigated';
+  String get calcCropModeIrrigated => 'መስኖ የገባ';
 
   @override
-  String get calcCropModeMixed => 'Mixed';
+  String get calcCropModeMixed => 'የተቀላቀለ';
 
   @override
-  String get calcRainFedSharePct => 'Rain-fed share %';
+  String get calcRainFedSharePct => 'በዝናብ ላይ የተመሰረተ ድርሻ %';
 
   @override
-  String get calcIrrigatedSharePct => 'Irrigated share %';
+  String get calcIrrigatedSharePct => 'የመስኖ ድርሻ %';
 
   @override
   String get calcGoldK24 => '24k';
@@ -532,24 +528,22 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcGoldK14 => '14k';
 
   @override
-  String get calcMethodologyPlaceholder =>
-      'Zakat methodology content placeholder.';
+  String get calcMethodologyPlaceholder => 'የዘካት ዘዴ ይዘት ቦታ ያዥ።';
 
   @override
   String get calcPayBlockedWealth =>
-      'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
+      'ዘካት ምንም አይነት ሀብት አይከፈልም ​​(ከኒሳብ በታች ወይም ከዜሮ ኢቲቢ ክፍያ በታች)። ግብዓቶችዎን ያስተካክሉ።';
 
   @override
-  String get calcPayBlockedLivestock =>
-      'No livestock Zakat is due for your current counts.';
+  String get calcPayBlockedLivestock => 'ለአሁኑ ቆጠራዎ ምንም የእንስሳት ዘካት አይከፈልበትም።';
 
   @override
   String get calcPayBlockedCrops =>
-      'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
+      'የሰብል ዘካት ገና አልገባም (ከመከር ኒሳብ በታች ወይም ከዜሮ ኪሎ ግራም በታች)።';
 
   @override
   String calcCertCropDueLine(String kg) {
-    return 'Crop Zakat due: $kg kg';
+    return 'የሚከፈልበት ዘካ: ${kg}_ ኪ.ግ';
   }
 
   @override
@@ -557,57 +551,56 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String calcLsSheepGoats(int count) {
-    return 'Sheep/Goats: $count sheep';
+    return 'በግ/ፍየሎች፡$count በግ';
   }
 
   @override
   String calcLsCattle(int tabi, int musinnah) {
-    return 'Cattle: $tabi tabi\' + $musinnah musinnah';
+    return 'ከብት፡ ${tabi}_ ታቢ\' + $musinnah ሙሲናህ';
   }
 
   @override
   String calcLsCamels(String description) {
-    return 'Camels: $description';
+    return 'ግመሎች፡ ${description}_';
   }
 
   @override
-  String get calcLsNone => 'No livestock due under current counts';
+  String get calcLsNone => 'አሁን ባለው ቆጠራ ምክንያት ምንም የቤት እንስሳ የለም።';
 
   @override
   String calcTransSheep(int head, int due) {
-    return 'Sheep/Goats threshold: $head >= 40 => due $due sheep.';
+    return 'የበግ/የፍየል ደጃፍ፡_ ${head}_ >= 40=የሚገባው $due በግ።';
   }
 
   @override
   String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'Cattle threshold: $head >= 30 => due $tabi tabi\', $musinnah musinnah (30/40 combination).';
+    return 'የከብት እርከን፡_ ${head}_ >= 30 => የሚከፈልበት $tabi ታቢዕ፣ $musinnah ሙሲና (30/40 ጥምር)።';
   }
 
   @override
   String calcTransCamel(int head, String due) {
-    return 'Camel threshold: $head >= 5 => due $due.';
+    return 'የግመል ገደብ፡_ ${head}_ >= 5=\\u003e $due።';
   }
 
   @override
   String calcTransAdvisoryLine(String text) {
-    return 'Advisory: $text';
+    return 'ምክር፡ ${text}_';
   }
 
   @override
   String get calcAdvNotPasture =>
-      'Not pasture-fed most of the year: check trade/business treatment with scholars.';
+      'አብዛኛውን አመት በግጦሽ የማይመገብ፡ ንግድ/የንግድ አያያዝ ከምሁራን ጋር ያረጋግጡ።';
 
   @override
   String get calcAdvHawl =>
-      'Hawl not completed: many scholars require one lunar year for livestock zakat.';
+      'ኸል አልተጠናቀቀም፡ ብዙ ሊቃውንት ለከብቶች ዘካ አንድ የጨረቃ አመት ይፈልጋሉ።';
 
   @override
-  String get calcAdvWork =>
-      'Work animals are typically exempt from livestock zakat.';
+  String get calcAdvWork => 'የስራ እንስሳት በተለምዶ ከእንስሳት ዘካ ነፃ ናቸው።';
 
   @override
   String calcCropTransBelow(String kg, String nisab) {
-    return 'Harvest ${kg}kg is below Nisab ($nisab kg), so no crop Zakat is due.';
+    return 'መኸር ${kg}_ኪሎ ከኒሳብ ($nisab ኪሎ ግራም) በታች ነው፣ ስለዚህ ምንም የሰብል ዘካት መከፈል የለበትም።';
   }
 
   @override
@@ -619,7 +612,7 @@ class AppLocalizationsAm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Mixed irrigation: rain $rain%, irrigated $irrig%. Effective rate = $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'የተቀላቀለ መስኖ፡ ዝናብ $rain%፣ መስኖ $irrig%. ውጤታማ ተመን = ${rate}_%. ቀመር፡ ${kg}_ × $rate2% = $dueኪሎ';
   }
 
   @override
@@ -629,7 +622,7 @@ class AppLocalizationsAm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Rain-fed rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'በዝናብ-የተመገብን መጠን ${rate}_%. ፎርሙላ፡ ${kg}_ × $rate2% = $dueኪሎ';
   }
 
   @override
@@ -639,49 +632,49 @@ class AppLocalizationsAm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Irrigated rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'የመስኖ መጠን $rate%. ፎርሙላ፡ ${kg}_ × $rate2% = $dueኪሎ';
   }
 
   @override
-  String get calcCamelNoDue => 'No due';
+  String get calcCamelNoDue => 'ምንም ክፍያ የለም።';
 
   @override
   String calcCamelSheepN(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count sheep',
-      one: '1 sheep',
+      other: '$count በግ',
+      one: '1 በግ',
     );
     return '$_temp0';
   }
 
   @override
-  String get calcCamel1BintMakhad => '1 bint makhad';
+  String get calcCamel1BintMakhad => '1 ቢንት ማክሃድ';
 
   @override
-  String get calcCamel1BintLabun => '1 bint labun';
+  String get calcCamel1BintLabun => '1 ቢንት ላቡን';
 
   @override
-  String get calcCamel1Hiqqah => '1 hiqqah';
+  String get calcCamel1Hiqqah => '1 ሂቃህ';
 
   @override
-  String get calcCamel1Jadhah => '1 jadhah';
+  String get calcCamel1Jadhah => '1 ጃዳህ';
 
   @override
-  String get calcCamel2BintLabun => '2 bint labun';
+  String get calcCamel2BintLabun => '2 ቢንት ላቡን';
 
   @override
-  String get calcCamel2Hiqqah => '2 hiqqah';
+  String get calcCamel2Hiqqah => '2 ሂቃህ';
 
   @override
   String calcCamelCombo(int hiqqah, int bintLabun) {
-    return '$hiqqah hiqqah + $bintLabun bint labun';
+    return '${hiqqah}_ ሂቃህ + $bintLabun ቢንት ላቡን';
   }
 
   @override
   String calcCamelApproxBintLabun(int count) {
-    return '$count bint labun (approximate combo)';
+    return '${count}_ ቢንት ላቡን (ግምታዊ ጥምር)';
   }
 
   @override
@@ -841,32 +834,32 @@ class AppLocalizationsAm extends AppLocalizations {
   String get profileLogOutDialogBody => 'በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።';
 
   @override
-  String get loginTitle => 'Sign in';
+  String get loginTitle => 'ይግቡ';
 
   @override
-  String get loginSubtitle => 'Use your registered phone number and password';
+  String get loginSubtitle => 'የእርስዎን የተመዘገበ ስልክ ቁጥር እና የይለፍ ቃል ይጠቀሙ';
 
   @override
-  String get loginPhoneLabel => 'Phone number';
+  String get loginPhoneLabel => 'ስልክ ቁጥር';
 
   @override
-  String get loginPasswordLabel => 'Password';
+  String get loginPasswordLabel => 'የይለፍ ቃል';
 
   @override
-  String get loginButton => 'Sign in';
+  String get loginButton => 'ይግቡ';
 
   @override
-  String get loginPhoneRequired => 'Enter your phone number';
+  String get loginPhoneRequired => 'ስልክ ቁጥርህን አስገባ';
 
   @override
   String get loginPhoneInvalid =>
-      'Enter a valid 9-digit mobile number (e.g. 923974838)';
+      'የሚሰራ ባለ 9-አሃዝ የሞባይል ቁጥር ያስገቡ (ለምሳሌ 923974838)';
 
   @override
-  String get loginSecureNote => 'Your sign-in is encrypted and secure';
+  String get loginSecureNote => 'መግባትህ የተመሰጠረ እና ደህንነቱ የተጠበቀ ነው።';
 
   @override
-  String get loginPasswordRequired => 'Enter your password';
+  String get loginPasswordRequired => 'የይለፍ ቃልዎን ያስገቡ';
 
   @override
   String get profileCancel => 'ሰርዝ';
@@ -993,114 +986,481 @@ class AppLocalizationsAm extends AppLocalizations {
       'ተጠቃሚዎችንና ፕሮጀክቶችን በግልጽነት፣ በእምነት እና በበረከት ይደግፉ።';
 
   @override
-  String get donationCurrencySheetTitle => 'How would you like to give?';
+  String get donationCurrencySheetTitle => 'እንዴት መስጠት ይፈልጋሉ?';
 
   @override
   String get donationCurrencySheetSubtitle =>
-      'Choose local ETB payment or international card payment.';
+      'የሀገር ውስጥ የኢቲቢ ክፍያ ወይም የአለምአቀፍ ካርድ ክፍያ ይምረጡ።';
 
   @override
-  String get donationLocalPaymentTitle => 'Local payment (ETB)';
+  String get donationLocalPaymentTitle => 'የአካባቢ ክፍያ (ኢ.ቲ.ቢ.)';
 
   @override
   String get donationLocalPaymentSubtitle =>
-      'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.';
+      'ቴሌቢር፣ ንግድ ባንክ ብር፣ ኤም-ፔሳ እና ሌሎች የኢትዮጵያ መግቢያ መንገዶች።';
 
   @override
-  String get donationInternationalPaymentTitle => 'International payment';
+  String get donationInternationalPaymentTitle => 'ዓለም አቀፍ ክፍያ';
 
   @override
   String get donationInternationalPaymentSubtitle =>
-      'Pay from anywhere with your card and billing address.';
+      'ከየትኛውም ቦታ ሆነው በካርድዎ እና በክፍያ አድራሻዎ ይክፈሉ።';
 
   @override
-  String get donationInternationalTitle => 'International Sadaqah';
+  String get donationInternationalTitle => 'ዓለም አቀፍ ሰዳቃ';
 
   @override
   String get donationInternationalSubtitle =>
-      'Support communities from anywhere in the world.';
+      'በዓለም ላይ ከየትኛውም ቦታ ሆነው ማህበረሰቦችን ይደግፉ።';
 
   @override
-  String get donationAmountLabel => 'Donation amount';
+  String get donationAmountLabel => 'የመዋጮ መጠን';
 
   @override
   String get donationAmountHint => '0.00';
 
   @override
-  String get donationAmountHelper =>
-      'Amount is settled in Ethiopian Birr (ETB).';
+  String get donationAmountHelper => 'መጠኑ በኢትዮጵያ ብር (ኢቲቢ) ተቀምጧል።';
 
   @override
-  String get donationAnonymousLabel => 'Give anonymously';
+  String get donationAnonymousLabel => 'ስም-አልባ ስጡ';
 
   @override
-  String get donationAnonymousSubtitle =>
-      'Your name will not be shown publicly.';
+  String get donationAnonymousSubtitle => 'ስምህ በይፋ አይታይም።';
 
   @override
-  String get donationDonorSectionTitle => 'Your details';
+  String get donationDonorSectionTitle => 'ዝርዝሮችህ';
 
   @override
-  String get donationFullNameLabel => 'Full name';
+  String get donationFullNameLabel => 'ሙሉ ስም';
 
   @override
-  String get donationPhoneLabel => 'Phone';
+  String get donationPhoneLabel => 'ስልክ';
 
   @override
-  String get donationEmailLabel => 'Email';
+  String get donationEmailLabel => 'ኢሜይል';
 
   @override
-  String get donationBillingSectionTitle => 'Billing address';
+  String get donationBillingSectionTitle => 'የመክፈያ አድራሻ';
 
   @override
-  String get donationAddress1Label => 'Address line 1';
+  String get donationAddress1Label => 'የአድራሻ መስመር 1';
 
   @override
-  String get donationAddress2Label => 'Address line 2 (optional)';
+  String get donationAddress2Label => 'አድራሻ መስመር 2 (አማራጭ)';
 
   @override
-  String get donationCountryLabel => 'Country';
+  String get donationCountryLabel => 'ሀገር';
 
   @override
-  String get donationCountryOther => 'Country name';
+  String get donationCountryOther => 'የሀገር ስም';
 
   @override
-  String get donationAdminAreaLabel => 'State / Province';
+  String get donationAdminAreaLabel => 'ግዛት / ክልል';
 
   @override
-  String get donationLocalityLabel => 'City';
+  String get donationLocalityLabel => 'ከተማ';
 
   @override
-  String get donationPostalCodeLabel => 'Postal code';
+  String get donationPostalCodeLabel => 'የፖስታ መላኪያ ኮድ';
 
   @override
-  String get donationContinueToPayment => 'Continue to payment';
+  String get donationContinueToPayment => 'መክፈሉን ይቀጥሉ';
 
   @override
-  String get donationSubmitting => 'Processing…';
+  String get donationSubmitting => 'በማስሄድ ላይ…';
 
   @override
-  String get donationSuccess => 'Thank you for your Sadaqah.';
+  String get donationSuccess => 'ስለ ሰደቃህ አመሰግናለሁ።';
 
   @override
   String get donationValidationPhone =>
-      'Enter a valid phone number in international format (e.g. +15551234567).';
+      'የሚሰራ ስልክ ቁጥር በአለምአቀፍ ቅርጸት አስገባ (ለምሳሌ +15551234567)።';
 
   @override
-  String get donationPaymentWebViewTitle => 'Complete payment';
+  String get donationPaymentWebViewTitle => 'ሙሉ ክፍያ';
 
   @override
-  String get donationSelectCountry => 'Select country';
+  String get donationSelectCountry => 'አገር ይምረጡ';
 
   @override
-  String get donationSearchCountry => 'Search countries';
+  String get donationSearchCountry => 'አገሮችን ይፈልጉ';
 
   @override
-  String get donationSelectState => 'Select state / province';
+  String get donationSelectState => 'ግዛት/አውራጃ ይምረጡ';
 
   @override
-  String get donationSearchState => 'Search by name or abbreviation';
+  String get donationSearchState => 'በስም ወይም በምህፃረ ቃል ይፈልጉ';
 
   @override
-  String get donationNoMatchesFound => 'No matches found';
+  String get donationNoMatchesFound => 'ምንም ተዛማጅ አልተገኙም።';
+
+  @override
+  String get changeAppModeTooltip => 'Change mode';
+
+  @override
+  String get switchedToAwqafMode => 'Switched to Awqaf mode';
+
+  @override
+  String get switchToAwqaf => 'Switch to Awqaf';
+
+  @override
+  String get switchedToZakatMode => 'Switched to Zakat mode';
+
+  @override
+  String get switchToZakat => 'Switch to Zakat';
+
+  @override
+  String get loginForgotPassword => 'Forgot password?';
+
+  @override
+  String get loginForgotPasswordComingSoon => 'Forgot password coming soon';
+
+  @override
+  String get loginNewToBaraka => 'New to Baraka? ';
+
+  @override
+  String get loginCreateAccount => 'Create an account';
+
+  @override
+  String get loginCreateAccountComingSoon => 'Create account coming soon';
+
+  @override
+  String get profileDisbursementIntro =>
+      'Choose where you want to receive disbursements.';
+
+  @override
+  String get profileCoopAccountLabel => 'Coop Bank Account Number';
+
+  @override
+  String get profileCoopAccountHint => 'Enter your account number';
+
+  @override
+  String get profileCoopAccountRequired =>
+      'Please enter your Coop Bank account number.';
+
+  @override
+  String get profileSaveAccount => 'Save Account';
+
+  @override
+  String get faydaIdentityVerification => 'Identity verification';
+
+  @override
+  String get commonBack => 'Back';
+
+  @override
+  String get commonContinue => 'Continue';
+
+  @override
+  String get commonFinish => 'Finish';
+
+  @override
+  String get commonTakePhoto => 'Take Photo';
+
+  @override
+  String get commonChooseGallery => 'Choose from Gallery';
+
+  @override
+  String get commonChooseFile => 'Choose File';
+
+  @override
+  String get regTitle => 'Beneficiary Registration';
+
+  @override
+  String get regMethodFastTrack => 'Fast-Track with Fayda';
+
+  @override
+  String get regMethodManual => 'Manual Registration';
+
+  @override
+  String get regMethodInstitution => 'Institution Registration';
+
+  @override
+  String get regMethodFastTrackDesc =>
+      'Securely verify identity with National ID and continue in minutes.';
+
+  @override
+  String get regMethodManualDesc =>
+      'Share your information and supporting details for trusted review.';
+
+  @override
+  String get regMethodInstitutionDesc =>
+      'Register your organization and submit required compliance documents.';
+
+  @override
+  String get regSecureIdentityTitle => 'Secure Identity Verification';
+
+  @override
+  String get regChooseMethodSubtitle =>
+      'Choose your preferred registration method to begin your journey.';
+
+  @override
+  String get regFastTrackFaydaTitle => 'Fast-Track with National ID (Fayda)';
+
+  @override
+  String get regFastTrackFaydaSubtitle =>
+      'Authenticate using your national digital ID.';
+
+  @override
+  String get regManualTitle => 'Manual Registration';
+
+  @override
+  String get regManualSubtitle => 'Upload supporting documentation for review.';
+
+  @override
+  String get regInstitutionCardTitle => 'Register as Institution';
+
+  @override
+  String get regInstitutionCardSubtitle =>
+      'Company, NGO, cooperative, or government entity.';
+
+  @override
+  String get regRegistrationCodeLabel => 'Registration code';
+
+  @override
+  String get regRegistrationCodeHint => 'EZW-A1B2-C3D4';
+
+  @override
+  String get regEncryptedPrivate => 'Encrypted & Private';
+
+  @override
+  String get regEncryptedPrivateBody =>
+      'Your data is secured and handled in line with privacy standards.';
+
+  @override
+  String get regVerificationInterrupted => 'Verification interrupted';
+
+  @override
+  String get regReopenVerification => 'Reopen verification';
+
+  @override
+  String get regRetryListening => 'Retry listening';
+
+  @override
+  String get regCameraPermissionError =>
+      'Could not open camera/gallery. Please check permissions.';
+
+  @override
+  String get regSelectBirthdate => 'Select birthdate';
+
+  @override
+  String get regManualIdentityTitle => 'Manual Identity Registration';
+
+  @override
+  String get regFirstName => 'First Name';
+
+  @override
+  String get regLastName => 'Last Name';
+
+  @override
+  String get regGrandfatherName => 'Grandfather\'s Name';
+
+  @override
+  String get regPhoneNumber => 'Phone Number';
+
+  @override
+  String get regPhoneHint => '+251911223344 or 0911223344';
+
+  @override
+  String get regEmail => 'Email';
+
+  @override
+  String get regGender => 'Gender';
+
+  @override
+  String get regMale => 'Male';
+
+  @override
+  String get regFemale => 'Female';
+
+  @override
+  String get regBeneficiaryCategory => 'Beneficiary Category';
+
+  @override
+  String get regNotes => 'Notes';
+
+  @override
+  String get regNotesHint => 'e.g. Zakat support applicant';
+
+  @override
+  String get regUploadProfilePicture => 'Upload Profile Picture';
+
+  @override
+  String get regVerifyingFaydaBanner =>
+      'Verifying with Fayda… Complete verification in the browser when it opens.';
+
+  @override
+  String get regNeedsAssessment => 'Needs Assessment';
+
+  @override
+  String get regSituationLabel => 'Describe your current situation';
+
+  @override
+  String get regSituationHint =>
+      'Explain hardship, dependents, and urgent needs...';
+
+  @override
+  String get regUploadProof => 'Upload Proof';
+
+  @override
+  String get regDisbursementSetup => 'Disbursement Setup';
+
+  @override
+  String get regTelebirrTitle => 'Telebirr Wallet';
+
+  @override
+  String get regTelebirrSubtitle => 'Instant mobile money transfer';
+
+  @override
+  String get regMpesaTitle => 'M-Pesa';
+
+  @override
+  String get regMpesaSubtitle => 'Secure mobile payment network';
+
+  @override
+  String get regCoopbankTitle => 'Coopbank Account';
+
+  @override
+  String get regCoopbankSubtitle => 'Direct bank deposit';
+
+  @override
+  String get regAccountOrMobile => 'Account or Mobile Number';
+
+  @override
+  String get regFullLegalName => 'Full Legal Name';
+
+  @override
+  String get regAgreementTitle => 'Agreement & Sharia Compliance';
+
+  @override
+  String get regAgreementBody =>
+      'I declare information is truthful and will use aid according to policy.';
+
+  @override
+  String get regInstitutionRegistration => 'Institution Registration';
+
+  @override
+  String get regInstitutionType => 'Institution Type';
+
+  @override
+  String get regLegalName => 'Legal Name';
+
+  @override
+  String get regTradingName => 'Trading Name';
+
+  @override
+  String get regTradeRegistrationNumber => 'Trade Registration Number';
+
+  @override
+  String get regTin => 'Tax Identification Number (TIN)';
+
+  @override
+  String get regVatOptional => 'VAT Registration Number (optional)';
+
+  @override
+  String get regRegion => 'Region';
+
+  @override
+  String get regCity => 'City';
+
+  @override
+  String get regAddress => 'Address';
+
+  @override
+  String get regNotesOptional => 'Notes (optional)';
+
+  @override
+  String get regAuthorityDocTitle => 'Authority to act document required';
+
+  @override
+  String get regAuthorityDocBody =>
+      'Enable if someone other than a registered signatory submits.';
+
+  @override
+  String get regFilePickError =>
+      'Could not pick file. Please check permissions.';
+
+  @override
+  String get regUploadKycTitle => 'Upload KYC Documents';
+
+  @override
+  String get regUploadKycBody =>
+      'Upload each required document. You can finish once all required documents are uploaded.';
+
+  @override
+  String regReference(Object id) {
+    return 'Reference: $id';
+  }
+
+  @override
+  String get regNoDocumentsRequired => 'No documents required at this time.';
+
+  @override
+  String get regRequired => 'Required';
+
+  @override
+  String get regOptional => 'Optional';
+
+  @override
+  String regSelectedFile(Object name) {
+    return 'Selected: $name';
+  }
+
+  @override
+  String get regUploaded => 'Uploaded';
+
+  @override
+  String get regUpload => 'Upload';
+
+  @override
+  String get regCreatePasswordTitle => 'Create Your Password';
+
+  @override
+  String get regCreatePasswordBody =>
+      'Choose a secure password for your account. You will use it to sign in after registration.';
+
+  @override
+  String get regPassword => 'Password';
+
+  @override
+  String get regConfirmPassword => 'Confirm Password';
+
+  @override
+  String get regPasswordRules =>
+      'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
+
+  @override
+  String get regPasswordSuccess =>
+      'Password set successfully. Welcome to Mejlis Digital Hub.';
+
+  @override
+  String regInstitutionComplete(Object id) {
+    return 'Institution registration complete. Reference: $id';
+  }
+
+  @override
+  String get regInstitutionCompleteGeneric =>
+      'Institution registration complete.';
+
+  @override
+  String get regCompleteLocal =>
+      'Registration complete. Needs and disbursement details are saved locally.';
+
+  @override
+  String get regContinueWithFayda => 'Continue with Fayda';
+
+  @override
+  String get regVerifyingFayda => 'Verifying with Fayda…';
+
+  @override
+  String get regSubmitContinue => 'Submit & Continue';
+
+  @override
+  String get regSetPasswordContinue => 'Set Password & Continue';
+
+  @override
+  String get regSetPasswordFinish => 'Set Password & Finish';
+
+  @override
+  String get navAwqaf => 'Awqaf';
 }

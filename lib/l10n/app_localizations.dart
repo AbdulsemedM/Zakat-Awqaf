@@ -1997,6 +1997,690 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No matches found'**
   String get donationNoMatchesFound;
+
+  /// No description provided for @changeAppModeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Change mode'**
+  String get changeAppModeTooltip;
+
+  /// No description provided for @switchedToAwqafMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to Awqaf mode'**
+  String get switchedToAwqafMode;
+
+  /// No description provided for @switchToAwqaf.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Awqaf'**
+  String get switchToAwqaf;
+
+  /// No description provided for @switchedToZakatMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to Zakat mode'**
+  String get switchedToZakatMode;
+
+  /// No description provided for @switchToZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Zakat'**
+  String get switchToZakat;
+
+  /// No description provided for @loginForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get loginForgotPassword;
+
+  /// No description provided for @loginForgotPasswordComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password coming soon'**
+  String get loginForgotPasswordComingSoon;
+
+  /// No description provided for @loginNewToBaraka.
+  ///
+  /// In en, this message translates to:
+  /// **'New to Baraka? '**
+  String get loginNewToBaraka;
+
+  /// No description provided for @loginCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get loginCreateAccount;
+
+  /// No description provided for @loginCreateAccountComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account coming soon'**
+  String get loginCreateAccountComingSoon;
+
+  /// No description provided for @profileDisbursementIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where you want to receive disbursements.'**
+  String get profileDisbursementIntro;
+
+  /// No description provided for @profileCoopAccountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Coop Bank Account Number'**
+  String get profileCoopAccountLabel;
+
+  /// No description provided for @profileCoopAccountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your account number'**
+  String get profileCoopAccountHint;
+
+  /// No description provided for @profileCoopAccountRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your Coop Bank account number.'**
+  String get profileCoopAccountRequired;
+
+  /// No description provided for @profileSaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Account'**
+  String get profileSaveAccount;
+
+  /// No description provided for @faydaIdentityVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity verification'**
+  String get faydaIdentityVerification;
+
+  /// No description provided for @commonBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get commonBack;
+
+  /// No description provided for @commonContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get commonContinue;
+
+  /// No description provided for @commonFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get commonFinish;
+
+  /// No description provided for @commonTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get commonTakePhoto;
+
+  /// No description provided for @commonChooseGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get commonChooseGallery;
+
+  /// No description provided for @commonChooseFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose File'**
+  String get commonChooseFile;
+
+  /// No description provided for @regTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary Registration'**
+  String get regTitle;
+
+  /// No description provided for @regMethodFastTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast-Track with Fayda'**
+  String get regMethodFastTrack;
+
+  /// No description provided for @regMethodManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Registration'**
+  String get regMethodManual;
+
+  /// No description provided for @regMethodInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution Registration'**
+  String get regMethodInstitution;
+
+  /// No description provided for @regMethodFastTrackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Securely verify identity with National ID and continue in minutes.'**
+  String get regMethodFastTrackDesc;
+
+  /// No description provided for @regMethodManualDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your information and supporting details for trusted review.'**
+  String get regMethodManualDesc;
+
+  /// No description provided for @regMethodInstitutionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Register your organization and submit required compliance documents.'**
+  String get regMethodInstitutionDesc;
+
+  /// No description provided for @regSecureIdentityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure Identity Verification'**
+  String get regSecureIdentityTitle;
+
+  /// No description provided for @regChooseMethodSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred registration method to begin your journey.'**
+  String get regChooseMethodSubtitle;
+
+  /// No description provided for @regFastTrackFaydaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast-Track with National ID (Fayda)'**
+  String get regFastTrackFaydaTitle;
+
+  /// No description provided for @regFastTrackFaydaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate using your national digital ID.'**
+  String get regFastTrackFaydaSubtitle;
+
+  /// No description provided for @regManualTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Registration'**
+  String get regManualTitle;
+
+  /// No description provided for @regManualSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload supporting documentation for review.'**
+  String get regManualSubtitle;
+
+  /// No description provided for @regInstitutionCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register as Institution'**
+  String get regInstitutionCardTitle;
+
+  /// No description provided for @regInstitutionCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company, NGO, cooperative, or government entity.'**
+  String get regInstitutionCardSubtitle;
+
+  /// No description provided for @regRegistrationCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration code'**
+  String get regRegistrationCodeLabel;
+
+  /// No description provided for @regRegistrationCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'EZW-A1B2-C3D4'**
+  String get regRegistrationCodeHint;
+
+  /// No description provided for @regEncryptedPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted & Private'**
+  String get regEncryptedPrivate;
+
+  /// No description provided for @regEncryptedPrivateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is secured and handled in line with privacy standards.'**
+  String get regEncryptedPrivateBody;
+
+  /// No description provided for @regVerificationInterrupted.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification interrupted'**
+  String get regVerificationInterrupted;
+
+  /// No description provided for @regReopenVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen verification'**
+  String get regReopenVerification;
+
+  /// No description provided for @regRetryListening.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry listening'**
+  String get regRetryListening;
+
+  /// No description provided for @regCameraPermissionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open camera/gallery. Please check permissions.'**
+  String get regCameraPermissionError;
+
+  /// No description provided for @regSelectBirthdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select birthdate'**
+  String get regSelectBirthdate;
+
+  /// No description provided for @regManualIdentityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Identity Registration'**
+  String get regManualIdentityTitle;
+
+  /// No description provided for @regFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get regFirstName;
+
+  /// No description provided for @regLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get regLastName;
+
+  /// No description provided for @regGrandfatherName.
+  ///
+  /// In en, this message translates to:
+  /// **'Grandfather\'s Name'**
+  String get regGrandfatherName;
+
+  /// No description provided for @regPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get regPhoneNumber;
+
+  /// No description provided for @regPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+251911223344 or 0911223344'**
+  String get regPhoneHint;
+
+  /// No description provided for @regEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get regEmail;
+
+  /// No description provided for @regGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get regGender;
+
+  /// No description provided for @regMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get regMale;
+
+  /// No description provided for @regFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get regFemale;
+
+  /// No description provided for @regBeneficiaryCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary Category'**
+  String get regBeneficiaryCategory;
+
+  /// No description provided for @regNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get regNotes;
+
+  /// No description provided for @regNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Zakat support applicant'**
+  String get regNotesHint;
+
+  /// No description provided for @regUploadProfilePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Profile Picture'**
+  String get regUploadProfilePicture;
+
+  /// No description provided for @regVerifyingFaydaBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying with Fayda… Complete verification in the browser when it opens.'**
+  String get regVerifyingFaydaBanner;
+
+  /// No description provided for @regNeedsAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs Assessment'**
+  String get regNeedsAssessment;
+
+  /// No description provided for @regSituationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your current situation'**
+  String get regSituationLabel;
+
+  /// No description provided for @regSituationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain hardship, dependents, and urgent needs...'**
+  String get regSituationHint;
+
+  /// No description provided for @regUploadProof.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Proof'**
+  String get regUploadProof;
+
+  /// No description provided for @regDisbursementSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Disbursement Setup'**
+  String get regDisbursementSetup;
+
+  /// No description provided for @regTelebirrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Telebirr Wallet'**
+  String get regTelebirrTitle;
+
+  /// No description provided for @regTelebirrSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant mobile money transfer'**
+  String get regTelebirrSubtitle;
+
+  /// No description provided for @regMpesaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'M-Pesa'**
+  String get regMpesaTitle;
+
+  /// No description provided for @regMpesaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure mobile payment network'**
+  String get regMpesaSubtitle;
+
+  /// No description provided for @regCoopbankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Coopbank Account'**
+  String get regCoopbankTitle;
+
+  /// No description provided for @regCoopbankSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct bank deposit'**
+  String get regCoopbankSubtitle;
+
+  /// No description provided for @regAccountOrMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Account or Mobile Number'**
+  String get regAccountOrMobile;
+
+  /// No description provided for @regFullLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Legal Name'**
+  String get regFullLegalName;
+
+  /// No description provided for @regAgreementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Agreement & Sharia Compliance'**
+  String get regAgreementTitle;
+
+  /// No description provided for @regAgreementBody.
+  ///
+  /// In en, this message translates to:
+  /// **'I declare information is truthful and will use aid according to policy.'**
+  String get regAgreementBody;
+
+  /// No description provided for @regInstitutionRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution Registration'**
+  String get regInstitutionRegistration;
+
+  /// No description provided for @regInstitutionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution Type'**
+  String get regInstitutionType;
+
+  /// No description provided for @regLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal Name'**
+  String get regLegalName;
+
+  /// No description provided for @regTradingName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trading Name'**
+  String get regTradingName;
+
+  /// No description provided for @regTradeRegistrationNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade Registration Number'**
+  String get regTradeRegistrationNumber;
+
+  /// No description provided for @regTin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Identification Number (TIN)'**
+  String get regTin;
+
+  /// No description provided for @regVatOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Registration Number (optional)'**
+  String get regVatOptional;
+
+  /// No description provided for @regRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get regRegion;
+
+  /// No description provided for @regCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get regCity;
+
+  /// No description provided for @regAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get regAddress;
+
+  /// No description provided for @regNotesOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (optional)'**
+  String get regNotesOptional;
+
+  /// No description provided for @regAuthorityDocTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Authority to act document required'**
+  String get regAuthorityDocTitle;
+
+  /// No description provided for @regAuthorityDocBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable if someone other than a registered signatory submits.'**
+  String get regAuthorityDocBody;
+
+  /// No description provided for @regFilePickError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not pick file. Please check permissions.'**
+  String get regFilePickError;
+
+  /// No description provided for @regUploadKycTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload KYC Documents'**
+  String get regUploadKycTitle;
+
+  /// No description provided for @regUploadKycBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload each required document. You can finish once all required documents are uploaded.'**
+  String get regUploadKycBody;
+
+  /// No description provided for @regReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference: {id}'**
+  String regReference(Object id);
+
+  /// No description provided for @regNoDocumentsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'No documents required at this time.'**
+  String get regNoDocumentsRequired;
+
+  /// No description provided for @regRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get regRequired;
+
+  /// No description provided for @regOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get regOptional;
+
+  /// No description provided for @regSelectedFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {name}'**
+  String regSelectedFile(Object name);
+
+  /// No description provided for @regUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded'**
+  String get regUploaded;
+
+  /// No description provided for @regUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get regUpload;
+
+  /// No description provided for @regCreatePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Password'**
+  String get regCreatePasswordTitle;
+
+  /// No description provided for @regCreatePasswordBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a secure password for your account. You will use it to sign in after registration.'**
+  String get regCreatePasswordBody;
+
+  /// No description provided for @regPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get regPassword;
+
+  /// No description provided for @regConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get regConfirmPassword;
+
+  /// No description provided for @regPasswordRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.'**
+  String get regPasswordRules;
+
+  /// No description provided for @regPasswordSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password set successfully. Welcome to Mejlis Digital Hub.'**
+  String get regPasswordSuccess;
+
+  /// No description provided for @regInstitutionComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution registration complete. Reference: {id}'**
+  String regInstitutionComplete(Object id);
+
+  /// No description provided for @regInstitutionCompleteGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution registration complete.'**
+  String get regInstitutionCompleteGeneric;
+
+  /// No description provided for @regCompleteLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration complete. Needs and disbursement details are saved locally.'**
+  String get regCompleteLocal;
+
+  /// No description provided for @regContinueWithFayda.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Fayda'**
+  String get regContinueWithFayda;
+
+  /// No description provided for @regVerifyingFayda.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying with Fayda…'**
+  String get regVerifyingFayda;
+
+  /// No description provided for @regSubmitContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit & Continue'**
+  String get regSubmitContinue;
+
+  /// No description provided for @regSetPasswordContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Password & Continue'**
+  String get regSetPasswordContinue;
+
+  /// No description provided for @regSetPasswordFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Password & Finish'**
+  String get regSetPasswordFinish;
+
+  /// No description provided for @navAwqaf.
+  ///
+  /// In en, this message translates to:
+  /// **'Awqaf'**
+  String get navAwqaf;
 }
 
 class _AppLocalizationsDelegate

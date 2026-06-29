@@ -318,8 +318,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: InkWell(
                                       onTap: () {
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Forgot password coming soon'),
+                                          SnackBar(
+                                            content: Text(l10n.loginForgotPasswordComingSoon),
                                           ),
                                         );
                                       },
@@ -330,7 +330,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           vertical: 4,
                                         ),
                                         child: Text(
-                                          'Forgot password?',
+                                          l10n.loginForgotPassword,
                                           style: theme.textTheme.labelLarge?.copyWith(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.w700,
@@ -447,7 +447,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'New to Baraka? ',
+                                  l10n.loginNewToBaraka,
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: Colors.white.withValues(alpha: 0.72),
                                   ),
@@ -456,8 +456,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                   onTap: () {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Create account coming soon'),
+                                      SnackBar(
+                                        content: Text(l10n.loginCreateAccountComingSoon),
                                       ),
                                     );
                                   },
@@ -467,7 +467,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       vertical: 2,
                                     ),
                                     child: Text(
-                                      'Create an account',
+                                      l10n.loginCreateAccount,
                                       style: theme.textTheme.bodySmall?.copyWith(
                                         color: const Color(0xFFF0CD7E),
                                         fontWeight: FontWeight.w700,

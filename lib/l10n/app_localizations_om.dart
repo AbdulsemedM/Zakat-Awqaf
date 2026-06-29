@@ -9,14 +9,13 @@ class AppLocalizationsOm extends AppLocalizations {
   AppLocalizationsOm([String locale = 'om']) : super(locale);
 
   @override
-  String get appTitle => 'Zakat & Awqaf Commission';
+  String get appTitle => 'Komishinii Zakaa fi Awqaaf';
 
   @override
-  String get splashSlogan =>
-      'For the sake of Allah, for the service of humanity';
+  String get splashSlogan => 'Rabbiif jecha, tajaajila dhala namaatiif';
 
   @override
-  String get splashWaqfByLabel => 'A Waqf by';
+  String get splashWaqfByLabel => 'A Waaqeffannaa by';
 
   @override
   String get splashWaqfByTitle => 'Coop Bank Alhuda';
@@ -125,95 +124,95 @@ class AppLocalizationsOm extends AppLocalizations {
   String get missingCertificateDetails => 'Bal\'ina ragaa hin jiru.';
 
   @override
-  String get calcAppBarTitle => 'Zakat Calculator';
+  String get calcAppBarTitle => 'Shallaggii Zakaa';
 
   @override
-  String get calcPayYourZakat => 'Pay Your Zakat';
+  String get calcPayYourZakat => 'Zakaa Keessan Bafadhaa';
 
   @override
-  String get calcTabWealth => 'Wealth';
+  String get calcTabWealth => 'Qabeenya';
 
   @override
-  String get calcTabLivestock => 'Livestock';
+  String get calcTabLivestock => 'Beeylada';
 
   @override
-  String get calcTabCrops => 'Crops';
+  String get calcTabCrops => 'Midhaan';
 
   @override
-  String get calcStep1NisabTitle => 'Step 1: Nisab threshold';
+  String get calcStep1NisabTitle => 'Tarkaanfii 1: Ulaagaa Nisab';
 
   @override
   String get calcStep1NisabBody =>
-      'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.';
+      'Zakaan kan kaffalamu yoo qabeenyi qulqulluun kee ulaagaa irra darbeedha. Nisab gatii warqee 85g platform 24k irratti hundaa\'a.';
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
-    return '$grams × $price = $total';
+    return '$grams × $price = $total .';
   }
 
   @override
   String calcNisabThresholdBanner(String amount) {
-    return 'Nisab threshold (platform rate, 85g gold equivalent): $amount';
+    return 'Ulaagaa Nisab (saffisa waltajjii, warqee 85g walqixa): $amount .';
   }
 
   @override
   String get calcUsdEtb => 'USD/ETB';
 
   @override
-  String get calcFxLive => 'Using live exchange rate';
+  String get calcFxLive => 'Sadarkaa jijjiirraa kallattiin fayyadamuu';
 
   @override
-  String get calcFxCache => 'Using cached exchange rate';
+  String get calcFxCache => 'Sadarkaa jijjiirraa kaached fayyadamuu';
 
   @override
-  String get calcFxFallback => 'Using fallback exchange rate';
+  String get calcFxFallback => 'Sadarkaa jijjiirraa fallback fayyadamuu';
 
   @override
-  String get calcTimestampUnavailable => 'timestamp unavailable';
+  String get calcTimestampUnavailable => 'chaappaan yeroo hin jiru';
 
   @override
-  String get calcStep1LivestockTitle => 'Step 1: Livestock scale method';
+  String get calcStep1LivestockTitle => 'Tarkaanfii 1: Mala iskeelii horii';
 
   @override
   String get calcStep1LivestockBody =>
-      'Livestock Zakat is calculated by physical head-count scales (not % of value).';
+      'Zakaan beeyladaa kan shallagamu madaallii lakkoofsa mataa fiizikaalaatiin (% gatii miti).';
 
   @override
   String get calcStep1LivestockNisabNote =>
-      'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.';
+      'Ulaagaa Nisab: Hoolaa/Re’ee 40, Loon 30, Gaala 5. Loon walnyaatinsa 30/40 fayyadama; gaalli sadarkaa sadarkaa hordofu.';
 
   @override
   String calcAdvisoryPrefix(String text) {
-    return 'Advisory: $text';
+    return 'Gorsaa: $text .';
   }
 
   @override
-  String get calcArabicTermDefinitionsTitle => 'Arabic Term Definitions';
+  String get calcArabicTermDefinitionsTitle => 'Hiika Jechoota Afaan Arabaa';
 
   @override
-  String get calcArabicDefTabi => 'one-year-old calf';
+  String get calcArabicDefTabi => 're’ee waggaa tokkoo';
 
   @override
-  String get calcArabicDefMusinnah => 'two-year-old cow';
+  String get calcArabicDefMusinnah => 're’ee waggaa lamaa';
 
   @override
-  String get calcArabicDefBintMakhad => 'one-year-old she-camel';
+  String get calcArabicDefBintMakhad => 'gaala dubaraa waggaa tokkoo';
 
   @override
-  String get calcArabicDefBintLabun => 'two-year-old she-camel';
+  String get calcArabicDefBintLabun => 'gaala dubaraa waggaa lamaa';
 
   @override
-  String get calcArabicDefHiqqah => 'three-year-old she-camel';
+  String get calcArabicDefHiqqah => 'gaala dubaraa waggaa sadii';
 
   @override
-  String get calcArabicDefJadhah => 'four-year-old she-camel';
+  String get calcArabicDefJadhah => 'gaala dubaraa waggaa afur';
 
   @override
-  String get calcStep1CropTitle => 'Step 1: Crop (Ushr) calculation';
+  String get calcStep1CropTitle => 'Tarkaanfii 1: Shallaggii midhaanii (Ushr).';
 
   @override
   String get calcStep1CropBody =>
-      'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.';
+      'Zakaan midhaanii yeroo sassaabamuu qaba. Nisab 653kg dha. Saffisni %10 (roobaan kan sooramu), %5 (jallisii), ykn makaadhaaf ulfaataadha.';
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -222,17 +221,17 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String calcCropLineIrrigation(String mode) {
-    return 'Irrigation mode: $mode';
+    return 'Haala jallisii: $mode .';
   }
 
   @override
   String calcCropLineEffectiveRate(String rate) {
-    return 'Effective rate: $rate%';
+    return 'Sadarkaa bu\'a qabeessa: $rate%';
   }
 
   @override
   String calcCropLineFormula(String line) {
-    return 'Formula: $line';
+    return 'Foormulaa: $line .';
   }
 
   @override
@@ -242,202 +241,205 @@ class AppLocalizationsOm extends AppLocalizations {
   String get calcRelationLt => '<';
 
   @override
-  String get calcOverviewNetWorthTitle => 'Net Worth Overview';
+  String get calcOverviewNetWorthTitle => 'Haala Waliigalaa Qabeenya Qulqulluu';
 
   @override
-  String get calcOverviewLivestockTitle => 'Livestock Overview';
+  String get calcOverviewLivestockTitle => 'Haala Waliigalaa Beeyladaa';
 
   @override
-  String get calcOverviewCropTitle => 'Crop Overview';
+  String get calcOverviewCropTitle => 'Haala Waliigalaa Midhaanii';
 
   @override
-  String get calcBadgeAboveNisab => 'Above Nisab';
+  String get calcBadgeAboveNisab => 'Nisab olitti';
 
   @override
-  String get calcBadgeBelowNisab => 'Below Nisab';
+  String get calcBadgeBelowNisab => 'Nisab gadiitti';
 
   @override
-  String get calcBadgeZakatDue => 'Zakat Due';
+  String get calcBadgeZakatDue => 'Zakaa Duumee';
 
   @override
   String get calcBadgeNoDue => 'No Due';
 
   @override
-  String get calcZakatDueLabel => 'Zakat Due';
+  String get calcZakatDueLabel => 'Zakaa Duumee';
 
   @override
-  String get calcLivestockDueLabel => 'Livestock Due';
+  String get calcLivestockDueLabel => 'Beeylada Due';
 
   @override
-  String get calcCropZakatDueLabel => 'Crop Zakat Due';
+  String get calcCropZakatDueLabel => 'Midhaan Zakaa Guutuu';
 
   @override
   String calcAnimalsCount(int count) {
-    return '$count animals';
+    return '$count bineensota';
   }
 
   @override
   String calcKgHarvest(String kg) {
-    return '$kg kg harvest';
+    return '$kg kg sassaabbii';
   }
 
   @override
   String get calcLivestockTermsFootnote =>
-      'Terms like tabi\', musinnah, bint makhad, bint labun, hiqqah, and jadhah are explained below in Livestock details.';
+      'Jechoonni akka tabi\', musinnah, bint makhad, bint labun, hiqqah, fi jadhah bal\'inaan Beeylada keessatti akka armaan gadiitti ibsamaniiru.';
 
   @override
-  String get calcStep2EnterAssets => 'Step 2: Enter Your Assets';
+  String get calcStep2EnterAssets =>
+      'Tarkaanfii 2ffaa: Qabeenya Keessan Galchi';
 
   @override
   String get calcStep2EnterAssetsBody =>
-      'Enter the value of your assets in ETB';
+      'Gatii qabeenya keetii ETB keessatti galchi';
 
   @override
-  String get calcCashBankSavings => 'Cash & Bank Savings';
+  String get calcCashBankSavings => 'Qusannoo Maallaqaa fi Baankii';
 
   @override
-  String get calcCashOnHand => 'Cash on Hand';
+  String get calcCashOnHand => 'Maallaqa Harkaa';
 
   @override
-  String get calcBankBalance => 'Bank Balance';
+  String get calcBankBalance => 'Hafnaan Baankii';
 
   @override
-  String get calcMobileWallet => 'Mobile Wallet';
+  String get calcMobileWallet => 'Wallet Mobaayilaa';
 
   @override
-  String get calcBusinessAssets => 'Business Assets';
+  String get calcBusinessAssets => 'Qabeenya Daldalaa';
 
   @override
-  String get calcFieldDescription => 'Description';
+  String get calcFieldDescription => 'Ibsa';
 
   @override
-  String get calcFieldType => 'Type';
+  String get calcFieldType => 'Akaakuu';
 
   @override
-  String get calcAmountEtb => 'Amount (ETB)';
+  String get calcAmountEtb => 'Maallaqa (ETB) .';
 
   @override
-  String get calcAddBusinessAsset => 'Add business asset';
+  String get calcAddBusinessAsset => 'Qabeenya daldalaa dabaluu';
 
   @override
-  String get calcGoldSilver => 'Gold & Silver';
+  String get calcGoldSilver => 'Warqee & Meetii';
 
   @override
-  String get calcGoldGrams => 'Gold (grams)';
+  String get calcGoldGrams => 'Warqee (giraama) .';
 
   @override
-  String get calcGoldKarat => 'Gold Karat';
+  String get calcGoldKarat => 'Warqee Karat';
 
   @override
-  String get calcSilverGrams => 'Silver (grams)';
+  String get calcSilverGrams => 'Meetii (giraama) .';
 
   @override
-  String get calcLiabilities => 'Liabilities';
+  String get calcLiabilities => 'Itti gaafatamummaa';
 
   @override
-  String get calcAddLiability => 'Add liability';
+  String get calcAddLiability => 'Itti gaafatamummaa itti dabali';
 
   @override
-  String get calcAssetInventory => 'Inventory';
+  String get calcAssetInventory => 'Eeruu';
 
   @override
-  String get calcAssetReceivable => 'Receivable';
+  String get calcAssetReceivable => 'Fudhatama kan qabu';
 
   @override
-  String get calcAssetOther => 'Other';
+  String get calcAssetOther => 'Kan biraa';
 
   @override
-  String get calcLiabilityShortTermDebt => 'Short-term debt';
+  String get calcLiabilityShortTermDebt => 'Liqaa yeroo gabaabaa';
 
   @override
-  String get calcLiabilityPayable => 'Payable';
+  String get calcLiabilityPayable => 'Kaffaltii kan qabu';
 
   @override
-  String get calcLiabilityOther => 'Other';
+  String get calcLiabilityOther => 'Kan biraa';
 
   @override
-  String get calcLivestockSheepGoats => 'Sheep / Goats';
+  String get calcLivestockSheepGoats => 'Hoolaa / Re\'ee';
 
   @override
-  String get calcLivestockCattle => 'Cattle';
+  String get calcLivestockCattle => 'Loon';
 
   @override
-  String get calcLivestockCamels => 'Camels';
+  String get calcLivestockCamels => 'Gaala';
 
   @override
-  String get calcPastureFedTitle => 'Pasture-fed most of the year';
+  String get calcPastureFedTitle =>
+      'Waggaa keessaa harka caalu dheedichaan kan sooramu';
 
   @override
-  String get calcPastureFedSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcPastureFedSubtitle => 'Gorsa qofa; shallaggii hin ugguru';
 
   @override
-  String get calcHawlTitle => 'Completed one lunar year (hawl)';
+  String get calcHawlTitle => 'Waggaa ji\'aa tokko xumure (hawl) .';
 
   @override
-  String get calcHawlSubtitle => 'Advisory only; does not block calculation';
+  String get calcHawlSubtitle => 'Gorsa qofa; shallaggii hin ugguru';
 
   @override
-  String get calcWorkAnimalsTitle => 'Used for work (plowing/transport)';
+  String get calcWorkAnimalsTitle => 'Hojiif kan oolu (qottoo/geejjibaa) .';
 
   @override
-  String get calcWorkAnimalsSubtitle =>
-      'Advisory only; does not block calculation';
+  String get calcWorkAnimalsSubtitle => 'Gorsa qofa; shallaggii hin ugguru';
 
   @override
-  String get calcLivestockSummaryHeading => 'Livestock summary';
+  String get calcLivestockSummaryHeading => 'Cuunfaa beeyladaa';
 
   @override
-  String get calcCropNisabHeading => 'Nisab & crop due';
+  String get calcCropNisabHeading => 'Nisab & midhaan irraa kan ka\'e';
 
   @override
   String calcEffectiveCropRateLine(String percent) {
-    return 'Effective crop rate: $percent%';
+    return 'Sadarkaa midhaan bu’a qabeessa: $percent% .';
   }
 
   @override
   String calcCropZakatDueKgLine(String kg) {
-    return 'Crop Zakat due: $kg kg';
+    return 'Zakaa midhaanii kaffalamuu qabu: $kg kg';
   }
 
   @override
-  String get calcHowCropZakatWorksTitle => 'How crop Zakat works';
+  String get calcHowCropZakatWorksTitle =>
+      'Zakaan midhaan akkamitti akka hojjetu';
 
   @override
   String get calcHowCropZakatWorksBody =>
-      'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
+      'Nisab: 653kg. Sadarkaa: roobaan kan nyaatame %10, kan jallisiin misoomu 5%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).';
 
   @override
   String get calcHowCropZakatNote =>
-      'Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.';
+      'Hubachiisa: App seera kana bal\'inaan hojiirra oolcha salphaa ta\'eef. Ejjennoo hayyootaa bal’ina gosa midhaanii fi hir’ina baasii irratti garaagarummaa qaba; dhimmoota adda ta’aniif hayyoota gahumsa qaban mariisisuu.';
 
   @override
-  String get calcWealthNisabHeading => 'Nisab & wealth Zakat';
+  String get calcWealthNisabHeading => 'Nisab & qabeenya Zakaa';
 
   @override
   String calcWealthNisabLine(String nisab) {
-    return 'Nisab threshold: $nisab';
+    return 'Ulaagaa Nisab: $nisab .';
   }
 
   @override
   String calcWealthZakatDueLine(String due) {
-    return 'Wealth Zakat due (smaller amount on the card): $due';
+    return 'Qabeenya Zakaa kaffalamuu qabu (kaardii irratti maallaqa xiqqaa): $due .';
   }
 
   @override
-  String get calcHowWealthZakatWorksTitle => 'How wealth Zakat is calculated';
+  String get calcHowWealthZakatWorksTitle =>
+      'Akkamitti qabeenyi Zakaan shallagama';
 
   @override
   String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is $grams g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of $silverRate ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.';
+    return 'Maallaqa harka jiru, hafnaan baankii, boorsaa moobaayilaa, qabeenya daldalaa, fi gatii warqee fi meetii itti daballa. Nisab warqee $grams g gatii app’n giraama tokkoof 24k ta’een. Warqeen ati qabdu kaaraatii filatteef saffisa appii fayyadamuun gatii kennama. Meetiin wabii dhaabbataa $silverRate ETB giraama tokkoof fayyadama. Dirqamni ati galchitu qabeenya qulqulluu argachuuf hir’ifama. Qabeenyi qulqulluun nisaab irratti yookiin isaa ol yoo ta’e, Zakaan kaffalamuu qabu qabeenya qulqulluu irraa %2.5 ta’a.';
   }
 
   @override
   String get calcHowWealthZakatNote =>
-      'Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.';
+      'Hubachiisa: Hayyoonni qabeenyi kam akka zakaa ta’u, liqiin qabeenya akkamitti akka hir’isu, bara ji’aa (hawl) yoom akka raawwatamuu fi bal’ina biroo irratti garaagarummaa qabu. Iskiriiniin kun tilmaama barnootaati-haala kee hayyoota gahumsa qaban waliin mirkaneessi.';
 
   @override
-  String get calcWealthBreakdownTitle => 'How the amounts above are calculated';
+  String get calcWealthBreakdownTitle =>
+      'Akkaataa maallaqni armaan olii itti shallagamu';
 
   @override
   String calcWealthTransLiquidsLine(
@@ -446,12 +448,12 @@ class AppLocalizationsOm extends AppLocalizations {
     String mobile,
     String subtotal,
   ) {
-    return 'Cash + bank + mobile: $cash + $bank + $mobile = $subtotal';
+    return 'Maallaqa + baankii + moobaayila: $cash + $bank + $mobile = $subtotal .';
   }
 
   @override
   String calcWealthTransBusinessLine(String business) {
-    return 'Business assets (sum of rows): $business';
+    return 'Qabeenya daldalaa (walitti qabama tarreewwanii): $business .';
   }
 
   @override
@@ -462,12 +464,12 @@ class AppLocalizationsOm extends AppLocalizations {
     String silver,
     String total,
   ) {
-    return 'Total assets: $liquids + $business + $gold + $silver = $total';
+    return 'Qabeenya waliigalaa: $liquids + $business + $gold + $silver = $total .';
   }
 
   @override
   String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'Nisab: $grams g × 24k ($price/g) = $nisab';
+    return 'Nisab: $grams g × 24k ($price/g) = $nisab .';
   }
 
   @override
@@ -477,46 +479,46 @@ class AppLocalizationsOm extends AppLocalizations {
     String price,
     String value,
   ) {
-    return 'Gold: $grams g × $karat ($price/g) = $value';
+    return 'Warqee: $grams g × $karat ($price/g) = $value .';
   }
 
   @override
   String calcWealthTransSilverLine(String grams, String rate, String value) {
-    return 'Silver: $grams g × $rate ETB/g = $value';
+    return 'Meetii: $grams g × $rate ETB/g = $value .';
   }
 
   @override
   String calcWealthTransNetLine(String liabilities, String net) {
-    return 'Net wealth (large amount on the card): total assets − liabilities ($liabilities) = $net';
+    return 'Qabeenya qulqulluu (maallaqa guddaa kaardii irratti): qabeenya waliigalaa − dirqama ($liabilities) = $net .';
   }
 
   @override
   String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × 2.5% = $due.';
+    return '$net nisab ($nisab) irratti ykn isaa ol waan ta\'eef, Zakaa kaffalamuu = $net × 2.5% = $due.';
   }
 
   @override
   String calcWealthTransDueBelow(String net, String nisab, String due) {
-    return 'Because $net is below nisab ($nisab), wealth Zakat due = $due.';
+    return 'Sababni isaas $net nisaaba ($nisab) gadi waan ta\'eef, qabeenyi Zakaa kaffalamuu = $due.';
   }
 
   @override
-  String get calcCropWeightKg => 'Crop Weight (kg)';
+  String get calcCropWeightKg => 'Ulfaatina Midhaanii (kg) .';
 
   @override
-  String get calcCropModeRainFed => 'Rain-fed';
+  String get calcCropModeRainFed => 'Roobaan kan sooramu';
 
   @override
-  String get calcCropModeIrrigated => 'Irrigated';
+  String get calcCropModeIrrigated => 'Jallisii';
 
   @override
-  String get calcCropModeMixed => 'Mixed';
+  String get calcCropModeMixed => 'Walmakaa';
 
   @override
-  String get calcRainFedSharePct => 'Rain-fed share %';
+  String get calcRainFedSharePct => 'Qooda rooba soorame % .';
 
   @override
-  String get calcIrrigatedSharePct => 'Irrigated share %';
+  String get calcIrrigatedSharePct => 'Qooda jallisii % .';
 
   @override
   String get calcGoldK24 => '24k';
@@ -534,24 +536,23 @@ class AppLocalizationsOm extends AppLocalizations {
   String get calcGoldK14 => '14k';
 
   @override
-  String get calcMethodologyPlaceholder =>
-      'Zakat methodology content placeholder.';
+  String get calcMethodologyPlaceholder => 'Qabiyyee mala Zakaa iddoo.';
 
   @override
   String get calcPayBlockedWealth =>
-      'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
+      'Qabeenyi Zakaan hin kaffalamu (nisab gadi ykn zeeroo ETB kaffalamuu qabu). Galtee kee sirreessaa.';
 
   @override
   String get calcPayBlockedLivestock =>
-      'No livestock Zakat is due for your current counts.';
+      'Lakkoofsa ammaa keessaniif Zakaan beeyladaa tokkollee hin kaffalamu.';
 
   @override
   String get calcPayBlockedCrops =>
-      'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
+      'Zakaan midhaanii ammallee yeroon isaa hin geenye (nisab midhaan sassaabuu gadi ykn zeeroo kg yeroon isaa kaffalamuu qaba).';
 
   @override
   String calcCertCropDueLine(String kg) {
-    return 'Crop Zakat due: $kg kg';
+    return 'Zakaa midhaanii kaffalamuu qabu: $kg kg';
   }
 
   @override
@@ -559,57 +560,58 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String calcLsSheepGoats(int count) {
-    return 'Sheep/Goats: $count sheep';
+    return 'Hoolota/Re\'ee: $count hoolaa';
   }
 
   @override
   String calcLsCattle(int tabi, int musinnah) {
-    return 'Cattle: $tabi tabi\' + $musinnah musinnah';
+    return 'Loon: $tabi tabii\' + $musinnah musinnah';
   }
 
   @override
   String calcLsCamels(String description) {
-    return 'Camels: $description';
+    return 'Gaalota: $description .';
   }
 
   @override
-  String get calcLsNone => 'No livestock due under current counts';
+  String get calcLsNone =>
+      'Lakkoofsa amma jiruun beeylada kaffalamuu qabu hin jiru';
 
   @override
   String calcTransSheep(int head, int due) {
-    return 'Sheep/Goats threshold: $head >= 40 => due $due sheep.';
+    return 'Ulaagaa Hoolotaa/Re\'ee: $head >= 40 => hoolaa $due yeroon isaa ga\'e.';
   }
 
   @override
   String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'Cattle threshold: $head >= 30 => due $tabi tabi\', $musinnah musinnah (30/40 combination).';
+    return 'Ulaagaa loon: $head >= 30 => sababa $tabi tabii\', $musinnah musinnah (walmakaa 30/40).';
   }
 
   @override
   String calcTransCamel(int head, String due) {
-    return 'Camel threshold: $head >= 5 => due $due.';
+    return 'Ulaagaa gaala: $head >= 5 => sababa $due.';
   }
 
   @override
   String calcTransAdvisoryLine(String text) {
-    return 'Advisory: $text';
+    return 'Gorsaa: $text .';
   }
 
   @override
   String get calcAdvNotPasture =>
-      'Not pasture-fed most of the year: check trade/business treatment with scholars.';
+      'Waggaa irra caalaan dheedichaa kan hin sooramne: hayyoota waliin wal’aansa daldalaa/daldalaa ilaali.';
 
   @override
   String get calcAdvHawl =>
-      'Hawl not completed: many scholars require one lunar year for livestock zakat.';
+      'Hawl hin xumuramne: hayyoonni baay’een zakaa beeyladaatiif waggaa ji’aa tokko barbaadu.';
 
   @override
   String get calcAdvWork =>
-      'Work animals are typically exempt from livestock zakat.';
+      'Bineensonni hojii akkaataa adda addaatiin zakaa beeyladaa irraa bilisa ta’u.';
 
   @override
   String calcCropTransBelow(String kg, String nisab) {
-    return 'Harvest ${kg}kg is below Nisab ($nisab kg), so no crop Zakat is due.';
+    return 'Sassaabni ${kg}kg Nisaaba ($nisab kg) gadi waan ta\'eef Zakaan midhaan kamiyyuu hin kaffalamu.';
   }
 
   @override
@@ -621,7 +623,7 @@ class AppLocalizationsOm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Mixed irrigation: rain $rain%, irrigated $irrig%. Effective rate = $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'Jallisii walmakaa: rooba $rain%, jallisii $irrig%. Sadarkaa bu\'a qabeessa = $rate%. Foormulaa: $kg × $rate2% = ${due}kg.';
   }
 
   @override
@@ -631,7 +633,7 @@ class AppLocalizationsOm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Rain-fed rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'Sadarkaan rooba sooramu $rate%. Foormulaa: $kg × $rate2% = ${due}kg.';
   }
 
   @override
@@ -641,40 +643,40 @@ class AppLocalizationsOm extends AppLocalizations {
     String rate2,
     String due,
   ) {
-    return 'Irrigated rate $rate%. Formula: $kg × $rate2% = ${due}kg.';
+    return 'Sadarkaa jallisii $rate%. Foormulaa: $kg × $rate2% = ${due}kg.';
   }
 
   @override
-  String get calcCamelNoDue => 'No due';
+  String get calcCamelNoDue => 'Hin qabu';
 
   @override
   String calcCamelSheepN(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count sheep',
-      one: '1 sheep',
+      other: '$count hoolaa',
+      one: '1 hoolaa',
     );
     return '$_temp0';
   }
 
   @override
-  String get calcCamel1BintMakhad => '1 bint makhad';
+  String get calcCamel1BintMakhad => '1 bint makhad jedhamuun beekama';
 
   @override
-  String get calcCamel1BintLabun => '1 bint labun';
+  String get calcCamel1BintLabun => '1 bint labun jedhamuun beekama';
 
   @override
-  String get calcCamel1Hiqqah => '1 hiqqah';
+  String get calcCamel1Hiqqah => '1 hiqqaa';
 
   @override
   String get calcCamel1Jadhah => '1 jadhah';
 
   @override
-  String get calcCamel2BintLabun => '2 bint labun';
+  String get calcCamel2BintLabun => '2 bint labun jedhamuun beekama';
 
   @override
-  String get calcCamel2Hiqqah => '2 hiqqah';
+  String get calcCamel2Hiqqah => '2 hiqqaa';
 
   @override
   String calcCamelCombo(int hiqqah, int bintLabun) {
@@ -683,7 +685,7 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String calcCamelApproxBintLabun(int count) {
-    return '$count bint labun (approximate combo)';
+    return '$count bint labun (tilmaamaan walnyaatinsa) .';
   }
 
   @override
@@ -856,29 +858,30 @@ class AppLocalizationsOm extends AppLocalizations {
   String get loginTitle => 'Sign in';
 
   @override
-  String get loginSubtitle => 'Use your registered phone number and password';
+  String get loginSubtitle =>
+      'Lakkoofsa bilbilaa fi jecha icciitii galmaa\'e fayyadamaa';
 
   @override
-  String get loginPhoneLabel => 'Phone number';
+  String get loginPhoneLabel => 'Lakkoofsa bilbilaa';
 
   @override
-  String get loginPasswordLabel => 'Password';
+  String get loginPasswordLabel => 'Jecha iccitii';
 
   @override
   String get loginButton => 'Sign in';
 
   @override
-  String get loginPhoneRequired => 'Enter your phone number';
+  String get loginPhoneRequired => 'Lakkoofsa bilbilaa keessan galchaa';
 
   @override
   String get loginPhoneInvalid =>
-      'Enter a valid 9-digit mobile number (e.g. 923974838)';
+      'Lakkoofsa moobaayilaa dijiitii 9 sirrii ta\'e galchi (fkn 923974838)';
 
   @override
-  String get loginSecureNote => 'Your sign-in is encrypted and secure';
+  String get loginSecureNote => 'Galmeen kee icciitii fi nageenya qaba';
 
   @override
-  String get loginPasswordRequired => 'Enter your password';
+  String get loginPasswordRequired => 'Jecha icciitii keessan galchaa';
 
   @override
   String get profileCancel => 'Haqi';
@@ -1010,114 +1013,487 @@ class AppLocalizationsOm extends AppLocalizations {
       'Ifaafi amanamummaadhaan fayyadamtootaa fi pirojektoota deeggari.';
 
   @override
-  String get donationCurrencySheetTitle => 'How would you like to give?';
+  String get donationCurrencySheetTitle => 'Akkamitti kennuu barbaadda?';
 
   @override
   String get donationCurrencySheetSubtitle =>
-      'Choose local ETB payment or international card payment.';
+      'Kaffaltii ETB biyya keessaa ykn kaffaltii kaardii idil-addunyaa filadhu.';
 
   @override
-  String get donationLocalPaymentTitle => 'Local payment (ETB)';
+  String get donationLocalPaymentTitle => 'Kaffaltii biyya keessaa (ETB) .';
 
   @override
   String get donationLocalPaymentSubtitle =>
-      'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.';
+      'Telebirr, CBE Birr, M-Pesa, fi karra Itoophiyaa biroo.';
 
   @override
-  String get donationInternationalPaymentTitle => 'International payment';
+  String get donationInternationalPaymentTitle => 'Kaffaltii idil-addunyaa';
 
   @override
   String get donationInternationalPaymentSubtitle =>
-      'Pay from anywhere with your card and billing address.';
+      'Kaardii fi teessoo kaffaltii keessaniin bakka kamirraayyuu kaffalaa.';
 
   @override
-  String get donationInternationalTitle => 'International Sadaqah';
+  String get donationInternationalTitle => 'Sadaqaan Idil Addunyaa';
 
   @override
   String get donationInternationalSubtitle =>
-      'Support communities from anywhere in the world.';
+      'Hawaasa addunyaa bakka kamirraayyuu deeggaru.';
 
   @override
-  String get donationAmountLabel => 'Donation amount';
+  String get donationAmountLabel => 'Maallaqa arjooma';
 
   @override
   String get donationAmountHint => '0.00';
 
   @override
   String get donationAmountHelper =>
-      'Amount is settled in Ethiopian Birr (ETB).';
+      'Maallaqni Birrii Itiyoophiyaan (ETB) qulqulleeffama.';
 
   @override
-  String get donationAnonymousLabel => 'Give anonymously';
+  String get donationAnonymousLabel => 'Maqaa osoo hin beekin kenni';
 
   @override
-  String get donationAnonymousSubtitle =>
-      'Your name will not be shown publicly.';
+  String get donationAnonymousSubtitle => 'Maqaan kee ifatti hin mul\'atu.';
 
   @override
-  String get donationDonorSectionTitle => 'Your details';
+  String get donationDonorSectionTitle => 'Bal\'ina keessan';
 
   @override
-  String get donationFullNameLabel => 'Full name';
+  String get donationFullNameLabel => 'Maqaa guutuu';
 
   @override
-  String get donationPhoneLabel => 'Phone';
+  String get donationPhoneLabel => 'Bilbila';
 
   @override
-  String get donationEmailLabel => 'Email';
+  String get donationEmailLabel => 'Imeelii';
 
   @override
-  String get donationBillingSectionTitle => 'Billing address';
+  String get donationBillingSectionTitle => 'Teessoo kaffaltii';
 
   @override
-  String get donationAddress1Label => 'Address line 1';
+  String get donationAddress1Label => 'Sarara teessoo 1.1';
 
   @override
-  String get donationAddress2Label => 'Address line 2 (optional)';
+  String get donationAddress2Label => 'Sarara teessoo 2 (dirqama) .';
 
   @override
-  String get donationCountryLabel => 'Country';
+  String get donationCountryLabel => 'Biyya';
 
   @override
-  String get donationCountryOther => 'Country name';
+  String get donationCountryOther => 'Maqaa biyyaa';
 
   @override
-  String get donationAdminAreaLabel => 'State / Province';
+  String get donationAdminAreaLabel => 'Naannoo / Naannoo';
 
   @override
-  String get donationLocalityLabel => 'City';
+  String get donationLocalityLabel => 'Magaalaa';
 
   @override
-  String get donationPostalCodeLabel => 'Postal code';
+  String get donationPostalCodeLabel => 'Koodii poostaa';
 
   @override
-  String get donationContinueToPayment => 'Continue to payment';
+  String get donationContinueToPayment => 'Kaffaltii itti fufaa';
 
   @override
-  String get donationSubmitting => 'Processing…';
+  String get donationSubmitting => 'Adeemsa hojii...';
 
   @override
-  String get donationSuccess => 'Thank you for your Sadaqah.';
+  String get donationSuccess => 'Sadaqa keessaniif galatoomaa.';
 
   @override
   String get donationValidationPhone =>
-      'Enter a valid phone number in international format (e.g. +15551234567).';
+      'Lakkoofsa bilbilaa sirrii ta\'e bifa idil-addunyaatiin galchi (fkn +15551234567).';
 
   @override
-  String get donationPaymentWebViewTitle => 'Complete payment';
+  String get donationPaymentWebViewTitle => 'Kaffaltii guutuu';
 
   @override
-  String get donationSelectCountry => 'Select country';
+  String get donationSelectCountry => 'Biyya filadhu';
 
   @override
-  String get donationSearchCountry => 'Search countries';
+  String get donationSearchCountry => 'Biyyoota barbaadi';
 
   @override
-  String get donationSelectState => 'Select state / province';
+  String get donationSelectState => 'Naannoo / bulchiinsa filadhu';
 
   @override
-  String get donationSearchState => 'Search by name or abbreviation';
+  String get donationSearchState => 'Maqaa ykn gabaabduu barbaadi';
 
   @override
-  String get donationNoMatchesFound => 'No matches found';
+  String get donationNoMatchesFound => 'Walsimsiisaa hin argamne';
+
+  @override
+  String get changeAppModeTooltip => 'Haalata jijjiiri';
+
+  @override
+  String get switchedToAwqafMode => 'Gara haala Awqaf tti jijjiirame';
+
+  @override
+  String get switchToAwqaf => 'Gara Awqaf tti jijjiiraa';
+
+  @override
+  String get switchedToZakatMode => 'Gara haala Zakaatti jijjiirame';
+
+  @override
+  String get switchToZakat => 'Gara Zakaatti jijjiiraa';
+
+  @override
+  String get loginForgotPassword => 'Jecha icciitii dagattee?';
+
+  @override
+  String get loginForgotPasswordComingSoon =>
+      'Password dagadhee yeroo dhiyootti dhufa';
+
+  @override
+  String get loginNewToBaraka => 'New to Baraka? ';
+
+  @override
+  String get loginCreateAccount => 'Akkaawuntii uumuu';
+
+  @override
+  String get loginCreateAccountComingSoon =>
+      'Akkaawuntii uumuu yeroo dhiyootti';
+
+  @override
+  String get profileDisbursementIntro =>
+      'Bakka kaffaltii argachuu barbaaddu filadhu.';
+
+  @override
+  String get profileCoopAccountLabel => 'Lakkoofsa Herrega Baankii Coop';
+
+  @override
+  String get profileCoopAccountHint => 'Lakkoofsa herrega keessanii galchaa';
+
+  @override
+  String get profileCoopAccountRequired =>
+      'Mee lakkoofsa herrega Coop Bank keessanii galchaa.';
+
+  @override
+  String get profileSaveAccount => 'Herrega Qusachuu';
+
+  @override
+  String get faydaIdentityVerification => 'Eenyummaa mirkaneessuu';
+
+  @override
+  String get commonBack => 'Dugda';
+
+  @override
+  String get commonContinue => 'Itti fufuu';
+
+  @override
+  String get commonFinish => 'Xumuruu';
+
+  @override
+  String get commonTakePhoto => 'Suuraa Fudhadhaa';
+
+  @override
+  String get commonChooseGallery => 'Gallery keessaa filadhu';
+
+  @override
+  String get commonChooseFile => 'Faayilii filadhu';
+
+  @override
+  String get regTitle => 'Galmee Fayyadamtootaa';
+
+  @override
+  String get regMethodFastTrack => 'Faayidaa waliin Saffisaa';
+
+  @override
+  String get regMethodManual => 'Galmee Maanuwaalii';
+
+  @override
+  String get regMethodInstitution => 'Galmee Dhaabbilee';
+
+  @override
+  String get regMethodFastTrackDesc =>
+      'Eenyummaa Biyyaalessaatiin haala nageenya qabuun mirkaneessuu fi daqiiqaa muraasa keessatti itti fufuu.';
+
+  @override
+  String get regMethodManualDesc =>
+      'Odeeffannoo fi ibsa deeggarsaa keessan gamaaggama amanamaa ta\'eef qoodaa.';
+
+  @override
+  String get regMethodInstitutionDesc =>
+      'Dhaabbata keessan galmeessuun sanadoota walsimannaa barbaachisan galchaa.';
+
+  @override
+  String get regSecureIdentityTitle => 'Mirkaneessa Eenyummaa Nageenya Qabu';
+
+  @override
+  String get regChooseMethodSubtitle =>
+      'Imala kee jalqabuuf mala galmee filatte filadhu.';
+
+  @override
+  String get regFastTrackFaydaTitle =>
+      'Saffisaan ID Biyyaalessaa (Fayda) waliin';
+
+  @override
+  String get regFastTrackFaydaSubtitle =>
+      'ID dijitaalaa biyyoolessaa keessan fayyadamuun mirkaneessuu.';
+
+  @override
+  String get regManualTitle => 'Galmee Maanuwaalii';
+
+  @override
+  String get regManualSubtitle => 'Galmee deeggarsaa olkaa\'i gamaaggamaaf.';
+
+  @override
+  String get regInstitutionCardTitle => 'Akka Dhaabbataatti Galmaa\'uu';
+
+  @override
+  String get regInstitutionCardSubtitle =>
+      'Dhaabbata, dhaabbata miti mootummaa, waldaa hojii gamtaa, ykn dhaabbata mootummaa.';
+
+  @override
+  String get regRegistrationCodeLabel => 'Koodii galmee';
+
+  @override
+  String get regRegistrationCodeHint => 'EZW-A1B2-C3D4';
+
+  @override
+  String get regEncryptedPrivate => 'Icciitii & Dhuunfaa';
+
+  @override
+  String get regEncryptedPrivateBody =>
+      'Daataan keessan kan eegamee fi ulaagaa icciitii wajjin walsimuun kan qabamudha.';
+
+  @override
+  String get regVerificationInterrupted => 'Mirkaneessi addaan cite';
+
+  @override
+  String get regReopenVerification => 'Mirkaneessuu irra deebi\'ii banaa';
+
+  @override
+  String get regRetryListening => 'Irra deebi\'ii dhaggeeffachuu yaali';
+
+  @override
+  String get regCameraPermissionError =>
+      'Kaameeraa/galma banachuu hin dandeenye. Mee hayyama ilaalaa.';
+
+  @override
+  String get regSelectBirthdate => 'Guyyaa dhalootaa filadhu';
+
+  @override
+  String get regManualIdentityTitle => 'Galmee Eenyummaa Harkaan';
+
+  @override
+  String get regFirstName => 'Maqaa jalqabaa';
+
+  @override
+  String get regLastName => 'Maqaa akaakayyuu';
+
+  @override
+  String get regGrandfatherName => 'Maqaa Akaakayyuu';
+
+  @override
+  String get regPhoneNumber => 'Lakkoofsa Bilbilaa';
+
+  @override
+  String get regPhoneHint => '+251911223344 or 0911223344';
+
+  @override
+  String get regEmail => 'Imeelii';
+
+  @override
+  String get regGender => 'Koorniyaa';
+
+  @override
+  String get regMale => 'Dhiira';
+
+  @override
+  String get regFemale => 'Dhalaa';
+
+  @override
+  String get regBeneficiaryCategory => 'Ramaddii Fayyadamtootaa';
+
+  @override
+  String get regNotes => 'Hubachiisa';
+
+  @override
+  String get regNotesHint => 'fkn. Iyyataa deeggarsa Zakaa';
+
+  @override
+  String get regUploadProfilePicture => 'Suuraa Profaayilii Olkaa\'i';
+
+  @override
+  String get regVerifyingFaydaBanner =>
+      'Fayda waliin mirkaneessuu... Yeroo banamu browser keessatti mirkaneessuu guutuu.';
+
+  @override
+  String get regNeedsAssessment => 'Madaallii Fedhii';
+
+  @override
+  String get regSituationLabel => 'Haala yeroo ammaa keessa jirtu ibsi';
+
+  @override
+  String get regSituationHint =>
+      'Rakkoo, hirkattoota, fi fedhii hatattamaa ibsi...';
+
+  @override
+  String get regUploadProof => 'Ragaa Olkaa\'uu';
+
+  @override
+  String get regDisbursementSetup => 'Qophii Kaffaltii';
+
+  @override
+  String get regTelebirrTitle => 'Telebirr Wallaggaa';
+
+  @override
+  String get regTelebirrSubtitle =>
+      'Maallaqa mobaayilaan battalumatti dabarsuu';
+
+  @override
+  String get regMpesaTitle => 'M-Pesa jedhamuun beekama';
+
+  @override
+  String get regMpesaSubtitle =>
+      'Neetworkiin kaffaltii moobaayilaa nageenya qabu';
+
+  @override
+  String get regCoopbankTitle => 'Coopbank Account';
+
+  @override
+  String get regCoopbankSubtitle => 'Direct bank deposit';
+
+  @override
+  String get regAccountOrMobile => 'Herrega ykn Lakkoofsa Mobaayilaa';
+
+  @override
+  String get regFullLegalName => 'Maqaa Seeraa Guutuu';
+
+  @override
+  String get regAgreementTitle => 'Waliigaltee & Shari\'aa Ulaagaa';
+
+  @override
+  String get regAgreementBody =>
+      'Odeeffannoon dhugaa ta\'uu isaa fi akkaataa imaammataatti gargaarsa akka fayyadamu nan labsa.';
+
+  @override
+  String get regInstitutionRegistration => 'Galmee Dhaabbilee';
+
+  @override
+  String get regInstitutionType => 'Gosa Dhaabbataa';
+
+  @override
+  String get regLegalName => 'Maqaa Seeraa';
+
+  @override
+  String get regTradingName => 'Maqaa Daldalaa';
+
+  @override
+  String get regTradeRegistrationNumber => 'Lakkoofsa Galmee Daldalaa';
+
+  @override
+  String get regTin => 'Lakkoofsa Eenyummaa Gibiraa (TIN) .';
+
+  @override
+  String get regVatOptional => 'Lakkoofsa Galmee VAT (dirqama) .';
+
+  @override
+  String get regRegion => 'Naannoo';
+
+  @override
+  String get regCity => 'Magaalaa';
+
+  @override
+  String get regAddress => 'Teessoo';
+
+  @override
+  String get regNotesOptional => 'Yaadannoo (dirqama) .';
+
+  @override
+  String get regAuthorityDocTitle => 'Aangoo hojii sanada barbaachisu';
+
+  @override
+  String get regAuthorityDocBody =>
+      'Yoo namni mallatteessaa galmaa\'e malee namni biraa dhiheesse dandeessisi.';
+
+  @override
+  String get regFilePickError =>
+      'Faayilii fudhachuu hin dandeenye. Mee hayyama ilaalaa.';
+
+  @override
+  String get regUploadKycTitle => 'Sanadoota KYC olkaa\'aa';
+
+  @override
+  String get regUploadKycBody =>
+      'Upload each required document. You can finish once all required documents are uploaded.';
+
+  @override
+  String regReference(Object id) {
+    return 'Wabii: $id .';
+  }
+
+  @override
+  String get regNoDocumentsRequired =>
+      'Yeroo kanatti sanadoonni hin barbaachisu.';
+
+  @override
+  String get regRequired => 'Kan barbaadamu';
+
+  @override
+  String get regOptional => 'Dirqama kan hinta\'in';
+
+  @override
+  String regSelectedFile(Object name) {
+    return 'Filatame: $name .';
+  }
+
+  @override
+  String get regUploaded => 'Olkaa\'ameera';
+
+  @override
+  String get regUpload => 'Olkaa\'i';
+
+  @override
+  String get regCreatePasswordTitle => 'Password Keessan Uumuu';
+
+  @override
+  String get regCreatePasswordBody =>
+      'Akkaawuntii keessaniif jecha icciitii nageenya qabu filadhaa. Erga galmooftanii booda galmaa\'uuf itti fayyadamtu.';
+
+  @override
+  String get regPassword => 'Jecha iccitii';
+
+  @override
+  String get regConfirmPassword => 'Password Mirkaneessi';
+
+  @override
+  String get regPasswordRules =>
+      'Jechi icciitii yoo xiqqaate arfiilee 8 ta\'uu fi qubee guddaa, qubee xiqqaa, lakkoofsa, fi arfii addaa of keessaa qabaachuu qaba.';
+
+  @override
+  String get regPasswordSuccess =>
+      'Password milkaa\'inaan saaguu. Baga gara Mejlis Digital Hub dhuftan.';
+
+  @override
+  String regInstitutionComplete(Object id) {
+    return 'Galmeen dhaabbilee xumurameera. Wabii: $id .';
+  }
+
+  @override
+  String get regInstitutionCompleteGeneric => 'Galmeen dhaabbilee xumurameera.';
+
+  @override
+  String get regCompleteLocal =>
+      'Galmeen xumurameera. Fedhii fi ibsi kaffaltii naannootti ni kuufama.';
+
+  @override
+  String get regContinueWithFayda => 'Faaydaa waliin itti fufaa';
+
+  @override
+  String get regVerifyingFayda => 'Fayya waliin mirkaneessaa...';
+
+  @override
+  String get regSubmitContinue => 'Galchuu & Itti Fufa';
+
+  @override
+  String get regSetPasswordContinue => 'Password Saagi & Itti fufi';
+
+  @override
+  String get regSetPasswordFinish => 'Password & Finish Saagi';
+
+  @override
+  String get navAwqaf => 'Awqaf';
 }

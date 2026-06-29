@@ -1,8 +1,8 @@
 {
   "@@locale": "ar",
-  "appTitle": "Zakat & Awqaf Commission",
-  "splashSlogan": "لأجل الله، لأجل خدمة الإنسانية",
-  "splashWaqfByLabel": "A Waqf by",
+  "appTitle": "هيئة الزكاة والأوقاف",
+  "splashSlogan": "في سبيل الله لخدمة الإنسانية",
+  "splashWaqfByLabel": "الوقف به",
   "splashWaqfByTitle": "Coop Bank Alhuda",
   "navHome": "الرئيسية",
   "navCalculator": "الحاسبة",
@@ -64,7 +64,9 @@
   "profileEditFieldComingSoon": "تعديل {field} قريبًا",
   "@profileEditFieldComingSoon": {
     "placeholders": {
-      "field": {"type": "String"}
+      "field": {
+        "type": "String"
+      }
     }
   },
   "profileNisabThresholdAlerts": "تنبيهات حد النصاب",
@@ -93,15 +95,15 @@
   "profileLogOutSubtitle": "إنهاء جلستك الحالية",
   "profileLogOutDialogTitle": "تسجيل الخروج؟",
   "profileLogOutDialogBody": "سيتم تسجيل خروجك من التطبيق على هذا الجهاز.",
-  "loginTitle": "Sign in",
-  "loginSubtitle": "Use your registered phone number and password",
-  "loginPhoneLabel": "Phone number",
-  "loginPasswordLabel": "Password",
-  "loginButton": "Sign in",
-  "loginPhoneRequired": "Enter your phone number",
-  "loginPhoneInvalid": "Enter a valid 9-digit mobile number (e.g. 923974838)",
-  "loginSecureNote": "Your sign-in is encrypted and secure",
-  "loginPasswordRequired": "Enter your password",
+  "loginTitle": "تسجيل الدخول",
+  "loginSubtitle": "استخدم رقم هاتفك المسجل وكلمة المرور",
+  "loginPhoneLabel": "رقم التليفون",
+  "loginPasswordLabel": "كلمة المرور",
+  "loginButton": "تسجيل الدخول",
+  "loginPhoneRequired": "أدخل رقم هاتفك",
+  "loginPhoneInvalid": "أدخل رقم هاتف محمول صالحًا مكونًا من 9 أرقام (على سبيل المثال 923974838)",
+  "loginSecureNote": "تسجيل دخولك مشفر وآمن",
+  "loginPasswordRequired": "أدخل كلمة المرور الخاصة بك",
   "profileCancel": "إلغاء",
   "profileHadithOfTheDay": "حديث اليوم",
   "profileHadithQuote": "\"ظل المؤمن يوم القيامة صدقته.\"",
@@ -118,7 +120,9 @@
   "impactEtbAmount": "{amount} بر إثيوبي",
   "@impactEtbAmount": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactLivesTouched": "الأرواح المستفيدة",
@@ -127,31 +131,41 @@
   "impactRegionImpactComingSoon": "أثر {region} قريبًا",
   "@impactRegionImpactComingSoon": {
     "placeholders": {
-      "region": {"type": "String"}
+      "region": {
+        "type": "String"
+      }
     }
   },
   "impactStoryComingSoon": "قصة {name} قريبًا",
   "@impactStoryComingSoon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "impactProjectDetailsComingSoon": "تفاصيل {title} قريبًا",
   "@impactProjectDetailsComingSoon": {
     "placeholders": {
-      "title": {"type": "String"}
+      "title": {
+        "type": "String"
+      }
     }
   },
   "impactPercentFunded": "تم تمويل {percent}%",
   "@impactPercentFunded": {
     "placeholders": {
-      "percent": {"type": "String"}
+      "percent": {
+        "type": "String"
+      }
     }
   },
   "impactEtbLeft": "متبقي {amount} بر إثيوبي",
   "@impactEtbLeft": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "impactSeeYourPersonalBaraka": "اطلع على بركتك الشخصية",
@@ -168,38 +182,685 @@
   "onboardingSubtitleEasyPayments": "ادفع زكاتك بسرعة عبر تجربة آمنة وسلسة على الجوال.",
   "onboardingTitleCompassionInAction": "رحمة تتحول إلى عمل",
   "onboardingSubtitleCompassionInAction": "ادعم المستفيدين والمشاريع بوضوح وثقة وبركة.",
-  "donationCurrencySheetTitle": "How would you like to give?",
-  "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
-  "donationLocalPaymentTitle": "Local payment (ETB)",
-  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.",
-  "donationInternationalPaymentTitle": "International payment",
-  "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
-  "donationInternationalTitle": "International Sadaqah",
-  "donationInternationalSubtitle": "Support communities from anywhere in the world.",
-  "donationAmountLabel": "Donation amount",
+  "donationCurrencySheetTitle": "كيف تريد أن تعطي؟",
+  "donationCurrencySheetSubtitle": "اختر الدفع ETB المحلي أو الدفع بالبطاقة الدولية.",
+  "donationLocalPaymentTitle": "الدفع المحلي (ETB)",
+  "donationLocalPaymentSubtitle": "Telebirr وCBE Birr وM-Pesa والبوابات الإثيوبية الأخرى.",
+  "donationInternationalPaymentTitle": "الدفع الدولي",
+  "donationInternationalPaymentSubtitle": "ادفع من أي مكان باستخدام بطاقتك وعنوان إرسال الفواتير.",
+  "donationInternationalTitle": "صدقة عالمية",
+  "donationInternationalSubtitle": "دعم المجتمعات من أي مكان في العالم.",
+  "donationAmountLabel": "مبلغ التبرع",
   "donationAmountHint": "0.00",
-  "donationAmountHelper": "Amount is settled in Ethiopian Birr (ETB).",
-  "donationAnonymousLabel": "Give anonymously",
-  "donationAnonymousSubtitle": "Your name will not be shown publicly.",
-  "donationDonorSectionTitle": "Your details",
-  "donationFullNameLabel": "Full name",
-  "donationPhoneLabel": "Phone",
-  "donationEmailLabel": "Email",
-  "donationBillingSectionTitle": "Billing address",
-  "donationAddress1Label": "Address line 1",
-  "donationAddress2Label": "Address line 2 (optional)",
-  "donationCountryLabel": "Country",
-  "donationCountryOther": "Country name",
-  "donationAdminAreaLabel": "State / Province",
-  "donationLocalityLabel": "City",
-  "donationPostalCodeLabel": "Postal code",
-  "donationContinueToPayment": "Continue to payment",
-  "donationSubmitting": "Processing…",
-  "donationSuccess": "Thank you for your Sadaqah.",
-  "donationValidationPhone": "Enter a valid phone number in international format (e.g. +15551234567).",
-  "donationPaymentWebViewTitle": "Complete payment",
-  "donationSelectCountry": "Select country",
-  "donationSearchCountry": "Search countries",
-  "donationSelectState": "Select state / province",
-  "donationSearchState": "Search by name or abbreviation"
+  "donationAmountHelper": "يتم تسوية المبلغ بالبر الإثيوبي (ETB).",
+  "donationAnonymousLabel": "إعطاء مجهول",
+  "donationAnonymousSubtitle": "لن يتم عرض اسمك للعامة.",
+  "donationDonorSectionTitle": "التفاصيل الخاصة بك",
+  "donationFullNameLabel": "الاسم الكامل",
+  "donationPhoneLabel": "هاتف",
+  "donationEmailLabel": "بريد إلكتروني",
+  "donationBillingSectionTitle": "عنوان إرسال الفواتير",
+  "donationAddress1Label": "العنوان سطر 1",
+  "donationAddress2Label": "سطر العنوان 2 (اختياري)",
+  "donationCountryLabel": "دولة",
+  "donationCountryOther": "اسم البلد",
+  "donationAdminAreaLabel": "الولاية/المقاطعة",
+  "donationLocalityLabel": "مدينة",
+  "donationPostalCodeLabel": "رمز بريدي",
+  "donationContinueToPayment": "الاستمرار في الدفع",
+  "donationSubmitting": "يعالج…",
+  "donationSuccess": "شكرا لصدقتك.",
+  "donationValidationPhone": "أدخل رقم هاتف صالحًا بالتنسيق الدولي (على سبيل المثال: +15551234567).",
+  "donationPaymentWebViewTitle": "استكمال الدفع",
+  "donationSelectCountry": "اختر البلد",
+  "donationSearchCountry": "دول البحث",
+  "donationSelectState": "اختر الولاية/المقاطعة",
+  "donationSearchState": "البحث بالاسم أو الاختصار",
+  "donationNoMatchesFound": "لم يتم العثور على أي تطابقات",
+  "calcAppBarTitle": "حاسبة الزكاة",
+  "calcPayYourZakat": "دفع الزكاة الخاصة بك",
+  "calcTabWealth": "ثروة",
+  "calcTabLivestock": "الماشية",
+  "calcTabCrops": "المحاصيل",
+  "calcStep1NisabTitle": "الخطوة 1: عتبة النصاب",
+  "calcStep1NisabBody": "تجب الزكاة إذا تجاوز صافي ثروتك الحد الأدنى. يعتمد النصاب على 85 جرامًا من سعر الذهب عيار 24 قيراطًا.",
+  "calcNisabGoldFormula": "{grams} × {price} = {total}",
+  "@calcNisabGoldFormula": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcNisabThresholdBanner": "عتبة النصاب (سعر المنصة، ما يعادل 85 جرامًا من الذهب): {amount}",
+  "@calcNisabThresholdBanner": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "calcUsdEtb": "USD/ETB",
+  "calcFxLive": "باستخدام سعر الصرف المباشر",
+  "calcFxCache": "باستخدام سعر الصرف المخزن مؤقتا",
+  "calcFxFallback": "باستخدام سعر الصرف الاحتياطي",
+  "calcTimestampUnavailable": "الطابع الزمني غير متاح",
+  "calcStep1LivestockTitle": "الخطوة 1: طريقة مقياس الثروة الحيوانية",
+  "calcStep1LivestockBody": "يتم احتساب زكاة الماشية بمقاييس عدد الرؤوس المادية (وليس النسبة المئوية من القيمة).",
+  "calcStep1LivestockNisabNote": "عتبات النصاب: الأغنام/الماعز 40، الماشية 30، الإبل 5. تستخدم الماشية مجموعات 30/40؛ تتبع الجمال نطاقات الطبقة.",
+  "calcAdvisoryPrefix": "استشاري: {text}",
+  "@calcAdvisoryPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcArabicTermDefinitionsTitle": "تعريفات المصطلحات العربية",
+  "calcArabicDefTabi": "عجل عمره عام واحد",
+  "calcArabicDefMusinnah": "بقرة عمرها سنتين",
+  "calcArabicDefBintMakhad": "ناقة عمرها عام واحد",
+  "calcArabicDefBintLabun": "ناقة تبلغ من العمر عامين",
+  "calcArabicDefHiqqah": "ناقة عمرها ثلاث سنوات",
+  "calcArabicDefJadhah": "ناقة عمرها أربع سنوات",
+  "calcStep1CropTitle": "الخطوة 1: حساب المحاصيل (العشر).",
+  "calcStep1CropBody": "وتجب زكاة الزرع عند حصاده. النصاب 653 كيلوجرامًا. النسبة 10% (بعلي) أو 5% (مروي) أو مرجح للمختلط.",
+  "calcCropLineThreshold": "{kg} كجم {relation} 653 كجم",
+  "@calcCropLineThreshold": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineIrrigation": "وضع الري: {mode}",
+  "@calcCropLineIrrigation": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineEffectiveRate": "المعدل الفعال: {rate}%",
+  "@calcCropLineEffectiveRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropLineFormula": "الصيغة: {line}",
+  "@calcCropLineFormula": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "calcRelationGte": "≥",
+  "calcRelationLt": "<",
+  "calcOverviewNetWorthTitle": "نظرة عامة على صافي القيمة",
+  "calcOverviewLivestockTitle": "نظرة عامة على الثروة الحيوانية",
+  "calcOverviewCropTitle": "نظرة عامة على المحاصيل",
+  "calcBadgeAboveNisab": "فوق نصاب",
+  "calcBadgeBelowNisab": "تحت نصاب",
+  "calcBadgeZakatDue": "الزكاة المستحقة",
+  "calcBadgeNoDue": "لا مستحق",
+  "calcZakatDueLabel": "الزكاة المستحقة",
+  "calcLivestockDueLabel": "مستحقات الثروة الحيوانية",
+  "calcCropZakatDueLabel": "زكاة المحاصيل المستحقة",
+  "calcAnimalsCount": "{count} الحيوانات",
+  "@calcAnimalsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcKgHarvest": "{kg} كجم الحصاد",
+  "@calcKgHarvest": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLivestockTermsFootnote": "مصطلحات مثل التابع، والمصنعة، وبنت مخاض، وبنت لبون، والحقة، والجده موضحة أدناه في تفاصيل الثروة الحيوانية.",
+  "calcStep2EnterAssets": "الخطوة 2: أدخل الأصول الخاصة بك",
+  "calcStep2EnterAssetsBody": "أدخل قيمة الأصول الخاصة بك في ETB",
+  "calcCashBankSavings": "الادخار النقدي والبنوك",
+  "calcCashOnHand": "النقد في متناول اليد",
+  "calcBankBalance": "رصيد البنك",
+  "calcMobileWallet": "المحفظة المتنقلة",
+  "calcBusinessAssets": "أصول الأعمال",
+  "calcFieldDescription": "وصف",
+  "calcFieldType": "يكتب",
+  "calcAmountEtb": "المبلغ (درهم إثيوبي)",
+  "calcAddBusinessAsset": "إضافة الأصول التجارية",
+  "calcGoldSilver": "الذهب والفضة",
+  "calcGoldGrams": "الذهب (جرام)",
+  "calcGoldKarat": "قيراط الذهب",
+  "calcSilverGrams": "الفضة (جرام)",
+  "calcLiabilities": "الإلتزامات",
+  "calcAddLiability": "إضافة المسؤولية",
+  "calcAssetInventory": "جرد",
+  "calcAssetReceivable": "مستحق",
+  "calcAssetOther": "آخر",
+  "calcLiabilityShortTermDebt": "الديون قصيرة الأجل",
+  "calcLiabilityPayable": "مستحق الدفع",
+  "calcLiabilityOther": "آخر",
+  "calcLivestockSheepGoats": "الأغنام / الماعز",
+  "calcLivestockCattle": "ماشية",
+  "calcLivestockCamels": "الجمال",
+  "calcPastureFedTitle": "تتغذى على المراعي معظم أيام السنة",
+  "calcPastureFedSubtitle": "استشارية فقط؛ لا يمنع الحساب",
+  "calcHawlTitle": "أكملت سنة قمرية واحدة (الحول)",
+  "calcHawlSubtitle": "استشارية فقط؛ لا يمنع الحساب",
+  "calcWorkAnimalsTitle": "تستخدم للعمل (الحراثة / النقل)",
+  "calcWorkAnimalsSubtitle": "استشارية فقط؛ لا يمنع الحساب",
+  "calcLivestockSummaryHeading": "ملخص الثروة الحيوانية",
+  "calcCropNisabHeading": "النصاب والمحصول الواجب",
+  "calcEffectiveCropRateLine": "معدل الاقتصاص الفعال: {percent}%",
+  "@calcEffectiveCropRateLine": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropZakatDueKgLine": "زكاة الزرع الواجبة: {kg} كيلو",
+  "@calcCropZakatDueKgLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowCropZakatWorksTitle": "كيفية عمل زكاة المحاصيل",
+  "calcHowCropZakatWorksBody": "النصاب : 653 كيلو جرام . المعدلات: البعلية 10%، المروية 5%، المختلطة = التقسيم المرجح. تجب الزكاة عند الحصاد (لا حول سنوي للمحاصيل).",
+  "calcHowCropZakatNote": "ملحوظة: يطبق التطبيق هذه القواعد على نطاق واسع من أجل البساطة. تختلف المواقف العلمية على نطاق نوع المحاصيل وخصومات النفقات؛ استشارة العلماء المؤهلين لحالات محددة.",
+  "calcWealthNisabHeading": "النصاب والمال والزكاة",
+  "calcWealthNisabLine": "عتبة النصاب: {nisab}",
+  "@calcWealthNisabLine": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthZakatDueLine": "زكاة الثروة المستحقة (مبلغ أقل على البطاقة): {due}",
+  "@calcWealthZakatDueLine": {
+    "placeholders": {
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcHowWealthZakatWorksTitle": "كيفية حساب زكاة الثروة",
+  "calcHowWealthZakatWorksBody": "نضيف النقد في الصندوق، والأرصدة المصرفية، ومحافظ الهاتف المحمول، والأصول التجارية، وقيمة الذهب والفضة. النصاب هو {grams} جرام من الذهب بسعر 24 ألف جرام في التطبيق. يتم تقييم الذهب الذي تمتلكه باستخدام سعر التطبيق للقيراط الذي تختاره. تستخدم الفضة مرجعًا ثابتًا قدره {silverRate} ETB لكل جرام. يتم طرح الالتزامات التي تدخلها للحصول على صافي الثروة. إذا كان صافي الثروة يساوي النصاب أو يزيد عليه، فإن الزكاة الواجبة هي 2.5% من صافي الثروة.",
+  "@calcHowWealthZakatWorksBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "silverRate": {
+        "type": "int"
+      }
+    }
+  },
+  "calcHowWealthZakatNote": "ملاحظة: اختلف العلماء في الأصول التي تجب فيها الزكاة، وفي كيفية خصم الديون من الثروة، ومتى يتم الحول، وغير ذلك من التفاصيل. هذه الشاشة عبارة عن تقدير تعليمي، قم بتأكيد حالتك مع العلماء المؤهلين.",
+  "calcWealthBreakdownTitle": "كيف يتم حساب المبالغ المذكورة أعلاه",
+  "calcWealthTransLiquidsLine": "نقدًا + بنك + جوال: {cash} + {bank} + {mobile} = {subtotal}",
+  "@calcWealthTransLiquidsLine": {
+    "placeholders": {
+      "cash": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "mobile": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransBusinessLine": "أصول النشاط التجاري (مجموع الصفوف): {business}",
+  "@calcWealthTransBusinessLine": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransRollupLine": "إجمالي الأصول: {liquids} + {business} + {gold} + {silver} = {total}",
+  "@calcWealthTransRollupLine": {
+    "placeholders": {
+      "liquids": {
+        "type": "String"
+      },
+      "business": {
+        "type": "String"
+      },
+      "gold": {
+        "type": "String"
+      },
+      "silver": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNisabLine": "النصاب: {grams} جم × 24 ك ({price}/جم) = {nisab}",
+  "@calcWealthTransNisabLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransGoldLine": "الذهب: {grams} جم × {karat} ({price}/جم) = {value}",
+  "@calcWealthTransGoldLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "karat": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransSilverLine": "الفضة: {grams} جم × {rate} ETB/g = {value}",
+  "@calcWealthTransSilverLine": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransNetLine": "صافي الثروة (مبلغ كبير على البطاقة): إجمالي الأصول − الخصوم ({liabilities}) = {net}",
+  "@calcWealthTransNetLine": {
+    "placeholders": {
+      "liabilities": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueAbove": "لأن {net} يبلغ النصاب أو يزيد عليه ({nisab})، فإن الزكاة الواجبة = {net} × 2.5% = {due}.",
+  "@calcWealthTransDueAbove": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcWealthTransDueBelow": "لأن {net} أقل من النصاب ({nisab})، فإن زكاة المال الواجبة = {due}.",
+  "@calcWealthTransDueBelow": {
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropWeightKg": "وزن المحصول (كجم)",
+  "calcCropModeRainFed": "البعلية",
+  "calcCropModeIrrigated": "مروية",
+  "calcCropModeMixed": "مختلط",
+  "calcRainFedSharePct": "نسبة الأمطار البعلية %",
+  "calcIrrigatedSharePct": "الحصة المروية %",
+  "calcGoldK24": "24k",
+  "calcGoldK22": "22k",
+  "calcGoldK21": "21k",
+  "calcGoldK18": "18k",
+  "calcGoldK14": "14k",
+  "calcMethodologyPlaceholder": "عنصر نائب لمحتوى منهجية الزكاة.",
+  "calcPayBlockedWealth": "لا توجد زكاة على الثروة (أقل من النصاب أو صفر مكتسب). ضبط المدخلات الخاصة بك.",
+  "calcPayBlockedLivestock": "لا تجب زكاة الماشية على أعدادك الحالية.",
+  "calcPayBlockedCrops": "لم تجب زكاة المحصول بعد (أقل من نصاب الحصاد أو صفر كيلو).",
+  "calcCertCropDueLine": "زكاة الزرع الواجبة: {kg} كيلو",
+  "@calcCertCropDueLine": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "calcBulletSeparator": " • ",
+  "calcLsSheepGoats": "الأغنام / الماعز: {count} الأغنام",
+  "@calcLsSheepGoats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCattle": "الماشية: {tabi} تابعي + {musinnah} مسينة",
+  "@calcLsCattle": {
+    "placeholders": {
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcLsCamels": "الجمال: {description}",
+  "@calcLsCamels": {
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLsNone": "لا يوجد ماشية مستحقة بموجب التهم الحالية",
+  "calcTransSheep": "عتبة الأغنام/الماعز: {head} >= 40 => بسبب {due} الأغنام.",
+  "@calcTransSheep": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCattle": "عتبة الماشية: {head} >= 30 => بسبب {tabi} تابع، {musinnah} مسينة (مجموعة 30/40).",
+  "@calcTransCattle": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "tabi": {
+        "type": "int"
+      },
+      "musinnah": {
+        "type": "int"
+      }
+    }
+  },
+  "calcTransCamel": "عتبة الجمل: {head} >= 5 => بسبب {due}.",
+  "@calcTransCamel": {
+    "placeholders": {
+      "head": {
+        "type": "int"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcTransAdvisoryLine": "استشاري: {text}",
+  "@calcTransAdvisoryLine": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "calcAdvNotPasture": "لا يتغذى على المراعي معظم أيام السنة: تحقق من المعاملة التجارية / التجارية مع العلماء.",
+  "calcAdvHawl": "لم يكتمل الحول: يشترط كثير من العلماء سنة قمرية واحدة لزكاة الماشية.",
+  "calcAdvWork": "عادة ما تُعفى حيوانات العمل من زكاة الماشية.",
+  "calcCropTransBelow": "حصاد {kg}كجم أقل من النصاب ({nisab} كجم)، فلا تجب فيه الزكاة.",
+  "@calcCropTransBelow": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      },
+      "nisab": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransMixed": "الري المختلط: المطري {rain}%، المروي {irrig}%. المعدل الفعال = {rate}%. الصيغة: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransMixed": {
+    "placeholders": {
+      "rain": {
+        "type": "String"
+      },
+      "irrig": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransRainFed": "معدل البعلية {rate}%. الصيغة: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransRainFed": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCropTransIrrigated": "معدل الري {rate}%. الصيغة: {kg} × {rate2}% = {due}kg.",
+  "@calcCropTransIrrigated": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "kg": {
+        "type": "String"
+      },
+      "rate2": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCamelNoDue": "لا مستحق",
+  "calcCamelSheepN": "{count, plural, one{1 خروف} other{{count} خروف}}",
+  "@calcCamelSheepN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamel1BintMakhad": "1 بنت مخاض",
+  "calcCamel1BintLabun": "1 بنت لبن",
+  "calcCamel1Hiqqah": "1 حقة",
+  "calcCamel1Jadhah": "1 جده",
+  "calcCamel2BintLabun": "2 بنت لبن",
+  "calcCamel2Hiqqah": "2 حقة",
+  "calcCamelCombo": "{hiqqah} حاقة + {bintLabun} بنت لبون",
+  "@calcCamelCombo": {
+    "placeholders": {
+      "hiqqah": {
+        "type": "int"
+      },
+      "bintLabun": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelApproxBintLabun": "{count} بنت لبون (تحرير وسرد تقريبي)",
+  "@calcCamelApproxBintLabun": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "changeAppModeTooltip": "تغيير الوضع",
+  "switchedToAwqafMode": "تحولت إلى وضع الأوقاف",
+  "switchToAwqaf": "التحول إلى الأوقاف",
+  "switchedToZakatMode": "تحولت إلى وضع الزكاة",
+  "switchToZakat": "التحول إلى الزكاة",
+  "loginForgotPassword": "هل نسيت كلمة السر؟",
+  "loginForgotPasswordComingSoon": "نسيت كلمة المرور قريبا",
+  "loginNewToBaraka": "New to Baraka? ",
+  "loginCreateAccount": "إنشاء حساب",
+  "loginCreateAccountComingSoon": "إنشاء حساب قريبا",
+  "profileDisbursementIntro": "اختر المكان الذي تريد تلقي المدفوعات فيه.",
+  "profileCoopAccountLabel": "رقم الحساب البنكي التعاوني",
+  "profileCoopAccountHint": "أدخل رقم حسابك",
+  "profileCoopAccountRequired": "الرجاء إدخال رقم حسابك في Coop Bank.",
+  "profileSaveAccount": "حفظ الحساب",
+  "faydaIdentityVerification": "التحقق من الهوية",
+  "commonBack": "خلف",
+  "commonContinue": "يكمل",
+  "commonFinish": "ينهي",
+  "commonTakePhoto": "التقط صورة",
+  "commonChooseGallery": "اختر من المعرض",
+  "commonChooseFile": "اختر ملف",
+  "regTitle": "تسجيل المستفيد",
+  "regMethodFastTrack": "المسار السريع مع فايدة",
+  "regMethodManual": "التسجيل اليدوي",
+  "regMethodInstitution": "تسجيل المؤسسة",
+  "regMethodFastTrackDesc": "تحقق بشكل آمن من الهوية باستخدام بطاقة الهوية الوطنية واستمر في دقائق.",
+  "regMethodManualDesc": "شارك معلوماتك والتفاصيل الداعمة لمراجعة موثوقة.",
+  "regMethodInstitutionDesc": "سجل مؤسستك وأرسل مستندات الامتثال المطلوبة.",
+  "regSecureIdentityTitle": "التحقق الآمن من الهوية",
+  "regChooseMethodSubtitle": "اختر طريقة التسجيل المفضلة لديك لتبدأ رحلتك.",
+  "regFastTrackFaydaTitle": "المسار السريع بالهوية الوطنية (فايضة)",
+  "regFastTrackFaydaSubtitle": "قم بالمصادقة باستخدام الهوية الرقمية الوطنية الخاصة بك.",
+  "regManualTitle": "التسجيل اليدوي",
+  "regManualSubtitle": "قم بتحميل الوثائق الداعمة للمراجعة.",
+  "regInstitutionCardTitle": "سجل كمؤسسة",
+  "regInstitutionCardSubtitle": "شركة أو منظمة غير حكومية أو تعاونية أو جهة حكومية.",
+  "regRegistrationCodeLabel": "رمز التسجيل",
+  "regRegistrationCodeHint": "EZW-A1B2-C3D4",
+  "regEncryptedPrivate": "مشفرة وخاصة",
+  "regEncryptedPrivateBody": "يتم تأمين بياناتك ومعالجتها بما يتماشى مع معايير الخصوصية.",
+  "regVerificationInterrupted": "تمت مقاطعة عملية التحقق",
+  "regReopenVerification": "إعادة فتح التحقق",
+  "regRetryListening": "أعد محاولة الاستماع",
+  "regCameraPermissionError": "لا يمكن فتح الكاميرا/المعرض. يرجى التحقق من الأذونات.",
+  "regSelectBirthdate": "اختر تاريخ الميلاد",
+  "regManualIdentityTitle": "التسجيل اليدوي للهوية",
+  "regFirstName": "الاسم الأول",
+  "regLastName": "اسم العائلة",
+  "regGrandfatherName": "اسم الجد",
+  "regPhoneNumber": "رقم التليفون",
+  "regPhoneHint": "+251911223344 or 0911223344",
+  "regEmail": "بريد إلكتروني",
+  "regGender": "جنس",
+  "regMale": "ذكر",
+  "regFemale": "أنثى",
+  "regBeneficiaryCategory": "فئة المستفيد",
+  "regNotes": "ملحوظات",
+  "regNotesHint": "على سبيل المثال طالب دعم الزكاة",
+  "regUploadProfilePicture": "تحميل صورة الملف الشخصي",
+  "regVerifyingFaydaBanner": "التحقق مع فايدة... أكمل التحقق في المتصفح عند فتحه.",
+  "regNeedsAssessment": "تقييم الاحتياجات",
+  "regSituationLabel": "صف وضعك الحالي",
+  "regSituationHint": "اشرح المشقة والمعالين والاحتياجات العاجلة ...",
+  "regUploadProof": "تحميل إثبات",
+  "regDisbursementSetup": "إعداد الصرف",
+  "regTelebirrTitle": "محفظة تيليبير",
+  "regTelebirrSubtitle": "تحويل فوري للأموال عبر الهاتف المحمول",
+  "regMpesaTitle": "م-بيسا",
+  "regMpesaSubtitle": "شبكة آمنة للدفع عبر الهاتف المحمول",
+  "regCoopbankTitle": "حساب كوببانك",
+  "regCoopbankSubtitle": "الإيداع البنكي المباشر",
+  "regAccountOrMobile": "رقم الحساب أو الجوال",
+  "regFullLegalName": "الاسم القانوني الكامل",
+  "regAgreementTitle": "الاتفاقية والامتثال للشريعة",
+  "regAgreementBody": "أقر بأن المعلومات صحيحة وسأستخدم المساعدة وفقًا للسياسة.",
+  "regInstitutionRegistration": "تسجيل المؤسسة",
+  "regInstitutionType": "نوع المؤسسة",
+  "regLegalName": "الاسم القانوني",
+  "regTradingName": "اسم التداول",
+  "regTradeRegistrationNumber": "رقم السجل التجاري",
+  "regTin": "رقم التعريف الضريبي (TIN)",
+  "regVatOptional": "رقم التسجيل في ضريبة القيمة المضافة (اختياري)",
+  "regRegion": "منطقة",
+  "regCity": "مدينة",
+  "regAddress": "عنوان",
+  "regNotesOptional": "ملاحظات (اختياري)",
+  "regAuthorityDocTitle": "وثيقة سلطة التصرف المطلوبة",
+  "regAuthorityDocBody": "قم بالتمكين في حالة إرسال شخص آخر غير الموقع المسجل.",
+  "regFilePickError": "لا يمكن اختيار الملف. يرجى التحقق من الأذونات.",
+  "regUploadKycTitle": "قم بتحميل مستندات KYC",
+  "regUploadKycBody": "قم بتحميل كل وثيقة مطلوبة. يمكنك الانتهاء بمجرد تحميل جميع المستندات المطلوبة.",
+  "regReference": "المرجع: {id}",
+  "regNoDocumentsRequired": "لا توجد وثائق مطلوبة في هذا الوقت.",
+  "regRequired": "مطلوب",
+  "regOptional": "خياري",
+  "regSelectedFile": "تم التحديد: {name}",
+  "regUploaded": "تم الرفع",
+  "regUpload": "رفع",
+  "regCreatePasswordTitle": "قم بإنشاء كلمة المرور الخاصة بك",
+  "regCreatePasswordBody": "اختر كلمة مرور آمنة لحسابك. سوف تستخدمه لتسجيل الدخول بعد التسجيل.",
+  "regPassword": "كلمة المرور",
+  "regConfirmPassword": "تأكيد كلمة المرور",
+  "regPasswordRules": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتتضمن أحرفًا كبيرة وصغيرة ورقمًا وحرفًا خاصًا.",
+  "regPasswordSuccess": "تم تعيين كلمة المرور بنجاح. مرحبا بكم في مركز المجلس الرقمي.",
+  "regInstitutionComplete": "اكتمل تسجيل المؤسسة. المرجع: {id}",
+  "regInstitutionCompleteGeneric": "اكتمل تسجيل المؤسسة.",
+  "regCompleteLocal": "اكتمل التسجيل. يتم حفظ الاحتياجات وتفاصيل الصرف محليًا.",
+  "regContinueWithFayda": "تواصل مع فايدة",
+  "regVerifyingFayda": "التحقق مع فايدة…",
+  "regSubmitContinue": "إرسال ومتابعة",
+  "regSetPasswordContinue": "تعيين كلمة المرور والمتابعة",
+  "regSetPasswordFinish": "تعيين كلمة المرور والانتهاء",
+  "navAwqaf": "Awqaf"
 }

@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/widgets/app_logo.dart';
+import '../../../../core/l10n/l10n.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
@@ -80,11 +81,7 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               current.method != RegistrationMethod.institution,
           listener: (context, state) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Password set successfully. Welcome to Mejlis Digital Hub.',
-                ),
-              ),
+              SnackBar(content: Text(context.l10n.regPasswordSuccess)),
             );
             context.go('/');
           },
@@ -95,21 +92,13 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               !previous.submissionSuccess &&
               current.method == RegistrationMethod.institution,
           listener: (context, state) {
+            final l10n = context.l10n;
             final id = state.createdBeneficiaryId;
-            final status = state.registeredBeneficiary?.verificationStatus;
-            final buffer = StringBuffer();
-            if (id != null && id.isNotEmpty) {
-              buffer.write(
-                'Institution registration complete. Reference: $id',
-              );
-            } else {
-              buffer.write('Institution registration complete.');
-            }
-            if (status != null && status.trim().isNotEmpty) {
-              buffer.write(' Status: ${status.trim()}.');
-            }
+            final message = id != null && id.isNotEmpty
+                ? l10n.regInstitutionComplete(id)
+                : l10n.regInstitutionCompleteGeneric;
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(buffer.toString())),
+              SnackBar(content: Text(message)),
             );
             context.go('/');
           },
@@ -122,11 +111,7 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
               current.step == BeneficiaryRegistrationStep.disbursement,
           listener: (context, state) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Registration complete. Needs and disbursement details are saved locally.',
-                ),
-              ),
+              SnackBar(content: Text(context.l10n.regCompleteLocal)),
             );
             context.go('/');
           },
@@ -134,6 +119,7 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
       ],
       child: BlocBuilder<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
         builder: (context, state) {
+          final l10n = context.l10n;
           final theme = Theme.of(context);
           return Theme(
             data: theme.copyWith(
@@ -199,7 +185,7 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Beneficiary Registration',
+                        l10n.regTitle,
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: AppColors.textOnPrimary,
                           fontWeight: FontWeight.w700,
@@ -262,23 +248,20 @@ class _RegistrationHeroBanner extends StatelessWidget {
 
   final BeneficiaryRegistrationState state;
 
-  String get _methodTitle => switch (state.method) {
-        RegistrationMethod.fastTrack => 'Fast-Track with Fayda',
-        RegistrationMethod.manual => 'Manual Registration',
-        RegistrationMethod.institution => 'Institution Registration',
-      };
-
-  String get _methodDescription => switch (state.method) {
-        RegistrationMethod.fastTrack =>
-          'Securely verify identity with National ID and continue in minutes.',
-        RegistrationMethod.manual =>
-          'Share your information and supporting details for trusted review.',
-        RegistrationMethod.institution =>
-          'Register your organization and submit required compliance documents.',
-      };
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final methodTitle = switch (state.method) {
+      RegistrationMethod.fastTrack => l10n.regMethodFastTrack,
+      RegistrationMethod.manual => l10n.regMethodManual,
+      RegistrationMethod.institution => l10n.regMethodInstitution,
+    };
+    final methodDescription = switch (state.method) {
+      RegistrationMethod.fastTrack => l10n.regMethodFastTrackDesc,
+      RegistrationMethod.manual => l10n.regMethodManualDesc,
+      RegistrationMethod.institution => l10n.regMethodInstitutionDesc,
+    };
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
@@ -319,7 +302,7 @@ class _RegistrationHeroBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _methodTitle,
+                  methodTitle,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.textOnPrimary,
                         fontWeight: FontWeight.w700,
@@ -327,7 +310,7 @@ class _RegistrationHeroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _methodDescription,
+                  methodDescription,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textOnPrimary.withValues(alpha: 0.95),
                       ),
@@ -376,6 +359,7 @@ class _WelcomeStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     return Column(
       children: [
@@ -383,16 +367,16 @@ class _WelcomeStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Secure Identity Verification', style: Theme.of(context).textTheme.headlineSmall),
+              Text(l10n.regSecureIdentityTitle, style: Theme.of(context).textTheme.headlineSmall),
               const SizedBox(height: 8),
               Text(
-                'Choose your preferred registration method to begin your journey.',
+                l10n.regChooseMethodSubtitle,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
               PayoutMethodTile(
-                title: 'Fast-Track with National ID (Fayda)',
-                subtitle: 'Authenticate using your national digital ID.',
+                title: l10n.regFastTrackFaydaTitle,
+                subtitle: l10n.regFastTrackFaydaSubtitle,
                 icon: Icons.qr_code_scanner_rounded,
                 selected: state.method == RegistrationMethod.fastTrack,
                 onTap: () => bloc.add(
@@ -401,8 +385,8 @@ class _WelcomeStep extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               PayoutMethodTile(
-                title: 'Manual Registration',
-                subtitle: 'Upload supporting documentation for review.',
+                title: l10n.regManualTitle,
+                subtitle: l10n.regManualSubtitle,
                 icon: Icons.edit_document,
                 selected: state.method == RegistrationMethod.manual,
                 onTap: () => bloc.add(
@@ -411,8 +395,8 @@ class _WelcomeStep extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               PayoutMethodTile(
-                title: 'Register as Institution',
-                subtitle: 'Company, NGO, cooperative, or government entity.',
+                title: l10n.regInstitutionCardTitle,
+                subtitle: l10n.regInstitutionCardSubtitle,
                 icon: Icons.business_outlined,
                 selected: state.method == RegistrationMethod.institution,
                 onTap: () => bloc.add(
@@ -427,9 +411,9 @@ class _WelcomeStep extends StatelessWidget {
           SectionCard(
             child: TextField(
               onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
-              decoration: const InputDecoration(
-                labelText: 'Registration code',
-                hintText: 'EZW-A1B2-C3D4',
+              decoration: InputDecoration(
+                labelText: l10n.regRegistrationCodeLabel,
+                hintText: l10n.regRegistrationCodeHint,
               ),
             ),
           ),
@@ -441,14 +425,14 @@ class _WelcomeStep extends StatelessWidget {
               const Icon(Icons.lock_outline, size: 28),
               const SizedBox(height: 8),
               Text(
-                'Encrypted & Private',
+                l10n.regEncryptedPrivate,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
               ),
               const SizedBox(height: 4),
               Text(
-                'Your data is secured and handled in line with privacy standards.',
+                l10n.regEncryptedPrivateBody,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -467,7 +451,7 @@ class _WelcomeStep extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Verification interrupted',
+                  l10n.regVerificationInterrupted,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -484,14 +468,14 @@ class _WelcomeStep extends StatelessWidget {
                           )
                       : null,
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  label: const Text('Reopen verification'),
+                  label: Text(l10n.regReopenVerification),
                 ),
                 const SizedBox(height: 8),
                 FilledButton.icon(
                   onPressed: () =>
                       bloc.add(const FaydaSseRetryRequested()),
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry listening'),
+                  label: Text(l10n.regRetryListening),
                 ),
               ],
             ),
@@ -507,6 +491,7 @@ class _IdentityStep extends StatelessWidget {
   final BeneficiaryRegistrationState state;
 
   Future<void> _pickProfileImage(BuildContext context) async {
+    final l10n = context.l10n;
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (sheetContext) {
@@ -516,12 +501,12 @@ class _IdentityStep extends StatelessWidget {
             children: [
               ListTile(
                 leading: const Icon(Icons.photo_camera_outlined),
-                title: const Text('Take Photo'),
+                title: Text(l10n.commonTakePhoto),
                 onTap: () => Navigator.of(sheetContext).pop(ImageSource.camera),
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library_outlined),
-                title: const Text('Choose from Gallery'),
+                title: Text(l10n.commonChooseGallery),
                 onTap: () => Navigator.of(sheetContext).pop(ImageSource.gallery),
               ),
             ],
@@ -553,8 +538,8 @@ class _IdentityStep extends StatelessWidget {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not open camera/gallery. Please check permissions.'),
+        SnackBar(
+          content: Text(context.l10n.regCameraPermissionError),
         ),
       );
     }
@@ -562,9 +547,10 @@ class _IdentityStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final birthdateText = state.birthdate == null
-          ? 'Select birthdate'
+          ? l10n.regSelectBirthdate
           : MaterialLocalizations.of(context).formatMediumDate(state.birthdate!);
     return Column(
         children: [
@@ -573,15 +559,15 @@ class _IdentityStep extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Manual Identity Registration',
+                  l10n.regManualIdentityTitle,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
-                  decoration: const InputDecoration(
-                    labelText: 'Registration code',
-                    hintText: 'EZW-A1B2-C3D4',
+                  decoration: InputDecoration(
+                    labelText: l10n.regRegistrationCodeLabel,
+                    hintText: l10n.regRegistrationCodeHint,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -590,14 +576,14 @@ class _IdentityStep extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(FirstNameUpdated(v)),
-                        decoration: const InputDecoration(labelText: 'First Name'),
+                        decoration: InputDecoration(labelText: l10n.regFirstName),
                       ),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(FatherNameUpdated(v)),
-                        decoration: const InputDecoration(labelText: 'Last Name'),
+                        decoration: InputDecoration(labelText: l10n.regLastName),
                       ),
                     ),
                   ],
@@ -608,7 +594,7 @@ class _IdentityStep extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         onChanged: (v) => bloc.add(GrandFatherNameUpdated(v)),
-                        decoration: const InputDecoration(labelText: "Grandfather's Name"),
+                        decoration: InputDecoration(labelText: l10n.regGrandfatherName),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -616,9 +602,9 @@ class _IdentityStep extends StatelessWidget {
                       child: TextField(
                         keyboardType: TextInputType.phone,
                         onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
-                        decoration: const InputDecoration(
-                          labelText: 'Phone Number',
-                          hintText: '+251911223344 or 0911223344',
+                        decoration: InputDecoration(
+                          labelText: l10n.regPhoneNumber,
+                          hintText: l10n.regPhoneHint,
                         ),
                       ),
                     ),
@@ -631,23 +617,23 @@ class _IdentityStep extends StatelessWidget {
                       child: TextField(
                         keyboardType: TextInputType.emailAddress,
                         onChanged: (v) => bloc.add(EmailUpdated(v)),
-                        decoration: const InputDecoration(labelText: 'Email'),
+                        decoration: InputDecoration(labelText: l10n.regEmail),
                       ),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: DropdownButtonFormField<Gender>(
                         initialValue: state.gender,
-                        items: const [
-                          DropdownMenuItem(value: Gender.male, child: Text('Male')),
-                          DropdownMenuItem(value: Gender.female, child: Text('Female')),
+                        items: [
+                          DropdownMenuItem(value: Gender.male, child: Text(l10n.regMale)),
+                          DropdownMenuItem(value: Gender.female, child: Text(l10n.regFemale)),
                         ],
                         onChanged: (value) {
                           if (value != null) {
                             bloc.add(GenderUpdated(value));
                           }
                         },
-                        decoration: const InputDecoration(labelText: 'Gender'),
+                        decoration: InputDecoration(labelText: l10n.regGender),
                       ),
                     ),
                   ],
@@ -687,24 +673,24 @@ class _IdentityStep extends StatelessWidget {
                       bloc.add(AsnafCategorySelected(value));
                     }
                   },
-                  decoration: const InputDecoration(
-                    labelText: 'Beneficiary Category',
+                  decoration: InputDecoration(
+                    labelText: l10n.regBeneficiaryCategory,
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextField(
                   maxLines: 2,
                   onChanged: (v) => bloc.add(NotesUpdated(v)),
-                  decoration: const InputDecoration(
-                    labelText: 'Notes',
-                    hintText: 'e.g. Zakat support applicant',
+                  decoration: InputDecoration(
+                    labelText: l10n.regNotes,
+                    hintText: l10n.regNotesHint,
                   ),
                 ),
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
                   onPressed: () => _pickProfileImage(context),
                   icon: const Icon(Icons.photo_camera_outlined),
-                  label: const Text('Upload Profile Picture'),
+                  label: Text(l10n.regUploadProfilePicture),
                 ),
                 if (state.profilePicture != null) ...[
                   const SizedBox(height: 8),
@@ -733,6 +719,7 @@ class _FaydaVerificationBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SectionCard(
       child: Row(
         children: [
@@ -744,7 +731,7 @@ class _FaydaVerificationBanner extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Verifying with Fayda… Complete verification in the browser when it opens.',
+              l10n.regVerifyingFaydaBanner,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -760,6 +747,7 @@ class _NeedsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     return Column(
       children: [
@@ -767,21 +755,21 @@ class _NeedsStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Needs Assessment', style: Theme.of(context).textTheme.titleLarge),
+              Text(l10n.regNeedsAssessment, style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               TextField(
                 maxLines: 4,
                 onChanged: (v) => bloc.add(SituationDescriptionUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Describe your current situation',
-                  hintText: 'Explain hardship, dependents, and urgent needs...',
+                decoration: InputDecoration(
+                  labelText: l10n.regSituationLabel,
+                  hintText: l10n.regSituationHint,
                 ),
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: () => bloc.add(const SupportingProofPicked('hospital_bill_june.pdf')),
                 icon: const Icon(Icons.upload_file_outlined),
-                label: const Text('Upload Proof'),
+                label: Text(l10n.regUploadProof),
               ),
               if (state.uploadedProofName != null) ...[
                 const SizedBox(height: 8),
@@ -809,6 +797,7 @@ class _DisbursementStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     return Column(
       children: [
@@ -816,11 +805,11 @@ class _DisbursementStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Disbursement Setup', style: Theme.of(context).textTheme.titleLarge),
+              Text(l10n.regDisbursementSetup, style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               PayoutMethodTile(
-                title: 'Telebirr Wallet',
-                subtitle: 'Instant mobile money transfer',
+                title: l10n.regTelebirrTitle,
+                subtitle: l10n.regTelebirrSubtitle,
                 icon: Icons.account_balance_wallet_outlined,
                 selected: state.payoutMethod == PayoutMethod.telebirrWallet,
                 onTap: () =>
@@ -828,16 +817,16 @@ class _DisbursementStep extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               PayoutMethodTile(
-                title: 'M-Pesa',
-                subtitle: 'Secure mobile payment network',
+                title: l10n.regMpesaTitle,
+                subtitle: l10n.regMpesaSubtitle,
                 icon: Icons.phone_iphone_outlined,
                 selected: state.payoutMethod == PayoutMethod.mPesa,
                 onTap: () => bloc.add(const PayoutMethodSelected(PayoutMethod.mPesa)),
               ),
               const SizedBox(height: 10),
               PayoutMethodTile(
-                title: 'Coopbank Account',
-                subtitle: 'Direct bank deposit',
+                title: l10n.regCoopbankTitle,
+                subtitle: l10n.regCoopbankSubtitle,
                 icon: Icons.account_balance_outlined,
                 selected: state.payoutMethod == PayoutMethod.coopbank,
                 onTap: () => bloc.add(const PayoutMethodSelected(PayoutMethod.coopbank)),
@@ -845,22 +834,20 @@ class _DisbursementStep extends StatelessWidget {
               const SizedBox(height: 14),
               TextField(
                 onChanged: (v) => bloc.add(AccountOrMobileUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Account or Mobile Number'),
+                decoration: InputDecoration(labelText: l10n.regAccountOrMobile),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(LegalNameUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Full Legal Name'),
+                decoration: InputDecoration(labelText: l10n.regFullLegalName),
               ),
               const SizedBox(height: 12),
               CheckboxListTile(
                 value: state.hasAcceptedCompliance,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (v) => bloc.add(ComplianceToggled(v ?? false)),
-                title: const Text('Agreement & Sharia Compliance'),
-                subtitle: const Text(
-                  'I declare information is truthful and will use aid according to policy.',
-                ),
+                title: Text(l10n.regAgreementTitle),
+                subtitle: Text(l10n.regAgreementBody),
               ),
             ],
           ),
@@ -877,6 +864,7 @@ class _InstitutionDetailsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     return Column(
       children: [
@@ -885,15 +873,15 @@ class _InstitutionDetailsStep extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Institution Registration',
+                l10n.regInstitutionRegistration,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<InstitutionSubtype>(
                 key: ValueKey(state.institutionSubtype),
                 initialValue: state.institutionSubtype,
-                decoration: const InputDecoration(
-                  labelText: 'Institution Type',
+                decoration: InputDecoration(
+                  labelText: l10n.regInstitutionType,
                 ),
                 items: InstitutionSubtype.values
                     .map(
@@ -912,69 +900,69 @@ class _InstitutionDetailsStep extends StatelessWidget {
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(LegalNameUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Legal Name'),
+                decoration: InputDecoration(labelText: l10n.regLegalName),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(TradingNameUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Trading Name'),
+                decoration: InputDecoration(labelText: l10n.regTradingName),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(TradeRegistrationNumberUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Trade Registration Number',
+                decoration: InputDecoration(
+                  labelText: l10n.regTradeRegistrationNumber,
                 ),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(TaxIdentificationNumberUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Tax Identification Number (TIN)',
+                decoration: InputDecoration(
+                  labelText: l10n.regTin,
                 ),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(VatRegistrationNumberUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'VAT Registration Number (optional)',
+                decoration: InputDecoration(
+                  labelText: l10n.regVatOptional,
                 ),
               ),
               const SizedBox(height: 10),
               TextField(
                 keyboardType: TextInputType.phone,
                 onChanged: (v) => bloc.add(PhoneNumberUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  hintText: '+251911223344 or 0911223344',
+                decoration: InputDecoration(
+                  labelText: l10n.regPhoneNumber,
+                  hintText: l10n.regPhoneHint,
                 ),
               ),
               const SizedBox(height: 10),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (v) => bloc.add(EmailUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: l10n.regEmail),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(RegionUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Region'),
+                decoration: InputDecoration(labelText: l10n.regRegion),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(CityUpdated(v)),
-                decoration: const InputDecoration(labelText: 'City'),
+                decoration: InputDecoration(labelText: l10n.regCity),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(AddressUpdated(v)),
-                decoration: const InputDecoration(labelText: 'Address'),
+                decoration: InputDecoration(labelText: l10n.regAddress),
               ),
               const SizedBox(height: 10),
               TextField(
                 onChanged: (v) => bloc.add(NotesUpdated(v)),
-                decoration: const InputDecoration(
-                  labelText: 'Notes (optional)',
+                decoration: InputDecoration(
+                  labelText: l10n.regNotesOptional,
                 ),
                 maxLines: 2,
               ),
@@ -984,10 +972,8 @@ class _InstitutionDetailsStep extends StatelessWidget {
                 value: state.authorityToActDocumentRequired,
                 onChanged: (value) =>
                     bloc.add(AuthorityToActRequiredToggled(value)),
-                title: const Text('Authority to act document required'),
-                subtitle: const Text(
-                  'Enable if someone other than a registered signatory submits.',
-                ),
+                title: Text(l10n.regAuthorityDocTitle),
+                subtitle: Text(l10n.regAuthorityDocBody),
               ),
             ],
           ),
@@ -1001,6 +987,7 @@ Future<void> _pickInstitutionDocument(
   BuildContext context,
   String documentCode,
 ) async {
+  final l10n = context.l10n;
   final source = await showModalBottomSheet<_DocumentPickSource>(
     context: context,
     builder: (sheetContext) {
@@ -1010,19 +997,19 @@ Future<void> _pickInstitutionDocument(
           children: [
             ListTile(
               leading: const Icon(Icons.photo_camera_outlined),
-              title: const Text('Take Photo'),
+              title: Text(l10n.commonTakePhoto),
               onTap: () =>
                   Navigator.of(sheetContext).pop(_DocumentPickSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Choose from Gallery'),
+              title: Text(l10n.commonChooseGallery),
               onTap: () =>
                   Navigator.of(sheetContext).pop(_DocumentPickSource.gallery),
             ),
             ListTile(
               leading: const Icon(Icons.attach_file_outlined),
-              title: const Text('Choose File'),
+              title: Text(l10n.commonChooseFile),
               onTap: () =>
                   Navigator.of(sheetContext).pop(_DocumentPickSource.file),
             ),
@@ -1073,8 +1060,8 @@ Future<void> _pickInstitutionDocument(
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Could not pick file. Please check permissions.'),
+      SnackBar(
+        content: Text(context.l10n.regFilePickError),
       ),
     );
   }
@@ -1089,6 +1076,7 @@ class _InstitutionDocumentsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final documents = state.kycDocuments;
 
@@ -1100,18 +1088,18 @@ class _InstitutionDocumentsStep extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Upload KYC Documents',
+                l10n.regUploadKycTitle,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               Text(
-                'Upload each required document. You can finish once all required documents are uploaded.',
+                l10n.regUploadKycBody,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               if (state.createdBeneficiaryId != null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  'Reference: ${state.createdBeneficiaryId}',
+                  l10n.regReference(state.createdBeneficiaryId!),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -1120,8 +1108,8 @@ class _InstitutionDocumentsStep extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         if (documents.isEmpty)
-          const SectionCard(
-            child: Text('No documents required at this time.'),
+          SectionCard(
+            child: Text(l10n.regNoDocumentsRequired),
           )
         else
           ...documents.map((doc) {
@@ -1170,14 +1158,14 @@ class _InstitutionDocumentsStep extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        doc.required ? 'Required' : 'Optional',
+                        doc.required ? l10n.regRequired : l10n.regOptional,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ),
                     if (pickedName != null && !doc.uploaded) ...[
                       const SizedBox(height: 8),
                       Text(
-                        'Selected: $pickedName',
+                        l10n.regSelectedFile(pickedName),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -1193,7 +1181,7 @@ class _InstitutionDocumentsStep extends StatelessWidget {
                                       doc.code,
                                     ),
                             icon: const Icon(Icons.attach_file_outlined),
-                            label: const Text('Choose File'),
+                            label: Text(l10n.commonChooseFile),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -1221,7 +1209,7 @@ class _InstitutionDocumentsStep extends StatelessWidget {
                                       color: AppColors.textOnPrimary,
                                     ),
                                   )
-                                : Text(doc.uploaded ? 'Uploaded' : 'Upload'),
+                                : Text(doc.uploaded ? l10n.regUploaded : l10n.regUpload),
                           ),
                         ),
                       ],
@@ -1251,6 +1239,7 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final state = widget.state;
 
@@ -1261,18 +1250,18 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Create Your Password',
+                l10n.regCreatePasswordTitle,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               Text(
-                'Choose a secure password for your account. You will use it to sign in after registration.',
+                l10n.regCreatePasswordBody,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               if (state.createdBeneficiaryId != null) ...[
                 const SizedBox(height: 12),
                 Text(
-                  'Reference: ${state.createdBeneficiaryId}',
+                  l10n.regReference(state.createdBeneficiaryId!),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -1281,7 +1270,7 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
                 obscureText: _obscurePassword,
                 onChanged: (v) => bloc.add(PasswordUpdated(v)),
                 decoration: InputDecoration(
-                  labelText: 'Password',
+                  labelText: l10n.regPassword,
                   suffixIcon: IconButton(
                     onPressed: () => setState(
                       () => _obscurePassword = !_obscurePassword,
@@ -1299,7 +1288,7 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
                 obscureText: _obscureConfirm,
                 onChanged: (v) => bloc.add(ConfirmPasswordUpdated(v)),
                 decoration: InputDecoration(
-                  labelText: 'Confirm Password',
+                  labelText: l10n.regConfirmPassword,
                   suffixIcon: IconButton(
                     onPressed: () => setState(
                       () => _obscureConfirm = !_obscureConfirm,
@@ -1314,8 +1303,7 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Password must be at least 8 characters and include uppercase, '
-                'lowercase, a number, and a special character.',
+                l10n.regPasswordRules,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -1332,6 +1320,7 @@ class _FooterActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bloc = context.read<BeneficiaryRegistrationBloc>();
     final isManualIdentitySubmit = state.method == RegistrationMethod.manual &&
         state.step == BeneficiaryRegistrationStep.identity;
@@ -1372,19 +1361,19 @@ class _FooterActions extends StatelessWidget {
     final continueLabel = switch (state.step) {
       BeneficiaryRegistrationStep.welcome when state.method == RegistrationMethod.fastTrack =>
         state.isFaydaPosting || state.awaitingFaydaSse
-            ? 'Verifying with Fayda…'
+            ? l10n.regVerifyingFayda
             : state.faydaVerificationComplete
-                ? 'Continue'
-                : 'Continue with Fayda',
-      BeneficiaryRegistrationStep.identity when isManualIdentitySubmit => 'Submit & Continue',
+                ? l10n.commonContinue
+                : l10n.regContinueWithFayda,
+      BeneficiaryRegistrationStep.identity when isManualIdentitySubmit => l10n.regSubmitContinue,
       BeneficiaryRegistrationStep.institutionDetails when isInstitutionDetailsSubmit =>
-        'Submit & Continue',
+        l10n.regSubmitContinue,
       BeneficiaryRegistrationStep.setPassword when state.method == RegistrationMethod.institution =>
-        'Set Password & Continue',
-      BeneficiaryRegistrationStep.setPassword => 'Set Password & Finish',
-      BeneficiaryRegistrationStep.institutionDocuments => 'Finish',
-      BeneficiaryRegistrationStep.disbursement => 'Finish',
-      _ => 'Continue',
+        l10n.regSetPasswordContinue,
+      BeneficiaryRegistrationStep.setPassword => l10n.regSetPasswordFinish,
+      BeneficiaryRegistrationStep.institutionDocuments => l10n.commonFinish,
+      BeneficiaryRegistrationStep.disbursement => l10n.commonFinish,
+      _ => l10n.commonContinue,
     };
 
     final scheme = Theme.of(context).colorScheme;
@@ -1428,7 +1417,7 @@ class _FooterActions extends StatelessWidget {
                   }
                   bloc.add(const RegistrationStepWentBack());
                 },
-                child: const Text('Back'),
+                child: Text(l10n.commonBack),
               ),
             ),
             const SizedBox(width: 12),
