@@ -1096,371 +1096,360 @@ class AppLocalizationsAm extends AppLocalizations {
   String get donationNoMatchesFound => 'ምንም ተዛማጅ አልተገኙም።';
 
   @override
-  String get changeAppModeTooltip => 'Change mode';
+  String get changeAppModeTooltip => 'ሁነታን ቀይር';
 
   @override
-  String get switchedToAwqafMode => 'Switched to Awqaf mode';
+  String get switchedToAwqafMode => 'ወደ Awqaf ሁነታ ተቀይሯል።';
 
   @override
-  String get switchToAwqaf => 'Switch to Awqaf';
+  String get switchToAwqaf => 'ወደ Awqaf ቀይር';
 
   @override
-  String get switchedToZakatMode => 'Switched to Zakat mode';
+  String get switchedToZakatMode => 'ወደ ዘካት ሁነታ ተቀይሯል።';
 
   @override
-  String get switchToZakat => 'Switch to Zakat';
+  String get switchToZakat => 'ወደ ዘካት ቀይር';
 
   @override
-  String get loginForgotPassword => 'Forgot password?';
+  String get loginForgotPassword => 'የይለፍ ቃል ረሱ?';
 
   @override
-  String get loginForgotPasswordComingSoon => 'Forgot password coming soon';
+  String get loginForgotPasswordComingSoon => 'የይለፍ ቃል ረሳው በቅርቡ ይመጣል';
 
   @override
   String get loginNewToBaraka => 'New to Baraka? ';
 
   @override
-  String get loginCreateAccount => 'Create an account';
+  String get loginCreateAccount => 'መለያ ፍጠር';
 
   @override
-  String get loginCreateAccountComingSoon => 'Create account coming soon';
+  String get loginCreateAccountComingSoon => 'በቅርቡ መለያ ይፍጠሩ';
 
   @override
-  String get profileDisbursementIntro =>
-      'Choose where you want to receive disbursements.';
+  String get profileDisbursementIntro => 'ወጭዎችን የት መቀበል እንደሚፈልጉ ይምረጡ።';
 
   @override
-  String get profileCoopAccountLabel => 'Coop Bank Account Number';
+  String get profileCoopAccountLabel => 'Coop የባንክ ሂሳብ ቁጥር';
 
   @override
-  String get profileCoopAccountHint => 'Enter your account number';
+  String get profileCoopAccountHint => 'የመለያ ቁጥርዎን ያስገቡ';
 
   @override
-  String get profileCoopAccountRequired =>
-      'Please enter your Coop Bank account number.';
+  String get profileCoopAccountRequired => 'እባክዎ የ Coop ባንክ መለያ ቁጥርዎን ያስገቡ።';
 
   @override
-  String get profileSaveAccount => 'Save Account';
+  String get profileSaveAccount => 'መለያ አስቀምጥ';
 
   @override
-  String get faydaIdentityVerification => 'Identity verification';
+  String get faydaIdentityVerification => 'የማንነት ማረጋገጫ';
 
   @override
-  String get commonBack => 'Back';
+  String get commonBack => 'ተመለስ';
 
   @override
-  String get commonContinue => 'Continue';
+  String get commonContinue => 'ቀጥል';
 
   @override
-  String get commonFinish => 'Finish';
+  String get commonFinish => 'ጨርስ';
 
   @override
-  String get commonTakePhoto => 'Take Photo';
+  String get commonTakePhoto => 'ፎቶ አንሳ';
 
   @override
-  String get commonChooseGallery => 'Choose from Gallery';
+  String get commonChooseGallery => 'ከጋለሪ ይምረጡ';
 
   @override
-  String get commonChooseFile => 'Choose File';
+  String get commonChooseFile => 'ፋይል ይምረጡ';
 
   @override
-  String get regTitle => 'Beneficiary Registration';
+  String get regTitle => 'የተጠቃሚዎች ምዝገባ';
 
   @override
-  String get regMethodFastTrack => 'Fast-Track with Fayda';
+  String get regMethodFastTrack => 'ፈጣን-ትራክ ከፋይዳ ጋር';
 
   @override
-  String get regMethodManual => 'Manual Registration';
+  String get regMethodManual => 'በእጅ ምዝገባ';
 
   @override
-  String get regMethodInstitution => 'Institution Registration';
+  String get regMethodInstitution => 'የተቋማት ምዝገባ';
 
   @override
   String get regMethodFastTrackDesc =>
-      'Securely verify identity with National ID and continue in minutes.';
+      'በብሔራዊ መታወቂያ ማንነትን ደህንነቱ በተጠበቀ ሁኔታ ያረጋግጡ እና በደቂቃዎች ውስጥ ይቀጥሉ።';
 
   @override
-  String get regMethodManualDesc =>
-      'Share your information and supporting details for trusted review.';
+  String get regMethodManualDesc => 'ለታማኝ ግምገማ መረጃዎን እና ደጋፊ ዝርዝሮችዎን ያጋሩ።';
 
   @override
-  String get regMethodInstitutionDesc =>
-      'Register your organization and submit required compliance documents.';
+  String get regMethodInstitutionDesc => 'ድርጅትዎን ያስመዝግቡ እና አስፈላጊ ሰነዶችን ያቅርቡ።';
 
   @override
-  String get regSecureIdentityTitle => 'Secure Identity Verification';
+  String get regSecureIdentityTitle => 'ደህንነቱ የተጠበቀ የማንነት ማረጋገጫ';
 
   @override
-  String get regChooseMethodSubtitle =>
-      'Choose your preferred registration method to begin your journey.';
+  String get regChooseMethodSubtitle => 'ጉዞዎን ለመጀመር የመረጡትን የመመዝገቢያ ዘዴ ይምረጡ።';
 
   @override
-  String get regFastTrackFaydaTitle => 'Fast-Track with National ID (Fayda)';
+  String get regFastTrackFaydaTitle => 'ፈጣን ዱካ በብሔራዊ መታወቂያ (ፋይዳ)';
 
   @override
-  String get regFastTrackFaydaSubtitle =>
-      'Authenticate using your national digital ID.';
+  String get regFastTrackFaydaSubtitle => 'ብሄራዊ ዲጂታል መታወቂያዎን በመጠቀም ያረጋግጡ።';
 
   @override
-  String get regManualTitle => 'Manual Registration';
+  String get regManualTitle => 'በእጅ ምዝገባ';
 
   @override
-  String get regManualSubtitle => 'Upload supporting documentation for review.';
+  String get regManualSubtitle => 'ለግምገማ ደጋፊ ሰነዶችን ይስቀሉ።';
 
   @override
-  String get regInstitutionCardTitle => 'Register as Institution';
+  String get regInstitutionCardTitle => 'እንደ ተቋም ይመዝገቡ';
 
   @override
   String get regInstitutionCardSubtitle =>
-      'Company, NGO, cooperative, or government entity.';
+      'ኩባንያ፣ መንግሥታዊ ያልሆነ ድርጅት፣ የሕብረት ሥራ ወይም የመንግሥት አካል።';
 
   @override
-  String get regRegistrationCodeLabel => 'Registration code';
+  String get regRegistrationCodeLabel => 'የምዝገባ ኮድ';
 
   @override
   String get regRegistrationCodeHint => 'EZW-A1B2-C3D4';
 
   @override
-  String get regEncryptedPrivate => 'Encrypted & Private';
+  String get regEncryptedPrivate => 'የተመሰጠረ እና የግል';
 
   @override
   String get regEncryptedPrivateBody =>
-      'Your data is secured and handled in line with privacy standards.';
+      'የእርስዎ ውሂብ የተጠበቀ እና የሚስተናገደው ከግላዊነት ደረጃዎች ጋር በሚስማማ መንገድ ነው።';
 
   @override
-  String get regVerificationInterrupted => 'Verification interrupted';
+  String get regVerificationInterrupted => 'ማረጋገጥ ተቋርጧል';
 
   @override
-  String get regReopenVerification => 'Reopen verification';
+  String get regReopenVerification => 'ማረጋገጫን እንደገና ክፈት';
 
   @override
-  String get regRetryListening => 'Retry listening';
+  String get regRetryListening => 'ለማዳመጥ እንደገና ይሞክሩ';
 
   @override
   String get regCameraPermissionError =>
-      'Could not open camera/gallery. Please check permissions.';
+      'ካሜራ/ጋለሪ መክፈት አልተቻለም። እባክዎ ፈቃዶችን ያረጋግጡ።';
 
   @override
-  String get regSelectBirthdate => 'Select birthdate';
+  String get regSelectBirthdate => 'የልደት ቀን ይምረጡ';
 
   @override
-  String get regManualIdentityTitle => 'Manual Identity Registration';
+  String get regManualIdentityTitle => 'በእጅ የማንነት ምዝገባ';
 
   @override
-  String get regFirstName => 'First Name';
+  String get regFirstName => 'የመጀመሪያ ስም';
 
   @override
-  String get regLastName => 'Last Name';
+  String get regLastName => 'የአያት ስም';
 
   @override
-  String get regGrandfatherName => 'Grandfather\'s Name';
+  String get regGrandfatherName => 'የአያት ስም';
 
   @override
-  String get regPhoneNumber => 'Phone Number';
+  String get regPhoneNumber => 'ስልክ ቁጥር';
 
   @override
   String get regPhoneHint => '+251911223344 or 0911223344';
 
   @override
-  String get regEmail => 'Email';
+  String get regEmail => 'ኢሜይል';
 
   @override
-  String get regGender => 'Gender';
+  String get regGender => 'ጾታ';
 
   @override
-  String get regMale => 'Male';
+  String get regMale => 'ወንድ';
 
   @override
-  String get regFemale => 'Female';
+  String get regFemale => 'ሴት';
 
   @override
-  String get regBeneficiaryCategory => 'Beneficiary Category';
+  String get regBeneficiaryCategory => 'ተጠቃሚ ምድብ';
 
   @override
-  String get regNotes => 'Notes';
+  String get regNotes => 'ማስታወሻዎች';
 
   @override
-  String get regNotesHint => 'e.g. Zakat support applicant';
+  String get regNotesHint => 'ለምሳሌ. ዘካት ድጋፍ አመልካች';
 
   @override
-  String get regUploadProfilePicture => 'Upload Profile Picture';
+  String get regUploadProfilePicture => 'የመገለጫ ሥዕል ስቀል';
 
   @override
-  String get regVerifyingFaydaBanner =>
-      'Verifying with Fayda… Complete verification in the browser when it opens.';
+  String get regVerifyingFaydaBanner => 'በፋይዳ ማረጋገጥ… በአሳሹ ውስጥ ሙሉ ማረጋገጫ ሲከፈት።';
 
   @override
-  String get regNeedsAssessment => 'Needs Assessment';
+  String get regNeedsAssessment => 'ግምገማ ያስፈልገዋል';
 
   @override
-  String get regSituationLabel => 'Describe your current situation';
+  String get regSituationLabel => 'አሁን ያለዎትን ሁኔታ ይግለጹ';
 
   @override
-  String get regSituationHint =>
-      'Explain hardship, dependents, and urgent needs...';
+  String get regSituationHint => 'ችግርን፣ ጥገኞችን፣ እና አስቸኳይ ፍላጎቶችን ያብራሩ...';
 
   @override
-  String get regUploadProof => 'Upload Proof';
+  String get regUploadProof => 'የመስቀል ማረጋገጫ';
 
   @override
-  String get regDisbursementSetup => 'Disbursement Setup';
+  String get regDisbursementSetup => 'የወጪ ማዋቀር';
 
   @override
   String get regTelebirrTitle => 'Telebirr Wallet';
 
   @override
-  String get regTelebirrSubtitle => 'Instant mobile money transfer';
+  String get regTelebirrSubtitle => 'ፈጣን የሞባይል ገንዘብ ማስተላለፍ';
 
   @override
-  String get regMpesaTitle => 'M-Pesa';
+  String get regMpesaTitle => 'ኤም-ፔሳ';
 
   @override
-  String get regMpesaSubtitle => 'Secure mobile payment network';
+  String get regMpesaSubtitle => 'ደህንነቱ የተጠበቀ የሞባይል ክፍያ አውታረ መረብ';
 
   @override
-  String get regCoopbankTitle => 'Coopbank Account';
+  String get regCoopbankTitle => 'Coopbank መለያ';
 
   @override
-  String get regCoopbankSubtitle => 'Direct bank deposit';
+  String get regCoopbankSubtitle => 'ቀጥተኛ የባንክ ተቀማጭ';
 
   @override
-  String get regAccountOrMobile => 'Account or Mobile Number';
+  String get regAccountOrMobile => 'መለያ ወይም የሞባይል ቁጥር';
 
   @override
-  String get regFullLegalName => 'Full Legal Name';
+  String get regFullLegalName => 'ሙሉ ህጋዊ ስም';
 
   @override
-  String get regAgreementTitle => 'Agreement & Sharia Compliance';
+  String get regAgreementTitle => 'ስምምነት እና የሸሪዓ ተገዢነት';
 
   @override
   String get regAgreementBody =>
-      'I declare information is truthful and will use aid according to policy.';
+      'መረጃው እውነት መሆኑን አውጃለሁ እናም በፖሊሲው መሰረት እርዳታን እጠቀማለሁ.';
 
   @override
-  String get regInstitutionRegistration => 'Institution Registration';
+  String get regInstitutionRegistration => 'የተቋማት ምዝገባ';
 
   @override
-  String get regInstitutionType => 'Institution Type';
+  String get regInstitutionType => 'ተቋም ዓይነት';
 
   @override
-  String get regLegalName => 'Legal Name';
+  String get regLegalName => 'ህጋዊ ስም';
 
   @override
-  String get regTradingName => 'Trading Name';
+  String get regTradingName => 'የንግድ ስም';
 
   @override
-  String get regTradeRegistrationNumber => 'Trade Registration Number';
+  String get regTradeRegistrationNumber => 'የንግድ ምዝገባ ቁጥር';
 
   @override
-  String get regTin => 'Tax Identification Number (TIN)';
+  String get regTin => 'የግብር መለያ ቁጥር (ቲን)';
 
   @override
-  String get regVatOptional => 'VAT Registration Number (optional)';
+  String get regVatOptional => 'የተጨማሪ እሴት ታክስ መመዝገቢያ ቁጥር (አማራጭ)';
 
   @override
-  String get regRegion => 'Region';
+  String get regRegion => 'ክልል';
 
   @override
-  String get regCity => 'City';
+  String get regCity => 'ከተማ';
 
   @override
-  String get regAddress => 'Address';
+  String get regAddress => 'አድራሻ';
 
   @override
-  String get regNotesOptional => 'Notes (optional)';
+  String get regNotesOptional => 'ማስታወሻዎች (አማራጭ)';
 
   @override
-  String get regAuthorityDocTitle => 'Authority to act document required';
+  String get regAuthorityDocTitle => 'ሰነድ ለመስራት ስልጣን ያስፈልጋል';
 
   @override
-  String get regAuthorityDocBody =>
-      'Enable if someone other than a registered signatory submits.';
+  String get regAuthorityDocBody => 'ከተመዘገበ ፈራሚ ሌላ ሰው ካቀረበ አንቃ።';
 
   @override
-  String get regFilePickError =>
-      'Could not pick file. Please check permissions.';
+  String get regFilePickError => 'ፋይል መምረጥ አልተቻለም። እባክዎ ፈቃዶችን ያረጋግጡ።';
 
   @override
-  String get regUploadKycTitle => 'Upload KYC Documents';
+  String get regUploadKycTitle => 'የKYC ሰነዶችን ይስቀሉ።';
 
   @override
   String get regUploadKycBody =>
-      'Upload each required document. You can finish once all required documents are uploaded.';
+      'እያንዳንዱን አስፈላጊ ሰነድ ስቀል። ሁሉም አስፈላጊ ሰነዶች ከተሰቀሉ በኋላ መጨረስ ይችላሉ።';
 
   @override
   String regReference(Object id) {
-    return 'Reference: $id';
+    return 'ዋቢ፡ _PH_0__';
   }
 
   @override
-  String get regNoDocumentsRequired => 'No documents required at this time.';
+  String get regNoDocumentsRequired => 'በዚህ ጊዜ ምንም ሰነዶች አያስፈልጉም.';
 
   @override
-  String get regRequired => 'Required';
+  String get regRequired => 'ያስፈልጋል';
 
   @override
-  String get regOptional => 'Optional';
+  String get regOptional => 'አማራጭ';
 
   @override
   String regSelectedFile(Object name) {
-    return 'Selected: $name';
+    return 'የተመረጠው፡ _PH_0__';
   }
 
   @override
-  String get regUploaded => 'Uploaded';
+  String get regUploaded => 'ተጭኗል';
 
   @override
-  String get regUpload => 'Upload';
+  String get regUpload => 'ስቀል';
 
   @override
-  String get regCreatePasswordTitle => 'Create Your Password';
+  String get regCreatePasswordTitle => 'የይለፍ ቃልዎን ይፍጠሩ';
 
   @override
   String get regCreatePasswordBody =>
-      'Choose a secure password for your account. You will use it to sign in after registration.';
+      'ለመለያዎ ደህንነቱ የተጠበቀ የይለፍ ቃል ይምረጡ። ከምዝገባ በኋላ ለመግባት ይጠቀሙበታል።';
 
   @override
-  String get regPassword => 'Password';
+  String get regPassword => 'የይለፍ ቃል';
 
   @override
-  String get regConfirmPassword => 'Confirm Password';
+  String get regConfirmPassword => 'የይለፍ ቃል ያረጋግጡ';
 
   @override
   String get regPasswordRules =>
-      'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
+      'የይለፍ ቃል ቢያንስ 8 ቁምፊዎች መሆን አለበት እና አቢይ ሆሄያት፣ ንዑስ ሆሄያት፣ ቁጥር እና ልዩ ቁምፊ ማካተት አለበት።';
 
   @override
   String get regPasswordSuccess =>
-      'Password set successfully. Welcome to Mejlis Digital Hub.';
+      'የይለፍ ቃል በተሳካ ሁኔታ ተቀናብሯል። እንኳን ወደ መጅሊስ ዲጂታል መገናኛ በደህና መጡ።';
 
   @override
   String regInstitutionComplete(Object id) {
-    return 'Institution registration complete. Reference: $id';
+    return 'የተቋሙ ምዝገባ ተጠናቋል። ዋቢ፡ _PH_0__';
   }
 
   @override
-  String get regInstitutionCompleteGeneric =>
-      'Institution registration complete.';
+  String get regInstitutionCompleteGeneric => 'የተቋሙ ምዝገባ ተጠናቋል።';
 
   @override
   String get regCompleteLocal =>
-      'Registration complete. Needs and disbursement details are saved locally.';
+      'ምዝገባው ተጠናቅቋል። ፍላጎቶች እና የክፍያ ዝርዝሮች በአገር ውስጥ ተቀምጠዋል።';
 
   @override
-  String get regContinueWithFayda => 'Continue with Fayda';
+  String get regContinueWithFayda => 'በፋይዳ ይቀጥሉ';
 
   @override
-  String get regVerifyingFayda => 'Verifying with Fayda…';
+  String get regVerifyingFayda => 'በፋይዳ በማረጋገጥ ላይ…';
 
   @override
-  String get regSubmitContinue => 'Submit & Continue';
+  String get regSubmitContinue => 'አስረክብ እና ቀጥል';
 
   @override
-  String get regSetPasswordContinue => 'Set Password & Continue';
+  String get regSetPasswordContinue => 'የይለፍ ቃል ያዘጋጁ እና ይቀጥሉ';
 
   @override
-  String get regSetPasswordFinish => 'Set Password & Finish';
+  String get regSetPasswordFinish => 'የይለፍ ቃል አዘጋጅ እና ጨርስ';
 
   @override
-  String get navAwqaf => 'Awqaf';
+  String get navAwqaf => 'አውቃፍ';
 }

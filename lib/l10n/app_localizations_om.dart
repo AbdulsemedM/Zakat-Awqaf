@@ -1351,10 +1351,10 @@ class AppLocalizationsOm extends AppLocalizations {
       'Neetworkiin kaffaltii moobaayilaa nageenya qabu';
 
   @override
-  String get regCoopbankTitle => 'Coopbank Account';
+  String get regCoopbankTitle => 'Herrega Koopbaankii';
 
   @override
-  String get regCoopbankSubtitle => 'Direct bank deposit';
+  String get regCoopbankSubtitle => 'Kuufama baankii kallattiin';
 
   @override
   String get regAccountOrMobile => 'Herrega ykn Lakkoofsa Mobaayilaa';
@@ -1418,7 +1418,7 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get regUploadKycBody =>
-      'Upload each required document. You can finish once all required documents are uploaded.';
+      'Tokkoon tokkoon sanada barbaachisu olkaa\'i. Sanadoonni barbaachisoo ta\'an hundi erga olkaa\'amanii booda xumuruu dandeessa.';
 
   @override
   String regReference(Object id) {

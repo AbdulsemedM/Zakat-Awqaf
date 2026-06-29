@@ -1491,5 +1491,5 @@ class AppLocalizationsSo extends AppLocalizations {
   String get regSetPasswordFinish => 'Deji erayga sirta ah oo dhame';
 
   @override
-  String get navAwqaf => 'Awqaf';
+  String get navAwqaf => 'Awqaaf';
 }

@@ -1465,5 +1465,5 @@ class AppLocalizationsAr extends AppLocalizations {
   String get regSetPasswordFinish => 'تعيين كلمة المرور والانتهاء';
 
   @override
-  String get navAwqaf => 'Awqaf';
+  String get navAwqaf => 'الأوقاف';
 }
