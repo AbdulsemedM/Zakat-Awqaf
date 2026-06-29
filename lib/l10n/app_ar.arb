@@ -2,6 +2,8 @@
   "@@locale": "ar",
   "appTitle": "Zakat & Awqaf Commission",
   "splashSlogan": "لأجل الله، لأجل خدمة الإنسانية",
+  "splashWaqfByLabel": "A Waqf by",
+  "splashWaqfByTitle": "Coop Bank Alhuda",
   "navHome": "الرئيسية",
   "navCalculator": "الحاسبة",
   "navImpact": "الأثر",

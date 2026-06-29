@@ -116,6 +116,18 @@ abstract class AppLocalizations {
   /// **'For the sake of Allah, for the service of humanity'**
   String get splashSlogan;
 
+  /// No description provided for @splashWaqfByLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'A Waqf by'**
+  String get splashWaqfByLabel;
+
+  /// No description provided for @splashWaqfByTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Coop Bank Alhuda'**
+  String get splashWaqfByTitle;
+
   /// No description provided for @navHome.
   ///
   /// In en, this message translates to:
@@ -1979,6 +1991,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search by name or abbreviation'**
   String get donationSearchState;
+
+  /// No description provided for @donationNoMatchesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches found'**
+  String get donationNoMatchesFound;
 }
 
 class _AppLocalizationsDelegate

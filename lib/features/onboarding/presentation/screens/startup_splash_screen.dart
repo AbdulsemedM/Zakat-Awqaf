@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/widgets/coop_waqf_splash_badge.dart';
 import '../../../../app/widgets/splash_atmosphere_background.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/auth/auth_session_controller.dart';
@@ -175,6 +176,16 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12, bottom: 48),
+                    child: FadeTransition(
+                      opacity: _contentFade,
+                      child: const CoopWaqfSplashBadge(),
                     ),
                   ),
                 ),

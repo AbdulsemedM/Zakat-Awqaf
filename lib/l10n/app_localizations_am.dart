@@ -16,6 +16,12 @@ class AppLocalizationsAm extends AppLocalizations {
       'For the sake of Allah, for the service of humanity';
 
   @override
+  String get splashWaqfByLabel => 'A Waqf by';
+
+  @override
+  String get splashWaqfByTitle => 'Coop Bank Alhuda';
+
+  @override
   String get navHome => 'መነሻ';
 
   @override
@@ -1094,4 +1100,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get donationSearchState => 'Search by name or abbreviation';
+
+  @override
+  String get donationNoMatchesFound => 'No matches found';
 }

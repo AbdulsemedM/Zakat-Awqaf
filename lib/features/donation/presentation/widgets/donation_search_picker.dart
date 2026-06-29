@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../core/l10n/l10n.dart';
 import '../../data/donation_picker_option.dart';
 
 /// Opens a searchable bottom sheet and returns the selected [DonationPickerOption].
@@ -101,6 +102,7 @@ class _DonationSearchPickerSheetState extends State<_DonationSearchPickerSheet> 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final maxHeight = MediaQuery.sizeOf(context).height * 0.85;
     final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
     final filtered = _filtered;
@@ -161,7 +163,7 @@ class _DonationSearchPickerSheetState extends State<_DonationSearchPickerSheet> 
                       ? Padding(
                           padding: const EdgeInsets.all(24),
                           child: Text(
-                            'No matches found',
+                            l10n.donationNoMatchesFound,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
