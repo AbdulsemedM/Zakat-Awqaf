@@ -44,7 +44,10 @@ class AsnafCategoryTile extends StatelessWidget {
             onTap: onTap,
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 12,
+                ),
                 child: Text(
                   label,
                   textAlign: TextAlign.center,

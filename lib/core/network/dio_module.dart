@@ -19,7 +19,8 @@ void _trustSelfSignedApiHost(Dio dio) {
   dio.httpClientAdapter = IOHttpClientAdapter(
     createHttpClient: () {
       final client = HttpClient();
-      client.badCertificateCallback = (cert, certHost, port) => certHost == host;
+      client.badCertificateCallback = (cert, certHost, port) =>
+          certHost == host;
       return client;
     },
   );

@@ -1506,23 +1506,6 @@ class AppLocalizationsSo extends AppLocalizations {
       'Fadlan xaqiiji in tani tahay laantaada ka hor intaadan sii wadin.';
 
   @override
-  String get regMoreDetailsTitle => 'Faahfaahin dheeraad ah (ikhtiyaari)';
-
-  @override
-  String get regMoreDetailsSubtitle =>
-      'Waad ka boodi kartaa. Sarkaalka goobta ayaa buuxin doona inta lagu qiimaynayo.';
-
-  @override
-  String get regEstimatedAge => 'Da\'da qiyaasta ah';
-
-  @override
-  String get regEstimatedAgeHint =>
-      'Kaliya haddii aadan aqoon taariikhda dhalashadaada';
-
-  @override
-  String get regNationalId => 'Aqoonsiga qaranka';
-
-  @override
   String get regAddressLine => 'Cinwaanka';
 
   @override
@@ -1548,33 +1531,6 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get regMaritalSeparated => 'Kala tagay';
-
-  @override
-  String get regPrimaryLanguage => 'Luqadda koowaad';
-
-  @override
-  String get regLangAmharic => 'Axmaari';
-
-  @override
-  String get regLangAfaanOromo => 'Afka Oromada';
-
-  @override
-  String get regLangTigrinya => 'Tigrinya';
-
-  @override
-  String get regLangSomali => 'Soomaali';
-
-  @override
-  String get regLangAfar => 'Cafar';
-
-  @override
-  String get regLangOther => 'Kale';
-
-  @override
-  String get regPrimaryLanguageOther => 'Luqaddee?';
-
-  @override
-  String get regNotSpecified => 'Lama cayimin';
 
   @override
   String get profileApplicationBranch => 'Laanta';

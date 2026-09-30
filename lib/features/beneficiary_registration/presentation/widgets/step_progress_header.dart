@@ -17,7 +17,10 @@ class StepProgressHeader extends StatelessWidget {
   final BeneficiaryRegistrationStep step;
   final RegistrationMethod method;
 
-  static int _activeIndex(BeneficiaryRegistrationStep step, RegistrationMethod method) {
+  static int _activeIndex(
+    BeneficiaryRegistrationStep step,
+    RegistrationMethod method,
+  ) {
     if (step == BeneficiaryRegistrationStep.welcome) {
       return -1;
     }
@@ -68,15 +71,15 @@ class StepProgressHeader extends StatelessWidget {
     final labels = switch (method) {
       RegistrationMethod.fastTrack => [l10n.regStepNeeds, l10n.regStepPayout],
       RegistrationMethod.institution => [
-          l10n.regStepDetails,
-          l10n.regStepPassword,
-          l10n.regStepDocuments,
-        ],
+        l10n.regStepDetails,
+        l10n.regStepPassword,
+        l10n.regStepDocuments,
+      ],
       RegistrationMethod.manual => [
-          l10n.regStepIdentity,
-          l10n.regStepNeeds,
-          l10n.regStepPayout,
-        ],
+        l10n.regStepIdentity,
+        l10n.regStepNeeds,
+        l10n.regStepPayout,
+      ],
     };
     final activeIndex = _activeIndex(step, method);
 
@@ -97,10 +100,15 @@ class StepProgressHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(3),
                         gradient: index < activeIndex
                             ? const LinearGradient(
-                                colors: [AppColors.forestLight, AppColors.warmGold],
+                                colors: [
+                                  AppColors.forestLight,
+                                  AppColors.warmGold,
+                                ],
                               )
                             : null,
-                        color: index < activeIndex ? null : scheme.outlineVariant,
+                        color: index < activeIndex
+                            ? null
+                            : scheme.outlineVariant,
                       ),
                     ),
                   ),
@@ -117,17 +125,18 @@ class StepProgressHeader extends StatelessWidget {
                     textAlign: index == 0
                         ? TextAlign.start
                         : index == labels.length - 1
-                            ? TextAlign.end
-                            : TextAlign.center,
+                        ? TextAlign.end
+                        : TextAlign.center,
                     style: AppTypography.body(
                       fontSize: 12,
-                      fontWeight:
-                          index == activeIndex ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: index == activeIndex
+                          ? FontWeight.w700
+                          : FontWeight.w500,
                       color: index == activeIndex
                           ? AppColors.goldDeep
                           : index < activeIndex
-                              ? scheme.primary
-                              : scheme.onSurfaceVariant,
+                          ? scheme.primary
+                          : scheme.onSurfaceVariant,
                     ),
                   ),
                 ),
@@ -159,10 +168,10 @@ class _StepCircle extends StatelessWidget {
         gradient: current
             ? PrimaryHero.goldButtonGradient
             : done
-                ? const LinearGradient(
-                    colors: [AppColors.forestLight, AppColors.forestGreen],
-                  )
-                : null,
+            ? const LinearGradient(
+                colors: [AppColors.forestLight, AppColors.forestGreen],
+              )
+            : null,
         color: current || done ? null : scheme.surfaceContainerHigh,
         border: Border.all(
           color: current ? AppColors.goldDeep : scheme.outlineVariant,
@@ -178,13 +187,19 @@ class _StepCircle extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: done
-          ? const Icon(Icons.check_rounded, size: 16, color: AppColors.goldLight)
+          ? const Icon(
+              Icons.check_rounded,
+              size: 16,
+              color: AppColors.goldLight,
+            )
           : Text(
               '${index + 1}',
               style: AppTypography.body(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: current ? AppColors.onSecondary : scheme.onSurfaceVariant,
+                color: current
+                    ? AppColors.onSecondary
+                    : scheme.onSurfaceVariant,
               ),
             ),
     );

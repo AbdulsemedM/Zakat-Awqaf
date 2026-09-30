@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
 
+import '../../../../core/network/dio_logging_interceptor.dart'
+    show kLogJsonPartKey;
 import '../beneficiary_registration_exception.dart';
 import '../mobile_error_message.dart';
 import '../models/beneficiary_create_request.dart';
@@ -87,7 +89,10 @@ class BeneficiaryRegistrationDataProviderImpl
           response = await _dio.post<Map<String, dynamic>>(
             _beneficiariesPath,
             data: FormData.fromMap(formMap),
-            options: Options(contentType: 'multipart/form-data'),
+            options: Options(
+              contentType: 'multipart/form-data',
+              extra: {kLogJsonPartKey: request.toJson()},
+            ),
           );
         case NationalIdBeneficiaryCreateRequest():
           response = await _dio.post<Map<String, dynamic>>(
@@ -97,9 +102,7 @@ class BeneficiaryRegistrationDataProviderImpl
       }
       final status = response.statusCode ?? 0;
       if (status < 200 || status > 202) {
-        throw BeneficiaryRegistrationException(
-          'Unexpected status: $status',
-        );
+        throw BeneficiaryRegistrationException('Unexpected status: $status');
       }
       return _parseEnvelope(response.data, status);
     } on BeneficiaryRegistrationException {
@@ -120,9 +123,7 @@ class BeneficiaryRegistrationDataProviderImpl
       );
       final status = response.statusCode ?? 0;
       if (status != 201) {
-        throw BeneficiaryRegistrationException(
-          'Unexpected status: $status',
-        );
+        throw BeneficiaryRegistrationException('Unexpected status: $status');
       }
       return _parseEnvelope(response.data, status);
     } on BeneficiaryRegistrationException {
@@ -157,9 +158,7 @@ class BeneficiaryRegistrationDataProviderImpl
       );
       final status = response.statusCode ?? 0;
       if (status != 200) {
-        throw BeneficiaryRegistrationException(
-          'Unexpected status: $status',
-        );
+        throw BeneficiaryRegistrationException('Unexpected status: $status');
       }
       return _parseEnvelope(response.data, status);
     } on BeneficiaryRegistrationException {
@@ -194,8 +193,6 @@ class BeneficiaryRegistrationDataProviderImpl
     if (parsed != null && parsed.isNotEmpty) {
       return BeneficiaryRegistrationException(parsed);
     }
-    return BeneficiaryRegistrationException(
-      e.message ?? 'Network error',
-    );
+    return BeneficiaryRegistrationException(e.message ?? 'Network error');
   }
 }

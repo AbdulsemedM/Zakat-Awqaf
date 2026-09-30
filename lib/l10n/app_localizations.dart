@@ -2700,36 +2700,6 @@ abstract class AppLocalizations {
   /// **'Please confirm this is your branch before continuing.'**
   String get regCodeBranchConfirm;
 
-  /// No description provided for @regMoreDetailsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'More details (optional)'**
-  String get regMoreDetailsTitle;
-
-  /// No description provided for @regMoreDetailsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'You can skip these. A field officer will complete them during your assessment.'**
-  String get regMoreDetailsSubtitle;
-
-  /// No description provided for @regEstimatedAge.
-  ///
-  /// In en, this message translates to:
-  /// **'Estimated age'**
-  String get regEstimatedAge;
-
-  /// No description provided for @regEstimatedAgeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Only if you don\'t know your birthdate'**
-  String get regEstimatedAgeHint;
-
-  /// No description provided for @regNationalId.
-  ///
-  /// In en, this message translates to:
-  /// **'National ID'**
-  String get regNationalId;
-
   /// No description provided for @regAddressLine.
   ///
   /// In en, this message translates to:
@@ -2783,60 +2753,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Separated'**
   String get regMaritalSeparated;
-
-  /// No description provided for @regPrimaryLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Primary language'**
-  String get regPrimaryLanguage;
-
-  /// No description provided for @regLangAmharic.
-  ///
-  /// In en, this message translates to:
-  /// **'Amharic'**
-  String get regLangAmharic;
-
-  /// No description provided for @regLangAfaanOromo.
-  ///
-  /// In en, this message translates to:
-  /// **'Afaan Oromo'**
-  String get regLangAfaanOromo;
-
-  /// No description provided for @regLangTigrinya.
-  ///
-  /// In en, this message translates to:
-  /// **'Tigrinya'**
-  String get regLangTigrinya;
-
-  /// No description provided for @regLangSomali.
-  ///
-  /// In en, this message translates to:
-  /// **'Somali'**
-  String get regLangSomali;
-
-  /// No description provided for @regLangAfar.
-  ///
-  /// In en, this message translates to:
-  /// **'Afar'**
-  String get regLangAfar;
-
-  /// No description provided for @regLangOther.
-  ///
-  /// In en, this message translates to:
-  /// **'Other'**
-  String get regLangOther;
-
-  /// No description provided for @regPrimaryLanguageOther.
-  ///
-  /// In en, this message translates to:
-  /// **'Which language?'**
-  String get regPrimaryLanguageOther;
-
-  /// No description provided for @regNotSpecified.
-  ///
-  /// In en, this message translates to:
-  /// **'Not specified'**
-  String get regNotSpecified;
 
   /// No description provided for @profileApplicationBranch.
   ///

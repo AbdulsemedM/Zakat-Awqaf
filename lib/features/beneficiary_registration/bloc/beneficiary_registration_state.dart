@@ -79,10 +79,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.codeValidation,
     this.isValidatingCode = false,
     this.maritalStatus,
-    this.estimatedAge = '',
-    this.religion = '',
-    this.primaryLanguage,
-    this.primaryLanguageOther = '',
+    this.religion = 'Muslim',
     this.kebele = '',
   });
 
@@ -140,10 +137,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final RegistrationCodeValidation? codeValidation;
   final bool isValidatingCode;
   final MaritalStatus? maritalStatus;
-  final String estimatedAge;
   final String religion;
-  final PrimaryLanguage? primaryLanguage;
-  final String primaryLanguageOther;
   final String kebele;
 
   /// True once the current [registrationCode] was checked and accepted.
@@ -151,15 +145,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
       codeValidation != null &&
       codeValidation!.valid &&
       codeValidation!.code == registrationCode.trim();
-
-  /// Parsed [estimatedAge] when it is a whole number between 0 and 120.
-  int? get parsedEstimatedAge {
-    final age = int.tryParse(estimatedAge.trim());
-    if (age == null || age < 0 || age > 120) {
-      return null;
-    }
-    return age;
-  }
 
   String? get resolvedPasswordSetupToken {
     final fromState = passwordSetupToken?.trim() ?? '';
@@ -203,8 +188,10 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         phoneNumber.trim().isNotEmpty &&
         email.trim().isNotEmpty &&
         gender != null &&
-        (birthdate != null || parsedEstimatedAge != null) &&
+        birthdate != null &&
         isRegistrationCodeVerified &&
+        kebele.trim().isNotEmpty &&
+        address.trim().isNotEmpty &&
         notes.trim().isNotEmpty &&
         selectedCategory != null;
   }
@@ -224,69 +211,67 @@ sealed class BeneficiaryRegistrationState extends Equatable {
 
   @override
   List<Object?> get props => [
-        step,
-        method,
-        selectedCategory,
-        payoutMethod,
-        nationalId,
-        registrationCode,
-        generatedNationalId,
-        firstName,
-        fatherName,
-        grandFatherName,
-        phoneNumber,
-        email,
-        profilePicture,
-        gender,
-        birthdate,
-        address,
-        region,
-        city,
-        notes,
-        situationDescription,
-        uploadedProofName,
-        accountOrMobileNumber,
-        legalName,
-        hasAcceptedCompliance,
-        tradingName,
-        tradeRegistrationNumber,
-        taxIdentificationNumber,
-        vatRegistrationNumber,
-        institutionSubtype,
-        authorityToActDocumentRequired,
-        companyDocumentUploadToken,
-        kycDocuments,
-        pickedDocumentPaths,
-        uploadingDocumentCode,
-        institutionRegistrationSubmitted,
-        institutionRequiredKycComplete,
-        password,
-        confirmPassword,
-        isSettingPassword,
-        passwordSetupComplete,
-        errorMessage,
-        submissionSuccess,
-        isSubmitting,
-        isFaydaPosting,
-        awaitingFaydaSse,
-        faydaVerificationComplete,
-        manualIdentitySubmitted,
-        createdBeneficiaryId,
-        verificationLink,
-        registeredBeneficiary,
-        passwordSetupToken,
-        codeValidation,
-        isValidatingCode,
-        maritalStatus,
-        estimatedAge,
-        religion,
-        primaryLanguage,
-        primaryLanguageOther,
-        kebele,
-      ];
+    step,
+    method,
+    selectedCategory,
+    payoutMethod,
+    nationalId,
+    registrationCode,
+    generatedNationalId,
+    firstName,
+    fatherName,
+    grandFatherName,
+    phoneNumber,
+    email,
+    profilePicture,
+    gender,
+    birthdate,
+    address,
+    region,
+    city,
+    notes,
+    situationDescription,
+    uploadedProofName,
+    accountOrMobileNumber,
+    legalName,
+    hasAcceptedCompliance,
+    tradingName,
+    tradeRegistrationNumber,
+    taxIdentificationNumber,
+    vatRegistrationNumber,
+    institutionSubtype,
+    authorityToActDocumentRequired,
+    companyDocumentUploadToken,
+    kycDocuments,
+    pickedDocumentPaths,
+    uploadingDocumentCode,
+    institutionRegistrationSubmitted,
+    institutionRequiredKycComplete,
+    password,
+    confirmPassword,
+    isSettingPassword,
+    passwordSetupComplete,
+    errorMessage,
+    submissionSuccess,
+    isSubmitting,
+    isFaydaPosting,
+    awaitingFaydaSse,
+    faydaVerificationComplete,
+    manualIdentitySubmitted,
+    createdBeneficiaryId,
+    verificationLink,
+    registeredBeneficiary,
+    passwordSetupToken,
+    codeValidation,
+    isValidatingCode,
+    maritalStatus,
+    religion,
+    kebele,
+  ];
 }
 
-final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState {
+final class BeneficiaryRegistrationInitial
+    extends BeneficiaryRegistrationState {
   const BeneficiaryRegistrationInitial({
     super.step = BeneficiaryRegistrationStep.welcome,
     // Fayda fast-track is disabled; manual is the default method.
@@ -343,10 +328,7 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.codeValidation,
     super.isValidatingCode,
     super.maritalStatus,
-    super.estimatedAge,
     super.religion,
-    super.primaryLanguage,
-    super.primaryLanguageOther,
     super.kebele,
   });
 
@@ -417,14 +399,10 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     RegistrationCodeValidation? codeValidation,
     bool? isValidatingCode,
     MaritalStatus? maritalStatus,
-    String? estimatedAge,
     String? religion,
-    PrimaryLanguage? primaryLanguage,
-    String? primaryLanguageOther,
     String? kebele,
     bool clearCodeValidation = false,
     bool clearMaritalStatus = false,
-    bool clearPrimaryLanguage = false,
   }) {
     return BeneficiaryRegistrationInitial(
       step: step ?? this.step,
@@ -456,9 +434,11 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       uploadedProofName: clearUploadedProof
           ? null
           : (uploadedProofName ?? this.uploadedProofName),
-      accountOrMobileNumber: accountOrMobileNumber ?? this.accountOrMobileNumber,
+      accountOrMobileNumber:
+          accountOrMobileNumber ?? this.accountOrMobileNumber,
       legalName: legalName ?? this.legalName,
-      hasAcceptedCompliance: hasAcceptedCompliance ?? this.hasAcceptedCompliance,
+      hasAcceptedCompliance:
+          hasAcceptedCompliance ?? this.hasAcceptedCompliance,
       tradingName: tradingName ?? this.tradingName,
       tradeRegistrationNumber:
           tradeRegistrationNumber ?? this.tradeRegistrationNumber,
@@ -467,10 +447,10 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       vatRegistrationNumber:
           vatRegistrationNumber ?? this.vatRegistrationNumber,
       institutionSubtype: institutionSubtype ?? this.institutionSubtype,
-      authorityToActDocumentRequired: authorityToActDocumentRequired ??
-          this.authorityToActDocumentRequired,
-      companyDocumentUploadToken: clearCompanyDocumentUploadToken ||
-              clearInstitutionMeta
+      authorityToActDocumentRequired:
+          authorityToActDocumentRequired ?? this.authorityToActDocumentRequired,
+      companyDocumentUploadToken:
+          clearCompanyDocumentUploadToken || clearInstitutionMeta
           ? null
           : (companyDocumentUploadToken ?? this.companyDocumentUploadToken),
       kycDocuments: clearInstitutionMeta
@@ -485,14 +465,15 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       institutionRegistrationSubmitted: clearInstitutionMeta
           ? false
           : (institutionRegistrationSubmitted ??
-              this.institutionRegistrationSubmitted),
+                this.institutionRegistrationSubmitted),
       institutionRequiredKycComplete: clearInstitutionMeta
           ? false
           : (institutionRequiredKycComplete ??
-              this.institutionRequiredKycComplete),
+                this.institutionRequiredKycComplete),
       password: clearPasswordFields ? '' : (password ?? this.password),
-      confirmPassword:
-          clearPasswordFields ? '' : (confirmPassword ?? this.confirmPassword),
+      confirmPassword: clearPasswordFields
+          ? ''
+          : (confirmPassword ?? this.confirmPassword),
       isSettingPassword: isSettingPassword ?? this.isSettingPassword,
       passwordSetupComplete:
           passwordSetupComplete ?? this.passwordSetupComplete,
@@ -528,13 +509,10 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
           ? null
           : (codeValidation ?? this.codeValidation),
       isValidatingCode: isValidatingCode ?? this.isValidatingCode,
-      maritalStatus: clearMaritalStatus ? null : (maritalStatus ?? this.maritalStatus),
-      estimatedAge: estimatedAge ?? this.estimatedAge,
-      religion: religion ?? this.religion,
-      primaryLanguage: clearPrimaryLanguage
+      maritalStatus: clearMaritalStatus
           ? null
-          : (primaryLanguage ?? this.primaryLanguage),
-      primaryLanguageOther: primaryLanguageOther ?? this.primaryLanguageOther,
+          : (maritalStatus ?? this.maritalStatus),
+      religion: religion ?? this.religion,
       kebele: kebele ?? this.kebele,
     );
   }

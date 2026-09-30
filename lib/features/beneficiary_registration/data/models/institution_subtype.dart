@@ -8,12 +8,12 @@ enum InstitutionSubtype {
   String get apiValue => name;
 
   String get label => switch (this) {
-        InstitutionSubtype.company => 'Company',
-        InstitutionSubtype.ngo => 'NGO',
-        InstitutionSubtype.government => 'Government',
-        InstitutionSubtype.cooperative => 'Cooperative',
-        InstitutionSubtype.other => 'Other',
-      };
+    InstitutionSubtype.company => 'Company',
+    InstitutionSubtype.ngo => 'NGO',
+    InstitutionSubtype.government => 'Government',
+    InstitutionSubtype.cooperative => 'Cooperative',
+    InstitutionSubtype.other => 'Other',
+  };
 
   static InstitutionSubtype? fromApiValue(String? value) {
     if (value == null || value.trim().isEmpty) {

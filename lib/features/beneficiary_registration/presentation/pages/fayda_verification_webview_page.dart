@@ -30,7 +30,10 @@ class _FaydaVerificationWebViewPageState
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+    return BlocListener<
+      BeneficiaryRegistrationBloc,
+      BeneficiaryRegistrationState
+    >(
       listenWhen: (previous, current) =>
           !previous.faydaVerificationComplete &&
           current.faydaVerificationComplete,
@@ -39,64 +42,70 @@ class _FaydaVerificationWebViewPageState
           Navigator.of(context).pop();
         }
       },
-      child: BlocBuilder<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
-        buildWhen: (previous, current) =>
-            previous.awaitingFaydaSse != current.awaitingFaydaSse ||
-            previous.faydaVerificationComplete !=
-                current.faydaVerificationComplete,
-        builder: (context, state) {
-          final showWaitingOverlay =
-              state.awaitingFaydaSse && !state.faydaVerificationComplete;
+      child:
+          BlocBuilder<
+            BeneficiaryRegistrationBloc,
+            BeneficiaryRegistrationState
+          >(
+            buildWhen: (previous, current) =>
+                previous.awaitingFaydaSse != current.awaitingFaydaSse ||
+                previous.faydaVerificationComplete !=
+                    current.faydaVerificationComplete,
+            builder: (context, state) {
+              final showWaitingOverlay =
+                  state.awaitingFaydaSse && !state.faydaVerificationComplete;
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(context.l10n.faydaIdentityVerification),
-            ),
-            body: Stack(
-              children: [
-                WebViewWidget(controller: _controller),
-                if (showWaitingOverlay)
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Material(
-                      elevation: 4,
-                      color: Theme.of(context).colorScheme.surface,
-                      child: SafeArea(
-                        top: false,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text(context.l10n.faydaIdentityVerification),
+                ),
+                body: Stack(
+                  children: [
+                    WebViewWidget(controller: _controller),
+                    if (showWaitingOverlay)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Material(
+                          elevation: 4,
+                          color: Theme.of(context).colorScheme.surface,
+                          child: SafeArea(
+                            top: false,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
                               ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  'Waiting for verification confirmation…',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      'Waiting for verification confirmation…',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-              ],
-            ),
-          );
-        },
-      ),
+                  ],
+                ),
+              );
+            },
+          ),
     );
   }
 }

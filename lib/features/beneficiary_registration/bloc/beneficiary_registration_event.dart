@@ -12,7 +12,8 @@ sealed class BeneficiaryRegistrationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class BeneficiaryRegistrationStarted extends BeneficiaryRegistrationEvent {
+final class BeneficiaryRegistrationStarted
+    extends BeneficiaryRegistrationEvent {
   const BeneficiaryRegistrationStarted();
 }
 
@@ -245,7 +246,8 @@ final class ComplianceToggled extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [accepted];
 }
 
-final class BeneficiarySubmissionRequested extends BeneficiaryRegistrationEvent {
+final class BeneficiarySubmissionRequested
+    extends BeneficiaryRegistrationEvent {
   const BeneficiarySubmissionRequested();
 }
 
@@ -257,7 +259,8 @@ final class TradingNameUpdated extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [value];
 }
 
-final class TradeRegistrationNumberUpdated extends BeneficiaryRegistrationEvent {
+final class TradeRegistrationNumberUpdated
+    extends BeneficiaryRegistrationEvent {
   const TradeRegistrationNumberUpdated(this.value);
   final String value;
 
@@ -265,7 +268,8 @@ final class TradeRegistrationNumberUpdated extends BeneficiaryRegistrationEvent 
   List<Object?> get props => [value];
 }
 
-final class TaxIdentificationNumberUpdated extends BeneficiaryRegistrationEvent {
+final class TaxIdentificationNumberUpdated
+    extends BeneficiaryRegistrationEvent {
   const TaxIdentificationNumberUpdated(this.value);
   final String value;
 
@@ -297,7 +301,8 @@ final class AuthorityToActRequiredToggled extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [required];
 }
 
-final class InstitutionRegistrationRequested extends BeneficiaryRegistrationEvent {
+final class InstitutionRegistrationRequested
+    extends BeneficiaryRegistrationEvent {
   const InstitutionRegistrationRequested();
 }
 
@@ -314,7 +319,8 @@ final class InstitutionDocumentPicked extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [documentCode, filePath];
 }
 
-final class InstitutionDocumentUploadRequested extends BeneficiaryRegistrationEvent {
+final class InstitutionDocumentUploadRequested
+    extends BeneficiaryRegistrationEvent {
   const InstitutionDocumentUploadRequested(this.documentCode);
   final String documentCode;
 
@@ -322,11 +328,13 @@ final class InstitutionDocumentUploadRequested extends BeneficiaryRegistrationEv
   List<Object?> get props => [documentCode];
 }
 
-final class InstitutionRegistrationFinished extends BeneficiaryRegistrationEvent {
+final class InstitutionRegistrationFinished
+    extends BeneficiaryRegistrationEvent {
   const InstitutionRegistrationFinished();
 }
 
-final class DisbursementRegistrationFinished extends BeneficiaryRegistrationEvent {
+final class DisbursementRegistrationFinished
+    extends BeneficiaryRegistrationEvent {
   const DisbursementRegistrationFinished();
 }
 
@@ -364,32 +372,8 @@ final class MaritalStatusUpdated extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [value];
 }
 
-final class EstimatedAgeUpdated extends BeneficiaryRegistrationEvent {
-  const EstimatedAgeUpdated(this.value);
-  final String value;
-
-  @override
-  List<Object?> get props => [value];
-}
-
 final class ReligionUpdated extends BeneficiaryRegistrationEvent {
   const ReligionUpdated(this.value);
-  final String value;
-
-  @override
-  List<Object?> get props => [value];
-}
-
-final class PrimaryLanguageUpdated extends BeneficiaryRegistrationEvent {
-  const PrimaryLanguageUpdated(this.value);
-  final PrimaryLanguage? value;
-
-  @override
-  List<Object?> get props => [value];
-}
-
-final class PrimaryLanguageOtherUpdated extends BeneficiaryRegistrationEvent {
-  const PrimaryLanguageOtherUpdated(this.value);
   final String value;
 
   @override

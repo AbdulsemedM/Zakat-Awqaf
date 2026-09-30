@@ -5,6 +5,11 @@ import 'package:flutter/foundation.dart';
 
 import 'dio_log_colors.dart';
 
+/// [RequestOptions.extra] key: a JSON-encodable copy of a multipart `data`
+/// part, printed with the request. A multipart file can only be read once,
+/// so the logger cannot read it back from the [FormData] itself.
+const String kLogJsonPartKey = 'log_json_part';
+
 /// Logs every Dio request/response to the debug console with ANSI colors.
 class DioLoggingInterceptor extends Interceptor {
   DioLoggingInterceptor({
@@ -66,6 +71,13 @@ class DioLoggingInterceptor extends Interceptor {
     if (logRequestBody && options.data != null) {
       buffer.writeln(DioLogColors.paint('Body', DioLogColors.yellow));
       buffer.writeln(_formatBody(options.data, options.contentType));
+      final jsonPart = options.extra[kLogJsonPartKey];
+      if (jsonPart != null) {
+        buffer.writeln(
+          DioLogColors.paint('JSON part "data"', DioLogColors.yellow),
+        );
+        buffer.writeln(_prettyJson(jsonPart));
+      }
     }
 
     if (options.responseType == ResponseType.stream) {
@@ -116,7 +128,9 @@ class DioLoggingInterceptor extends Interceptor {
 
     if (logResponseBody && options.responseType != ResponseType.stream) {
       buffer.writeln(DioLogColors.paint('Body', DioLogColors.yellow));
-      buffer.writeln(_formatBody(response.data, response.headers.value('content-type')));
+      buffer.writeln(
+        _formatBody(response.data, response.headers.value('content-type')),
+      );
     }
 
     buffer.writeln(_divider(null, statusColor));
@@ -227,7 +241,9 @@ class DioLoggingInterceptor extends Interceptor {
       final key = entry.key;
       final value = entry.value;
       final display = _redactIfSensitive(key, value);
-      buffer.writeln('  ${DioLogColors.paint(key, DioLogColors.magenta)}: $display');
+      buffer.writeln(
+        '  ${DioLogColors.paint(key, DioLogColors.magenta)}: $display',
+      );
     }
     return buffer.toString();
   }
@@ -263,7 +279,9 @@ class DioLoggingInterceptor extends Interceptor {
     }
 
     if (data is FormData) {
-      final fields = data.fields.map((e) => '  ${e.key}: ${e.value}').join('\n');
+      final fields = data.fields
+          .map((e) => '  ${e.key}: ${e.value}')
+          .join('\n');
       final files = data.files
           .map((e) => '  ${e.key}: ${e.value.filename ?? 'file'}')
           .join('\n');

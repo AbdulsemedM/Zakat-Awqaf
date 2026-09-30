@@ -6,7 +6,8 @@ sealed class BeneficiaryRegistrationRequest {
 }
 
 /// Mode A — full registration (expect HTTP 201).
-final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest {
+final class FullBeneficiaryCreateRequest
+    extends BeneficiaryRegistrationRequest {
   const FullBeneficiaryCreateRequest({
     required this.fullName,
     required this.phone,
@@ -17,13 +18,10 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
     required this.category,
     required this.notes,
     this.dateOfBirth,
-    this.estimatedAge,
     this.nationalId,
     this.addressLine,
     this.maritalStatus,
     this.religion,
-    this.primaryLanguage,
-    this.primaryLanguageOther,
     this.kebele,
     this.profilePicturePath,
   });
@@ -32,7 +30,7 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
   final String phone;
   final String email;
 
-  /// `YYYY-MM-DD`; when null, [estimatedAge] should be set instead.
+  /// `YYYY-MM-DD`.
   final String? dateOfBirth;
   final String gender;
   final String registrationCode;
@@ -41,13 +39,10 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
   final String notes;
 
   // Optional basic details; region/zone/woreda always come from the branch.
-  final int? estimatedAge;
   final String? nationalId;
   final String? addressLine;
   final String? maritalStatus;
   final String? religion;
-  final String? primaryLanguage;
-  final String? primaryLanguageOther;
   final String? kebele;
   final String? profilePicturePath;
 
@@ -71,24 +66,18 @@ final class FullBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest 
     }
 
     putText('dateOfBirth', dateOfBirth);
-    if (estimatedAge != null) {
-      json['estimatedAge'] = estimatedAge;
-    }
     putText('nationalId', nationalId);
     putText('addressLine', addressLine);
     putText('maritalStatus', maritalStatus);
     putText('religion', religion);
-    putText('primaryLanguage', primaryLanguage);
-    if (primaryLanguage == 'other') {
-      putText('primaryLanguageOther', primaryLanguageOther);
-    }
     putText('kebele', kebele);
     return json;
   }
 }
 
 /// Mode B — national ID / Fayda path (expect HTTP 202).
-final class NationalIdBeneficiaryCreateRequest extends BeneficiaryRegistrationRequest {
+final class NationalIdBeneficiaryCreateRequest
+    extends BeneficiaryRegistrationRequest {
   const NationalIdBeneficiaryCreateRequest({
     required this.registrationCode,
     required this.nationalId,
@@ -99,7 +88,7 @@ final class NationalIdBeneficiaryCreateRequest extends BeneficiaryRegistrationRe
 
   @override
   Map<String, dynamic> toJson() => {
-        'registrationCode': registrationCode.trim(),
-        'nationalId': nationalId.trim(),
-      };
+    'registrationCode': registrationCode.trim(),
+    'nationalId': nationalId.trim(),
+  };
 }

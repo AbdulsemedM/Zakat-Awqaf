@@ -22,10 +22,11 @@ class RegistrationCodeValidation {
   final String? message;
 
   /// "Region, Zone, Woreda" with empty parts skipped.
-  String get locationLine => [region, zone, woreda]
-      .map((e) => e?.trim() ?? '')
-      .where((e) => e.isNotEmpty)
-      .join(', ');
+  String get locationLine => [
+    region,
+    zone,
+    woreda,
+  ].map((e) => e?.trim() ?? '').where((e) => e.isNotEmpty).join(', ');
 
   factory RegistrationCodeValidation.fromJson(
     String code,

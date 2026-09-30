@@ -21,10 +21,8 @@ import 'beneficiary_registration_event.dart';
 import 'beneficiary_registration_state.dart';
 
 @injectable
-class BeneficiaryRegistrationBloc extends Bloc<
-    BeneficiaryRegistrationEvent,
-    BeneficiaryRegistrationState
-> {
+class BeneficiaryRegistrationBloc
+    extends Bloc<BeneficiaryRegistrationEvent, BeneficiaryRegistrationState> {
   BeneficiaryRegistrationBloc(
     this._repository,
     this._sseClient,
@@ -73,7 +71,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<AuthorityToActRequiredToggled>(_onAuthorityToActRequiredToggled);
     on<InstitutionRegistrationRequested>(_onInstitutionRegistrationRequested);
     on<InstitutionDocumentPicked>(_onInstitutionDocumentPicked);
-    on<InstitutionDocumentUploadRequested>(_onInstitutionDocumentUploadRequested);
+    on<InstitutionDocumentUploadRequested>(
+      _onInstitutionDocumentUploadRequested,
+    );
     on<InstitutionRegistrationFinished>(_onInstitutionRegistrationFinished);
     on<DisbursementRegistrationFinished>(_onDisbursementRegistrationFinished);
     on<PasswordUpdated>(_onPasswordUpdated);
@@ -88,20 +88,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
         ),
       ),
     );
-    on<EstimatedAgeUpdated>(
-      (e, emit) => emit(_current.copyWith(estimatedAge: e.value, clearError: true)),
-    );
-    on<ReligionUpdated>((e, emit) => emit(_current.copyWith(religion: e.value)));
-    on<PrimaryLanguageUpdated>(
-      (e, emit) => emit(
-        _current.copyWith(
-          primaryLanguage: e.value,
-          clearPrimaryLanguage: e.value == null,
-        ),
-      ),
-    );
-    on<PrimaryLanguageOtherUpdated>(
-      (e, emit) => emit(_current.copyWith(primaryLanguageOther: e.value)),
+    on<ReligionUpdated>(
+      (e, emit) => emit(_current.copyWith(religion: e.value)),
     );
     on<KebeleUpdated>((e, emit) => emit(_current.copyWith(kebele: e.value)));
   }
@@ -127,8 +115,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
 
   BeneficiaryRegistrationInitial get _current =>
       state is BeneficiaryRegistrationInitial
-          ? state as BeneficiaryRegistrationInitial
-          : const BeneficiaryRegistrationInitial();
+      ? state as BeneficiaryRegistrationInitial
+      : const BeneficiaryRegistrationInitial();
 
   @override
   Future<void> close() {
@@ -231,8 +219,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
           errorMessage: result.valid
               ? null
               : (message != null && message.isNotEmpty
-                  ? message
-                  : 'This registration code is not valid or was already used.'),
+                    ? message
+                    : 'This registration code is not valid or was already used.'),
         ),
       );
       return result.valid;
@@ -375,12 +363,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     _faydaSseMatched = false;
     _faydaSseReconnectAttempts = 0;
 
-    emit(
-      _current.copyWith(
-        awaitingFaydaSse: true,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(awaitingFaydaSse: true, clearError: true));
     _startFaydaVerificationWatch(id);
   }
 
@@ -511,8 +494,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
                 sseEvent.isVerificationComplete) {
               add(
                 FaydaSseCompletedSuccessfully(
-                  passwordSetupToken:
-                      sseEvent.passwordSetupToken?.trim() ?? '',
+                  passwordSetupToken: sseEvent.passwordSetupToken?.trim() ?? '',
                 ),
               );
             }
@@ -527,7 +509,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
   }
 
   String _friendlyFaydaSseError(Object error) {
-    if (error is DioException && error.type == DioExceptionType.receiveTimeout) {
+    if (error is DioException &&
+        error.type == DioExceptionType.receiveTimeout) {
       return 'Still waiting for Fayda verification. We will reconnect automatically.';
     }
     return 'Connection to verification updates was interrupted. '
@@ -599,12 +582,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return;
     }
 
-    emit(
-      _current.copyWith(
-        isFaydaPosting: false,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(isFaydaPosting: false, clearError: true));
   }
 
   void _onFirstNameUpdated(
@@ -709,14 +687,21 @@ class BeneficiaryRegistrationBloc extends Bloc<
     SituationDescriptionUpdated event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(_current.copyWith(situationDescription: event.description, clearError: true));
+    emit(
+      _current.copyWith(
+        situationDescription: event.description,
+        clearError: true,
+      ),
+    );
   }
 
   void _onProofPicked(
     SupportingProofPicked event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(_current.copyWith(uploadedProofName: event.fileName, clearError: true));
+    emit(
+      _current.copyWith(uploadedProofName: event.fileName, clearError: true),
+    );
   }
 
   void _onProofRemoved(
@@ -737,7 +722,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
     AccountOrMobileUpdated event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(_current.copyWith(accountOrMobileNumber: event.value, clearError: true));
+    emit(
+      _current.copyWith(accountOrMobileNumber: event.value, clearError: true),
+    );
   }
 
   void _onLegalNameUpdated(
@@ -751,7 +738,12 @@ class BeneficiaryRegistrationBloc extends Bloc<
     ComplianceToggled event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(_current.copyWith(hasAcceptedCompliance: event.accepted, clearError: true));
+    emit(
+      _current.copyWith(
+        hasAcceptedCompliance: event.accepted,
+        clearError: true,
+      ),
+    );
   }
 
   void _onTradingNameUpdated(
@@ -766,10 +758,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
     emit(
-      _current.copyWith(
-        tradeRegistrationNumber: event.value,
-        clearError: true,
-      ),
+      _current.copyWith(tradeRegistrationNumber: event.value, clearError: true),
     );
   }
 
@@ -778,10 +767,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
     emit(
-      _current.copyWith(
-        taxIdentificationNumber: event.value,
-        clearError: true,
-      ),
+      _current.copyWith(taxIdentificationNumber: event.value, clearError: true),
     );
   }
 
@@ -790,10 +776,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
     emit(
-      _current.copyWith(
-        vatRegistrationNumber: event.value,
-        clearError: true,
-      ),
+      _current.copyWith(vatRegistrationNumber: event.value, clearError: true),
     );
   }
 
@@ -801,12 +784,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     InstitutionSubtypeUpdated event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(
-      _current.copyWith(
-        institutionSubtype: event.value,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(institutionSubtype: event.value, clearError: true));
   }
 
   void _onAuthorityToActRequiredToggled(
@@ -827,15 +805,12 @@ class BeneficiaryRegistrationBloc extends Bloc<
   ) {
     final updated = Map<String, String>.from(_current.pickedDocumentPaths);
     updated[event.documentCode] = event.filePath;
-    emit(
-      _current.copyWith(
-        pickedDocumentPaths: updated,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(pickedDocumentPaths: updated, clearError: true));
   }
 
-  BeneficiaryRegistrationStep? _nextStepAfter(BeneficiaryRegistrationInitial c) {
+  BeneficiaryRegistrationStep? _nextStepAfter(
+    BeneficiaryRegistrationInitial c,
+  ) {
     if (c.method == RegistrationMethod.institution) {
       return switch (c.step) {
         BeneficiaryRegistrationStep.welcome =>
@@ -843,8 +818,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
         BeneficiaryRegistrationStep.institutionDetails =>
           c.institutionRegistrationSubmitted
               ? (c.passwordSetupComplete
-                  ? BeneficiaryRegistrationStep.institutionDocuments
-                  : BeneficiaryRegistrationStep.setPassword)
+                    ? BeneficiaryRegistrationStep.institutionDocuments
+                    : BeneficiaryRegistrationStep.setPassword)
               : BeneficiaryRegistrationStep.setPassword,
         BeneficiaryRegistrationStep.setPassword =>
           BeneficiaryRegistrationStep.institutionDocuments,
@@ -856,7 +831,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     }
     if (c.method == RegistrationMethod.fastTrack) {
       return switch (c.step) {
-        BeneficiaryRegistrationStep.welcome => BeneficiaryRegistrationStep.needs,
+        BeneficiaryRegistrationStep.welcome =>
+          BeneficiaryRegistrationStep.needs,
         BeneficiaryRegistrationStep.needs =>
           BeneficiaryRegistrationStep.disbursement,
         BeneficiaryRegistrationStep.disbursement => null,
@@ -867,7 +843,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
       };
     }
     return switch (c.step) {
-      BeneficiaryRegistrationStep.welcome => BeneficiaryRegistrationStep.identity,
+      BeneficiaryRegistrationStep.welcome =>
+        BeneficiaryRegistrationStep.identity,
       BeneficiaryRegistrationStep.identity =>
         c.manualIdentitySubmitted && !c.passwordSetupComplete
             ? BeneficiaryRegistrationStep.setPassword
@@ -881,7 +858,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
     };
   }
 
-  BeneficiaryRegistrationStep? _prevStepAfter(BeneficiaryRegistrationInitial c) {
+  BeneficiaryRegistrationStep? _prevStepAfter(
+    BeneficiaryRegistrationInitial c,
+  ) {
     if (c.method == RegistrationMethod.institution) {
       return switch (c.step) {
         BeneficiaryRegistrationStep.institutionDetails =>
@@ -900,7 +879,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return switch (c.step) {
         BeneficiaryRegistrationStep.setPassword =>
           BeneficiaryRegistrationStep.welcome,
-        BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.welcome,
+        BeneficiaryRegistrationStep.needs =>
+          BeneficiaryRegistrationStep.welcome,
         BeneficiaryRegistrationStep.disbursement =>
           BeneficiaryRegistrationStep.needs,
         BeneficiaryRegistrationStep.welcome => null,
@@ -912,7 +892,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     return switch (c.step) {
       BeneficiaryRegistrationStep.setPassword =>
         BeneficiaryRegistrationStep.identity,
-      BeneficiaryRegistrationStep.identity => BeneficiaryRegistrationStep.welcome,
+      BeneficiaryRegistrationStep.identity =>
+        BeneficiaryRegistrationStep.welcome,
       BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.identity,
       BeneficiaryRegistrationStep.disbursement =>
         BeneficiaryRegistrationStep.needs,
@@ -996,10 +977,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     final validation = _validateManualIdentity(_current);
     if (validation != null) {
       emit(
-        _current.copyWith(
-          errorMessage: validation,
-          submissionSuccess: false,
-        ),
+        _current.copyWith(errorMessage: validation, submissionSuccess: false),
       );
       return;
     }
@@ -1038,19 +1016,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
         ),
       );
     } on BeneficiaryRegistrationException catch (e) {
-      emit(
-        _current.copyWith(
-          isSubmitting: false,
-          errorMessage: e.message,
-        ),
-      );
+      emit(_current.copyWith(isSubmitting: false, errorMessage: e.message));
     } catch (e) {
-      emit(
-        _current.copyWith(
-          isSubmitting: false,
-          errorMessage: e.toString(),
-        ),
-      );
+      emit(_current.copyWith(isSubmitting: false, errorMessage: e.toString()));
     }
   }
 
@@ -1061,13 +1029,15 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (PhoneE164.normalize(s.phoneNumber) == null) {
       return 'Enter a valid phone number (e.g. +251911223344 or 0911223344).';
     }
-    if (s.birthdate == null && s.parsedEstimatedAge == null) {
-      return 'Enter a birthdate or an estimated age between 0 and 120.';
+    if (s.birthdate == null) {
+      return 'Select your birthdate.';
     }
     return null;
   }
 
-  FullBeneficiaryCreateRequest _buildFullCreateRequest(BeneficiaryRegistrationInitial s) {
+  FullBeneficiaryCreateRequest _buildFullCreateRequest(
+    BeneficiaryRegistrationInitial s,
+  ) {
     final fullName = _manualFullName(s);
     final genderStr = switch (s.gender!) {
       Gender.male => 'male',
@@ -1088,24 +1058,22 @@ class BeneficiaryRegistrationBloc extends Bloc<
       beneficiaryType: 'individual',
       category: s.selectedCategory!.apiValue,
       notes: s.notes.trim(),
-      estimatedAge: dob == null ? s.parsedEstimatedAge : null,
       // National ID is disabled for now; the field officer records it.
       // nationalId: s.nationalId,
       addressLine: s.address,
       maritalStatus: s.maritalStatus?.apiValue,
       religion: s.religion,
-      primaryLanguage: s.primaryLanguage?.apiValue,
-      primaryLanguageOther: s.primaryLanguageOther,
       kebele: s.kebele,
       profilePicturePath: s.profilePicture,
     );
   }
 
   String _manualFullName(BeneficiaryRegistrationInitial s) {
-    return [s.firstName, s.fatherName, s.grandFatherName]
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .join(' ');
+    return [
+      s.firstName,
+      s.fatherName,
+      s.grandFatherName,
+    ].map((e) => e.trim()).where((e) => e.isNotEmpty).join(' ');
   }
 
   Future<void> _onInstitutionRegistrationRequested(
@@ -1133,10 +1101,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     final validation = _validateInstitutionDetails(_current);
     if (validation != null) {
       emit(
-        _current.copyWith(
-          errorMessage: validation,
-          submissionSuccess: false,
-        ),
+        _current.copyWith(errorMessage: validation, submissionSuccess: false),
       );
       return;
     }
@@ -1176,19 +1141,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
         ),
       );
     } on BeneficiaryRegistrationException catch (e) {
-      emit(
-        _current.copyWith(
-          isSubmitting: false,
-          errorMessage: e.message,
-        ),
-      );
+      emit(_current.copyWith(isSubmitting: false, errorMessage: e.message));
     } catch (e) {
-      emit(
-        _current.copyWith(
-          isSubmitting: false,
-          errorMessage: e.toString(),
-        ),
-      );
+      emit(_current.copyWith(isSubmitting: false, errorMessage: e.toString()));
     }
   }
 
@@ -1210,7 +1165,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
         uploadToken.isEmpty) {
       emit(
         _current.copyWith(
-          errorMessage: 'Registration session expired. Please go back and try again.',
+          errorMessage:
+              'Registration session expired. Please go back and try again.',
         ),
       );
       return;
@@ -1314,7 +1270,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (beneficiaryId == null || beneficiaryId.isEmpty) {
       emit(
         _current.copyWith(
-          errorMessage: 'Missing beneficiary reference. Please restart registration.',
+          errorMessage:
+              'Missing beneficiary reference. Please restart registration.',
         ),
       );
       return;
@@ -1379,17 +1336,11 @@ class BeneficiaryRegistrationBloc extends Bloc<
       }
     } on AuthException catch (e) {
       emit(
-        _current.copyWith(
-          isSettingPassword: false,
-          errorMessage: e.message,
-        ),
+        _current.copyWith(isSettingPassword: false, errorMessage: e.message),
       );
     } catch (e) {
       emit(
-        _current.copyWith(
-          isSettingPassword: false,
-          errorMessage: e.toString(),
-        ),
+        _current.copyWith(isSettingPassword: false, errorMessage: e.toString()),
       );
     }
   }
@@ -1434,17 +1385,13 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (!_current.institutionRequiredKycComplete) {
       emit(
         _current.copyWith(
-          errorMessage: 'Please upload all required documents before finishing.',
+          errorMessage:
+              'Please upload all required documents before finishing.',
         ),
       );
       return;
     }
-    emit(
-      _current.copyWith(
-        submissionSuccess: true,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(submissionSuccess: true, clearError: true));
   }
 
   void _onDisbursementRegistrationFinished(
@@ -1454,12 +1401,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (_current.step != BeneficiaryRegistrationStep.disbursement) {
       return;
     }
-    emit(
-      _current.copyWith(
-        submissionSuccess: true,
-        clearError: true,
-      ),
-    );
+    emit(_current.copyWith(submissionSuccess: true, clearError: true));
   }
 
   String? _validateInstitutionDetails(BeneficiaryRegistrationInitial s) {

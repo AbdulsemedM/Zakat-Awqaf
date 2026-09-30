@@ -43,8 +43,9 @@ class BeneficiarySseClient {
         return;
       }
 
-      final lineStream =
-          utf8.decoder.bind(body.stream).transform(const LineSplitter());
+      final lineStream = utf8.decoder
+          .bind(body.stream)
+          .transform(const LineSplitter());
       var currentEvent = '';
       await for (final line in lineStream) {
         final trimmed = line.trimRight();

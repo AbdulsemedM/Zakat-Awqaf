@@ -102,9 +102,7 @@ class BeneficiaryDto {
       for (final item in kycRaw) {
         if (item is Map) {
           kycDocuments.add(
-            InstitutionKycDocument.fromJson(
-              Map<String, dynamic>.from(item),
-            ),
+            InstitutionKycDocument.fromJson(Map<String, dynamic>.from(item)),
           );
         }
       }
@@ -137,8 +135,7 @@ class BeneficiaryDto {
       institutionRecommendedKycDocuments: kycDocuments,
       institutionRequiredKycComplete:
           json['institutionRequiredKycComplete'] as bool?,
-      companyDocumentUploadToken:
-          json['companyDocumentUploadToken'] as String?,
+      companyDocumentUploadToken: json['companyDocumentUploadToken'] as String?,
       nationality: json['nationality'] as String?,
       caseStatus: json['caseStatus'] as String?,
       bankName: json['bankName'] as String?,

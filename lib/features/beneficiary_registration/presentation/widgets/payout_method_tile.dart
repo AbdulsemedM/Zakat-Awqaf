@@ -56,19 +56,26 @@ class PayoutMethodTile extends StatelessWidget {
                           ? const LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [AppColors.forestLight, AppColors.forestGreen],
+                              colors: [
+                                AppColors.forestLight,
+                                AppColors.forestGreen,
+                              ],
                             )
                           : null,
                       color: selected ? null : AppColors.tagGreenBg,
                       border: Border.all(
-                        color: selected ? AppColors.goldLight : AppColors.goldHairline,
+                        color: selected
+                            ? AppColors.goldLight
+                            : AppColors.goldHairline,
                         width: 1.2,
                       ),
                     ),
                     child: Icon(
                       icon,
                       size: 20,
-                      color: selected ? AppColors.goldLight : AppColors.forestMid,
+                      color: selected
+                          ? AppColors.goldLight
+                          : AppColors.forestMid,
                     ),
                   ),
                   const SizedBox(width: 14),
@@ -103,14 +110,22 @@ class PayoutMethodTile extends StatelessWidget {
                     height: 22,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: selected ? AppColors.forestLight : Colors.transparent,
+                      color: selected
+                          ? AppColors.forestLight
+                          : Colors.transparent,
                       border: Border.all(
-                        color: selected ? AppColors.forestLight : scheme.outline,
+                        color: selected
+                            ? AppColors.forestLight
+                            : scheme.outline,
                         width: 1.6,
                       ),
                     ),
                     child: selected
-                        ? const Icon(Icons.check_rounded, size: 14, color: Colors.white)
+                        ? const Icon(
+                            Icons.check_rounded,
+                            size: 14,
+                            color: Colors.white,
+                          )
                         : null,
                   ),
                 ],

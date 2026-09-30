@@ -1480,22 +1480,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'يرجى التأكد من أن هذا هو فرعك قبل المتابعة.';
 
   @override
-  String get regMoreDetailsTitle => 'تفاصيل إضافية (اختياري)';
-
-  @override
-  String get regMoreDetailsSubtitle =>
-      'يمكنك تخطي هذه الحقول. سيكملها موظف ميداني أثناء التقييم.';
-
-  @override
-  String get regEstimatedAge => 'العمر التقريبي';
-
-  @override
-  String get regEstimatedAgeHint => 'فقط إذا كنت لا تعرف تاريخ ميلادك';
-
-  @override
-  String get regNationalId => 'الهوية الوطنية';
-
-  @override
   String get regAddressLine => 'العنوان';
 
   @override
@@ -1521,33 +1505,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get regMaritalSeparated => 'منفصل';
-
-  @override
-  String get regPrimaryLanguage => 'اللغة الأساسية';
-
-  @override
-  String get regLangAmharic => 'الأمهرية';
-
-  @override
-  String get regLangAfaanOromo => 'الأورومية';
-
-  @override
-  String get regLangTigrinya => 'التيغرينية';
-
-  @override
-  String get regLangSomali => 'الصومالية';
-
-  @override
-  String get regLangAfar => 'العفرية';
-
-  @override
-  String get regLangOther => 'أخرى';
-
-  @override
-  String get regPrimaryLanguageOther => 'ما هي اللغة؟';
-
-  @override
-  String get regNotSpecified => 'غير محدد';
 
   @override
   String get profileApplicationBranch => 'الفرع';

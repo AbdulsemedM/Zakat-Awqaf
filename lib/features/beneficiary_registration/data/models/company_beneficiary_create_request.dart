@@ -35,19 +35,19 @@ class CompanyBeneficiaryCreateRequest {
   final String registrationCode;
 
   Map<String, dynamic> toJson() => {
-        'legalName': legalName.trim(),
-        'tradingName': tradingName.trim(),
-        'tradeRegistrationNumber': tradeRegistrationNumber.trim(),
-        'taxIdentificationNumber': taxIdentificationNumber.trim(),
-        'vatRegistrationNumber': vatRegistrationNumber.trim(),
-        'phone': phone.trim(),
-        'email': email.trim(),
-        'region': region.trim(),
-        'city': city.trim(),
-        'addressLine': addressLine.trim(),
-        'institutionSubtype': institutionSubtype.apiValue,
-        'authorityToActDocumentRequired': authorityToActDocumentRequired,
-        'notes': notes.trim(),
-        'registrationCode': registrationCode.trim(),
-      };
+    'legalName': legalName.trim(),
+    'tradingName': tradingName.trim(),
+    'tradeRegistrationNumber': tradeRegistrationNumber.trim(),
+    'taxIdentificationNumber': taxIdentificationNumber.trim(),
+    'vatRegistrationNumber': vatRegistrationNumber.trim(),
+    'phone': phone.trim(),
+    'email': email.trim(),
+    'region': region.trim(),
+    'city': city.trim(),
+    'addressLine': addressLine.trim(),
+    'institutionSubtype': institutionSubtype.apiValue,
+    'authorityToActDocumentRequired': authorityToActDocumentRequired,
+    'notes': notes.trim(),
+    'registrationCode': registrationCode.trim(),
+  };
 }

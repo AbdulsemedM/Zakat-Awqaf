@@ -11,13 +11,14 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/widgets/zakat_page_header.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../bloc/beneficiary_registration_bloc.dart';
 import '../../bloc/beneficiary_registration_event.dart';
 import '../../bloc/beneficiary_registration_state.dart';
 import '../../data/models/asnaf_category.dart';
+import '../../data/models/basic_detail_options.dart';
 import '../../data/models/institution_subtype.dart';
 import '../pages/fayda_verification_webview_page.dart';
-import '../widgets/optional_basic_details_section.dart';
 import '../widgets/payout_method_tile.dart';
 import '../widgets/registration_code_field.dart';
 import '../widgets/section_card.dart';
@@ -407,6 +408,14 @@ class _WelcomeStep extends StatelessWidget {
 
 /// Shown until the registration code is verified; the rest of the form
 /// unlocks once the server accepts the code.
+String _maritalLabel(AppLocalizations l10n, MaritalStatus v) => switch (v) {
+  MaritalStatus.single => l10n.regMaritalSingle,
+  MaritalStatus.married => l10n.regMaritalMarried,
+  MaritalStatus.widowed => l10n.regMaritalWidowed,
+  MaritalStatus.divorced => l10n.regMaritalDivorced,
+  MaritalStatus.separated => l10n.regMaritalSeparated,
+};
+
 class _RegistrationCodeGate extends StatelessWidget {
   const _RegistrationCodeGate({required this.state, required this.title});
 
@@ -562,18 +571,17 @@ class _IdentityStep extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (v) => bloc.add(EmailUpdated(v)),
+                decoration: InputDecoration(labelText: l10n.regEmail),
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (v) => bloc.add(EmailUpdated(v)),
-                      decoration: InputDecoration(labelText: l10n.regEmail),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
                     child: DropdownButtonFormField<Gender>(
+                      isExpanded: true,
                       initialValue: state.gender,
                       items: [
                         DropdownMenuItem(
@@ -591,6 +599,31 @@ class _IdentityStep extends StatelessWidget {
                         }
                       },
                       decoration: InputDecoration(labelText: l10n.regGender),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: DropdownButtonFormField<MaritalStatus>(
+                      isExpanded: true,
+                      initialValue: state.maritalStatus,
+                      items: [
+                        for (final v in MaritalStatus.values)
+                          DropdownMenuItem(
+                            value: v,
+                            child: Text(
+                              _maritalLabel(l10n, v),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                      ],
+                      onChanged: (v) {
+                        if (v != null) {
+                          bloc.add(MaritalStatusUpdated(v));
+                        }
+                      },
+                      decoration: InputDecoration(
+                        labelText: l10n.regMaritalStatus,
+                      ),
                     ),
                   ),
                 ],
@@ -613,18 +646,27 @@ class _IdentityStep extends StatelessWidget {
                 icon: const Icon(Icons.calendar_today_outlined),
                 label: Text(birthdateText),
               ),
-              if (state.birthdate == null) ...[
-                const SizedBox(height: 10),
-                TextFormField(
-                  initialValue: state.estimatedAge,
-                  keyboardType: TextInputType.number,
-                  onChanged: (v) => bloc.add(EstimatedAgeUpdated(v)),
-                  decoration: InputDecoration(
-                    labelText: l10n.regEstimatedAge,
-                    hintText: l10n.regEstimatedAgeHint,
-                  ),
-                ),
-              ],
+              const SizedBox(height: 10),
+              TextFormField(
+                initialValue: state.religion,
+                textCapitalization: TextCapitalization.words,
+                onChanged: (v) => bloc.add(ReligionUpdated(v)),
+                decoration: InputDecoration(labelText: l10n.regReligion),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                initialValue: state.kebele,
+                textCapitalization: TextCapitalization.words,
+                onChanged: (v) => bloc.add(KebeleUpdated(v)),
+                decoration: InputDecoration(labelText: l10n.regKebele),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                initialValue: state.address,
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (v) => bloc.add(AddressUpdated(v)),
+                decoration: InputDecoration(labelText: l10n.regAddressLine),
+              ),
               const SizedBox(height: 10),
               DropdownButtonFormField<AsnafCategory>(
                 key: ValueKey(state.selectedCategory),
@@ -655,8 +697,6 @@ class _IdentityStep extends StatelessWidget {
                   hintText: l10n.regNotesHint,
                 ),
               ),
-              const SizedBox(height: 4),
-              OptionalBasicDetailsSection(state: state),
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: () => _pickProfileImage(context),

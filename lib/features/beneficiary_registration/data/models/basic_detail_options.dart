@@ -9,15 +9,3 @@ enum MaritalStatus {
   const MaritalStatus(this.apiValue);
   final String apiValue;
 }
-
-enum PrimaryLanguage {
-  amharic('amharic'),
-  afaanOromo('afaan_oromo'),
-  tigrinya('tigrinya'),
-  somali('somali'),
-  afar('afar'),
-  other('other');
-
-  const PrimaryLanguage(this.apiValue);
-  final String apiValue;
-}
