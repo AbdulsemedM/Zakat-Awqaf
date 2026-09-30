@@ -1003,6 +1003,11 @@ class BeneficiaryRegistrationBloc
           'Unexpected status: ${result.statusCode}',
         );
       }
+      // A sign-in account (and its password token) exists only when an
+      // email was given. Without a token there is no password to set, so
+      // the registration is complete.
+      final hasToken =
+          (result.dto.passwordSetupToken?.trim().isNotEmpty ?? false);
       emit(
         _current.copyWith(
           isSubmitting: false,
@@ -1010,7 +1015,10 @@ class BeneficiaryRegistrationBloc
           createdBeneficiaryId: result.dto.id,
           registeredBeneficiary: result.dto,
           passwordSetupToken: result.dto.passwordSetupToken,
-          step: BeneficiaryRegistrationStep.setPassword,
+          step: hasToken
+              ? BeneficiaryRegistrationStep.setPassword
+              : _current.step,
+          submissionSuccess: !hasToken,
           clearError: true,
           clearPasswordFields: true,
         ),
@@ -1031,6 +1039,11 @@ class BeneficiaryRegistrationBloc
     }
     if (s.birthdate == null) {
       return 'Select your birthdate.';
+    }
+    final email = s.email.trim();
+    if (email.isNotEmpty &&
+        !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+      return 'Enter a valid email address or leave it empty.';
     }
     return null;
   }

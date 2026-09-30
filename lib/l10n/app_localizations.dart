@@ -2999,6 +2999,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Documents'**
   String get regStepDocuments;
+
+  /// No description provided for @regEmailOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Email (optional)'**
+  String get regEmailOptional;
+
+  /// No description provided for @regSubmittedNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration submitted. No sign-in account was created because no email was given.'**
+  String get regSubmittedNoAccount;
 }
 
 class _AppLocalizationsDelegate

@@ -186,7 +186,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         fatherName.trim().isNotEmpty &&
         grandFatherName.trim().isNotEmpty &&
         phoneNumber.trim().isNotEmpty &&
-        email.trim().isNotEmpty &&
         gender != null &&
         birthdate != null &&
         isRegistrationCodeVerified &&

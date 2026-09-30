@@ -1661,4 +1661,11 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get regStepDocuments => 'Dukumentiyo';
+
+  @override
+  String get regEmailOptional => 'Iimayl (ikhtiyaari)';
+
+  @override
+  String get regSubmittedNoAccount =>
+      'Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin.';
 }

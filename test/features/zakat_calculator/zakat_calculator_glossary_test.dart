@@ -6,7 +6,8 @@ void main() {
   test('livestock Arabic glossary includes required terms', () {
     final l = AppLocalizationsEn();
     final map = {
-      for (final e in ZakatCalculatorStrings.arabicTermEntries(l)) e.key: e.value,
+      for (final e in ZakatCalculatorStrings.arabicTermEntries(l))
+        e.key: e.value,
     };
     expect(map["tabi'"], 'one-year-old calf');
     expect(map['musinnah'], 'two-year-old cow');

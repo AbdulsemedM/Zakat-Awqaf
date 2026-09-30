@@ -51,7 +51,6 @@ final class FullBeneficiaryCreateRequest
     final json = <String, dynamic>{
       'fullName': fullName.trim(),
       'phone': phone.trim(),
-      'email': email.trim(),
       'gender': gender.trim(),
       'registrationCode': registrationCode.trim(),
       'beneficiaryType': beneficiaryType.trim(),
@@ -65,6 +64,8 @@ final class FullBeneficiaryCreateRequest
       }
     }
 
+    // Without an email the API creates no sign-in account.
+    putText('email', email);
     putText('dateOfBirth', dateOfBirth);
     putText('nationalId', nationalId);
     putText('addressLine', addressLine);

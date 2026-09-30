@@ -1631,4 +1631,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get regStepDocuments => 'المستندات';
+
+  @override
+  String get regEmailOptional => 'البريد الإلكتروني (اختياري)';
+
+  @override
+  String get regSubmittedNoAccount =>
+      'تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني.';
 }

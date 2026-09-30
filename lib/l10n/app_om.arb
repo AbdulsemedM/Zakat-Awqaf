@@ -915,5 +915,7 @@
   "regStepPayout": "Kaffaltii",
   "regStepDetails": "Bal'ina",
   "regStepPassword": "Jecha iccitii",
-  "regStepDocuments": "Galmeewwan"
+  "regStepDocuments": "Galmeewwan",
+  "regEmailOptional": "Imeelii (filannoo)",
+  "regSubmittedNoAccount": "Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne."
 }

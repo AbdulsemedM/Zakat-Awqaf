@@ -5,26 +5,26 @@ import 'package:mejlis_digital_hub/features/beneficiary_registration/data/models
 import 'package:mejlis_digital_hub/features/beneficiary_registration/data/models/registration_code_validation.dart';
 
 FullBeneficiaryCreateRequest _request({
+  String email = 'amina@example.com',
   String? maritalStatus,
   String? religion,
   String? kebele,
   String? addressLine,
-}) =>
-    FullBeneficiaryCreateRequest(
-      fullName: 'Amina Hassen',
-      phone: '+251911223344',
-      email: 'amina@example.com',
-      gender: 'female',
-      registrationCode: ' EZW-7K3M-Q9TP ',
-      beneficiaryType: 'individual',
-      category: 'poor',
-      notes: 'n',
-      dateOfBirth: '1986-03-01',
-      maritalStatus: maritalStatus,
-      religion: religion,
-      kebele: kebele,
-      addressLine: addressLine,
-    );
+}) => FullBeneficiaryCreateRequest(
+  fullName: 'Amina Hassen',
+  phone: '+251911223344',
+  email: email,
+  gender: 'female',
+  registrationCode: ' EZW-7K3M-Q9TP ',
+  beneficiaryType: 'individual',
+  category: 'poor',
+  notes: 'n',
+  dateOfBirth: '1986-03-01',
+  maritalStatus: maritalStatus,
+  religion: religion,
+  kebele: kebele,
+  addressLine: addressLine,
+);
 
 void main() {
   test('trims values and omits empty optional fields', () {
@@ -40,6 +40,12 @@ void main() {
     ]) {
       expect(json.containsKey(key), isFalse, reason: key);
     }
+  });
+
+  test('email is optional: omitted when empty, sent when given', () {
+    expect(_request(email: '').toJson().containsKey('email'), isFalse);
+    expect(_request(email: '  ').toJson().containsKey('email'), isFalse);
+    expect(_request().toJson()['email'], 'amina@example.com');
   });
 
   test('sends the basic details when provided', () {
@@ -71,7 +77,6 @@ void main() {
       fatherName: 'B',
       grandFatherName: 'C',
       phoneNumber: '0911223344',
-      email: 'a@b.com',
       gender: Gender.female,
       birthdate: DateTime(1990),
       notes: 'n',
@@ -79,9 +84,14 @@ void main() {
       kebele: 'Kebele 05',
       address: 'House 12',
     );
+    // No email is fine.
+    expect(complete.email, isEmpty);
     expect(complete.isIdentityStepComplete, isTrue);
     expect(complete.copyWith(kebele: ' ').isIdentityStepComplete, isFalse);
     expect(complete.copyWith(address: '').isIdentityStepComplete, isFalse);
-    expect(complete.copyWith(clearBirthdate: true).isIdentityStepComplete, isFalse);
+    expect(
+      complete.copyWith(clearBirthdate: true).isIdentityStepComplete,
+      isFalse,
+    );
   });
 }

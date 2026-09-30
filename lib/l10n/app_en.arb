@@ -922,5 +922,7 @@
   "regStepPayout": "Payout",
   "regStepDetails": "Details",
   "regStepPassword": "Password",
-  "regStepDocuments": "Documents"
+  "regStepDocuments": "Documents",
+  "regEmailOptional": "Email (optional)",
+  "regSubmittedNoAccount": "Registration submitted. No sign-in account was created because no email was given."
 }

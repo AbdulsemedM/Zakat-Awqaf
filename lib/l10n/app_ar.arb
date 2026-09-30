@@ -915,5 +915,7 @@
   "regStepPayout": "الصرف",
   "regStepDetails": "التفاصيل",
   "regStepPassword": "كلمة المرور",
-  "regStepDocuments": "المستندات"
+  "regStepDocuments": "المستندات",
+  "regEmailOptional": "البريد الإلكتروني (اختياري)",
+  "regSubmittedNoAccount": "تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني."
 }

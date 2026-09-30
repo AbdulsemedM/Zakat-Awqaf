@@ -915,5 +915,7 @@
   "regStepPayout": "ክፍያ መቀበያ",
   "regStepDetails": "ዝርዝሮች",
   "regStepPassword": "የይለፍ ቃል",
-  "regStepDocuments": "ሰነዶች"
+  "regStepDocuments": "ሰነዶች",
+  "regEmailOptional": "ኢሜይል (አማራጭ)",
+  "regSubmittedNoAccount": "ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።"
 }

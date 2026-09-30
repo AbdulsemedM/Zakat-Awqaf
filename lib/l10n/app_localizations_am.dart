@@ -1617,4 +1617,11 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get regStepDocuments => 'ሰነዶች';
+
+  @override
+  String get regEmailOptional => 'ኢሜይል (አማራጭ)';
+
+  @override
+  String get regSubmittedNoAccount =>
+      'ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።';
 }

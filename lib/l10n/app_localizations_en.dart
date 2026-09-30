@@ -1645,4 +1645,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get regStepDocuments => 'Documents';
+
+  @override
+  String get regEmailOptional => 'Email (optional)';
+
+  @override
+  String get regSubmittedNoAccount =>
+      'Registration submitted. No sign-in account was created because no email was given.';
 }

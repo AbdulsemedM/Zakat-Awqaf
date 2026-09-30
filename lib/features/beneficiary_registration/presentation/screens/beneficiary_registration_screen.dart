@@ -94,6 +94,19 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
           listenWhen: (previous, current) =>
               current.submissionSuccess &&
               !previous.submissionSuccess &&
+              current.method == RegistrationMethod.manual,
+          listener: (context, state) {
+            // Registered without an email: nothing further to set up.
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.l10n.regSubmittedNoAccount)),
+            );
+            context.go('/');
+          },
+        ),
+        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
+          listenWhen: (previous, current) =>
+              current.submissionSuccess &&
+              !previous.submissionSuccess &&
               current.method == RegistrationMethod.institution,
           listener: (context, state) {
             final l10n = context.l10n;
@@ -574,7 +587,7 @@ class _IdentityStep extends StatelessWidget {
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (v) => bloc.add(EmailUpdated(v)),
-                decoration: InputDecoration(labelText: l10n.regEmail),
+                decoration: InputDecoration(labelText: l10n.regEmailOptional),
               ),
               const SizedBox(height: 10),
               Row(

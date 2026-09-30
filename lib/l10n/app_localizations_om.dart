@@ -1665,4 +1665,11 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get regStepDocuments => 'Galmeewwan';
+
+  @override
+  String get regEmailOptional => 'Imeelii (filannoo)';
+
+  @override
+  String get regSubmittedNoAccount =>
+      'Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne.';
 }

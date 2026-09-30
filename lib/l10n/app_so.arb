@@ -915,5 +915,7 @@
   "regStepPayout": "Lacag bixinta",
   "regStepDetails": "Faahfaahin",
   "regStepPassword": "Furaha sirta",
-  "regStepDocuments": "Dukumentiyo"
+  "regStepDocuments": "Dukumentiyo",
+  "regEmailOptional": "Iimayl (ikhtiyaari)",
+  "regSubmittedNoAccount": "Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin."
 }
