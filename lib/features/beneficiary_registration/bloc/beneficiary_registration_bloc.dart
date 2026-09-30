@@ -79,6 +79,31 @@ class BeneficiaryRegistrationBloc extends Bloc<
     on<PasswordUpdated>(_onPasswordUpdated);
     on<ConfirmPasswordUpdated>(_onConfirmPasswordUpdated);
     on<SetPasswordRequested>(_onSetPasswordRequested);
+    on<RegistrationCodeValidationRequested>(_onCodeValidationRequested);
+    on<MaritalStatusUpdated>(
+      (e, emit) => emit(
+        _current.copyWith(
+          maritalStatus: e.value,
+          clearMaritalStatus: e.value == null,
+        ),
+      ),
+    );
+    on<EstimatedAgeUpdated>(
+      (e, emit) => emit(_current.copyWith(estimatedAge: e.value, clearError: true)),
+    );
+    on<ReligionUpdated>((e, emit) => emit(_current.copyWith(religion: e.value)));
+    on<PrimaryLanguageUpdated>(
+      (e, emit) => emit(
+        _current.copyWith(
+          primaryLanguage: e.value,
+          clearPrimaryLanguage: e.value == null,
+        ),
+      ),
+    );
+    on<PrimaryLanguageOtherUpdated>(
+      (e, emit) => emit(_current.copyWith(primaryLanguageOther: e.value)),
+    );
+    on<KebeleUpdated>((e, emit) => emit(_current.copyWith(kebele: e.value)));
   }
 
   final BeneficiaryRegistrationRepository _repository;
@@ -145,7 +170,77 @@ class BeneficiaryRegistrationBloc extends Bloc<
     RegistrationCodeUpdated event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    emit(_current.copyWith(registrationCode: event.value, clearError: true));
+    final changed = event.value.trim() != _current.registrationCode.trim();
+    emit(
+      _current.copyWith(
+        registrationCode: event.value,
+        clearError: true,
+        clearCodeValidation: changed,
+      ),
+    );
+  }
+
+  Future<void> _onCodeValidationRequested(
+    RegistrationCodeValidationRequested event,
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    await _ensureRegistrationCodeVerified(emit);
+  }
+
+  /// Validates the registration code with the server unless the current code
+  /// was already accepted. Returns whether the code is valid.
+  Future<bool> _ensureRegistrationCodeVerified(
+    Emitter<BeneficiaryRegistrationState> emit,
+  ) async {
+    if (_current.isRegistrationCodeVerified) {
+      return true;
+    }
+    final code = _current.registrationCode.trim();
+    if (code.isEmpty) {
+      emit(
+        _current.copyWith(errorMessage: 'Please enter your registration code.'),
+      );
+      return false;
+    }
+    if (_current.isValidatingCode) {
+      return false;
+    }
+    emit(
+      _current.copyWith(
+        isValidatingCode: true,
+        clearError: true,
+        clearCodeValidation: true,
+      ),
+    );
+    try {
+      final result = await _repository.validateRegistrationCode(code);
+      // Ignore a stale answer if the code was edited meanwhile.
+      if (_current.registrationCode.trim() != code) {
+        emit(_current.copyWith(isValidatingCode: false));
+        return false;
+      }
+      final message = result.message?.trim();
+      emit(
+        _current.copyWith(
+          isValidatingCode: false,
+          codeValidation: result,
+          errorMessage: result.valid
+              ? null
+              : (message != null && message.isNotEmpty
+                  ? message
+                  : 'This registration code is not valid or was already used.'),
+        ),
+      );
+      return result.valid;
+    } on BeneficiaryRegistrationException catch (e) {
+      emit(_current.copyWith(isValidatingCode: false, errorMessage: e.message));
+      return false;
+    } catch (e) {
+      emit(
+        _current.copyWith(isValidatingCode: false, errorMessage: e.toString()),
+      );
+      return false;
+    }
   }
 
   Future<void> _onFaydaRequested(
@@ -166,15 +261,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
     _faydaSseMatched = false;
     _faydaSseReconnectAttempts = 0;
 
-    final postingBase = _current;
-    if (postingBase.registrationCode.trim().isEmpty) {
-      emit(
-        postingBase.copyWith(
-          errorMessage: 'Please enter your registration code.',
-        ),
-      );
+    if (!await _ensureRegistrationCodeVerified(emit)) {
       return;
     }
+    final postingBase = _current;
     final generatedId =
         postingBase.generatedNationalId ?? generateFaydaNationalId();
 
@@ -910,6 +1000,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
       return;
     }
 
+    if (!await _ensureRegistrationCodeVerified(emit)) {
+      return;
+    }
+
     emit(
       _current.copyWith(
         isSubmitting: true,
@@ -963,6 +1057,9 @@ class BeneficiaryRegistrationBloc extends Bloc<
     if (PhoneE164.normalize(s.phoneNumber) == null) {
       return 'Enter a valid phone number (e.g. +251911223344 or 0911223344).';
     }
+    if (s.birthdate == null && s.parsedEstimatedAge == null) {
+      return 'Enter a birthdate or an estimated age between 0 and 120.';
+    }
     return null;
   }
 
@@ -972,9 +1069,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
       Gender.male => 'male',
       Gender.female => 'female',
     };
-    final dob = s.birthdate!;
-    final dateOfBirth =
-        '${dob.year.toString().padLeft(4, '0')}-${dob.month.toString().padLeft(2, '0')}-${dob.day.toString().padLeft(2, '0')}';
+    final dob = s.birthdate;
+    final dateOfBirth = dob == null
+        ? null
+        : '${dob.year.toString().padLeft(4, '0')}-${dob.month.toString().padLeft(2, '0')}-${dob.day.toString().padLeft(2, '0')}';
 
     return FullBeneficiaryCreateRequest(
       fullName: fullName,
@@ -986,6 +1084,14 @@ class BeneficiaryRegistrationBloc extends Bloc<
       beneficiaryType: 'individual',
       category: s.selectedCategory!.apiValue,
       notes: s.notes.trim(),
+      estimatedAge: dob == null ? s.parsedEstimatedAge : null,
+      nationalId: s.nationalId,
+      addressLine: s.address,
+      maritalStatus: s.maritalStatus?.apiValue,
+      religion: s.religion,
+      primaryLanguage: s.primaryLanguage?.apiValue,
+      primaryLanguageOther: s.primaryLanguageOther,
+      kebele: s.kebele,
       profilePicturePath: s.profilePicture,
     );
   }

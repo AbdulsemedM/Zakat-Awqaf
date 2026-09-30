@@ -1,5 +1,6 @@
 import '../../../core/auth/auth_token_storage.dart';
 import '../../beneficiary_registration/data/models/beneficiary_dto.dart';
+import 'models/application_status_dto.dart';
 import 'models/profile_model.dart';
 
 abstract final class ProfileMapper {
@@ -28,6 +29,21 @@ abstract final class ProfileMapper {
       nationalId: dto.nationalId,
       region: dto.region,
       city: dto.city,
+    );
+  }
+
+  /// Overlays `GET /me/application` onto a profile built from `/me`.
+  static ProfileModel withApplication(
+    ProfileModel profile,
+    ApplicationStatusDto application,
+  ) {
+    return profile.copyWith(
+      beneficiaryStatus: application.status != null
+          ? _mapVerificationStatus(application.status)
+          : null,
+      applicationBranch: application.branchName,
+      applicationSubmittedAt: application.submittedAt,
+      applicationMessage: application.message,
     );
   }
 
@@ -74,6 +90,7 @@ abstract final class ProfileMapper {
     switch (status?.toLowerCase()) {
       case 'approved':
       case 'verified':
+      case 'active':
         return BeneficiaryStatus.approved;
       case 'rejected':
         return BeneficiaryStatus.rejected;

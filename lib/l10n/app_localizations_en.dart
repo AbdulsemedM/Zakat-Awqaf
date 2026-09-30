@@ -1476,4 +1476,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navAwqaf => 'Awqaf';
+
+  @override
+  String get regVerifyCode => 'Verify';
+
+  @override
+  String regCodeBranchLabel(String branchName) {
+    return 'Branch: $branchName';
+  }
+
+  @override
+  String get regCodeBranchConfirm =>
+      'Please confirm this is your branch before continuing.';
+
+  @override
+  String get regMoreDetailsTitle => 'More details (optional)';
+
+  @override
+  String get regMoreDetailsSubtitle =>
+      'You can skip these. A field officer will complete them during your assessment.';
+
+  @override
+  String get regEstimatedAge => 'Estimated age';
+
+  @override
+  String get regEstimatedAgeHint => 'Only if you don\'t know your birthdate';
+
+  @override
+  String get regNationalId => 'National ID';
+
+  @override
+  String get regAddressLine => 'Address';
+
+  @override
+  String get regKebele => 'Kebele';
+
+  @override
+  String get regReligion => 'Religion';
+
+  @override
+  String get regMaritalStatus => 'Marital status';
+
+  @override
+  String get regMaritalSingle => 'Single';
+
+  @override
+  String get regMaritalMarried => 'Married';
+
+  @override
+  String get regMaritalWidowed => 'Widowed';
+
+  @override
+  String get regMaritalDivorced => 'Divorced';
+
+  @override
+  String get regMaritalSeparated => 'Separated';
+
+  @override
+  String get regPrimaryLanguage => 'Primary language';
+
+  @override
+  String get regLangAmharic => 'Amharic';
+
+  @override
+  String get regLangAfaanOromo => 'Afaan Oromo';
+
+  @override
+  String get regLangTigrinya => 'Tigrinya';
+
+  @override
+  String get regLangSomali => 'Somali';
+
+  @override
+  String get regLangAfar => 'Afar';
+
+  @override
+  String get regLangOther => 'Other';
+
+  @override
+  String get regPrimaryLanguageOther => 'Which language?';
+
+  @override
+  String get regNotSpecified => 'Not specified';
+
+  @override
+  String get profileApplicationBranch => 'Branch';
+
+  @override
+  String get profileApplicationSubmittedOn => 'Applied on';
 }

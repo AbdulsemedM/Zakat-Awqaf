@@ -4,6 +4,7 @@ import '../data_provider/beneficiary_registration_data_provider.dart';
 import '../models/beneficiary_create_request.dart';
 import '../models/beneficiary_registration_result.dart';
 import '../models/company_beneficiary_create_request.dart';
+import '../models/registration_code_validation.dart';
 import 'beneficiary_registration_repository.dart';
 
 @LazySingleton(as: BeneficiaryRegistrationRepository)
@@ -12,6 +13,11 @@ class BeneficiaryRegistrationRepositoryImpl
   BeneficiaryRegistrationRepositoryImpl(this._dataProvider);
 
   final BeneficiaryRegistrationDataProvider _dataProvider;
+
+  @override
+  Future<RegistrationCodeValidation> validateRegistrationCode(String code) {
+    return _dataProvider.validateRegistrationCode(code);
+  }
 
   @override
   Future<BeneficiaryRegistrationResult> register(

@@ -37,6 +37,16 @@ class BeneficiaryDto {
     this.credentialsDelivery,
     this.createdAt,
     this.updatedAt,
+    this.estimatedAge,
+    this.maritalStatus,
+    this.religion,
+    this.primaryLanguage,
+    this.primaryLanguageOther,
+    this.kebele,
+    this.zone,
+    this.woreda,
+    this.branchId,
+    this.branchName,
   });
 
   final String id;
@@ -74,6 +84,16 @@ class BeneficiaryDto {
   final String? credentialsDelivery;
   final String? createdAt;
   final String? updatedAt;
+  final int? estimatedAge;
+  final String? maritalStatus;
+  final String? religion;
+  final String? primaryLanguage;
+  final String? primaryLanguageOther;
+  final String? kebele;
+  final String? zone;
+  final String? woreda;
+  final String? branchId;
+  final String? branchName;
 
   factory BeneficiaryDto.fromJson(Map<String, dynamic> json) {
     final kycRaw = json['institutionRecommendedKycDocuments'];
@@ -128,6 +148,16 @@ class BeneficiaryDto {
       credentialsDelivery: json['credentialsDelivery'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
+      estimatedAge: (json['estimatedAge'] as num?)?.toInt(),
+      maritalStatus: json['maritalStatus']?.toString(),
+      religion: json['religion']?.toString(),
+      primaryLanguage: json['primaryLanguage']?.toString(),
+      primaryLanguageOther: json['primaryLanguageOther']?.toString(),
+      kebele: json['kebele']?.toString(),
+      zone: json['zone']?.toString(),
+      woreda: json['woreda']?.toString(),
+      branchId: json['branchId']?.toString(),
+      branchName: json['branchName']?.toString(),
     );
   }
 }

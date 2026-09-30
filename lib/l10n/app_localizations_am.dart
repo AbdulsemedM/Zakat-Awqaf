@@ -1452,4 +1452,91 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get navAwqaf => 'አውቃፍ';
+
+  @override
+  String get regVerifyCode => 'አረጋግጥ';
+
+  @override
+  String regCodeBranchLabel(String branchName) {
+    return 'ቅርንጫፍ፦ $branchName';
+  }
+
+  @override
+  String get regCodeBranchConfirm => 'ከመቀጠልዎ በፊት ይህ የእርስዎ ቅርንጫፍ መሆኑን ያረጋግጡ።';
+
+  @override
+  String get regMoreDetailsTitle => 'ተጨማሪ ዝርዝሮች (አማራጭ)';
+
+  @override
+  String get regMoreDetailsSubtitle =>
+      'እነዚህን መዝለል ይችላሉ። የመስክ ባለሙያ በግምገማዎ ወቅት ያሟላቸዋል።';
+
+  @override
+  String get regEstimatedAge => 'የሚገመት ዕድሜ';
+
+  @override
+  String get regEstimatedAgeHint => 'የትውልድ ቀንዎን ካላወቁ ብቻ';
+
+  @override
+  String get regNationalId => 'ብሔራዊ መታወቂያ';
+
+  @override
+  String get regAddressLine => 'አድራሻ';
+
+  @override
+  String get regKebele => 'ቀበሌ';
+
+  @override
+  String get regReligion => 'ሃይማኖት';
+
+  @override
+  String get regMaritalStatus => 'የጋብቻ ሁኔታ';
+
+  @override
+  String get regMaritalSingle => 'ያላገባ';
+
+  @override
+  String get regMaritalMarried => 'ያገባ';
+
+  @override
+  String get regMaritalWidowed => 'የትዳር አጋሩን በሞት ያጣ';
+
+  @override
+  String get regMaritalDivorced => 'የተፋታ';
+
+  @override
+  String get regMaritalSeparated => 'ተለያይቶ የሚኖር';
+
+  @override
+  String get regPrimaryLanguage => 'ዋና ቋንቋ';
+
+  @override
+  String get regLangAmharic => 'አማርኛ';
+
+  @override
+  String get regLangAfaanOromo => 'አፋን ኦሮሞ';
+
+  @override
+  String get regLangTigrinya => 'ትግርኛ';
+
+  @override
+  String get regLangSomali => 'ሶማሊኛ';
+
+  @override
+  String get regLangAfar => 'አፋርኛ';
+
+  @override
+  String get regLangOther => 'ሌላ';
+
+  @override
+  String get regPrimaryLanguageOther => 'የትኛው ቋንቋ?';
+
+  @override
+  String get regNotSpecified => 'አልተገለጸም';
+
+  @override
+  String get profileApplicationBranch => 'ቅርንጫፍ';
+
+  @override
+  String get profileApplicationSubmittedOn => 'የተመዘገቡበት ቀን';
 }

@@ -107,6 +107,9 @@ class ProfileModel extends Equatable {
     this.nationalId,
     this.region,
     this.city,
+    this.applicationBranch,
+    this.applicationSubmittedAt,
+    this.applicationMessage,
   });
 
   final String name;
@@ -139,6 +142,11 @@ class ProfileModel extends Equatable {
   final String? region;
   final String? city;
 
+  // From `GET /me/application` (beneficiary-safe fields only).
+  final String? applicationBranch;
+  final DateTime? applicationSubmittedAt;
+  final String? applicationMessage;
+
   ProfileModel copyWith({
     String? name,
     String? email,
@@ -164,6 +172,9 @@ class ProfileModel extends Equatable {
     String? nationalId,
     String? region,
     String? city,
+    String? applicationBranch,
+    DateTime? applicationSubmittedAt,
+    String? applicationMessage,
   }) {
     return ProfileModel(
       name: name ?? this.name,
@@ -191,6 +202,10 @@ class ProfileModel extends Equatable {
       nationalId: nationalId ?? this.nationalId,
       region: region ?? this.region,
       city: city ?? this.city,
+      applicationBranch: applicationBranch ?? this.applicationBranch,
+      applicationSubmittedAt:
+          applicationSubmittedAt ?? this.applicationSubmittedAt,
+      applicationMessage: applicationMessage ?? this.applicationMessage,
     );
   }
 
@@ -219,5 +234,8 @@ class ProfileModel extends Equatable {
         nationalId,
         region,
         city,
+        applicationBranch,
+        applicationSubmittedAt,
+        applicationMessage,
       ];
 }

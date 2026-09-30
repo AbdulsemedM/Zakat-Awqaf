@@ -16,7 +16,9 @@ import '../../bloc/beneficiary_registration_state.dart';
 import '../../data/models/asnaf_category.dart';
 import '../../data/models/institution_subtype.dart';
 import '../pages/fayda_verification_webview_page.dart';
+import '../widgets/optional_basic_details_section.dart';
 import '../widgets/payout_method_tile.dart';
+import '../widgets/registration_code_field.dart';
 import '../widgets/section_card.dart';
 import '../widgets/step_progress_header.dart';
 
@@ -409,13 +411,7 @@ class _WelcomeStep extends StatelessWidget {
         if (state.method == RegistrationMethod.fastTrack) ...[
           const SizedBox(height: 12),
           SectionCard(
-            child: TextField(
-              onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
-              decoration: InputDecoration(
-                labelText: l10n.regRegistrationCodeLabel,
-                hintText: l10n.regRegistrationCodeHint,
-              ),
-            ),
+            child: RegistrationCodeField(state: state),
           ),
         ],
         const SizedBox(height: 12),
@@ -563,13 +559,7 @@ class _IdentityStep extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12),
-                TextField(
-                  onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
-                  decoration: InputDecoration(
-                    labelText: l10n.regRegistrationCodeLabel,
-                    hintText: l10n.regRegistrationCodeHint,
-                  ),
-                ),
+                RegistrationCodeField(state: state),
                 const SizedBox(height: 10),
                 Row(
                   children: [
@@ -656,6 +646,18 @@ class _IdentityStep extends StatelessWidget {
                   icon: const Icon(Icons.calendar_today_outlined),
                   label: Text(birthdateText),
                 ),
+                if (state.birthdate == null) ...[
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    initialValue: state.estimatedAge,
+                    keyboardType: TextInputType.number,
+                    onChanged: (v) => bloc.add(EstimatedAgeUpdated(v)),
+                    decoration: InputDecoration(
+                      labelText: l10n.regEstimatedAge,
+                      hintText: l10n.regEstimatedAgeHint,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 10),
                 DropdownButtonFormField<AsnafCategory>(
                   key: ValueKey(state.selectedCategory),
@@ -686,6 +688,8 @@ class _IdentityStep extends StatelessWidget {
                     hintText: l10n.regNotesHint,
                   ),
                 ),
+                const SizedBox(height: 4),
+                OptionalBasicDetailsSection(state: state),
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
                   onPressed: () => _pickProfileImage(context),
@@ -1338,11 +1342,13 @@ class _FooterActions extends StatelessWidget {
       BeneficiaryRegistrationStep.welcome => switch (state.method) {
           RegistrationMethod.fastTrack =>
             state.registrationCode.trim().isNotEmpty &&
+                !state.isValidatingCode &&
                 !state.isFaydaPosting &&
                 !state.awaitingFaydaSse,
           _ => true,
         },
-      BeneficiaryRegistrationStep.identity => state.isIdentityStepComplete,
+      BeneficiaryRegistrationStep.identity =>
+        state.isIdentityStepComplete && !state.isValidatingCode,
       BeneficiaryRegistrationStep.institutionDetails =>
         state.isInstitutionDetailsComplete,
       BeneficiaryRegistrationStep.setPassword =>

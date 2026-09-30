@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 import '../data/models/asnaf_category.dart';
+import '../data/models/basic_detail_options.dart';
 import '../data/models/beneficiary_dto.dart';
 import '../data/models/institution_kyc_document.dart';
 import '../data/models/institution_subtype.dart';
+import '../data/models/registration_code_validation.dart';
 
 enum BeneficiaryRegistrationStep {
   welcome,
@@ -74,6 +76,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.verificationLink,
     this.registeredBeneficiary,
     this.passwordSetupToken,
+    this.codeValidation,
+    this.isValidatingCode = false,
+    this.maritalStatus,
+    this.estimatedAge = '',
+    this.religion = '',
+    this.primaryLanguage,
+    this.primaryLanguageOther = '',
+    this.kebele = '',
   });
 
   final BeneficiaryRegistrationStep step;
@@ -127,6 +137,29 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String? verificationLink;
   final BeneficiaryDto? registeredBeneficiary;
   final String? passwordSetupToken;
+  final RegistrationCodeValidation? codeValidation;
+  final bool isValidatingCode;
+  final MaritalStatus? maritalStatus;
+  final String estimatedAge;
+  final String religion;
+  final PrimaryLanguage? primaryLanguage;
+  final String primaryLanguageOther;
+  final String kebele;
+
+  /// True once the current [registrationCode] was checked and accepted.
+  bool get isRegistrationCodeVerified =>
+      codeValidation != null &&
+      codeValidation!.valid &&
+      codeValidation!.code == registrationCode.trim();
+
+  /// Parsed [estimatedAge] when it is a whole number between 0 and 120.
+  int? get parsedEstimatedAge {
+    final age = int.tryParse(estimatedAge.trim());
+    if (age == null || age < 0 || age > 120) {
+      return null;
+    }
+    return age;
+  }
 
   String? get resolvedPasswordSetupToken {
     final fromState = passwordSetupToken?.trim() ?? '';
@@ -170,7 +203,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         phoneNumber.trim().isNotEmpty &&
         email.trim().isNotEmpty &&
         gender != null &&
-        birthdate != null &&
+        (birthdate != null || parsedEstimatedAge != null) &&
         registrationCode.trim().isNotEmpty &&
         notes.trim().isNotEmpty &&
         selectedCategory != null;
@@ -241,6 +274,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         verificationLink,
         registeredBeneficiary,
         passwordSetupToken,
+        codeValidation,
+        isValidatingCode,
+        maritalStatus,
+        estimatedAge,
+        religion,
+        primaryLanguage,
+        primaryLanguageOther,
+        kebele,
       ];
 }
 
@@ -297,6 +338,14 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     super.verificationLink,
     super.registeredBeneficiary,
     super.passwordSetupToken,
+    super.codeValidation,
+    super.isValidatingCode,
+    super.maritalStatus,
+    super.estimatedAge,
+    super.religion,
+    super.primaryLanguage,
+    super.primaryLanguageOther,
+    super.kebele,
   });
 
   BeneficiaryRegistrationInitial copyWith({
@@ -363,6 +412,17 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
     bool clearBeneficiaryMeta = false,
     bool clearFaydaProgress = false,
     bool clearInstitutionMeta = false,
+    RegistrationCodeValidation? codeValidation,
+    bool? isValidatingCode,
+    MaritalStatus? maritalStatus,
+    String? estimatedAge,
+    String? religion,
+    PrimaryLanguage? primaryLanguage,
+    String? primaryLanguageOther,
+    String? kebele,
+    bool clearCodeValidation = false,
+    bool clearMaritalStatus = false,
+    bool clearPrimaryLanguage = false,
   }) {
     return BeneficiaryRegistrationInitial(
       step: step ?? this.step,
@@ -462,6 +522,18 @@ final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState 
       passwordSetupToken: clearBeneficiaryMeta || clearInstitutionMeta
           ? null
           : (passwordSetupToken ?? this.passwordSetupToken),
+      codeValidation: clearCodeValidation
+          ? null
+          : (codeValidation ?? this.codeValidation),
+      isValidatingCode: isValidatingCode ?? this.isValidatingCode,
+      maritalStatus: clearMaritalStatus ? null : (maritalStatus ?? this.maritalStatus),
+      estimatedAge: estimatedAge ?? this.estimatedAge,
+      religion: religion ?? this.religion,
+      primaryLanguage: clearPrimaryLanguage
+          ? null
+          : (primaryLanguage ?? this.primaryLanguage),
+      primaryLanguageOther: primaryLanguageOther ?? this.primaryLanguageOther,
+      kebele: kebele ?? this.kebele,
     );
   }
 }

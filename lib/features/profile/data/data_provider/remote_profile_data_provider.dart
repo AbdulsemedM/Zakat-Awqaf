@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/auth/auth_token_storage.dart';
 import '../../../beneficiary_registration/data/mobile_error_message.dart';
 import '../../../beneficiary_registration/data/models/beneficiary_dto.dart';
+import '../models/application_status_dto.dart';
 import '../models/bank_account_update_request.dart';
 import '../models/profile_model.dart';
 import '../profile_exception.dart';
@@ -19,6 +20,7 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
 
   static const _mePath = 'api/beneficiaries/v1/me';
   static const _bankAccountPath = 'api/beneficiaries/v1/me/bank-account';
+  static const _applicationPath = 'api/beneficiaries/v1/me/application';
 
   ProfileModel _localCache = ProfileMapper.defaultLocalOverlay();
 
@@ -32,6 +34,10 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
         dto,
         localOverlay: _localCache,
       );
+      final application = await _fetchApplication();
+      if (application != null) {
+        _localCache = ProfileMapper.withApplication(_localCache, application);
+      }
       return _localCache;
     } on ProfileException {
       rethrow;
@@ -70,6 +76,21 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
       rethrow;
     } on DioException catch (e) {
       throw _mapDioException(e);
+    }
+  }
+
+  /// Application status is optional: the profile still loads without it.
+  Future<ApplicationStatusDto?> _fetchApplication() async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(_applicationPath);
+      final body = response.data;
+      final data = body?['data'];
+      if (body?['success'] != true || data is! Map) {
+        return null;
+      }
+      return ApplicationStatusDto.fromJson(Map<String, dynamic>.from(data));
+    } on DioException {
+      return null;
     }
   }
 

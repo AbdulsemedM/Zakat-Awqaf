@@ -1496,4 +1496,92 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get navAwqaf => 'Awqaf';
+
+  @override
+  String get regVerifyCode => 'Mirkaneessi';
+
+  @override
+  String regCodeBranchLabel(String branchName) {
+    return 'Damee: $branchName';
+  }
+
+  @override
+  String get regCodeBranchConfirm =>
+      'Itti fufuu keessan dura damee keessan ta\'uu isaa mirkaneessaa.';
+
+  @override
+  String get regMoreDetailsTitle => 'Odeeffannoo dabalataa (filannoo)';
+
+  @override
+  String get regMoreDetailsSubtitle =>
+      'Kana irra darbuu dandeessu. Hojjetaan dirree yeroo madaallii keessanii ni guuta.';
+
+  @override
+  String get regEstimatedAge => 'Umurii tilmaamaa';
+
+  @override
+  String get regEstimatedAgeHint => 'Guyyaa dhalootaa yoo hin beekne qofa';
+
+  @override
+  String get regNationalId => 'Eenyummeessa biyyaalessaa';
+
+  @override
+  String get regAddressLine => 'Teessoo';
+
+  @override
+  String get regKebele => 'Ganda';
+
+  @override
+  String get regReligion => 'Amantaa';
+
+  @override
+  String get regMaritalStatus => 'Haala gaa\'elaa';
+
+  @override
+  String get regMaritalSingle => 'Kan hin fuune/heerumne';
+
+  @override
+  String get regMaritalMarried => 'Kan fuudhe/heerume';
+
+  @override
+  String get regMaritalWidowed => 'Kan irraa du\'e';
+
+  @override
+  String get regMaritalDivorced => 'Kan hiike';
+
+  @override
+  String get regMaritalSeparated => 'Kan addaan bahe';
+
+  @override
+  String get regPrimaryLanguage => 'Afaan jalqabaa';
+
+  @override
+  String get regLangAmharic => 'Afaan Amaaraa';
+
+  @override
+  String get regLangAfaanOromo => 'Afaan Oromoo';
+
+  @override
+  String get regLangTigrinya => 'Afaan Tigiraay';
+
+  @override
+  String get regLangSomali => 'Afaan Somaalee';
+
+  @override
+  String get regLangAfar => 'Afaan Affaar';
+
+  @override
+  String get regLangOther => 'Kan biraa';
+
+  @override
+  String get regPrimaryLanguageOther => 'Afaan kamii?';
+
+  @override
+  String get regNotSpecified => 'Hin ibsamne';
+
+  @override
+  String get profileApplicationBranch => 'Damee';
+
+  @override
+  String get profileApplicationSubmittedOn => 'Guyyaa galmee';
 }

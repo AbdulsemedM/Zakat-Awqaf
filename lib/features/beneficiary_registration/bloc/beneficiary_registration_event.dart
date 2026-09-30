@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../data/models/asnaf_category.dart';
+import '../data/models/basic_detail_options.dart';
 import '../data/models/institution_subtype.dart';
 import 'beneficiary_registration_state.dart';
 
@@ -347,4 +348,58 @@ final class ConfirmPasswordUpdated extends BeneficiaryRegistrationEvent {
 
 final class SetPasswordRequested extends BeneficiaryRegistrationEvent {
   const SetPasswordRequested();
+}
+
+/// Checks the current registration code and loads its branch.
+final class RegistrationCodeValidationRequested
+    extends BeneficiaryRegistrationEvent {
+  const RegistrationCodeValidationRequested();
+}
+
+final class MaritalStatusUpdated extends BeneficiaryRegistrationEvent {
+  const MaritalStatusUpdated(this.value);
+  final MaritalStatus? value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class EstimatedAgeUpdated extends BeneficiaryRegistrationEvent {
+  const EstimatedAgeUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class ReligionUpdated extends BeneficiaryRegistrationEvent {
+  const ReligionUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class PrimaryLanguageUpdated extends BeneficiaryRegistrationEvent {
+  const PrimaryLanguageUpdated(this.value);
+  final PrimaryLanguage? value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class PrimaryLanguageOtherUpdated extends BeneficiaryRegistrationEvent {
+  const PrimaryLanguageOtherUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
+}
+
+final class KebeleUpdated extends BeneficiaryRegistrationEvent {
+  const KebeleUpdated(this.value);
+  final String value;
+
+  @override
+  List<Object?> get props => [value];
 }

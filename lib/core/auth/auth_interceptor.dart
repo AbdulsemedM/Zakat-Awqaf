@@ -29,6 +29,9 @@ class AuthInterceptor extends Interceptor {
       if (path.contains('api/beneficiaries/v1/accounts/set-password')) {
         return true;
       }
+      if (path.contains('api/beneficiaries/v1/registration-codes/validate')) {
+        return true;
+      }
       if (path.contains('api/beneficiaries/v1/companies')) {
         return path.contains('/documents') || _isExactCompaniesCollectionPath(path);
       }

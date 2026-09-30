@@ -459,7 +459,32 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (profile.applicationMessage != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                profile.applicationMessage!,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+            ],
             const Divider(height: 24),
+            if (profile.applicationBranch != null) ...[
+              _InsightRow(
+                icon: Icons.account_balance_outlined,
+                label: context.l10n.profileApplicationBranch,
+                value: profile.applicationBranch!,
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (profile.applicationSubmittedAt != null) ...[
+              _InsightRow(
+                icon: Icons.edit_calendar_outlined,
+                label: context.l10n.profileApplicationSubmittedOn,
+                value: _formatDate(profile.applicationSubmittedAt!.toLocal()),
+              ),
+              const SizedBox(height: 12),
+            ],
             Row(
               children: [
                 Icon(
@@ -514,6 +539,47 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _InsightRow extends StatelessWidget {
+  const _InsightRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: scheme.onSurfaceVariant),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+        Flexible(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -862,5 +862,40 @@
   "regSubmitContinue": "Submit & Continue",
   "regSetPasswordContinue": "Set Password & Continue",
   "regSetPasswordFinish": "Set Password & Finish",
-  "navAwqaf": "Awqaf"
+  "navAwqaf": "Awqaf",
+  "regVerifyCode": "Verify",
+  "regCodeBranchLabel": "Branch: {branchName}",
+  "@regCodeBranchLabel": {
+    "placeholders": {
+      "branchName": {
+        "type": "String"
+      }
+    }
+  },
+  "regCodeBranchConfirm": "Please confirm this is your branch before continuing.",
+  "regMoreDetailsTitle": "More details (optional)",
+  "regMoreDetailsSubtitle": "You can skip these. A field officer will complete them during your assessment.",
+  "regEstimatedAge": "Estimated age",
+  "regEstimatedAgeHint": "Only if you don't know your birthdate",
+  "regNationalId": "National ID",
+  "regAddressLine": "Address",
+  "regKebele": "Kebele",
+  "regReligion": "Religion",
+  "regMaritalStatus": "Marital status",
+  "regMaritalSingle": "Single",
+  "regMaritalMarried": "Married",
+  "regMaritalWidowed": "Widowed",
+  "regMaritalDivorced": "Divorced",
+  "regMaritalSeparated": "Separated",
+  "regPrimaryLanguage": "Primary language",
+  "regLangAmharic": "Amharic",
+  "regLangAfaanOromo": "Afaan Oromo",
+  "regLangTigrinya": "Tigrinya",
+  "regLangSomali": "Somali",
+  "regLangAfar": "Afar",
+  "regLangOther": "Other",
+  "regPrimaryLanguageOther": "Which language?",
+  "regNotSpecified": "Not specified",
+  "profileApplicationBranch": "Branch",
+  "profileApplicationSubmittedOn": "Applied on"
 }

@@ -10,6 +10,7 @@ import '../models/beneficiary_create_request.dart';
 import '../models/beneficiary_dto.dart';
 import '../models/beneficiary_registration_result.dart';
 import '../models/company_beneficiary_create_request.dart';
+import '../models/registration_code_validation.dart';
 import 'beneficiary_registration_data_provider.dart';
 
 @LazySingleton(as: BeneficiaryRegistrationDataProvider)
@@ -21,6 +22,46 @@ class BeneficiaryRegistrationDataProviderImpl
 
   static const _beneficiariesPath = 'api/beneficiaries/v1/beneficiaries';
   static const _companiesPath = 'api/beneficiaries/v1/companies';
+  static const _validateCodePath =
+      'api/beneficiaries/v1/registration-codes/validate';
+
+  @override
+  Future<RegistrationCodeValidation> validateRegistrationCode(
+    String code,
+  ) async {
+    final trimmed = code.trim();
+    try {
+      final response = await _dio.post<Map<String, dynamic>>(
+        _validateCodePath,
+        data: {'registrationCode': trimmed},
+      );
+      final body = response.data;
+      final data = body?['data'];
+      if (body == null || body['success'] != true || data is! Map) {
+        return RegistrationCodeValidation(
+          code: trimmed,
+          valid: false,
+          message: parseMobileErrorMessage(body),
+        );
+      }
+      return RegistrationCodeValidation.fromJson(
+        trimmed,
+        Map<String, dynamic>.from(data),
+        message: body['message'] as String?,
+      );
+    } on DioException catch (e) {
+      // A used or unknown code may come back as 400/404 instead of valid=false.
+      final status = e.response?.statusCode ?? 0;
+      if (status >= 400 && status < 500) {
+        return RegistrationCodeValidation(
+          code: trimmed,
+          valid: false,
+          message: parseMobileErrorMessage(e.response?.data),
+        );
+      }
+      throw _mapDioException(e);
+    }
+  }
 
   @override
   Future<BeneficiaryRegistrationResult> createBeneficiary(
