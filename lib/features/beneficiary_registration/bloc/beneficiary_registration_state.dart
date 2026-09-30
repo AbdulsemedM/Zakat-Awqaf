@@ -289,7 +289,8 @@ sealed class BeneficiaryRegistrationState extends Equatable {
 final class BeneficiaryRegistrationInitial extends BeneficiaryRegistrationState {
   const BeneficiaryRegistrationInitial({
     super.step = BeneficiaryRegistrationStep.welcome,
-    super.method = RegistrationMethod.fastTrack,
+    // Fayda fast-track is disabled; manual is the default method.
+    super.method = RegistrationMethod.manual,
     super.selectedCategory,
     super.payoutMethod = PayoutMethod.telebirrWallet,
     super.nationalId,

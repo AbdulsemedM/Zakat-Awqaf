@@ -297,18 +297,19 @@ class _WelcomeStep extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
-              PayoutMethodTile(
-                title: l10n.regFastTrackFaydaTitle,
-                subtitle: l10n.regFastTrackFaydaSubtitle,
-                icon: Icons.qr_code_scanner_rounded,
-                selected: state.method == RegistrationMethod.fastTrack,
-                onTap: () => bloc.add(
-                  const RegistrationMethodSelected(
-                    RegistrationMethod.fastTrack,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
+              // Fayda fast-track is disabled for now.
+              // PayoutMethodTile(
+              //   title: l10n.regFastTrackFaydaTitle,
+              //   subtitle: l10n.regFastTrackFaydaSubtitle,
+              //   icon: Icons.qr_code_scanner_rounded,
+              //   selected: state.method == RegistrationMethod.fastTrack,
+              //   onTap: () => bloc.add(
+              //     const RegistrationMethodSelected(
+              //       RegistrationMethod.fastTrack,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 12),
               PayoutMethodTile(
                 title: l10n.regManualTitle,
                 subtitle: l10n.regManualSubtitle,

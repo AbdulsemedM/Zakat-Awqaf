@@ -1,10 +1,29 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../auth/auth_interceptor.dart';
 import '../config/app_env.dart';
 import 'dio_logging_interceptor.dart';
+
+/// Debug builds only: the UAT server uses a self-signed certificate, which
+/// the platform rejects. Trust it for the configured API host and nothing
+/// else. Release builds keep normal certificate validation.
+void _trustSelfSignedApiHost(Dio dio) {
+  if (!kDebugMode) return;
+  final host = Uri.tryParse(dio.options.baseUrl)?.host;
+  if (host == null || host.isEmpty) return;
+  dio.httpClientAdapter = IOHttpClientAdapter(
+    createHttpClient: () {
+      final client = HttpClient();
+      client.badCertificateCallback = (cert, certHost, port) => certHost == host;
+      return client;
+    },
+  );
+}
 
 @module
 abstract class DioModule {
@@ -29,6 +48,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
+    _trustSelfSignedApiHost(dio);
 
     return dio;
   }
@@ -48,6 +68,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
+    _trustSelfSignedApiHost(dio);
 
     return dio;
   }
@@ -68,6 +89,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
+    _trustSelfSignedApiHost(dio);
 
     return dio;
   }

@@ -148,6 +148,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
     RegistrationMethodSelected event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
+    // Fayda fast-track is disabled; ignore it if it is ever requested.
+    if (event.method == RegistrationMethod.fastTrack) {
+      return;
+    }
     emit(
       _current.copyWith(
         method: event.method,
