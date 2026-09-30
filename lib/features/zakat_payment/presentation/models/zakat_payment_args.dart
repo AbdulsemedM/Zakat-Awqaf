@@ -5,6 +5,9 @@ import '../../../zakat_calculator/presentation/zakat_calculator_strings.dart';
 
 enum ZakatAmountEntryMode { fixed, userEstimatedEtb }
 
+/// What the payment screen is collecting; drives its wording.
+enum PaymentPurpose { zakat, sadaqah }
+
 /// Navigation extra for [`ZakatPaymentScreen`].
 class ZakatPaymentArgs {
   const ZakatPaymentArgs({
@@ -19,6 +22,7 @@ class ZakatPaymentArgs {
     this.livestockTransparencyText,
     this.cropTransparencyText,
     this.certificateNaturalUnitLine,
+    this.purpose = PaymentPurpose.zakat,
   });
 
   final ZakatCategoryTab activeTab;
@@ -37,6 +41,8 @@ class ZakatPaymentArgs {
 
   /// Optional one-line text for certificate PDF (livestock/crops natural units).
   final String? certificateNaturalUnitLine;
+
+  final PaymentPurpose purpose;
 
   static bool canOpenPayment(ZakatCalculatorInitial s) {
     switch (s.activeTab) {

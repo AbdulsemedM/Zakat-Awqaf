@@ -1584,4 +1584,128 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get profileApplicationSubmittedOn => 'Guyyaa galmee';
+
+  @override
+  String get regVerifyCodeFirst =>
+      'Koodii galmee keessanii galchaatii «Mirkaneessi» tuqaa. Koodiin erga fudhatamee booda unkaan ni banama.';
+
+  @override
+  String get homeQuickCalculate => 'Herregi';
+
+  @override
+  String get homeQuickSadaqah => 'Sadaqaa';
+
+  @override
+  String get homeQuickApply => 'Iyyadhu';
+
+  @override
+  String get homeUpcoming => 'DHUFAA JIRA';
+
+  @override
+  String get payTitleZakat => 'Zakaa keessan xumuraa';
+
+  @override
+  String get payTitleSadaqah => 'Sadaqaa kennaa';
+
+  @override
+  String get paySubtitleZakat =>
+      'Dirqama keessan karaa biyya keessaa amanamoo ta\'een nageenyaan bahaa.';
+
+  @override
+  String get paySubtitleSadaqah =>
+      'Arjummaa fedhii keessaniin karaa biyya keessaa amanamoo ta\'een kennaa.';
+
+  @override
+  String get payTotalZakatDue => 'WALIIGALA ZAKAA KAFFALAMU';
+
+  @override
+  String get payCalculatedOverview => 'GUDUNFAA SHALLAGAME';
+
+  @override
+  String get payAmountLabel => 'Hanga kaffalamu (ETB)';
+
+  @override
+  String get payAmountHintZakat => 'Hanga kaffaluu barbaaddan galchaa';
+
+  @override
+  String get payAmountHintEtb => 'Hanga ETB galchaa';
+
+  @override
+  String get payNaturalUnitsLivestock =>
+      'Zakaan horii bineensotaan kaffalama. Gatii gabaa naannoo amma jiruun ETB\'n kaffaluu dandeessu.';
+
+  @override
+  String get payNaturalUnitsCrops =>
+      'Zakaan midhaan oomishaan kaffalama. Gatii gabaa naannoo amma jiruun ETB\'n kaffaluu dandeessu.';
+
+  @override
+  String get payPayerName => 'Maqaa kaffalaa';
+
+  @override
+  String get payFirstName => 'Maqaa';
+
+  @override
+  String get payFatherName => 'Maqaa abbaa';
+
+  @override
+  String get payGrandfatherName => 'Maqaa akaakayyuu';
+
+  @override
+  String get payBeneficiary => 'Fayyadamaa (filannoo)';
+
+  @override
+  String get payProjectLabel => 'Pirojektii fayyadamtootaa';
+
+  @override
+  String get payGeneralFundZakat => 'Maallaqa Zakaa waliigalaa';
+
+  @override
+  String get payGeneralFundSadaqah => 'Maallaqa Sadaqaa waliigalaa';
+
+  @override
+  String get payMethod => 'Mala kaffaltii';
+
+  @override
+  String get payRecurringTitle => 'Ji\'a ji\'aan irra deebi\'aa';
+
+  @override
+  String get payRecurringSubtitle =>
+      'Ji\'a baatii hundaa akka irra deebitanii kennitan isin yaadachiifna.';
+
+  @override
+  String get paySecureSsl => 'SSL 256-BIT';
+
+  @override
+  String get paySecureBank => 'NAGEENYA SADARKAA BAANKII';
+
+  @override
+  String get payButtonSadaqah => 'Sadaqaa kennaa';
+
+  @override
+  String get payImpactTitle => 'Dhiibbaa keessan';
+
+  @override
+  String get payImpactBody =>
+      'Gumaachi hundi karaa sagantaalee komishinichaa iftoominaan qoodama.';
+
+  @override
+  String get regStepIdentity => 'Eenyummaa';
+
+  @override
+  String get regStepNeeds => 'Fedhiiwwan';
+
+  @override
+  String get regStepVerify => 'Mirkaneessa';
+
+  @override
+  String get regStepPayout => 'Kaffaltii';
+
+  @override
+  String get regStepDetails => 'Bal\'ina';
+
+  @override
+  String get regStepPassword => 'Jecha iccitii';
+
+  @override
+  String get regStepDocuments => 'Galmeewwan';
 }

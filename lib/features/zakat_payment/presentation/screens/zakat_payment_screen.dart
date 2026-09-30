@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
-import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/theme/app_typography.dart';
+import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../app/widgets/zakat_page_header.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
+import '../../../../core/l10n/l10n.dart';
 import '../models/zakat_certificate_args.dart';
 import '../models/zakat_checkout_method.dart';
 import '../models/zakat_payment_args.dart';
@@ -27,6 +32,10 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   ZakatCheckoutMethod _method = ZakatCheckoutMethod.coopBankAlhuda;
   bool _recurring = false;
   String? _beneficiaryProjectTitle;
+
+  static const _quickAmounts = [100, 500, 1000, 5000];
+
+  bool get _isSadaqah => widget.args.purpose == PaymentPurpose.sadaqah;
 
   @override
   void initState() {
@@ -100,285 +109,187 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     context.push('/zakat/certificate', extra: extra);
   }
 
+  void _setQuickAmount(int value) {
+    setState(() => _estimatedEtb.text = value.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final l10n = context.l10n;
     final a = widget.args;
+    const gap = SizedBox(height: 16);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const AppLogo(height: 26),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Complete contribution',
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+            ZakatPageHeader(
+              title: _isSadaqah ? l10n.payTitleSadaqah : l10n.payTitleZakat,
+              subtitle: _isSadaqah ? l10n.paySubtitleSadaqah : l10n.paySubtitleZakat,
+              leadingIcon: _isSadaqah
+                  ? Icons.favorite_outline_rounded
+                  : Icons.verified_user_outlined,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (!_isSadaqah) ...[
+                    _OverviewCard(args: a),
+                    gap,
+                  ],
+                  PremiumCard(
+                    child: _AmountSection(
+                      args: a,
+                      isSadaqah: _isSadaqah,
+                      estimatedController: _estimatedEtb,
+                      quickAmounts: _isSadaqah ? _quickAmounts : const [],
+                      onQuickAmount: _setQuickAmount,
+                      onChanged: () => setState(() {}),
+                    ),
+                  ),
+                  gap,
+                  PremiumCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ZakatFormSectionTitle(
+                          icon: Icons.person_outline_rounded,
+                          label: l10n.payPayerName,
+                        ),
+                        const SizedBox(height: 14),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _firstName,
+                                textCapitalization: TextCapitalization.words,
+                                onChanged: (_) => setState(() {}),
+                                decoration: InputDecoration(labelText: l10n.payFirstName),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextField(
+                                controller: _fatherName,
+                                textCapitalization: TextCapitalization.words,
+                                onChanged: (_) => setState(() {}),
+                                decoration: InputDecoration(labelText: l10n.payFatherName),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: _grandFatherName,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged: (_) => setState(() {}),
+                          decoration: InputDecoration(labelText: l10n.payGrandfatherName),
+                        ),
+                        const SizedBox(height: 18),
+                        ZakatFormSectionTitle(
+                          icon: Icons.volunteer_activism_outlined,
+                          label: l10n.payBeneficiary,
+                        ),
+                        const SizedBox(height: 14),
+                        DropdownButtonFormField<String?>(
+                          initialValue: _beneficiaryProjectTitle,
+                          isExpanded: true,
+                          decoration: InputDecoration(labelText: l10n.payProjectLabel),
+                          items: [
+                            DropdownMenuItem<String?>(
+                              value: null,
+                              child: Text(
+                                _isSadaqah
+                                    ? l10n.payGeneralFundSadaqah
+                                    : l10n.payGeneralFundZakat,
+                              ),
+                            ),
+                            ...homeUrgentNeeds.map(
+                              (p) => DropdownMenuItem<String?>(
+                                value: p.title,
+                                child: Text(p.title),
+                              ),
+                            ),
+                          ],
+                          onChanged: (v) => setState(() => _beneficiaryProjectTitle = v),
+                        ),
+                      ],
+                    ),
+                  ),
+                  gap,
+                  PremiumCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ZakatFormSectionTitle(
+                          icon: Icons.account_balance_wallet_outlined,
+                          label: l10n.payMethod,
+                        ),
+                        const SizedBox(height: 14),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: ZakatCheckoutMethod.values.length,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 1.3,
+                          ),
+                          itemBuilder: (context, index) {
+                            final m = ZakatCheckoutMethod.values[index];
+                            return _MethodTile(
+                              method: m,
+                              selected: _method == m,
+                              onTap: () => setState(() => _method = m),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        SwitchListTile.adaptive(
+                          value: _recurring,
+                          onChanged: (v) => setState(() => _recurring = v),
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            l10n.payRecurringTitle,
+                            style: AppTypography.body(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          subtitle: Text(
+                            l10n.payRecurringSubtitle,
+                            style: AppTypography.body(
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  gap,
+                  const _ImpactNote(),
+                  const SizedBox(height: 14),
+                  const _SecurityRow(),
+                ],
               ),
             ),
           ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.verified_user_outlined, color: AppColors.primary),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Complete Contribution',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'Securely fulfill your religious obligation through integrated local gateways.',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 16),
-              _AmountSection(
-                args: a,
-                estimatedController: _estimatedEtb,
-                onChanged: () => setState(() {}),
-              ),
-              const SizedBox(height: 16),
-              Text('Payer name', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-              const SizedBox(height: 8),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 120,
-                      child: TextField(
-                        controller: _firstName,
-                        onChanged: (_) => setState(() {}),
-                        decoration: const InputDecoration(
-                          labelText: 'First name',
-                          isDense: true,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 120,
-                      child: TextField(
-                        controller: _fatherName,
-                        onChanged: (_) => setState(() {}),
-                        decoration: const InputDecoration(
-                          labelText: "Father's name",
-                          isDense: true,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 130,
-                      child: TextField(
-                        controller: _grandFatherName,
-                        onChanged: (_) => setState(() {}),
-                        decoration: const InputDecoration(
-                          labelText: "Grandfather's name",
-                          isDense: true,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Beneficiary (optional)',
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String?>(
-                // ignore: deprecated_member_use
-                value: _beneficiaryProjectTitle,
-                decoration: const InputDecoration(
-                  labelText: 'Urgent beneficiary project',
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
-                items: [
-                  const DropdownMenuItem<String?>(
-                    value: null,
-                    child: Text('General Zakat fund (no specific project)'),
-                  ),
-                  ...homeUrgentNeeds.map(
-                    (p) => DropdownMenuItem<String?>(
-                      value: p.title,
-                      child: Text(p.title),
-                    ),
-                  ),
-                ],
-                onChanged: (v) => setState(() => _beneficiaryProjectTitle = v),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Payment method',
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 8),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: ZakatCheckoutMethod.values.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 1.4,
-                ),
-                itemBuilder: (context, index) {
-                  final m = ZakatCheckoutMethod.values[index];
-                  final isSelected = _method == m;
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.secondary.withValues(alpha: 0.22)
-                          : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primary
-                            : theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-                        width: isSelected ? 1.5 : 1,
-                      ),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
-                        onTap: () => setState(() => _method = m),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(_methodIcon(m), color: AppColors.primary),
-                                  const Spacer(),
-                                  if (isSelected)
-                                    const Icon(
-                                      Icons.check_circle,
-                                      color: AppColors.primary,
-                                      size: 20,
-                                    ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                m.label,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                m.subtitle,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              CheckboxListTile(
-                value: _recurring,
-                onChanged: (v) => setState(() => _recurring = v ?? false),
-                title: const Text('Save for recurring monthly'),
-                subtitle: const Text(
-                  'Automatically calculate and prompt for payment every lunar month.',
-                ),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.lock_outline, size: 16, color: theme.colorScheme.outline),
-                  const SizedBox(width: 6),
-                  Text(
-                    '256-BIT SSL',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Icon(Icons.shield_outlined, size: 16, color: theme.colorScheme.outline),
-                  const SizedBox(width: 6),
-                  Text(
-                    'BANK GRADE SECURITY',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: _canPay ? _onPay : null,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                icon: const Icon(Icons.lock_outline),
-                label: const Text('Pay Your Zakat'),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: theme.colorScheme.outlineVariant,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.volunteer_activism_outlined, color: AppColors.primary),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'Your Impact\nThis contribution supports transparent allocation through the commission’s programs.',
-                        style: theme.textTheme.bodySmall?.copyWith(height: 1.35),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: GoldActionButton(
+            label: _isSadaqah ? l10n.payButtonSadaqah : l10n.calcPayYourZakat,
+            icon: Icons.lock_outline_rounded,
+            onPressed: _canPay ? _onPay : null,
           ),
         ),
       ),
@@ -404,130 +315,388 @@ IconData _methodIcon(ZakatCheckoutMethod method) {
   };
 }
 
+/// Emerald summary of what the calculator worked out (Zakat only).
+class _OverviewCard extends StatelessWidget {
+  const _OverviewCard({required this.args});
+
+  final ZakatPaymentArgs args;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(22),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: PrimaryHero.zakatHeroGradient,
+          border: Border.all(color: AppColors.goldLight.withValues(alpha: 0.35)),
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: Stack(
+          children: [
+            const IslamicPatternLayer(opacity: 0.12, cell: 36, fadeTo: Alignment.bottomLeft),
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    args.activeTab == ZakatCategoryTab.wealth
+                        ? l10n.payTotalZakatDue
+                        : l10n.payCalculatedOverview,
+                    style: AppTypography.label(
+                      fontSize: 11,
+                      color: AppColors.mintGreen,
+                      letterSpacing: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    args.overviewTitle,
+                    style: AppTypography.displayHeading(fontSize: 18, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    args.overviewPrimaryValue,
+                    style: AppTypography.body(
+                      fontSize: 24,
+                      color: AppColors.textOnPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: scheme.surfaceContainerLowest,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.goldHairline),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          args.overviewDueLabel,
+                          style: AppTypography.body(
+                            fontSize: 13,
+                            color: scheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          args.overviewDueValue,
+                          style: AppTypography.body(
+                            fontSize: 20,
+                            color: scheme.primary,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _AmountSection extends StatelessWidget {
   const _AmountSection({
     required this.args,
+    required this.isSadaqah,
     required this.estimatedController,
+    required this.quickAmounts,
+    required this.onQuickAmount,
     required this.onChanged,
   });
 
   final ZakatPaymentArgs args;
+  final bool isSadaqah;
   final TextEditingController estimatedController;
+  final List<int> quickAmounts;
+  final ValueChanged<int> onQuickAmount;
   final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final noteStyle = AppTypography.body(
+      fontSize: 12,
+      color: scheme.onSurfaceVariant,
+      height: 1.45,
+    );
+    final current = int.tryParse(estimatedController.text.replaceAll(',', ''));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: AppColors.secondary.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: theme.colorScheme.outlineVariant.withValues(alpha: 0.6)),
+        ZakatFormSectionTitle(
+          icon: Icons.payments_outlined,
+          label: isSadaqah ? l10n.donationAmountLabel : l10n.payAmountLabel,
+        ),
+        if (!isSadaqah && args.activeTab != ZakatCategoryTab.wealth) ...[
+          const SizedBox(height: 12),
+          Text(
+            args.activeTab == ZakatCategoryTab.livestock
+                ? l10n.payNaturalUnitsLivestock
+                : l10n.payNaturalUnitsCrops,
+            style: noteStyle,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          if ((args.livestockTransparencyText ?? '').trim().isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(args.livestockTransparencyText!.trim(), style: noteStyle),
+          ],
+          if ((args.cropTransparencyText ?? '').trim().isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(args.cropTransparencyText!.trim(), style: noteStyle),
+          ],
+        ],
+        const SizedBox(height: 14),
+        TextField(
+          controller: estimatedController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.,]'))],
+          onChanged: (_) => onChanged(),
+          style: AppTypography.body(
+            fontSize: 24,
+            color: scheme.onSurface,
+            fontWeight: FontWeight.w800,
+          ),
+          decoration: InputDecoration(
+            hintText: args.activeTab == ZakatCategoryTab.wealth
+                ? l10n.payAmountHintZakat
+                : l10n.payAmountHintEtb,
+            hintStyle: AppTypography.body(fontSize: 14, color: scheme.onSurfaceVariant),
+            prefixIcon: const _EtbPrefix(),
+            prefixIconConstraints: const BoxConstraints(),
+          ),
+        ),
+        if (quickAmounts.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      args.activeTab == ZakatCategoryTab.wealth
-                          ? 'TOTAL ZAKAT DUE'
-                          : 'CALCULATED OVERVIEW',
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        letterSpacing: 0.8,
-                        fontWeight: FontWeight.w700,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.info_outline, size: 18, color: theme.colorScheme.outline),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                args.overviewTitle,
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                args.overviewPrimaryValue,
-                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surface.withValues(alpha: 0.55),
-                  borderRadius: BorderRadius.circular(12),
+              for (final amount in quickAmounts)
+                ChoiceChip(
+                  label: Text('ETB $amount'),
+                  selected: current == amount,
+                  onSelected: (_) => onQuickAmount(amount),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Always-visible currency tag inside amount fields.
+class _EtbPrefix extends StatelessWidget {
+  const _EtbPrefix();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(start: 16, end: 10),
+      child: Text(
+        'ETB',
+        style: AppTypography.body(
+          fontSize: 16,
+          color: AppColors.goldDeep,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}
+
+class _MethodTile extends StatelessWidget {
+  const _MethodTile({
+    required this.method,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final ZakatCheckoutMethod method;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      decoration: BoxDecoration(
+        color: selected
+            ? AppColors.tagGreenBg.withValues(
+                alpha: Theme.of(context).brightness == Brightness.dark ? 0.12 : 1,
+              )
+            : scheme.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: selected ? AppColors.forestLight : scheme.outlineVariant,
+          width: selected ? 1.6 : 1,
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Text(
-                      args.overviewDueLabel,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: selected
+                            ? const LinearGradient(
+                                colors: [AppColors.forestLight, AppColors.forestGreen],
+                              )
+                            : null,
+                        color: selected ? null : AppColors.tagGreenBg,
+                        border: Border.all(color: AppColors.goldHairline),
+                      ),
+                      child: Icon(
+                        _methodIcon(method),
+                        size: 17,
+                        color: selected ? AppColors.goldLight : AppColors.forestMid,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      args.overviewDueValue,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primary,
+                    const Spacer(),
+                    AnimatedOpacity(
+                      duration: const Duration(milliseconds: 180),
+                      opacity: selected ? 1 : 0,
+                      child: const Icon(
+                        Icons.check_circle_rounded,
+                        color: AppColors.forestLight,
+                        size: 20,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                const Spacer(),
+                Text(
+                  method.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.body(
+                    fontSize: 13,
+                    color: scheme.onSurface,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  method.subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.body(
+                    fontSize: 11,
+                    color: scheme.onSurfaceVariant,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        const SizedBox(height: 12),
-        if (args.activeTab != ZakatCategoryTab.wealth) ...[
-          Text(
-            'Zakat for ${args.activeTab == ZakatCategoryTab.livestock ? 'livestock' : 'crops'} is determined in natural units. '
-            'You may estimate the ETB amount to discharge your obligation based on your local and current market value.',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              height: 1.35,
+      ),
+    );
+  }
+}
+
+class _ImpactNote extends StatelessWidget {
+  const _ImpactNote();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.tagGoldBg,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.tagGoldBorder),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.auto_awesome_outlined, color: AppColors.goldDeep),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.payImpactTitle,
+                  style: AppTypography.body(
+                    fontSize: 14,
+                    color: AppColors.tagGoldText,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  l10n.payImpactBody,
+                  style: AppTypography.body(
+                    fontSize: 12,
+                    color: AppColors.tagGoldText,
+                    height: 1.4,
+                  ),
+                ),
+              ],
             ),
           ),
-          if ((args.livestockTransparencyText ?? '').trim().isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              args.livestockTransparencyText!.trim(),
-              style: theme.textTheme.bodySmall?.copyWith(height: 1.3),
-            ),
-          ],
-          if ((args.cropTransparencyText ?? '').trim().isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              args.cropTransparencyText!.trim(),
-              style: theme.textTheme.bodySmall?.copyWith(height: 1.3),
-            ),
-          ],
-          const SizedBox(height: 8),
         ],
-        TextField(
-          controller: estimatedController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onChanged: (_) => onChanged(),
-          decoration: InputDecoration(
-            labelText: 'Amount to pay (ETB)',
-            hintText: args.activeTab == ZakatCategoryTab.wealth
-                ? 'Enter amount you want to pay'
-                : 'Enter ETB amount',
-            border: const OutlineInputBorder(),
-          ),
+      ),
+    );
+  }
+}
+
+class _SecurityRow extends StatelessWidget {
+  const _SecurityRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final color = Theme.of(context).colorScheme.onSurfaceVariant;
+    final style = AppTypography.label(fontSize: 10, color: color, letterSpacing: 0.8);
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 16,
+      runSpacing: 6,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.lock_outline, size: 14, color: color),
+            const SizedBox(width: 6),
+            Text(l10n.paySecureSsl, style: style),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.shield_outlined, size: 14, color: color),
+            const SizedBox(width: 6),
+            Text(l10n.paySecureBank, style: style),
+          ],
         ),
       ],
     );

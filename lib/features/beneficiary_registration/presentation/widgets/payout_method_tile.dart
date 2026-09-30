@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_typography.dart';
 
 class PayoutMethodTile extends StatelessWidget {
   const PayoutMethodTile({
@@ -21,48 +22,101 @@ class PayoutMethodTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Ink(
-        padding: const EdgeInsets.all(12),
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           color: selected
-              ? AppColors.secondary.withValues(alpha: 0.22)
-              : scheme.surface,
+              ? AppColors.tagGreenBg.withValues(alpha: dark ? 0.12 : 1)
+              : scheme.surfaceContainerLowest,
           border: Border.all(
-            color: selected ? AppColors.primary : scheme.outlineVariant,
+            color: selected ? AppColors.forestLight : scheme.outlineVariant,
+            width: selected ? 1.6 : 1,
           ),
         ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundColor: scheme.surfaceContainerHighest,
-              child: Icon(icon, size: 18, color: AppColors.primary),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        clipBehavior: Clip.antiAlias,
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Row(
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.titleSmall),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: scheme.onSurfaceVariant,
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: selected
+                          ? const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [AppColors.forestLight, AppColors.forestGreen],
+                            )
+                          : null,
+                      color: selected ? null : AppColors.tagGreenBg,
+                      border: Border.all(
+                        color: selected ? AppColors.goldLight : AppColors.goldHairline,
+                        width: 1.2,
+                      ),
                     ),
+                    child: Icon(
+                      icon,
+                      size: 20,
+                      color: selected ? AppColors.goldLight : AppColors.forestMid,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: AppTypography.body(
+                            fontSize: 15,
+                            color: scheme.onSurface,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          subtitle,
+                          style: AppTypography.body(
+                            fontSize: 12,
+                            color: scheme.onSurfaceVariant,
+                            height: 1.35,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    width: 22,
+                    height: 22,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selected ? AppColors.forestLight : Colors.transparent,
+                      border: Border.all(
+                        color: selected ? AppColors.forestLight : scheme.outline,
+                        width: 1.6,
+                      ),
+                    ),
+                    child: selected
+                        ? const Icon(Icons.check_rounded, size: 14, color: Colors.white)
+                        : null,
                   ),
                 ],
               ),
             ),
-            Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: selected ? AppColors.primary : scheme.outline,
-            ),
-          ],
+          ),
         ),
       ),
     );

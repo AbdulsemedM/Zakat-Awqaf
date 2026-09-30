@@ -16,6 +16,7 @@ class CompanyBeneficiaryCreateRequest {
     required this.institutionSubtype,
     required this.authorityToActDocumentRequired,
     required this.notes,
+    required this.registrationCode,
   });
 
   final String legalName;
@@ -31,6 +32,7 @@ class CompanyBeneficiaryCreateRequest {
   final InstitutionSubtype institutionSubtype;
   final bool authorityToActDocumentRequired;
   final String notes;
+  final String registrationCode;
 
   Map<String, dynamic> toJson() => {
         'legalName': legalName.trim(),
@@ -46,5 +48,6 @@ class CompanyBeneficiaryCreateRequest {
         'institutionSubtype': institutionSubtype.apiValue,
         'authorityToActDocumentRequired': authorityToActDocumentRequired,
         'notes': notes.trim(),
+        'registrationCode': registrationCode.trim(),
       };
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/app_logo.dart';
-import '../../../../app/widgets/brand_atmosphere_background.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/utils/number_format.dart';
 import '../../bloc/impact_bloc.dart';
@@ -22,45 +24,38 @@ class ImpactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBarBrandLeading(height: 28),
-        title: Text(context.l10n.impactNationalImpact),
-        actions: [
-          IconButton(
-            tooltip: context.l10n.impactNotifications,
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileNoNewNotifications)),
-              );
-            },
-            icon: const Icon(Icons.notifications_none_rounded),
-          ),
-          // const Padding(
-          //   padding: EdgeInsets.only(right: 12),
-          //   child: CircleAvatar(
-          //     radius: 14,
-          //     child: Icon(Icons.person, size: 16),
-          //   ),
-          // ),
-        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
       ),
-      body: BlocBuilder<ImpactBloc, ImpactState>(
-        builder: (context, state) {
-          return switch (state) {
-            ImpactInitial() || ImpactLoading() =>
-              const Center(child: CircularProgressIndicator()),
-            ImpactError(:final message) => _ErrorView(message: message),
-            ImpactLoaded(:final model) => RefreshIndicator(
-                onRefresh: () async {
-                  context
-                      .read<ImpactBloc>()
-                      .add(const ImpactRefreshRequested());
-                },
-                child: _ImpactContent(model: model),
-              ),
-          };
-        },
+      child: Scaffold(
+        body: BlocBuilder<ImpactBloc, ImpactState>(
+          builder: (context, state) {
+            return switch (state) {
+              ImpactInitial() || ImpactLoading() => const Column(
+                  children: [
+                    _ImpactHeader(model: null),
+                    Expanded(child: Center(child: CircularProgressIndicator())),
+                  ],
+                ),
+              ImpactError(:final message) => Column(
+                  children: [
+                    const _ImpactHeader(model: null),
+                    Expanded(child: _ErrorView(message: message)),
+                  ],
+                ),
+              ImpactLoaded(:final model) => RefreshIndicator(
+                  color: AppColors.warmGold,
+                  onRefresh: () async {
+                    context
+                        .read<ImpactBloc>()
+                        .add(const ImpactRefreshRequested());
+                  },
+                  child: _ImpactContent(model: model),
+                ),
+            };
+          },
+        ),
       ),
     );
   }
@@ -120,102 +115,54 @@ class _ImpactContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _LiveImpactCard(theme: theme, model: model),
-          const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            child: Row(
+          _ImpactHeader(model: model),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  context.l10n.impactGeographicReach,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: scheme.surfaceContainerHigh,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    model.regionName,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w700,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: ZakatSectionHeader(title: l10n.impactGeographicReach),
                     ),
-                  ),
+                    _RegionChip(label: model.regionName),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          _GeographicCard(theme: theme, model: model),
-          const SizedBox(height: 18),
-          Text(
-            context.l10n.impactBarakaStories,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 8),
-          _StoriesRow(stories: model.barakaStories),
-          const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            child: Row(
-              children: [
-                Text(
-                  context.l10n.impactActiveAwqafProjects,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const Spacer(),
-                InkWell(
-                  borderRadius: BorderRadius.circular(8),
-                  onTap: () {
+                const SizedBox(height: 14),
+                _ImpactMapCard(model: model),
+                const SizedBox(height: 28),
+                ZakatSectionHeader(title: l10n.impactBarakaStories),
+                const SizedBox(height: 14),
+                _StoriesRow(stories: model.barakaStories),
+                const SizedBox(height: 28),
+                ZakatSectionHeader(
+                  title: l10n.impactActiveAwqafProjects,
+                  actionLabel: l10n.viewAll,
+                  onAction: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(context.l10n.impactAllProjectsComingSoon)),
+                      SnackBar(content: Text(l10n.impactAllProjectsComingSoon)),
                     );
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    child: Text(
-                      context.l10n.viewAll,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: scheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
                 ),
+                const SizedBox(height: 14),
+                for (var i = 0; i < model.awqafProjects.length; i++) ...[
+                  _ProjectCard(project: model.awqafProjects[i]),
+                  if (i != model.awqafProjects.length - 1)
+                    const SizedBox(height: 14),
+                ],
+                const SizedBox(height: 24),
+                const _PersonalBarakaCard(),
               ],
             ),
           ),
-          const SizedBox(height: 6),
-          for (var i = 0; i < model.awqafProjects.length; i++) ...[
-            _ProjectCard(theme: theme, project: model.awqafProjects[i]),
-            if (i != model.awqafProjects.length - 1)
-              const SizedBox(height: 12),
-          ],
-          const SizedBox(height: 14),
-          _PersonalBarakaCard(theme: theme),
         ],
       ),
     );

@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/app_logo.dart';
-import '../../../../app/widgets/brand_atmosphere_background.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/utils/number_format.dart';
 import '../../bloc/profile_bloc.dart';
@@ -215,13 +216,26 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Text(
-      label.toUpperCase(),
-      style: theme.textTheme.labelMedium?.copyWith(
-        letterSpacing: 1.2,
-        fontWeight: FontWeight.w700,
-        color: theme.colorScheme.onSurfaceVariant,
-      ),
+    return Row(
+      children: [
+        Transform.rotate(
+          angle: 0.785398,
+          child: Container(width: 6, height: 6, color: AppColors.warmGold),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          label.toUpperCase(),
+          style: theme.textTheme.labelMedium?.copyWith(
+            letterSpacing: 1.4,
+            fontWeight: FontWeight.w700,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(height: 1, color: theme.colorScheme.outlineVariant),
+        ),
+      ],
     );
   }
 }

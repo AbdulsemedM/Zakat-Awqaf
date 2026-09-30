@@ -1554,4 +1554,124 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileApplicationSubmittedOn => 'تاريخ التقديم';
+
+  @override
+  String get regVerifyCodeFirst =>
+      'أدخل رمز التسجيل واضغط «تحقق». سيُفتح النموذج بعد قبول الرمز.';
+
+  @override
+  String get homeQuickCalculate => 'احسب';
+
+  @override
+  String get homeQuickSadaqah => 'صدقة';
+
+  @override
+  String get homeQuickApply => 'قدّم طلبًا';
+
+  @override
+  String get homeUpcoming => 'قادم';
+
+  @override
+  String get payTitleZakat => 'أكمل زكاتك';
+
+  @override
+  String get payTitleSadaqah => 'تصدّق';
+
+  @override
+  String get paySubtitleZakat => 'أدِّ فريضتك بأمان عبر قنوات محلية موثوقة.';
+
+  @override
+  String get paySubtitleSadaqah => 'تصدّق طوعًا بأمان عبر قنوات محلية موثوقة.';
+
+  @override
+  String get payTotalZakatDue => 'إجمالي الزكاة المستحقة';
+
+  @override
+  String get payCalculatedOverview => 'ملخص الحساب';
+
+  @override
+  String get payAmountLabel => 'المبلغ المراد دفعه (بر)';
+
+  @override
+  String get payAmountHintZakat => 'أدخل المبلغ الذي تريد دفعه';
+
+  @override
+  String get payAmountHintEtb => 'أدخل مبلغًا بالبر';
+
+  @override
+  String get payNaturalUnitsLivestock =>
+      'زكاة المواشي تُخرج من الأنعام. يمكنك دفع قيمتها بالبر وفق أسعار السوق المحلية الحالية.';
+
+  @override
+  String get payNaturalUnitsCrops =>
+      'زكاة الزروع تُخرج من المحصول. يمكنك دفع قيمتها بالبر وفق أسعار السوق المحلية الحالية.';
+
+  @override
+  String get payPayerName => 'اسم الدافع';
+
+  @override
+  String get payFirstName => 'الاسم الأول';
+
+  @override
+  String get payFatherName => 'اسم الأب';
+
+  @override
+  String get payGrandfatherName => 'اسم الجد';
+
+  @override
+  String get payBeneficiary => 'المستفيد (اختياري)';
+
+  @override
+  String get payProjectLabel => 'مشروع المستفيدين';
+
+  @override
+  String get payGeneralFundZakat => 'صندوق الزكاة العام';
+
+  @override
+  String get payGeneralFundSadaqah => 'صندوق الصدقات العام';
+
+  @override
+  String get payMethod => 'طريقة الدفع';
+
+  @override
+  String get payRecurringTitle => 'كرّر كل شهر';
+
+  @override
+  String get payRecurringSubtitle => 'سنذكّرك بالعطاء مجددًا كل شهر قمري.';
+
+  @override
+  String get paySecureSsl => 'تشفير SSL 256 بت';
+
+  @override
+  String get paySecureBank => 'أمان بمستوى البنوك';
+
+  @override
+  String get payButtonSadaqah => 'تصدّق الآن';
+
+  @override
+  String get payImpactTitle => 'أثرك';
+
+  @override
+  String get payImpactBody => 'تُوزَّع كل مساهمة بشفافية عبر برامج الهيئة.';
+
+  @override
+  String get regStepIdentity => 'الهوية';
+
+  @override
+  String get regStepNeeds => 'الاحتياجات';
+
+  @override
+  String get regStepVerify => 'التحقق';
+
+  @override
+  String get regStepPayout => 'الصرف';
+
+  @override
+  String get regStepDetails => 'التفاصيل';
+
+  @override
+  String get regStepPassword => 'كلمة المرور';
+
+  @override
+  String get regStepDocuments => 'المستندات';
 }

@@ -53,12 +53,13 @@ class OptionalBasicDetailsSection extends StatelessWidget {
           style: theme.textTheme.bodySmall,
         ),
         children: [
-          TextFormField(
-            initialValue: state.nationalId,
-            onChanged: (v) => bloc.add(NationalIdUpdated(v)),
-            decoration: InputDecoration(labelText: l10n.regNationalId),
-          ),
-          gap,
+          // National ID is disabled for now; the field officer records it.
+          // TextFormField(
+          //   initialValue: state.nationalId,
+          //   onChanged: (v) => bloc.add(NationalIdUpdated(v)),
+          //   decoration: InputDecoration(labelText: l10n.regNationalId),
+          // ),
+          // gap,
           DropdownButtonFormField<MaritalStatus?>(
             initialValue: state.maritalStatus,
             items: [

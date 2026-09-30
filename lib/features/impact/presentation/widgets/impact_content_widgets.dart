@@ -1,114 +1,167 @@
 part of '../pages/impact_page.dart';
 
-class _LiveImpactCard extends StatelessWidget {
-  const _LiveImpactCard({required this.theme, required this.model});
+/// Emerald header: title row plus the live funds summary. [model] is null
+/// while loading or on error, in which case only the title row is shown.
+class _ImpactHeader extends StatelessWidget {
+  const _ImpactHeader({required this.model});
 
-  final ThemeData theme;
+  final ImpactModel? model;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final m = model;
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
+      child: DecoratedBox(
+        decoration: const BoxDecoration(gradient: PrimaryHero.zakatHeroGradient),
+        child: Stack(
+          children: [
+            const IslamicPatternLayer(opacity: 0.13, fadeTo: Alignment.bottomLeft),
+            const Positioned(
+              top: 70,
+              right: -36,
+              child: CrescentOrnament(size: 150, opacity: 0.14),
+            ),
+            SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 8, 16, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const AppBarBrandLeading(height: 30),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            l10n.impactNationalImpact,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.displayHeading(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: l10n.impactNotifications,
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.white.withValues(alpha: 0.10),
+                            side: BorderSide(
+                              color: AppColors.goldLight.withValues(alpha: 0.45),
+                            ),
+                          ),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(l10n.profileNoNewNotifications)),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.notifications_none_rounded,
+                            color: AppColors.goldLight,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(start: 4, top: 4),
+                      child: GoldOrnamentDivider(width: 56),
+                    ),
+                    if (m != null) ...[
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 4),
+                        child: _LiveFundsSummary(model: m),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LiveFundsSummary extends StatelessWidget {
+  const _LiveFundsSummary({required this.model});
+
   final ImpactModel model;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = theme.colorScheme;
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        boxShadow: [
-          BoxShadow(
-            color: scheme.shadow.withValues(alpha: 0.1),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
+    final l10n = context.l10n;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: AppColors.emeraldNight.withValues(alpha: 0.45),
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: AppColors.warmGold.withValues(alpha: 0.8)),
           ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          const Positioned.fill(
-            child: BrandAtmosphereBackground(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const _PulsingDot(),
+              const SizedBox(width: 8),
+              Text(
+                l10n.impactLiveImpactStream,
+                style: AppTypography.label(
+                  fontSize: 11,
+                  color: AppColors.goldLight,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.secondary.withValues(alpha: 0.28),
-                        borderRadius: BorderRadius.circular(99),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const _PulsingDot(),
-                          const SizedBox(width: 6),
-                          Text(
-                            context.l10n.impactLiveImpactStream,
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: AppColors.onSecondary,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.8,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.auto_graph_rounded,
-                      size: 18,
-                      color: AppColors.secondary,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  context.l10n.impactDistributedFunds,
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: AppColors.textOnPrimary.withValues(alpha: 0.84),
-                    letterSpacing: 1,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  context.l10n.impactEtbAmount(formatThousands(model.distributedFundsEtb)),
-                  style: theme.textTheme.displaySmall?.copyWith(
-                    color: AppColors.textOnPrimary,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Divider(
-                  color: AppColors.textOnPrimary.withValues(alpha: 0.25),
-                  height: 1,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    _MetricColumn(
-                      title: context.l10n.impactLivesTouched,
-                      value: formatThousands(model.livesTouched),
-                      theme: theme,
-                    ),
-                    const SizedBox(width: 26),
-                    _MetricColumn(
-                      title: context.l10n.impactActiveProjects,
-                      value: formatThousands(model.activeProjects),
-                      theme: theme,
-                    ),
-                  ],
-                ),
-              ],
+        ),
+        const SizedBox(height: 18),
+        Text(
+          l10n.impactDistributedFunds.toUpperCase(),
+          style: AppTypography.label(
+            fontSize: 11,
+            color: AppColors.mintGreen,
+            letterSpacing: 1.6,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          l10n.impactEtbAmount(formatThousands(model.distributedFundsEtb)),
+          style: AppTypography.body(
+            fontSize: 34,
+            color: AppColors.goldLight,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.6,
+          ),
+        ),
+        const SizedBox(height: 18),
+        Row(
+          children: [
+            Expanded(
+              child: _MetricPanel(
+                icon: Icons.groups_2_rounded,
+                title: l10n.impactLivesTouched,
+                value: formatThousands(model.livesTouched),
+              ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _MetricPanel(
+                icon: Icons.account_balance_rounded,
+                title: l10n.impactActiveProjects,
+                value: formatThousands(model.activeProjects),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -149,6 +202,13 @@ class _PulsingDotState extends State<_PulsingDot>
 
   @override
   Widget build(BuildContext context) {
+    const dot = DecoratedBox(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.goldLight,
+      ),
+      child: SizedBox(width: 8, height: 8),
+    );
     return SizedBox(
       width: 12,
       height: 12,
@@ -157,29 +217,61 @@ class _PulsingDotState extends State<_PulsingDot>
         children: [
           AnimatedBuilder(
             animation: _controller,
-            builder: (context, _) {
-              return Opacity(
-                opacity: _opacity.value,
-                child: Transform.scale(
-                  scale: _scale.value,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.secondary,
-                    ),
+            builder: (context, child) => Opacity(
+              opacity: _opacity.value,
+              child: Transform.scale(scale: _scale.value, child: child),
+            ),
+            child: dot,
+          ),
+          dot,
+        ],
+      ),
+    );
+  }
+}
+
+class _MetricPanel extends StatelessWidget {
+  const _MetricPanel({
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return GlassPanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: AppColors.mintGreen),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  title.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.label(
+                    fontSize: 10,
+                    color: AppColors.mintGreen,
+                    letterSpacing: 1,
                   ),
                 ),
-              );
-            },
+              ),
+            ],
           ),
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.secondary,
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: AppTypography.body(
+              fontSize: 22,
+              color: AppColors.textOnPrimary,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ],
@@ -188,58 +280,42 @@ class _PulsingDotState extends State<_PulsingDot>
   }
 }
 
-class _MetricColumn extends StatelessWidget {
-  const _MetricColumn({
-    required this.title,
-    required this.value,
-    required this.theme,
-  });
+class _RegionChip extends StatelessWidget {
+  const _RegionChip({required this.label});
 
-  final String title;
-  final String value;
-  final ThemeData theme;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.labelSmall?.copyWith(
-            color: AppColors.textOnPrimary.withValues(alpha: 0.82),
-            letterSpacing: 0.8,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.tagGoldBg,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: AppColors.tagGoldBorder),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.place_outlined, size: 14, color: AppColors.tagGoldText),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: AppTypography.body(
+              fontSize: 12,
+              color: AppColors.tagGoldText,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          value,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            color: AppColors.textOnPrimary,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-class _GeographicCard extends StatelessWidget {
-  const _GeographicCard({required this.theme, required this.model});
-
-  final ThemeData theme;
-  final ImpactModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return _ImpactMapCard(theme: theme, model: model);
-  }
-}
-
 class _ImpactMapCard extends StatefulWidget {
-  const _ImpactMapCard({required this.theme, required this.model});
+  const _ImpactMapCard({required this.model});
 
-  final ThemeData theme;
   final ImpactModel model;
 
   @override
@@ -260,103 +336,101 @@ class _ImpactMapCardState extends State<_ImpactMapCard> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = widget.theme;
-    final scheme = theme.colorScheme;
-    return Card(
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: 210,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Stack(
-                  children: [
-                    FlutterMap(
-                      options: const MapOptions(
-                        initialCenter: LatLng(9.145, 40.4897),
-                        initialZoom: 5.5,
-                        minZoom: 4.5,
-                        maxZoom: 13,
+    final scheme = Theme.of(context).colorScheme;
+    return PremiumCard(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 220,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Stack(
+                children: [
+                  FlutterMap(
+                    options: const MapOptions(
+                      initialCenter: LatLng(9.145, 40.4897),
+                      initialZoom: 5.5,
+                      minZoom: 4.5,
+                      maxZoom: 13,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'mejlis_digital_hub',
                       ),
-                      children: [
-                        TileLayer(
-                          urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName: 'mejlis_digital_hub',
-                        ),
-                        MarkerLayer(
-                          markers: [
-                            for (final region in widget.model.regions)
-                              Marker(
-                                point: LatLng(region.latitude, region.longitude),
-                                width: 48,
-                                height: 48,
-                                child: _MapPin(
-                                  active: _selectedRegion == region,
-                                  onTap: () {
-                                    setState(() => _selectedRegion = region);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          context.l10n.impactRegionImpactComingSoon(region.name),
-                                        ),
+                      MarkerLayer(
+                        markers: [
+                          for (final region in widget.model.regions)
+                            Marker(
+                              point: LatLng(region.latitude, region.longitude),
+                              width: 48,
+                              height: 48,
+                              child: _MapPin(
+                                active: _selectedRegion == region,
+                                onTap: () {
+                                  setState(() => _selectedRegion = region);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        context.l10n.impactRegionImpactComingSoon(region.name),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
-                          ],
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppColors.forestGreen.withValues(alpha: 0.92),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: AppColors.goldLight.withValues(alpha: 0.6),
                         ),
-                      ],
-                    ),
-                    Positioned(
-                      top: 12,
-                      left: 12,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: scheme.surface.withValues(alpha: 0.92),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Text(
-                          _selectedRegion.name,
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
-                          ),
+                      ),
+                      child: Text(
+                        _selectedRegion.name,
+                        style: AppTypography.body(
+                          fontSize: 12,
+                          color: AppColors.goldLight,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(6, 10, 6, 4),
+            child: Row(
               children: [
-                Icon(
-                  Icons.info_outline,
-                  size: 16,
-                  color: scheme.onSurfaceVariant,
-                ),
+                Icon(Icons.touch_app_outlined, size: 16, color: scheme.onSurfaceVariant),
                 const SizedBox(width: 6),
-                Text(
-                  context.l10n.impactTapRegionHint,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: scheme.onSurfaceVariant,
+                Expanded(
+                  child: Text(
+                    context.l10n.impactTapRegionHint,
+                    style: AppTypography.body(
+                      fontSize: 12,
+                      color: scheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -375,16 +449,17 @@ class _MapPin extends StatelessWidget {
       child: Center(
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
-          width: active ? 16 : 12,
-          height: active ? 16 : 12,
+          width: active ? 18 : 13,
+          height: active ? 18 : 13,
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: active ? AppColors.warmGold : AppColors.forestLight,
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white, width: 2),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.35),
-                blurRadius: 10,
+                color: (active ? AppColors.warmGold : AppColors.forestLight)
+                    .withValues(alpha: 0.45),
+                blurRadius: 12,
               ),
             ],
           ),
@@ -403,8 +478,7 @@ class _StoriesRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        for (final story in stories)
-          Expanded(child: _StoryAvatar(story: story)),
+        for (final story in stories) Expanded(child: _StoryAvatar(story: story)),
       ],
     );
   }
@@ -417,7 +491,7 @@ class _StoryAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final scheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -430,35 +504,33 @@ class _StoryAvatar extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 64,
-              height: 64,
+              width: 72,
+              height: 72,
               padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: LinearGradient(
+                gradient: SweepGradient(
                   colors: [
-                    Colors.amber.shade300,
-                    Colors.amber.shade600,
+                    AppColors.goldLight,
+                    AppColors.warmGold,
+                    AppColors.goldDeep,
+                    AppColors.goldLight,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
                 ),
               ),
               child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
+                padding: const EdgeInsets.all(2.5),
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: scheme.surface,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        story.accent,
-                        Color.lerp(story.accent, Colors.black, 0.3) ??
-                            story.accent,
-                      ],
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [AppColors.forestLight, AppColors.forestGreen],
                     ),
                     image: story.imageAsset != null
                         ? DecorationImage(
@@ -468,22 +540,20 @@ class _StoryAvatar extends StatelessWidget {
                         : null,
                   ),
                   child: story.imageAsset == null
-                      ? Icon(
-                          story.fallbackIcon,
-                          color: Colors.white,
-                          size: 26,
-                        )
+                      ? Icon(story.fallbackIcon, color: AppColors.goldLight, size: 26)
                       : null,
                 ),
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Text(
               story.name,
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.labelSmall?.copyWith(
+              style: AppTypography.body(
+                fontSize: 12,
+                color: scheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -495,138 +565,145 @@ class _StoryAvatar extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  const _ProjectCard({required this.theme, required this.project});
+  const _ProjectCard({required this.project});
 
-  final ThemeData theme;
   final AwqafProject project;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = theme.colorScheme;
-    final statusColor = _statusColor(project.status, scheme);
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.impactProjectDetailsComingSoon(project.title)),
-            ),
-          );
-        },
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 120,
-              decoration: BoxDecoration(
-                gradient: project.imageAsset == null
-                    ? PrimaryHero.gradient(scheme)
-                    : null,
-                image: project.imageAsset != null
-                    ? DecorationImage(
-                        image: AssetImage(project.imageAsset!),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-              child: Stack(
-                children: [
-                  if (project.imageAsset == null)
-                    Positioned(
-                      left: 12,
-                      bottom: 10,
-                      child: Icon(
-                        _statusIcon(project.status),
-                        size: 36,
-                        color: AppColors.textOnPrimary.withValues(alpha: 0.65),
-                      ),
-                    ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: statusColor,
-                        borderRadius: BorderRadius.circular(99),
-                      ),
-                      child: Text(
-                        project.status.label,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: project.status == AwqafStatus.construction
-                              ? AppColors.onSecondary
-                              : project.status == AwqafStatus.completed
-                                  ? scheme.onSurface
-                                  : AppColors.textOnPrimary,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    project.title,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
+    final scheme = Theme.of(context).colorScheme;
+    final (statusBg, statusFg) = _statusColors(project.status, scheme);
+    final percent = (project.fundedPercent * 100).toStringAsFixed(0);
+    return PremiumCard(
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(context.l10n.impactProjectDetailsComingSoon(project.title)),
+                ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 124,
+                  child: Stack(
+                    fit: StackFit.expand,
                     children: [
-                      Text(
-                        context.l10n.impactPercentFunded((project.fundedPercent * 100).toStringAsFixed(0)),
-                        style: theme.textTheme.bodySmall,
-                      ),
-                      const Spacer(),
-                      Text(
-                        context.l10n.impactEtbLeft(formatThousands(project.etbLeft)),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w700,
+                      if (project.imageAsset != null)
+                        Image.asset(project.imageAsset!, fit: BoxFit.cover)
+                      else ...[
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: PrimaryHero.zakatHeroGradient,
+                          ),
+                        ),
+                        const IslamicPatternLayer(
+                          opacity: 0.18,
+                          cell: 32,
+                          fadeTo: Alignment.bottomLeft,
+                        ),
+                        Positioned(
+                          left: 16,
+                          bottom: 14,
+                          child: Icon(
+                            _statusIcon(project.status),
+                            size: 38,
+                            color: AppColors.goldLight.withValues(alpha: 0.85),
+                          ),
+                        ),
+                      ],
+                      Positioned(
+                        right: 12,
+                        top: 12,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: statusBg,
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(
+                            project.status.label,
+                            style: AppTypography.label(
+                              fontSize: 11,
+                              color: statusFg,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(99),
-                    child: LinearProgressIndicator(
-                      value: project.fundedPercent,
-                      minHeight: 6,
-                      color: scheme.primary,
-                      backgroundColor: scheme.surfaceContainerHighest,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        project.title,
+                        style: AppTypography.displayHeading(
+                          fontSize: 17,
+                          color: scheme.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            context.l10n.impactPercentFunded(percent),
+                            style: AppTypography.body(
+                              fontSize: 12,
+                              color: AppColors.goldDeep,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            context.l10n.impactEtbLeft(formatThousands(project.etbLeft)),
+                            style: AppTypography.body(
+                              fontSize: 12,
+                              color: scheme.onSurfaceVariant,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(99),
+                        child: LinearProgressIndicator(
+                          value: project.fundedPercent,
+                          minHeight: 6,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Color _statusColor(AwqafStatus status, ColorScheme scheme) {
+  (Color, Color) _statusColors(AwqafStatus status, ColorScheme scheme) {
     switch (status) {
       case AwqafStatus.construction:
-        return AppColors.secondary;
+        return (AppColors.warmGold, AppColors.onSecondary);
       case AwqafStatus.planning:
-        return Colors.blue.shade500;
+        return (AppColors.waterGradientEnd, AppColors.textOnPrimary);
       case AwqafStatus.completed:
-        return scheme.outline;
+        return (AppColors.tagGreenBg, AppColors.tagGreenText);
     }
   }
 
@@ -643,48 +720,61 @@ class _ProjectCard extends StatelessWidget {
 }
 
 class _PersonalBarakaCard extends StatelessWidget {
-  const _PersonalBarakaCard({required this.theme});
-
-  final ThemeData theme;
+  const _PersonalBarakaCard();
 
   @override
   Widget build(BuildContext context) {
-    final scheme = theme.colorScheme;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: AppColors.secondary,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.l10n.impactSeeYourPersonalBaraka,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: AppColors.textOnPrimary,
+    final l10n = context.l10n;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(22),
+      child: DecoratedBox(
+        decoration: const BoxDecoration(gradient: PrimaryHero.sadaqahGradient),
+        child: Stack(
+          children: [
+            const IslamicPatternLayer(
+              color: AppColors.emeraldNight,
+              opacity: 0.10,
+              cell: 34,
+              fadeTo: Alignment.bottomRight,
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            context.l10n.impactTrackStewardship,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSecondary,
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.impactSeeYourPersonalBaraka,
+                    style: AppTypography.displayHeading(
+                      fontSize: 21,
+                      color: AppColors.emeraldNight,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    l10n.impactTrackStewardship,
+                    style: AppTypography.body(
+                      fontSize: 13,
+                      color: AppColors.emeraldNight.withValues(alpha: 0.78),
+                      height: 1.45,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton.icon(
+                    onPressed: () => context.go('/profile'),
+                    icon: const Icon(Icons.show_chart_rounded, size: 18),
+                    label: Text(l10n.impactViewMyHistory),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.forestGreen,
+                      foregroundColor: AppColors.goldLight,
+                      minimumSize: const Size(180, 46),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            onPressed: () => context.go('/profile'),
-            icon: const Icon(Icons.show_chart_rounded, size: 18),
-            label: Text(context.l10n.impactViewMyHistory),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              minimumSize: const Size(170, 42),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

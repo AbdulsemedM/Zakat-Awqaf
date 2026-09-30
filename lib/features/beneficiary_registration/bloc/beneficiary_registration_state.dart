@@ -204,13 +204,14 @@ sealed class BeneficiaryRegistrationState extends Equatable {
         email.trim().isNotEmpty &&
         gender != null &&
         (birthdate != null || parsedEstimatedAge != null) &&
-        registrationCode.trim().isNotEmpty &&
+        isRegistrationCodeVerified &&
         notes.trim().isNotEmpty &&
         selectedCategory != null;
   }
 
   bool get isInstitutionDetailsComplete {
-    return legalName.trim().isNotEmpty &&
+    return isRegistrationCodeVerified &&
+        legalName.trim().isNotEmpty &&
         tradingName.trim().isNotEmpty &&
         tradeRegistrationNumber.trim().isNotEmpty &&
         taxIdentificationNumber.trim().isNotEmpty &&

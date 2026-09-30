@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
 import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
@@ -36,6 +37,7 @@ class _DonationCurrencySheet extends StatelessWidget {
         overviewPrimaryValue: l10n.supportCommunityNeeds,
         overviewDueLabel: 'Amount',
         overviewDueValue: 'Enter an amount',
+        purpose: PaymentPurpose.sadaqah,
       ),
     );
   }
@@ -55,8 +57,9 @@ class _DonationCurrencySheet extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + bottomInset),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          color: theme.colorScheme.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: theme.colorScheme.outlineVariant),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.12),
@@ -76,7 +79,7 @@ class _DonationCurrencySheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.outlineVariant,
+                    color: AppColors.goldHairline,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -84,10 +87,14 @@ class _DonationCurrencySheet extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 l10n.donationCurrencySheetTitle,
-                style: theme.textTheme.titleLarge?.copyWith(
+                style: AppTypography.displayHeading(
+                  fontSize: 22,
+                  color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              const SizedBox(height: 8),
+              const GoldOrnamentDivider(width: 48),
               const SizedBox(height: 6),
               Text(
                 l10n.donationCurrencySheetSubtitle,
@@ -101,6 +108,7 @@ class _DonationCurrencySheet extends StatelessWidget {
                 subtitle: l10n.donationLocalPaymentSubtitle,
                 icon: TablerIcons.wallet,
                 gradient: PrimaryHero.sadaqahGradient,
+                dark: false,
                 onTap: () => _onLocalTap(context),
               ),
               const SizedBox(height: 12),
@@ -108,16 +116,8 @@ class _DonationCurrencySheet extends StatelessWidget {
                 title: l10n.donationInternationalPaymentTitle,
                 subtitle: l10n.donationInternationalPaymentSubtitle,
                 icon: TablerIcons.world,
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.awqafPrimary,
-                    Color(0xFF1A3A6B),
-                    AppColors.warmGold,
-                  ],
-                  stops: [0.0, 0.55, 1.0],
-                ),
+                gradient: PrimaryHero.zakatHeroGradient,
+                dark: true,
                 onTap: () => _onInternationalTap(context),
               ),
             ],
@@ -134,6 +134,7 @@ class _CurrencyOptionTile extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     required this.gradient,
+    required this.dark,
     required this.onTap,
   });
 
@@ -141,10 +142,15 @@ class _CurrencyOptionTile extends StatelessWidget {
   final String subtitle;
   final IconData icon;
   final Gradient gradient;
+
+  /// True for emerald tiles (light text), false for gold tiles (dark text).
+  final bool dark;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final fg = dark ? AppColors.textOnPrimary : AppColors.emeraldNight;
+    final accent = dark ? AppColors.goldLight : AppColors.emeraldNight;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -154,10 +160,14 @@ class _CurrencyOptionTile extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: gradient,
             borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: AppColors.goldLight.withValues(alpha: dark ? 0.45 : 0.8),
+            ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.awqafPrimary.withValues(alpha: 0.18),
+                color: AppColors.forestGreen.withValues(alpha: 0.18),
                 blurRadius: 16,
+                spreadRadius: -4,
                 offset: const Offset(0, 8),
               ),
             ],
@@ -170,10 +180,11 @@ class _CurrencyOptionTile extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: AppColors.textOnPrimary.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(14),
+                    shape: BoxShape.circle,
+                    color: fg.withValues(alpha: 0.10),
+                    border: Border.all(color: accent.withValues(alpha: 0.55)),
                   ),
-                  child: Icon(icon, color: AppColors.textOnPrimary, size: 26),
+                  child: Icon(icon, color: accent, size: 24),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -182,10 +193,10 @@ class _CurrencyOptionTile extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: AppTypography.body(
-                          fontSize: 16,
+                        style: AppTypography.displayHeading(
+                          fontSize: 17,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.textOnPrimary,
+                          color: fg,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -193,17 +204,13 @@ class _CurrencyOptionTile extends StatelessWidget {
                         subtitle,
                         style: AppTypography.body(
                           fontSize: 12,
-                          color: AppColors.textOnPrimary.withValues(alpha: 0.82),
+                          color: fg.withValues(alpha: 0.8),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                  color: AppColors.textOnPrimary.withValues(alpha: 0.9),
-                ),
+                Icon(Icons.arrow_forward_ios_rounded, size: 16, color: accent),
               ],
             ),
           ),

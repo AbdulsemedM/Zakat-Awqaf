@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../app/theme/app_colors.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../widgets/home_about_card.dart';
 import '../widgets/home_hero_section.dart';
+import '../widgets/home_quick_actions.dart';
 import '../widgets/home_register_cta.dart';
 import '../widgets/home_sadaqah_card.dart';
 import '../widgets/home_urgent_causes_section.dart';
@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static const _statusBarStyle = SystemUiOverlayStyle(
-    statusBarColor: AppColors.forestGreen,
+    statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
     statusBarBrightness: Brightness.dark,
   );
@@ -24,28 +24,31 @@ class HomeScreen extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _statusBarStyle,
       child: Scaffold(
-        backgroundColor: AppColors.parchment,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const HomeHeroSection(),
-              Container(
-                color: AppColors.parchment,
-                padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const RegisterZakatCta(),
-                    const SizedBox(height: 16),
-                    UrgentCausesSection(causes: homeUrgentNeeds),
-                    const SizedBox(height: 16),
-                    const ZakatReminderCard(),
-                    const SizedBox(height: 16),
-                    const AboutCommissionSection(),
-                    const SizedBox(height: 14),
-                    const DonateSadaqahCard(),
-                  ],
+              Transform.translate(
+                offset: const Offset(0, -kHomeHeroOverlap),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const HomeQuickActions(),
+                      const SizedBox(height: 20),
+                      const RegisterZakatCta(),
+                      const SizedBox(height: 28),
+                      UrgentCausesSection(causes: homeUrgentNeeds),
+                      const SizedBox(height: 28),
+                      const ZakatReminderCard(),
+                      const SizedBox(height: 20),
+                      const AboutCommissionSection(),
+                      const SizedBox(height: 20),
+                      const DonateSadaqahCard(),
+                    ],
+                  ),
                 ),
               ),
             ],

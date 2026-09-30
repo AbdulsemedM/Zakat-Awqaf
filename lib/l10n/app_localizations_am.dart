@@ -1539,4 +1539,125 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get profileApplicationSubmittedOn => 'የተመዘገቡበት ቀን';
+
+  @override
+  String get regVerifyCodeFirst =>
+      'የምዝገባ ኮድዎን አስገብተው «አረጋግጥ»ን ይጫኑ። ኮዱ ከተቀበለ በኋላ ቅጹ ይከፈታል።';
+
+  @override
+  String get homeQuickCalculate => 'አስላ';
+
+  @override
+  String get homeQuickSadaqah => 'ሰደቃ';
+
+  @override
+  String get homeQuickApply => 'አመልክት';
+
+  @override
+  String get homeUpcoming => 'በቅርቡ';
+
+  @override
+  String get payTitleZakat => 'ዘካትዎን ያጠናቅቁ';
+
+  @override
+  String get payTitleSadaqah => 'ሰደቃ ይስጡ';
+
+  @override
+  String get paySubtitleZakat => 'ግዴታዎን በታመኑ የሀገር ውስጥ መንገዶች በደህንነት ይወጡ።';
+
+  @override
+  String get paySubtitleSadaqah =>
+      'የበጎ ፈቃድ ምጽዋትን በታመኑ የሀገር ውስጥ መንገዶች በደህንነት ይስጡ።';
+
+  @override
+  String get payTotalZakatDue => 'ጠቅላላ የሚከፈል ዘካት';
+
+  @override
+  String get payCalculatedOverview => 'የተሰላ አጠቃላይ እይታ';
+
+  @override
+  String get payAmountLabel => 'የሚከፈል መጠን (ብር)';
+
+  @override
+  String get payAmountHintZakat => 'መክፈል የሚፈልጉትን መጠን ያስገቡ';
+
+  @override
+  String get payAmountHintEtb => 'የብር መጠን ያስገቡ';
+
+  @override
+  String get payNaturalUnitsLivestock =>
+      'የእንስሳት ዘካት የሚከፈለው በእንስሳ ነው። አሁን ባለው የአካባቢ ገበያ ዋጋ መሠረት በብር መክፈል ይችላሉ።';
+
+  @override
+  String get payNaturalUnitsCrops =>
+      'የሰብል ዘካት የሚከፈለው በምርት ነው። አሁን ባለው የአካባቢ ገበያ ዋጋ መሠረት በብር መክፈል ይችላሉ።';
+
+  @override
+  String get payPayerName => 'የከፋይ ስም';
+
+  @override
+  String get payFirstName => 'ስም';
+
+  @override
+  String get payFatherName => 'የአባት ስም';
+
+  @override
+  String get payGrandfatherName => 'የአያት ስም';
+
+  @override
+  String get payBeneficiary => 'ተጠቃሚ (አማራጭ)';
+
+  @override
+  String get payProjectLabel => 'የተጠቃሚ ፕሮጀክት';
+
+  @override
+  String get payGeneralFundZakat => 'አጠቃላይ የዘካት ፈንድ';
+
+  @override
+  String get payGeneralFundSadaqah => 'አጠቃላይ የሰደቃ ፈንድ';
+
+  @override
+  String get payMethod => 'የክፍያ ዘዴ';
+
+  @override
+  String get payRecurringTitle => 'በየወሩ ይድገሙ';
+
+  @override
+  String get payRecurringSubtitle => 'በየጨረቃ ወሩ እንደገና እንዲሰጡ እናስታውስዎታለን።';
+
+  @override
+  String get paySecureSsl => '256-ቢት SSL';
+
+  @override
+  String get paySecureBank => 'የባንክ ደረጃ ደህንነት';
+
+  @override
+  String get payButtonSadaqah => 'ሰደቃ ይስጡ';
+
+  @override
+  String get payImpactTitle => 'የእርስዎ አስተዋጽኦ';
+
+  @override
+  String get payImpactBody => 'እያንዳንዱ አስተዋጽኦ በኮሚሽኑ ፕሮግራሞች በግልጽነት ይከፋፈላል።';
+
+  @override
+  String get regStepIdentity => 'ማንነት';
+
+  @override
+  String get regStepNeeds => 'ፍላጎቶች';
+
+  @override
+  String get regStepVerify => 'ማረጋገጫ';
+
+  @override
+  String get regStepPayout => 'ክፍያ መቀበያ';
+
+  @override
+  String get regStepDetails => 'ዝርዝሮች';
+
+  @override
+  String get regStepPassword => 'የይለፍ ቃል';
+
+  @override
+  String get regStepDocuments => 'ሰነዶች';
 }

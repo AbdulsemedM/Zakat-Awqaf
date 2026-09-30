@@ -1085,7 +1085,8 @@ class BeneficiaryRegistrationBloc extends Bloc<
       category: s.selectedCategory!.apiValue,
       notes: s.notes.trim(),
       estimatedAge: dob == null ? s.parsedEstimatedAge : null,
-      nationalId: s.nationalId,
+      // National ID is disabled for now; the field officer records it.
+      // nationalId: s.nationalId,
       addressLine: s.address,
       maritalStatus: s.maritalStatus?.apiValue,
       religion: s.religion,
@@ -1118,6 +1119,10 @@ class BeneficiaryRegistrationBloc extends Bloc<
       if (next != null) {
         emit(_current.copyWith(step: next, clearError: true));
       }
+      return;
+    }
+
+    if (!await _ensureRegistrationCodeVerified(emit)) {
       return;
     }
 
@@ -1483,6 +1488,7 @@ class BeneficiaryRegistrationBloc extends Bloc<
       institutionSubtype: s.institutionSubtype,
       authorityToActDocumentRequired: s.authorityToActDocumentRequired,
       notes: s.notes.trim(),
+      registrationCode: s.registrationCode.trim(),
     );
   }
 

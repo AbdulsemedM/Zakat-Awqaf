@@ -1581,4 +1581,128 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get profileApplicationSubmittedOn => 'Taariikhda codsiga';
+
+  @override
+  String get regVerifyCodeFirst =>
+      'Geli koodhka diiwaangelinta oo taabo «Xaaqiiji». Foomku wuu furmayaa marka koodhka la aqbalo.';
+
+  @override
+  String get homeQuickCalculate => 'Xisaabi';
+
+  @override
+  String get homeQuickSadaqah => 'Sadaqo';
+
+  @override
+  String get homeQuickApply => 'Codso';
+
+  @override
+  String get homeUpcoming => 'SOO SOCDA';
+
+  @override
+  String get payTitleZakat => 'Dhammaystir Sakadaada';
+
+  @override
+  String get payTitleSadaqah => 'Bixi Sadaqo';
+
+  @override
+  String get paySubtitleZakat =>
+      'Waajibkaaga si ammaan ah ugu gut kanaalada maxalliga ah ee la isku halleyn karo.';
+
+  @override
+  String get paySubtitleSadaqah =>
+      'Sadaqo ikhtiyaari ah si ammaan ah ugu bixi kanaalada maxalliga ah.';
+
+  @override
+  String get payTotalZakatDue => 'WADARTA SAKADA LAGU LEEYAHAY';
+
+  @override
+  String get payCalculatedOverview => 'SOO KOOBID XISAABSAN';
+
+  @override
+  String get payAmountLabel => 'Lacagta la bixinayo (ETB)';
+
+  @override
+  String get payAmountHintZakat => 'Geli lacagta aad rabto inaad bixiso';
+
+  @override
+  String get payAmountHintEtb => 'Geli lacag ETB ah';
+
+  @override
+  String get payNaturalUnitsLivestock =>
+      'Sakada xoolaha waxaa lagu bixiyaa xoolo. Waxaad bixin kartaa qiimaheeda ETB ahaan iyadoo loo eegayo qiimaha suuqa maxalliga ah.';
+
+  @override
+  String get payNaturalUnitsCrops =>
+      'Sakada dalagga waxaa lagu bixiyaa goosashada. Waxaad bixin kartaa qiimaheeda ETB ahaan iyadoo loo eegayo qiimaha suuqa maxalliga ah.';
+
+  @override
+  String get payPayerName => 'Magaca bixiyaha';
+
+  @override
+  String get payFirstName => 'Magaca koowaad';
+
+  @override
+  String get payFatherName => 'Magaca aabbaha';
+
+  @override
+  String get payGrandfatherName => 'Magaca awowga';
+
+  @override
+  String get payBeneficiary => 'Ka faa\'iideystaha (ikhtiyaari)';
+
+  @override
+  String get payProjectLabel => 'Mashruuca ka faa\'iideystayaasha';
+
+  @override
+  String get payGeneralFundZakat => 'Sanduuqa guud ee Sakada';
+
+  @override
+  String get payGeneralFundSadaqah => 'Sanduuqa guud ee Sadaqada';
+
+  @override
+  String get payMethod => 'Habka lacag bixinta';
+
+  @override
+  String get payRecurringTitle => 'Ku celi bil kasta';
+
+  @override
+  String get payRecurringSubtitle =>
+      'Waxaan kuu xusuusin doonnaa inaad mar kale bixiso bil kasta oo qamari ah.';
+
+  @override
+  String get paySecureSsl => 'SSL 256-BIT';
+
+  @override
+  String get paySecureBank => 'AMNI HEER BANGI';
+
+  @override
+  String get payButtonSadaqah => 'Bixi Sadaqo';
+
+  @override
+  String get payImpactTitle => 'Saamaynta aad leedahay';
+
+  @override
+  String get payImpactBody =>
+      'Tabarruc kasta waxaa si hufan loogu qaybiyaa barnaamijyada guddiga.';
+
+  @override
+  String get regStepIdentity => 'Aqoonsi';
+
+  @override
+  String get regStepNeeds => 'Baahiyaha';
+
+  @override
+  String get regStepVerify => 'Xaqiijin';
+
+  @override
+  String get regStepPayout => 'Lacag bixinta';
+
+  @override
+  String get regStepDetails => 'Faahfaahin';
+
+  @override
+  String get regStepPassword => 'Furaha sirta';
+
+  @override
+  String get regStepDocuments => 'Dukumentiyo';
 }

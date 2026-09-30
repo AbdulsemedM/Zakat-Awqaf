@@ -1564,4 +1564,128 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileApplicationSubmittedOn => 'Applied on';
+
+  @override
+  String get regVerifyCodeFirst =>
+      'Enter your registration code and tap Verify. The form opens once the code is accepted.';
+
+  @override
+  String get homeQuickCalculate => 'Calculate';
+
+  @override
+  String get homeQuickSadaqah => 'Sadaqah';
+
+  @override
+  String get homeQuickApply => 'Apply';
+
+  @override
+  String get homeUpcoming => 'UPCOMING';
+
+  @override
+  String get payTitleZakat => 'Complete your Zakat';
+
+  @override
+  String get payTitleSadaqah => 'Give Sadaqah';
+
+  @override
+  String get paySubtitleZakat =>
+      'Fulfil your obligation securely through trusted local channels.';
+
+  @override
+  String get paySubtitleSadaqah =>
+      'Give voluntary charity securely through trusted local channels.';
+
+  @override
+  String get payTotalZakatDue => 'TOTAL ZAKAT DUE';
+
+  @override
+  String get payCalculatedOverview => 'CALCULATED OVERVIEW';
+
+  @override
+  String get payAmountLabel => 'Amount to pay (ETB)';
+
+  @override
+  String get payAmountHintZakat => 'Enter the amount you want to pay';
+
+  @override
+  String get payAmountHintEtb => 'Enter an ETB amount';
+
+  @override
+  String get payNaturalUnitsLivestock =>
+      'Zakat on livestock is due in animals. You may pay its ETB value based on current local market prices.';
+
+  @override
+  String get payNaturalUnitsCrops =>
+      'Zakat on crops is due in harvest. You may pay its ETB value based on current local market prices.';
+
+  @override
+  String get payPayerName => 'Payer name';
+
+  @override
+  String get payFirstName => 'First name';
+
+  @override
+  String get payFatherName => 'Father\'s name';
+
+  @override
+  String get payGrandfatherName => 'Grandfather\'s name';
+
+  @override
+  String get payBeneficiary => 'Beneficiary (optional)';
+
+  @override
+  String get payProjectLabel => 'Beneficiary project';
+
+  @override
+  String get payGeneralFundZakat => 'General Zakat fund';
+
+  @override
+  String get payGeneralFundSadaqah => 'General Sadaqah fund';
+
+  @override
+  String get payMethod => 'Payment method';
+
+  @override
+  String get payRecurringTitle => 'Repeat every month';
+
+  @override
+  String get payRecurringSubtitle =>
+      'We\'ll remind you to give again each lunar month.';
+
+  @override
+  String get paySecureSsl => '256-BIT SSL';
+
+  @override
+  String get paySecureBank => 'BANK-GRADE SECURITY';
+
+  @override
+  String get payButtonSadaqah => 'Give Sadaqah';
+
+  @override
+  String get payImpactTitle => 'Your impact';
+
+  @override
+  String get payImpactBody =>
+      'Every contribution is allocated transparently through the commission\'s programmes.';
+
+  @override
+  String get regStepIdentity => 'Identity';
+
+  @override
+  String get regStepNeeds => 'Needs';
+
+  @override
+  String get regStepVerify => 'Verify';
+
+  @override
+  String get regStepPayout => 'Payout';
+
+  @override
+  String get regStepDetails => 'Details';
+
+  @override
+  String get regStepPassword => 'Password';
+
+  @override
+  String get regStepDocuments => 'Documents';
 }

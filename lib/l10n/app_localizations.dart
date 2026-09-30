@@ -2849,6 +2849,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Applied on'**
   String get profileApplicationSubmittedOn;
+
+  /// No description provided for @regVerifyCodeFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your registration code and tap Verify. The form opens once the code is accepted.'**
+  String get regVerifyCodeFirst;
+
+  /// No description provided for @homeQuickCalculate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate'**
+  String get homeQuickCalculate;
+
+  /// No description provided for @homeQuickSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Sadaqah'**
+  String get homeQuickSadaqah;
+
+  /// No description provided for @homeQuickApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get homeQuickApply;
+
+  /// No description provided for @homeUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'UPCOMING'**
+  String get homeUpcoming;
+
+  /// No description provided for @payTitleZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your Zakat'**
+  String get payTitleZakat;
+
+  /// No description provided for @payTitleSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Give Sadaqah'**
+  String get payTitleSadaqah;
+
+  /// No description provided for @paySubtitleZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Fulfil your obligation securely through trusted local channels.'**
+  String get paySubtitleZakat;
+
+  /// No description provided for @paySubtitleSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Give voluntary charity securely through trusted local channels.'**
+  String get paySubtitleSadaqah;
+
+  /// No description provided for @payTotalZakatDue.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL ZAKAT DUE'**
+  String get payTotalZakatDue;
+
+  /// No description provided for @payCalculatedOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'CALCULATED OVERVIEW'**
+  String get payCalculatedOverview;
+
+  /// No description provided for @payAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to pay (ETB)'**
+  String get payAmountLabel;
+
+  /// No description provided for @payAmountHintZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount you want to pay'**
+  String get payAmountHintZakat;
+
+  /// No description provided for @payAmountHintEtb.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an ETB amount'**
+  String get payAmountHintEtb;
+
+  /// No description provided for @payNaturalUnitsLivestock.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat on livestock is due in animals. You may pay its ETB value based on current local market prices.'**
+  String get payNaturalUnitsLivestock;
+
+  /// No description provided for @payNaturalUnitsCrops.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat on crops is due in harvest. You may pay its ETB value based on current local market prices.'**
+  String get payNaturalUnitsCrops;
+
+  /// No description provided for @payPayerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Payer name'**
+  String get payPayerName;
+
+  /// No description provided for @payFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get payFirstName;
+
+  /// No description provided for @payFatherName.
+  ///
+  /// In en, this message translates to:
+  /// **'Father\'s name'**
+  String get payFatherName;
+
+  /// No description provided for @payGrandfatherName.
+  ///
+  /// In en, this message translates to:
+  /// **'Grandfather\'s name'**
+  String get payGrandfatherName;
+
+  /// No description provided for @payBeneficiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary (optional)'**
+  String get payBeneficiary;
+
+  /// No description provided for @payProjectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary project'**
+  String get payProjectLabel;
+
+  /// No description provided for @payGeneralFundZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'General Zakat fund'**
+  String get payGeneralFundZakat;
+
+  /// No description provided for @payGeneralFundSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'General Sadaqah fund'**
+  String get payGeneralFundSadaqah;
+
+  /// No description provided for @payMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get payMethod;
+
+  /// No description provided for @payRecurringTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat every month'**
+  String get payRecurringTitle;
+
+  /// No description provided for @payRecurringSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll remind you to give again each lunar month.'**
+  String get payRecurringSubtitle;
+
+  /// No description provided for @paySecureSsl.
+  ///
+  /// In en, this message translates to:
+  /// **'256-BIT SSL'**
+  String get paySecureSsl;
+
+  /// No description provided for @paySecureBank.
+  ///
+  /// In en, this message translates to:
+  /// **'BANK-GRADE SECURITY'**
+  String get paySecureBank;
+
+  /// No description provided for @payButtonSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Give Sadaqah'**
+  String get payButtonSadaqah;
+
+  /// No description provided for @payImpactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your impact'**
+  String get payImpactTitle;
+
+  /// No description provided for @payImpactBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every contribution is allocated transparently through the commission\'s programmes.'**
+  String get payImpactBody;
+
+  /// No description provided for @regStepIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get regStepIdentity;
+
+  /// No description provided for @regStepNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs'**
+  String get regStepNeeds;
+
+  /// No description provided for @regStepVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get regStepVerify;
+
+  /// No description provided for @regStepPayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout'**
+  String get regStepPayout;
+
+  /// No description provided for @regStepDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get regStepDetails;
+
+  /// No description provided for @regStepPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get regStepPassword;
+
+  /// No description provided for @regStepDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get regStepDocuments;
 }
 
 class _AppLocalizationsDelegate

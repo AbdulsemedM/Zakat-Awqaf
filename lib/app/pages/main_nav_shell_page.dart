@@ -9,6 +9,8 @@ import '../settings/app_settings_controller.dart';
 import '../../core/l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../theme/primary_hero.dart';
+import '../widgets/islamic_ornaments.dart';
 import '../widgets/zakat_themed.dart';
 
 class MainNavShellPage extends StatelessWidget {
@@ -70,27 +72,45 @@ class _ZakatBottomNav extends StatelessWidget {
       ),
     ];
 
-    return Container(
-      color: AppColors.forestGreen,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Row(
-            children: [
-              for (var i = 0; i < items.length; i++)
-                Expanded(
-                  child: _ZakatNavButton(
-                    item: items[i],
-                    selected: selectedIndex == i,
-                    onTap: () => context.go(
-                      _destinationFor(itemIndex: i, appMode: appMode),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.forestGreen, AppColors.emeraldNight],
         ),
+        border: Border(
+          top: BorderSide(color: Color(0x66D4A23A), width: 0.8),
+        ),
+      ),
+      child: Stack(
+        children: [
+          const IslamicPatternLayer(
+            opacity: 0.07,
+            cell: 36,
+            fadeTo: Alignment.bottomCenter,
+          ),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 6),
+              child: Row(
+                children: [
+                  for (var i = 0; i < items.length; i++)
+                    Expanded(
+                      child: _ZakatNavButton(
+                        item: items[i],
+                        selected: selectedIndex == i,
+                        onTap: () => context.go(
+                          _destinationFor(itemIndex: i, appMode: appMode),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -109,23 +129,54 @@ class _ZakatNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        selected ? AppColors.warmGold : AppColors.mintGreenMuted;
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
+    const duration = Duration(milliseconds: 220);
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: item.label,
+      child: InkResponse(
+        onTap: onTap,
+        radius: 36,
+        highlightColor: Colors.transparent,
+        splashColor: AppColors.warmGold.withValues(alpha: 0.18),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(item.icon, color: color, size: 22),
-            const SizedBox(height: 2),
-            Text(
-              item.label,
+            AnimatedContainer(
+              duration: duration,
+              curve: Curves.easeOutCubic,
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              decoration: BoxDecoration(
+                gradient: selected ? PrimaryHero.goldButtonGradient : null,
+                borderRadius: BorderRadius.circular(999),
+                boxShadow: selected
+                    ? [
+                        BoxShadow(
+                          color: AppColors.warmGold.withValues(alpha: 0.35),
+                          blurRadius: 12,
+                          offset: const Offset(0, 3),
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Icon(
+                item.icon,
+                size: 22,
+                color: selected ? AppColors.onSecondary : AppColors.mintGreenMuted,
+              ),
+            ),
+            const SizedBox(height: 4),
+            AnimatedDefaultTextStyle(
+              duration: duration,
               style: AppTypography.label(
-                fontSize: 9,
-                color: color,
+                fontSize: 11,
+                color: selected ? AppColors.goldLight : AppColors.mintGreenMuted,
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              ),
+              child: Text(
+                item.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

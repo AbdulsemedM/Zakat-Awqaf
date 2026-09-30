@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../../../core/l10n/l10n.dart';
@@ -23,59 +26,136 @@ class ZakatCalculatorScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ZakatCalculatorBloc()..add(const ZakatCalculatorStarted()),
       child: Scaffold(
-        appBar: AppBar(
-          leading: const AppBarBrandLeading(height: 28),
-          title: Text(context.l10n.calcAppBarTitle),
-        ),
         body: BlocBuilder<ZakatCalculatorBloc, ZakatCalculatorState>(
           builder: (context, state) {
             final s = state as ZakatCalculatorInitial;
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: s.isPricingLoading ? const _Step1Shimmer() : _Step1Card(state: s),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _CategoryTabs(activeTab: s.activeTab),
-                  const SizedBox(height: 12),
-                  _CategoryPanel(state: s),
-                  const SizedBox(height: 12),
-                  _TabOverviewCard(state: s),
-                  if (s.activeTab == ZakatCategoryTab.wealth) ...[
-                    const SizedBox(height: 12),
-                    _WealthPostOverviewSection(state: s),
-                  ],
-                  if (s.activeTab == ZakatCategoryTab.livestock) ...[
-                    const SizedBox(height: 12),
-                    _LivestockPostOverviewSection(state: s),
-                  ],
-                  if (s.activeTab == ZakatCategoryTab.crops) ...[
-                    const SizedBox(height: 12),
-                    _CropPostOverviewSection(state: s),
-                  ],
-                  const SizedBox(height: 12),
-                  FilledButton.icon(
-                    onPressed: () => context.push(
-                      '/zakat/payment',
-                      extra: ZakatPaymentArgs.fromCalculator(context.l10n, s),
-                    ),
-                    icon: const Icon(Icons.volunteer_activism_outlined),
-                    label: Text(context.l10n.calcPayYourZakat),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.textOnPrimary,
+                  _CalculatorHeader(activeTab: s.activeTab),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: s.isPricingLoading
+                                ? const _Step1Shimmer()
+                                : _Step1Card(state: s),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        _CategoryPanel(state: s),
+                        const SizedBox(height: 12),
+                        _TabOverviewCard(state: s),
+                        if (s.activeTab == ZakatCategoryTab.wealth) ...[
+                          const SizedBox(height: 12),
+                          _WealthPostOverviewSection(state: s),
+                        ],
+                        if (s.activeTab == ZakatCategoryTab.livestock) ...[
+                          const SizedBox(height: 12),
+                          _LivestockPostOverviewSection(state: s),
+                        ],
+                        if (s.activeTab == ZakatCategoryTab.crops) ...[
+                          const SizedBox(height: 12),
+                          _CropPostOverviewSection(state: s),
+                        ],
+                        const SizedBox(height: 20),
+                        ElevatedButton.icon(
+                          onPressed: () => context.push(
+                            '/zakat/payment',
+                            extra: ZakatPaymentArgs.fromCalculator(
+                              context.l10n,
+                              s,
+                            ),
+                          ),
+                          icon: const Icon(Icons.volunteer_activism_outlined),
+                          label: Text(context.l10n.calcPayYourZakat),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(56),
+                            elevation: 2,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+/// Emerald header band with the title and the gold category selector.
+class _CalculatorHeader extends StatelessWidget {
+  const _CalculatorHeader({required this.activeTab});
+  final ZakatCategoryTab activeTab;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: PrimaryHero.zakatHeroGradient,
+        ),
+        child: Stack(
+          children: [
+            const IslamicPatternLayer(
+              opacity: 0.12,
+              fadeTo: Alignment.bottomLeft,
+            ),
+            SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 8, 16, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const AppBarBrandLeading(height: 30),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            context.l10n.calcAppBarTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.displayHeading(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'الزكاة',
+                          textDirection: TextDirection.rtl,
+                          style: AppTypography.body(
+                            fontSize: 22,
+                            color: AppColors.goldLight,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(start: 4),
+                      child: GoldOrnamentDivider(width: 56),
+                    ),
+                    const SizedBox(height: 18),
+                    _CategoryTabs(activeTab: activeTab),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -89,28 +169,88 @@ class _CategoryTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: constraints.maxWidth),
-            child: Center(
-              child: SegmentedButton<ZakatCategoryTab>(
-                segments: [
-                  ButtonSegment(value: ZakatCategoryTab.wealth, label: Text(l10n.calcTabWealth)),
-                  ButtonSegment(value: ZakatCategoryTab.livestock, label: Text(l10n.calcTabLivestock)),
-                  ButtonSegment(value: ZakatCategoryTab.crops, label: Text(l10n.calcTabCrops)),
-                ],
-                selected: {activeTab},
-                onSelectionChanged: (value) => context.read<ZakatCalculatorBloc>().add(
-                  ZakatCategoryTabChanged(value.first),
+    final tabs = [
+      (ZakatCategoryTab.wealth, TablerIcons.coins, l10n.calcTabWealth),
+      (ZakatCategoryTab.livestock, TablerIcons.paw, l10n.calcTabLivestock),
+      (ZakatCategoryTab.crops, TablerIcons.plant_2, l10n.calcTabCrops),
+    ];
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.emeraldNight.withValues(alpha: 0.45),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: AppColors.goldLight.withValues(alpha: 0.35)),
+      ),
+      child: Row(
+        children: [
+          for (final (tab, icon, label) in tabs)
+            Expanded(
+              child: _CategoryPill(
+                icon: icon,
+                label: label,
+                selected: tab == activeTab,
+                onTap: () => context.read<ZakatCalculatorBloc>().add(
+                  ZakatCategoryTabChanged(tab),
                 ),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryPill extends StatelessWidget {
+  const _CategoryPill({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = selected ? AppColors.onSecondary : AppColors.mintGreen;
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+          decoration: BoxDecoration(
+            gradient: selected ? PrimaryHero.goldButtonGradient : null,
+            borderRadius: BorderRadius.circular(999),
           ),
-        );
-      },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 17, color: color),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.body(
+                    fontSize: 13,
+                    color: color,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -146,12 +286,12 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1NisabTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
-            const SizedBox(height: 4),
             Text(
-              l10n.calcStep1NisabBody,
-              style: theme.textTheme.bodySmall,
+              l10n.calcStep1NisabTitle,
+              style: CalcTextStyles.stepTitle(theme.textTheme),
             ),
+            const SizedBox(height: 4),
+            Text(l10n.calcStep1NisabBody, style: theme.textTheme.bodySmall),
             const SizedBox(height: 4),
             CalcEmphasisText(
               text: l10n.calcNisabGoldFormula(
@@ -175,11 +315,15 @@ class _Step1Card extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+                color: theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.45,
+                ),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: CalcEmphasisText(
-                text: l10n.calcNisabThresholdBanner(_money(state.nisabThresholdEtb)),
+                text: l10n.calcNisabThresholdBanner(
+                  _money(state.nisabThresholdEtb),
+                ),
                 style: theme.textTheme.titleSmall,
                 emphasizeAll: true,
               ),
@@ -191,12 +335,12 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1LivestockTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
-            const SizedBox(height: 4),
             Text(
-              l10n.calcStep1LivestockBody,
-              style: theme.textTheme.bodySmall,
+              l10n.calcStep1LivestockTitle,
+              style: CalcTextStyles.stepTitle(theme.textTheme),
             ),
+            const SizedBox(height: 4),
+            Text(l10n.calcStep1LivestockBody, style: theme.textTheme.bodySmall),
             const SizedBox(height: 8),
             CalcEmphasisText(
               text: l10n.calcStep1LivestockNisabNote,
@@ -228,7 +372,10 @@ class _Step1Card extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep1CropTitle, style: CalcTextStyles.stepTitle(theme.textTheme)),
+            Text(
+              l10n.calcStep1CropTitle,
+              style: CalcTextStyles.stepTitle(theme.textTheme),
+            ),
             const SizedBox(height: 4),
             CalcEmphasisText(
               text: l10n.calcStep1CropBody,
@@ -239,11 +386,14 @@ class _Step1Card extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+                color: theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.45,
+                ),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: CalcEmphasisText(
-                text: '${l10n.calcCropLineThreshold(state.cropKg.toStringAsFixed(2), isAboveNisab ? l10n.calcRelationGte : l10n.calcRelationLt)}\n'
+                text:
+                    '${l10n.calcCropLineThreshold(state.cropKg.toStringAsFixed(2), isAboveNisab ? l10n.calcRelationGte : l10n.calcRelationLt)}\n'
                     '${l10n.calcCropLineIrrigation(ZakatCalculatorStrings.cropModeLabel(l10n, state.cropIrrigationMode))}\n'
                     '${l10n.calcCropLineEffectiveRate(ratePercent)}\n'
                     '${l10n.calcCropLineFormula(formulaInner)}',
@@ -274,7 +424,14 @@ class _TabOverviewCard extends StatelessWidget {
         state.cattleMusinnahDueCount > 0 ||
         ZakatCalculatorStrings.camelHasDue(state);
 
-    final (title, badge, badgeActive, primaryValue, dueLabel, dueValue) = switch (state.activeTab) {
+    final (
+      title,
+      badge,
+      badgeActive,
+      primaryValue,
+      dueLabel,
+      dueValue,
+    ) = switch (state.activeTab) {
       ZakatCategoryTab.wealth => (
         l10n.calcOverviewNetWorthTitle,
         state.aboveNisab ? l10n.calcBadgeAboveNisab : l10n.calcBadgeBelowNisab,
@@ -302,110 +459,127 @@ class _TabOverviewCard extends StatelessWidget {
     };
 
     return Container(
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        gradient: PrimaryHero.gradient(scheme),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
+        gradient: PrimaryHero.zakatHeroGradient,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: const [
           BoxShadow(
-            color: scheme.shadow.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
+            color: AppColors.shadow,
+            blurRadius: 24,
+            offset: Offset(0, 10),
           ),
         ],
-        border: Border.all(
-          color: AppColors.textOnPrimary.withValues(alpha: 0.22),
-        ),
+        border: Border.all(color: AppColors.goldLight.withValues(alpha: 0.35)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Stack(
+        children: [
+          const IslamicPatternLayer(
+            opacity: 0.12,
+            cell: 38,
+            fadeTo: Alignment.bottomLeft,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  badgeActive ? Icons.workspace_premium : Icons.shield_outlined,
-                  color: AppColors.secondary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textOnPrimary,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: badgeActive
-                        ? AppColors.secondary.withValues(alpha: 0.28)
-                        : AppColors.textOnPrimary.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    badge,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: badgeActive
-                          ? AppColors.onSecondary
-                          : AppColors.textOnPrimary.withValues(alpha: 0.78),
+                Row(
+                  children: [
+                    Icon(
+                      badgeActive
+                          ? Icons.workspace_premium
+                          : Icons.shield_outlined,
+                      color: AppColors.goldLight,
                     ),
+                    const SizedBox(width: 8),
+                    Text(
+                      title,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textOnPrimary,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: badgeActive
+                            ? AppColors.secondary.withValues(alpha: 0.28)
+                            : AppColors.textOnPrimary.withValues(alpha: 0.14),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Text(
+                        badge,
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: badgeActive
+                              ? AppColors.onSecondary
+                              : AppColors.textOnPrimary.withValues(alpha: 0.78),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  primaryValue,
+                  style: AppTypography.body(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textOnPrimary,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: scheme.surfaceContainerLowest,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.goldHairline),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        dueLabel,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: scheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        dueValue,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontFamily: AppTypography.inter,
+                          fontWeight: FontWeight.w800,
+                          color: badgeActive
+                              ? AppColors.primary
+                              : scheme.onSurfaceVariant,
+                        ),
+                      ),
+                      if (state.activeTab == ZakatCategoryTab.livestock) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          l10n.calcLivestockTermsFootnote,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Text(
-              primaryValue,
-              style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: AppColors.textOnPrimary,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: scheme.surface.withValues(alpha: 0.92),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    dueLabel,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    dueValue,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: badgeActive
-                          ? AppColors.primary
-                          : scheme.onSurfaceVariant,
-                    ),
-                  ),
-                  if (state.activeTab == ZakatCategoryTab.livestock) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      l10n.calcLivestockTermsFootnote,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -426,11 +600,20 @@ class _WealthPanel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.calcStep2EnterAssets, style: CalcTextStyles.stepTitle(theme.textTheme)),
+            Text(
+              l10n.calcStep2EnterAssets,
+              style: CalcTextStyles.stepTitle(theme.textTheme),
+            ),
             const SizedBox(height: 4),
-            Text(l10n.calcStep2EnterAssetsBody, style: theme.textTheme.bodySmall),
+            Text(
+              l10n.calcStep2EnterAssetsBody,
+              style: theme.textTheme.bodySmall,
+            ),
             const SizedBox(height: 12),
-            Text(l10n.calcCashBankSavings, style: CalcTextStyles.sectionTitle(theme.textTheme)),
+            Text(
+              l10n.calcCashBankSavings,
+              style: CalcTextStyles.sectionTitle(theme.textTheme),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -438,7 +621,8 @@ class _WealthPanel extends StatelessWidget {
                   child: _NumberField(
                     label: l10n.calcCashOnHand,
                     value: state.cashOnHand,
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(cashOnHand: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(cashOnHand: v)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -446,7 +630,8 @@ class _WealthPanel extends StatelessWidget {
                   child: _NumberField(
                     label: l10n.calcBankBalance,
                     value: state.bankBalance,
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(bankBalance: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(bankBalance: v)),
                   ),
                 ),
               ],
@@ -458,14 +643,18 @@ class _WealthPanel extends StatelessWidget {
                   child: _NumberField(
                     label: l10n.calcMobileWallet,
                     value: state.mobileWallet,
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(mobileWallet: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(mobileWallet: v)),
                   ),
                 ),
                 const Expanded(child: SizedBox()),
               ],
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcBusinessAssets, style: CalcTextStyles.sectionTitle(theme.textTheme)),
+            Text(
+              l10n.calcBusinessAssets,
+              style: CalcTextStyles.sectionTitle(theme.textTheme),
+            ),
             const SizedBox(height: 8),
             ...List.generate(state.businessAssets.length, (index) {
               final item = state.businessAssets[index];
@@ -479,9 +668,14 @@ class _WealthPanel extends StatelessWidget {
                           flex: 3,
                           child: TextFormField(
                             initialValue: item.description,
-                            decoration: InputDecoration(labelText: l10n.calcFieldDescription),
+                            decoration: InputDecoration(
+                              labelText: l10n.calcFieldDescription,
+                            ),
                             onChanged: (v) => bloc.add(
-                              BusinessAssetUpdated(index: index, description: v),
+                              BusinessAssetUpdated(
+                                index: index,
+                                description: v,
+                              ),
                             ),
                           ),
                         ),
@@ -491,7 +685,9 @@ class _WealthPanel extends StatelessWidget {
                           child: DropdownButtonFormField<BusinessAssetType>(
                             initialValue: item.type,
                             isExpanded: true,
-                            decoration: InputDecoration(labelText: l10n.calcFieldType),
+                            decoration: InputDecoration(
+                              labelText: l10n.calcFieldType,
+                            ),
                             items: BusinessAssetType.values
                                 .map(
                                   (t) => DropdownMenuItem(
@@ -523,7 +719,8 @@ class _WealthPanel extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => bloc.add(BusinessAssetRemoved(index)),
+                          onPressed: () =>
+                              bloc.add(BusinessAssetRemoved(index)),
                           icon: const Icon(Icons.delete_outline),
                         ),
                       ],
@@ -538,7 +735,10 @@ class _WealthPanel extends StatelessWidget {
               label: Text(l10n.calcAddBusinessAsset),
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcGoldSilver, style: CalcTextStyles.sectionTitle(theme.textTheme)),
+            Text(
+              l10n.calcGoldSilver,
+              style: CalcTextStyles.sectionTitle(theme.textTheme),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -546,7 +746,8 @@ class _WealthPanel extends StatelessWidget {
                   child: _NumberField(
                     label: l10n.calcGoldGrams,
                     value: state.goldGrams,
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(goldGrams: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(goldGrams: v)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -566,7 +767,8 @@ class _WealthPanel extends StatelessWidget {
                           ),
                         )
                         .toList(),
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(goldKarat: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(goldKarat: v)),
                   ),
                 ),
               ],
@@ -578,14 +780,18 @@ class _WealthPanel extends StatelessWidget {
                   child: _NumberField(
                     label: l10n.calcSilverGrams,
                     value: state.silverGrams,
-                    onChanged: (v) => bloc.add(WealthFieldsUpdated(silverGrams: v)),
+                    onChanged: (v) =>
+                        bloc.add(WealthFieldsUpdated(silverGrams: v)),
                   ),
                 ),
                 const Expanded(child: SizedBox()),
               ],
             ),
             const SizedBox(height: 14),
-            Text(l10n.calcLiabilities, style: CalcTextStyles.sectionTitle(theme.textTheme)),
+            Text(
+              l10n.calcLiabilities,
+              style: CalcTextStyles.sectionTitle(theme.textTheme),
+            ),
             const SizedBox(height: 8),
             ...List.generate(state.liabilities.length, (index) {
               final item = state.liabilities[index];
@@ -599,9 +805,12 @@ class _WealthPanel extends StatelessWidget {
                           flex: 3,
                           child: TextFormField(
                             initialValue: item.description,
-                            decoration: InputDecoration(labelText: l10n.calcFieldDescription),
-                            onChanged: (v) =>
-                                bloc.add(LiabilityUpdated(index: index, description: v)),
+                            decoration: InputDecoration(
+                              labelText: l10n.calcFieldDescription,
+                            ),
+                            onChanged: (v) => bloc.add(
+                              LiabilityUpdated(index: index, description: v),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -610,7 +819,9 @@ class _WealthPanel extends StatelessWidget {
                           child: DropdownButtonFormField<LiabilityType>(
                             initialValue: item.type,
                             isExpanded: true,
-                            decoration: InputDecoration(labelText: l10n.calcFieldType),
+                            decoration: InputDecoration(
+                              labelText: l10n.calcFieldType,
+                            ),
                             items: LiabilityType.values
                                 .map(
                                   (t) => DropdownMenuItem(
@@ -636,8 +847,9 @@ class _WealthPanel extends StatelessWidget {
                           child: _NumberField(
                             label: l10n.calcAmountEtb,
                             value: item.amount,
-                            onChanged: (v) =>
-                                bloc.add(LiabilityUpdated(index: index, amount: v)),
+                            onChanged: (v) => bloc.add(
+                              LiabilityUpdated(index: index, amount: v),
+                            ),
                           ),
                         ),
                         IconButton(
@@ -683,7 +895,9 @@ class _WealthPostOverviewSection extends StatelessWidget {
         children: [
           Text(
             l10n.calcWealthBreakdownTitle,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 8),
           CalcEmphasisText(
@@ -713,7 +927,8 @@ class _LivestockPanel extends StatelessWidget {
             _IntField(
               label: l10n.calcLivestockSheepGoats,
               value: state.sheepOrGoats,
-              onChanged: (v) => bloc.add(LivestockFieldsUpdated(sheepOrGoats: v)),
+              onChanged: (v) =>
+                  bloc.add(LivestockFieldsUpdated(sheepOrGoats: v)),
             ),
             const SizedBox(height: 8),
             _IntField(
@@ -733,27 +948,24 @@ class _LivestockPanel extends StatelessWidget {
               value: state.isPastureFedMostOfYear,
               title: Text(l10n.calcPastureFedTitle),
               subtitle: Text(l10n.calcPastureFedSubtitle),
-              onChanged: (v) => bloc.add(
-                LivestockFieldsUpdated(isPastureFedMostOfYear: v),
-              ),
+              onChanged: (v) =>
+                  bloc.add(LivestockFieldsUpdated(isPastureFedMostOfYear: v)),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: state.completedHawl,
               title: Text(l10n.calcHawlTitle),
               subtitle: Text(l10n.calcHawlSubtitle),
-              onChanged: (v) => bloc.add(
-                LivestockFieldsUpdated(completedHawl: v),
-              ),
+              onChanged: (v) =>
+                  bloc.add(LivestockFieldsUpdated(completedHawl: v)),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: state.usedForWork,
               title: Text(l10n.calcWorkAnimalsTitle),
               subtitle: Text(l10n.calcWorkAnimalsSubtitle),
-              onChanged: (v) => bloc.add(
-                LivestockFieldsUpdated(usedForWork: v),
-              ),
+              onChanged: (v) =>
+                  bloc.add(LivestockFieldsUpdated(usedForWork: v)),
             ),
           ],
         ),
@@ -778,7 +990,9 @@ class _LivestockPostOverviewSection extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.45,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -868,7 +1082,8 @@ class _CropsPanel extends StatelessWidget {
                     child: _NumberField(
                       label: l10n.calcRainFedSharePct,
                       value: state.rainSharePercent,
-                      onChanged: (v) => bloc.add(CropFieldsUpdated(rainSharePercent: v)),
+                      onChanged: (v) =>
+                          bloc.add(CropFieldsUpdated(rainSharePercent: v)),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -876,7 +1091,8 @@ class _CropsPanel extends StatelessWidget {
                     child: _NumberField(
                       label: l10n.calcIrrigatedSharePct,
                       value: state.irrigatedSharePercent,
-                      onChanged: (v) => bloc.add(CropFieldsUpdated(irrigatedSharePercent: v)),
+                      onChanged: (v) =>
+                          bloc.add(CropFieldsUpdated(irrigatedSharePercent: v)),
                     ),
                   ),
                 ],
@@ -905,7 +1121,9 @@ class _CropPostOverviewSection extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.45,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -924,7 +1142,9 @@ class _CropPostOverviewSection extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               CalcEmphasisText(
-                text: l10n.calcCropZakatDueKgLine(state.cropZakatDueKg.toStringAsFixed(2)),
+                text: l10n.calcCropZakatDueKgLine(
+                  state.cropZakatDueKg.toStringAsFixed(2),
+                ),
                 style: theme.textTheme.bodyMedium,
                 emphasizeAll: true,
               ),
@@ -947,7 +1167,9 @@ class _CropPostOverviewSection extends StatelessWidget {
             children: [
               Text(
                 l10n.calcHowCropZakatWorksTitle,
-                style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               const SizedBox(height: 6),
               CalcEmphasisText(
@@ -1048,9 +1270,7 @@ class _ArabicTermsDefinitionsCard extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        children: [
-          _ArabicTermsDefinitionBody(compact: compact),
-        ],
+        children: [_ArabicTermsDefinitionBody(compact: compact)],
       );
     }
 

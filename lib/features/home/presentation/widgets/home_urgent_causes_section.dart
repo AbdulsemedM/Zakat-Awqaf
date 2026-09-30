@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
+import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/constants/urgent_beneficiary_projects.dart';
 import '../../../../core/l10n/l10n.dart';
 import 'home_shared.dart';
@@ -18,42 +19,19 @@ class UrgentCausesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                l10n.urgentBeneficiaryNeeds,
-                style: AppTypography.body(
-                  fontSize: 15,
-                  color: AppColors.forestGreen,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () => context.go('/beneficiary-registration'),
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                child: Text(
-                  l10n.viewAll,
-                  style: AppTypography.body(
-                    fontSize: 13,
-                    color: AppColors.warmGold,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        ZakatSectionHeader(
+          title: l10n.urgentBeneficiaryNeeds,
+          actionLabel: l10n.viewAll,
+          onAction: () => context.go('/beneficiary-registration'),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 14),
         SizedBox(
-          height: 220,
+          height: 268,
           child: ListView.separated(
+            clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
             itemCount: causes.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            separatorBuilder: (_, __) => const SizedBox(width: 14),
             itemBuilder: (context, index) =>
                 UrgentCauseCard(model: causes[index]),
           ),
@@ -71,93 +49,130 @@ class UrgentCauseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final percent = (model.progress.clamp(0.0, 1.0) * 100).round();
     return SizedBox(
-      width: 200,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.textOnPrimary,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.borderWarm),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: 72,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: model.bannerColors,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Center(
-                child: Icon(
-                  model.icon,
-                  color: AppColors.textOnPrimary,
-                  size: 28,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      width: 236,
+      child: PremiumCard(
+        padding: EdgeInsets.zero,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 104,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    TagPill(label: model.badge),
-                    const SizedBox(height: 6),
-                    Text(
-                      model.title,
-                      style: AppTypography.body(
-                        fontSize: 12,
-                        color: AppColors.forestGreen,
-                        fontWeight: FontWeight.w600,
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: model.bannerColors,
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      model.description,
-                      style: AppTypography.body(
-                        fontSize: 10,
-                        color: AppColors.mutedText,
-                        height: 1.35,
+                    const IslamicPatternLayer(
+                      opacity: 0.22,
+                      cell: 30,
+                      color: AppColors.goldLight,
+                      fadeTo: Alignment.bottomLeft,
+                    ),
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: TagPill(
+                        label: model.badge,
+                        style: model.badge.toUpperCase() == 'URGENT'
+                            ? TagStyle.gold
+                            : TagStyle.green,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const Spacer(),
-                    GoldProgressBar(value: model.progress),
-                    const SizedBox(height: 8),
-                    Material(
-                      color: AppColors.forestGreen,
-                      borderRadius: BorderRadius.circular(8),
-                      child: InkWell(
-                        onTap: () => context.go('/calculator'),
-                        borderRadius: BorderRadius.circular(8),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Center(
-                            child: Text(
-                              l10n.payZakatCause,
-                              style: AppTypography.body(
-                                fontSize: 11,
-                                color: AppColors.textOnPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                    Positioned(
+                      right: 14,
+                      bottom: 12,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.16),
+                          border: Border.all(
+                            color: AppColors.goldLight.withValues(alpha: 0.6),
                           ),
                         ),
+                        child: Icon(model.icon, color: Colors.white, size: 22),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.displayHeading(
+                          fontSize: 16,
+                          color: scheme.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        model.description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.body(
+                          fontSize: 12,
+                          color: scheme.onSurfaceVariant,
+                          height: 1.4,
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Expanded(child: GoldProgressBar(value: model.progress)),
+                          const SizedBox(width: 8),
+                          Text(
+                            '$percent%',
+                            style: AppTypography.body(
+                              fontSize: 12,
+                              color: AppColors.goldDeep,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () => context.go('/calculator'),
+                          style: FilledButton.styleFrom(
+                            minimumSize: const Size(0, 40),
+                            padding: EdgeInsets.zero,
+                            textStyle: AppTypography.body(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          child: Text(l10n.payZakatCause),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

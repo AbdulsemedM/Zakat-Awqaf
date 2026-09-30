@@ -14,14 +14,22 @@ class _ProfileHeroHeader extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(24),
+            bottomLeft: Radius.circular(32),
+            bottomRight: Radius.circular(32),
           ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
             children: [
               const Positioned.fill(
-                child: BrandAtmosphereBackground(),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: PrimaryHero.zakatHeroGradient,
+                  ),
+                ),
+              ),
+              const IslamicPatternLayer(
+                opacity: 0.13,
+                fadeTo: Alignment.bottomLeft,
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -52,9 +60,16 @@ class _ProfileHeroHeader extends StatelessWidget {
                               SnackBar(content: Text(context.l10n.profileNoNewNotifications)),
                             );
                           },
-                          icon: Icon(
+                          style: IconButton.styleFrom(
+                            backgroundColor:
+                                Colors.white.withValues(alpha: 0.10),
+                            side: BorderSide(
+                              color: AppColors.goldLight.withValues(alpha: 0.45),
+                            ),
+                          ),
+                          icon: const Icon(
                             Icons.notifications_none_rounded,
-                            color: AppColors.secondary,
+                            color: AppColors.goldLight,
                           ),
                         ),
                       ],
@@ -65,8 +80,8 @@ class _ProfileHeroHeader extends StatelessWidget {
                         _Avatar(
                           name: profile.name,
                           asset: profile.avatarAsset,
-                          ringColor: AppColors.textOnPrimary,
-                          fillColor: AppColors.textOnPrimary.withValues(alpha: 0.16),
+                          ringColor: AppColors.goldLight,
+                          fillColor: Colors.white.withValues(alpha: 0.12),
                         ),
                         const SizedBox(width: 14),
                         Expanded(
@@ -89,11 +104,8 @@ class _ProfileHeroHeader extends StatelessWidget {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.secondary.withValues(alpha: 0.28),
+                                  gradient: PrimaryHero.goldButtonGradient,
                                   borderRadius: BorderRadius.circular(999),
-                                  border: Border.all(
-                                    color: AppColors.secondary,
-                                  ),
                                 ),
                                 child: Text(
                                   profile.roleLabel.toUpperCase(),
@@ -119,15 +131,14 @@ class _ProfileHeroHeader extends StatelessWidget {
           left: 16,
           right: 16,
           bottom: -22,
-          child: Material(
-            elevation: 1,
-            borderRadius: BorderRadius.circular(14),
-            color: scheme.surface,
+          child: PremiumCard(
+            radius: 18,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 12,
-              ),
+              padding: EdgeInsets.zero,
               child: Row(
                 children: [
                   Icon(
@@ -164,8 +175,9 @@ class _ProfileHeroHeader extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: AppColors.secondary.withValues(alpha: 0.28),
+                      color: AppColors.tagGoldBg,
                       shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.tagGoldBorder),
                     ),
                     child: Icon(
                       Icons.check_rounded,
