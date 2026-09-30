@@ -96,12 +96,9 @@
   "profileLogOutDialogTitle": "Ma ka baxaysaa?",
   "profileLogOutDialogBody": "Waxaad ka bixi doontaa app-ka qalabkan.",
   "loginTitle": "Soo gal",
-  "loginSubtitle": "Isticmaal lambarka taleefankaaga diiwaangashan iyo eraygaaga sirta ah",
-  "loginPhoneLabel": "Lambarka taleefanka",
+  "loginSubtitle": "Isticmaal lambarka taleefanka ama iimaylka diiwaangashan iyo furahaaga sirta",
   "loginPasswordLabel": "Furaha",
   "loginButton": "Soo gal",
-  "loginPhoneRequired": "Geli lambarka taleefankaaga",
-  "loginPhoneInvalid": "Geli nambarka gacanta oo 9-god ah oo ansax ah (tusaale 923974838)",
   "loginSecureNote": "Soo gelidaadu waa sir oo ammaan ah",
   "loginPasswordRequired": "Geli eraygaaga sirta ah",
   "profileCancel": "Jooji",
@@ -917,5 +914,8 @@
   "regStepPassword": "Furaha sirta",
   "regStepDocuments": "Dukumentiyo",
   "regEmailOptional": "Iimayl (ikhtiyaari)",
-  "regSubmittedNoAccount": "Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin."
+  "regSubmittedNoAccount": "Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin.",
+  "loginIdentifierLabel": "Lambarka taleefanka ama iimayl",
+  "loginIdentifierRequired": "Geli lambarka taleefankaaga ama iimaylkaaga",
+  "loginIdentifierInvalid": "Geli lambar taleefan sax ah (tusaale 0911223344) ama iimayl sax ah"
 }

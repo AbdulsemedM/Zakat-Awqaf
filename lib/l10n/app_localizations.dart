@@ -1527,14 +1527,8 @@ abstract class AppLocalizations {
   /// No description provided for @loginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Use your registered phone number and password'**
+  /// **'Use your registered phone number or email and your password'**
   String get loginSubtitle;
-
-  /// No description provided for @loginPhoneLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone number'**
-  String get loginPhoneLabel;
 
   /// No description provided for @loginPasswordLabel.
   ///
@@ -1547,18 +1541,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get loginButton;
-
-  /// No description provided for @loginPhoneRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your phone number'**
-  String get loginPhoneRequired;
-
-  /// No description provided for @loginPhoneInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a valid 9-digit mobile number (e.g. 923974838)'**
-  String get loginPhoneInvalid;
 
   /// No description provided for @loginSecureNote.
   ///
@@ -3011,6 +2993,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Registration submitted. No sign-in account was created because no email was given.'**
   String get regSubmittedNoAccount;
+
+  /// No description provided for @loginIdentifierLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number or email'**
+  String get loginIdentifierLabel;
+
+  /// No description provided for @loginIdentifierRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number or email'**
+  String get loginIdentifierRequired;
+
+  /// No description provided for @loginIdentifierInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number (e.g. 0911223344) or email'**
+  String get loginIdentifierInvalid;
 }
 
 class _AppLocalizationsDelegate

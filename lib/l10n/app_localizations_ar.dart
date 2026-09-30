@@ -841,23 +841,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loginTitle => 'تسجيل الدخول';
 
   @override
-  String get loginSubtitle => 'استخدم رقم هاتفك المسجل وكلمة المرور';
-
-  @override
-  String get loginPhoneLabel => 'رقم التليفون';
+  String get loginSubtitle =>
+      'استخدم رقم هاتفك أو بريدك الإلكتروني المسجّل وكلمة المرور';
 
   @override
   String get loginPasswordLabel => 'كلمة المرور';
 
   @override
   String get loginButton => 'تسجيل الدخول';
-
-  @override
-  String get loginPhoneRequired => 'أدخل رقم هاتفك';
-
-  @override
-  String get loginPhoneInvalid =>
-      'أدخل رقم هاتف محمول صالحًا مكونًا من 9 أرقام (على سبيل المثال 923974838)';
 
   @override
   String get loginSecureNote => 'تسجيل دخولك مشفر وآمن';
@@ -1638,4 +1629,14 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get regSubmittedNoAccount =>
       'تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني.';
+
+  @override
+  String get loginIdentifierLabel => 'رقم الهاتف أو البريد الإلكتروني';
+
+  @override
+  String get loginIdentifierRequired => 'أدخل رقم هاتفك أو بريدك الإلكتروني';
+
+  @override
+  String get loginIdentifierInvalid =>
+      'أدخل رقم هاتف صالحًا (مثل 0911223344) أو بريدًا إلكترونيًا صالحًا';
 }

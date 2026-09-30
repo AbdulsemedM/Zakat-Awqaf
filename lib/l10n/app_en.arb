@@ -628,12 +628,9 @@
   "profileLogOutDialogTitle": "Log out?",
   "profileLogOutDialogBody": "You will be signed out of the app on this device.",
   "loginTitle": "Sign in",
-  "loginSubtitle": "Use your registered phone number and password",
-  "loginPhoneLabel": "Phone number",
+  "loginSubtitle": "Use your registered phone number or email and your password",
   "loginPasswordLabel": "Password",
   "loginButton": "Sign in",
-  "loginPhoneRequired": "Enter your phone number",
-  "loginPhoneInvalid": "Enter a valid 9-digit mobile number (e.g. 923974838)",
   "loginSecureNote": "Your sign-in is encrypted and secure",
   "loginPasswordRequired": "Enter your password",
   "profileCancel": "Cancel",
@@ -924,5 +921,8 @@
   "regStepPassword": "Password",
   "regStepDocuments": "Documents",
   "regEmailOptional": "Email (optional)",
-  "regSubmittedNoAccount": "Registration submitted. No sign-in account was created because no email was given."
+  "regSubmittedNoAccount": "Registration submitted. No sign-in account was created because no email was given.",
+  "loginIdentifierLabel": "Phone number or email",
+  "loginIdentifierRequired": "Enter your phone number or email",
+  "loginIdentifierInvalid": "Enter a valid phone number (e.g. 0911223344) or email"
 }

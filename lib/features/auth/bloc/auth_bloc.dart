@@ -20,12 +20,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthLoginSubmitted event,
     Emitter<AuthState> emit,
   ) async {
-    final username = PhoneE164.normalize(event.username.trim()) ??
-        event.username.trim();
+    final username =
+        PhoneE164.normalize(event.username.trim()) ?? event.username.trim();
     final password = event.password;
 
     if (username.isEmpty) {
-      emit(const AuthFailure('Enter your phone number.'));
+      emit(const AuthFailure('Enter your phone number or email.'));
       return;
     }
     if (password.isEmpty) {

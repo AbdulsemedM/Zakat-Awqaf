@@ -847,23 +847,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Sign in';
 
   @override
-  String get loginSubtitle => 'Use your registered phone number and password';
-
-  @override
-  String get loginPhoneLabel => 'Phone number';
+  String get loginSubtitle =>
+      'Use your registered phone number or email and your password';
 
   @override
   String get loginPasswordLabel => 'Password';
 
   @override
   String get loginButton => 'Sign in';
-
-  @override
-  String get loginPhoneRequired => 'Enter your phone number';
-
-  @override
-  String get loginPhoneInvalid =>
-      'Enter a valid 9-digit mobile number (e.g. 923974838)';
 
   @override
   String get loginSecureNote => 'Your sign-in is encrypted and secure';
@@ -1652,4 +1643,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get regSubmittedNoAccount =>
       'Registration submitted. No sign-in account was created because no email was given.';
+
+  @override
+  String get loginIdentifierLabel => 'Phone number or email';
+
+  @override
+  String get loginIdentifierRequired => 'Enter your phone number or email';
+
+  @override
+  String get loginIdentifierInvalid =>
+      'Enter a valid phone number (e.g. 0911223344) or email';
 }

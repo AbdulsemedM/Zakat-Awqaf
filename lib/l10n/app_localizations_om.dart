@@ -859,23 +859,13 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get loginSubtitle =>
-      'Lakkoofsa bilbilaa fi jecha icciitii galmaa\'e fayyadamaa';
-
-  @override
-  String get loginPhoneLabel => 'Lakkoofsa bilbilaa';
+      'Lakkoofsa bilbilaa ykn imeelii galmeeffame fi jecha iccitii fayyadamaa';
 
   @override
   String get loginPasswordLabel => 'Jecha iccitii';
 
   @override
   String get loginButton => 'Sign in';
-
-  @override
-  String get loginPhoneRequired => 'Lakkoofsa bilbilaa keessan galchaa';
-
-  @override
-  String get loginPhoneInvalid =>
-      'Lakkoofsa moobaayilaa dijiitii 9 sirrii ta\'e galchi (fkn 923974838)';
 
   @override
   String get loginSecureNote => 'Galmeen kee icciitii fi nageenya qaba';
@@ -1672,4 +1662,15 @@ class AppLocalizationsOm extends AppLocalizations {
   @override
   String get regSubmittedNoAccount =>
       'Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne.';
+
+  @override
+  String get loginIdentifierLabel => 'Lakkoofsa bilbilaa ykn imeelii';
+
+  @override
+  String get loginIdentifierRequired =>
+      'Lakkoofsa bilbilaa ykn imeelii galchaa';
+
+  @override
+  String get loginIdentifierInvalid =>
+      'Lakkoofsa bilbilaa sirrii (fkn 0911223344) ykn imeelii sirrii galchaa';
 }

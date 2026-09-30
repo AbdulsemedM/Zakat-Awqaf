@@ -856,23 +856,13 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get loginSubtitle =>
-      'Isticmaal lambarka taleefankaaga diiwaangashan iyo eraygaaga sirta ah';
-
-  @override
-  String get loginPhoneLabel => 'Lambarka taleefanka';
+      'Isticmaal lambarka taleefanka ama iimaylka diiwaangashan iyo furahaaga sirta';
 
   @override
   String get loginPasswordLabel => 'Furaha';
 
   @override
   String get loginButton => 'Soo gal';
-
-  @override
-  String get loginPhoneRequired => 'Geli lambarka taleefankaaga';
-
-  @override
-  String get loginPhoneInvalid =>
-      'Geli nambarka gacanta oo 9-god ah oo ansax ah (tusaale 923974838)';
 
   @override
   String get loginSecureNote => 'Soo gelidaadu waa sir oo ammaan ah';
@@ -1668,4 +1658,15 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get regSubmittedNoAccount =>
       'Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin.';
+
+  @override
+  String get loginIdentifierLabel => 'Lambarka taleefanka ama iimayl';
+
+  @override
+  String get loginIdentifierRequired =>
+      'Geli lambarka taleefankaaga ama iimaylkaaga';
+
+  @override
+  String get loginIdentifierInvalid =>
+      'Geli lambar taleefan sax ah (tusaale 0911223344) ama iimayl sax ah';
 }

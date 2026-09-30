@@ -837,23 +837,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get loginTitle => 'ይግቡ';
 
   @override
-  String get loginSubtitle => 'የእርስዎን የተመዘገበ ስልክ ቁጥር እና የይለፍ ቃል ይጠቀሙ';
-
-  @override
-  String get loginPhoneLabel => 'ስልክ ቁጥር';
+  String get loginSubtitle => 'የተመዘገቡበትን ስልክ ቁጥር ወይም ኢሜይል እና የይለፍ ቃል ይጠቀሙ';
 
   @override
   String get loginPasswordLabel => 'የይለፍ ቃል';
 
   @override
   String get loginButton => 'ይግቡ';
-
-  @override
-  String get loginPhoneRequired => 'ስልክ ቁጥርህን አስገባ';
-
-  @override
-  String get loginPhoneInvalid =>
-      'የሚሰራ ባለ 9-አሃዝ የሞባይል ቁጥር ያስገቡ (ለምሳሌ 923974838)';
 
   @override
   String get loginSecureNote => 'መግባትህ የተመሰጠረ እና ደህንነቱ የተጠበቀ ነው።';
@@ -1624,4 +1614,14 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String get regSubmittedNoAccount =>
       'ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።';
+
+  @override
+  String get loginIdentifierLabel => 'ስልክ ቁጥር ወይም ኢሜይል';
+
+  @override
+  String get loginIdentifierRequired => 'ስልክ ቁጥርዎን ወይም ኢሜይልዎን ያስገቡ';
+
+  @override
+  String get loginIdentifierInvalid =>
+      'ትክክለኛ ስልክ ቁጥር (ለምሳሌ 0911223344) ወይም ኢሜይል ያስገቡ';
 }

@@ -12,7 +12,7 @@ class SetPasswordRequest {
   final String passwordSetupToken;
 
   Map<String, dynamic> toJson() => {
-        'password': password,
-        'confirmPassword': confirmPassword,
-      };
+    'password': password,
+    'confirmPassword': confirmPassword,
+  };
 }

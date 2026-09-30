@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
-import '../../../../core/common/utils/phone_e164.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../bloc/auth_bloc.dart';
 import '../../bloc/auth_event.dart';
 import '../../bloc/auth_state.dart';
+import '../../data/login_identifier.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({this.embeddedInProfile = false, super.key});
@@ -22,34 +21,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _phoneController = TextEditingController();
+  final _identifierController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _identifierController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  String _localPhoneDigits(String raw) {
-    var digits = raw.replaceAll(RegExp(r'\D'), '');
-    if (digits.startsWith('0')) {
-      digits = digits.substring(1);
-    }
-    return digits;
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    final localNumber = _localPhoneDigits(_phoneController.text);
+    final username = LoginIdentifier.resolve(_identifierController.text);
+    if (username == null) {
+      return;
+    }
     context.read<AuthBloc>().add(
       AuthLoginSubmitted(
-        username: '+${PhoneE164.ethiopiaCountryCode}$localNumber',
+        username: username,
         password: _passwordController.text,
       ),
     );
@@ -58,37 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
   InputDecoration _fieldDecoration({
     required String hint,
     required IconData prefixIcon,
-    String? prefixText,
     Widget? suffix,
   }) {
     final scheme = Theme.of(context).colorScheme;
     return InputDecoration(
       hintText: hint,
       prefixIcon: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 16, end: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(prefixIcon, size: 20, color: scheme.onSurfaceVariant),
-            if (prefixText != null) ...[
-              const SizedBox(width: 10),
-              Text(
-                prefixText,
-                style: AppTypography.body(
-                  fontSize: 15,
-                  color: scheme.onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                width: 1,
-                height: 20,
-                margin: const EdgeInsetsDirectional.only(start: 10),
-                color: scheme.outlineVariant,
-              ),
-            ],
-          ],
-        ),
+        padding: const EdgeInsetsDirectional.only(start: 16, end: 12),
+        child: Icon(prefixIcon, size: 20, color: scheme.onSurfaceVariant),
       ),
       prefixIconConstraints: const BoxConstraints(),
       suffixIcon: suffix,
@@ -199,31 +170,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             const SizedBox(height: 32),
-                            TextFormField(
-                              controller: _phoneController,
-                              keyboardType: TextInputType.phone,
-                              textInputAction: TextInputAction.next,
-                              enabled: !isLoading,
-                              autofillHints: const [
-                                AutofillHints.telephoneNumberNational,
-                              ],
-                              inputFormatters: [
-                                _EthiopianLocalPhoneInputFormatter(),
-                              ],
-                              decoration: _fieldDecoration(
-                                hint: l10n.loginPhoneLabel,
-                                prefixIcon: Icons.phone_outlined,
-                                prefixText: '+${PhoneE164.ethiopiaCountryCode}',
-                              ),
-                              validator: (value) {
-                                final digits = _localPhoneDigits(value ?? '');
-                                if (digits.isEmpty) {
-                                  return l10n.loginPhoneRequired;
-                                }
-                                if (!RegExp(r'^9\d{8}$').hasMatch(digits)) {
-                                  return l10n.loginPhoneInvalid;
-                                }
-                                return null;
+                            ValueListenableBuilder<TextEditingValue>(
+                              valueListenable: _identifierController,
+                              builder: (context, value, _) {
+                                final isEmail = LoginIdentifier.looksLikeEmail(
+                                  value.text,
+                                );
+                                return TextFormField(
+                                  controller: _identifierController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  textInputAction: TextInputAction.next,
+                                  autocorrect: false,
+                                  enableSuggestions: false,
+                                  enabled: !isLoading,
+                                  autofillHints: const [AutofillHints.username],
+                                  decoration: _fieldDecoration(
+                                    hint: l10n.loginIdentifierLabel,
+                                    prefixIcon: isEmail
+                                        ? Icons.alternate_email_rounded
+                                        : Icons.phone_outlined,
+                                  ),
+                                  validator: (input) {
+                                    final text = (input ?? '').trim();
+                                    if (text.isEmpty) {
+                                      return l10n.loginIdentifierRequired;
+                                    }
+                                    return LoginIdentifier.resolve(text) == null
+                                        ? l10n.loginIdentifierInvalid
+                                        : null;
+                                  },
+                                );
                               },
                             ),
                             const SizedBox(height: 14),
@@ -397,28 +373,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Strips a leading `0` from Ethiopian local numbers (e.g. `0923…` → `923…`).
-class _EthiopianLocalPhoneInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    var digits = newValue.text.replaceAll(RegExp(r'\D'), '');
-    if (digits.startsWith('0')) {
-      digits = digits.substring(1);
-    }
-    if (digits.length > 9) {
-      digits = digits.substring(0, 9);
-    }
-
-    return TextEditingValue(
-      text: digits,
-      selection: TextSelection.collapsed(offset: digits.length),
     );
   }
 }

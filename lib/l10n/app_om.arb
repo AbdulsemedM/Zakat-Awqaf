@@ -96,12 +96,9 @@
   "profileLogOutDialogTitle": "Ba'uu barbaaddaa?",
   "profileLogOutDialogBody": "Meeshaa kana irratti app keessaa ni baata.",
   "loginTitle": "Sign in",
-  "loginSubtitle": "Lakkoofsa bilbilaa fi jecha icciitii galmaa'e fayyadamaa",
-  "loginPhoneLabel": "Lakkoofsa bilbilaa",
+  "loginSubtitle": "Lakkoofsa bilbilaa ykn imeelii galmeeffame fi jecha iccitii fayyadamaa",
   "loginPasswordLabel": "Jecha iccitii",
   "loginButton": "Sign in",
-  "loginPhoneRequired": "Lakkoofsa bilbilaa keessan galchaa",
-  "loginPhoneInvalid": "Lakkoofsa moobaayilaa dijiitii 9 sirrii ta'e galchi (fkn 923974838)",
   "loginSecureNote": "Galmeen kee icciitii fi nageenya qaba",
   "loginPasswordRequired": "Jecha icciitii keessan galchaa",
   "profileCancel": "Haqi",
@@ -917,5 +914,8 @@
   "regStepPassword": "Jecha iccitii",
   "regStepDocuments": "Galmeewwan",
   "regEmailOptional": "Imeelii (filannoo)",
-  "regSubmittedNoAccount": "Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne."
+  "regSubmittedNoAccount": "Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne.",
+  "loginIdentifierLabel": "Lakkoofsa bilbilaa ykn imeelii",
+  "loginIdentifierRequired": "Lakkoofsa bilbilaa ykn imeelii galchaa",
+  "loginIdentifierInvalid": "Lakkoofsa bilbilaa sirrii (fkn 0911223344) ykn imeelii sirrii galchaa"
 }

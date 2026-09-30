@@ -96,12 +96,9 @@
   "profileLogOutDialogTitle": "ልትወጡ ነው?",
   "profileLogOutDialogBody": "በዚህ መሣሪያ ላይ ከመተግበሪያው ይወጣሉ።",
   "loginTitle": "ይግቡ",
-  "loginSubtitle": "የእርስዎን የተመዘገበ ስልክ ቁጥር እና የይለፍ ቃል ይጠቀሙ",
-  "loginPhoneLabel": "ስልክ ቁጥር",
+  "loginSubtitle": "የተመዘገቡበትን ስልክ ቁጥር ወይም ኢሜይል እና የይለፍ ቃል ይጠቀሙ",
   "loginPasswordLabel": "የይለፍ ቃል",
   "loginButton": "ይግቡ",
-  "loginPhoneRequired": "ስልክ ቁጥርህን አስገባ",
-  "loginPhoneInvalid": "የሚሰራ ባለ 9-አሃዝ የሞባይል ቁጥር ያስገቡ (ለምሳሌ 923974838)",
   "loginSecureNote": "መግባትህ የተመሰጠረ እና ደህንነቱ የተጠበቀ ነው።",
   "loginPasswordRequired": "የይለፍ ቃልዎን ያስገቡ",
   "profileCancel": "ሰርዝ",
@@ -917,5 +914,8 @@
   "regStepPassword": "የይለፍ ቃል",
   "regStepDocuments": "ሰነዶች",
   "regEmailOptional": "ኢሜይል (አማራጭ)",
-  "regSubmittedNoAccount": "ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።"
+  "regSubmittedNoAccount": "ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።",
+  "loginIdentifierLabel": "ስልክ ቁጥር ወይም ኢሜይል",
+  "loginIdentifierRequired": "ስልክ ቁጥርዎን ወይም ኢሜይልዎን ያስገቡ",
+  "loginIdentifierInvalid": "ትክክለኛ ስልክ ቁጥር (ለምሳሌ 0911223344) ወይም ኢሜይል ያስገቡ"
 }

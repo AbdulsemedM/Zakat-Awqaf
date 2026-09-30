@@ -96,12 +96,9 @@
   "profileLogOutDialogTitle": "تسجيل الخروج؟",
   "profileLogOutDialogBody": "سيتم تسجيل خروجك من التطبيق على هذا الجهاز.",
   "loginTitle": "تسجيل الدخول",
-  "loginSubtitle": "استخدم رقم هاتفك المسجل وكلمة المرور",
-  "loginPhoneLabel": "رقم التليفون",
+  "loginSubtitle": "استخدم رقم هاتفك أو بريدك الإلكتروني المسجّل وكلمة المرور",
   "loginPasswordLabel": "كلمة المرور",
   "loginButton": "تسجيل الدخول",
-  "loginPhoneRequired": "أدخل رقم هاتفك",
-  "loginPhoneInvalid": "أدخل رقم هاتف محمول صالحًا مكونًا من 9 أرقام (على سبيل المثال 923974838)",
   "loginSecureNote": "تسجيل دخولك مشفر وآمن",
   "loginPasswordRequired": "أدخل كلمة المرور الخاصة بك",
   "profileCancel": "إلغاء",
@@ -917,5 +914,8 @@
   "regStepPassword": "كلمة المرور",
   "regStepDocuments": "المستندات",
   "regEmailOptional": "البريد الإلكتروني (اختياري)",
-  "regSubmittedNoAccount": "تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني."
+  "regSubmittedNoAccount": "تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني.",
+  "loginIdentifierLabel": "رقم الهاتف أو البريد الإلكتروني",
+  "loginIdentifierRequired": "أدخل رقم هاتفك أو بريدك الإلكتروني",
+  "loginIdentifierInvalid": "أدخل رقم هاتف صالحًا (مثل 0911223344) أو بريدًا إلكترونيًا صالحًا"
 }
