@@ -7,8 +7,12 @@ import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/zakat_page_header.dart';
-import '../../../../core/constants/urgent_beneficiary_projects.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../../core/network/api_envelope.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../causes/data/models/cause.dart';
+import '../../../causes/data/repository/causes_repository.dart';
 import '../models/zakat_certificate_args.dart';
 import '../models/zakat_checkout_method.dart';
 import '../models/zakat_payment_args.dart';
@@ -31,7 +35,13 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
 
   ZakatCheckoutMethod _method = ZakatCheckoutMethod.coopBankAlhuda;
   bool _recurring = false;
-  String? _beneficiaryProjectTitle;
+
+  /// Selected project; `null` is the general sadaqah fund. Zakat always has
+  /// one ([Cause.generalFundId] by default), sent as `causeId` in B3.3.
+  String? _causeId;
+  List<Cause> _causes = const [];
+  bool _causesLoading = true;
+  String? _causesLang;
 
   static const _quickAmounts = [100, 500, 1000, 5000];
 
@@ -44,6 +54,58 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     if (prefillAmount != null && prefillAmount > 0) {
       _estimatedEtb.text = _formatEtbInput(prefillAmount);
     }
+    _causeId =
+        widget.args.initialCauseId ?? (_isSadaqah ? null : Cause.generalFundId);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final lang = apiLang(context.contentLocale);
+    if (lang != _causesLang) {
+      _causesLang = lang;
+      _loadCauses(lang);
+    }
+  }
+
+  /// Zakat: causes that accept zakat (general fund first). Sadaqah: every
+  /// active cause; its general fund is the `null` option.
+  Future<void> _loadCauses(String lang) async {
+    setState(() => _causesLoading = true);
+    List<Cause> causes;
+    try {
+      final page = await getIt<CausesRepository>().fetchCauses(
+        acceptsZakatOnly: !_isSadaqah,
+        limit: 50,
+        lang: lang,
+      );
+      causes = _isSadaqah
+          ? page.items.where((c) => !c.isGeneralFund).toList()
+          : page.items;
+    } on ApiException {
+      causes = const [];
+    }
+    if (!mounted || lang != _causesLang) return;
+    setState(() {
+      _causes = causes;
+      _causesLoading = false;
+    });
+  }
+
+  /// Dropdown options as `(id, title)`, always including the selection.
+  List<(String?, String)> _projectOptions(AppLocalizations l10n) {
+    final options = <(String?, String)>[
+      if (_isSadaqah) (null, l10n.payGeneralFundSadaqah),
+      for (final cause in _causes) (cause.id, cause.title),
+    ];
+    if (!_isSadaqah && !options.any((o) => o.$1 == Cause.generalFundId)) {
+      options.insert(0, (Cause.generalFundId, l10n.payGeneralFundZakat));
+    }
+    final selected = _causeId;
+    if (selected != null && !options.any((o) => o.$1 == selected)) {
+      options.add((selected, widget.args.initialCauseTitle ?? selected));
+    }
+    return options;
   }
 
   @override
@@ -100,10 +162,13 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
       paymentMethodLabel: _method.label,
       issuedAt: DateTime.now(),
       categoryTab: widget.args.activeTab,
-      beneficiaryLabel: _beneficiaryProjectTitle,
+      beneficiaryLabel: _causeId == null
+          ? null
+          : _projectOptions(
+              context.l10n,
+            ).firstWhere((o) => o.$1 == _causeId).$2,
       naturalUnitSummary: widget.args.certificateNaturalUnitLine,
-      amountIsMarketEstimate:
-          widget.args.activeTab != ZakatCategoryTab.wealth,
+      amountIsMarketEstimate: widget.args.activeTab != ZakatCategoryTab.wealth,
     );
 
     context.push('/zakat/certificate', extra: extra);
@@ -126,7 +191,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
           children: [
             ZakatPageHeader(
               title: _isSadaqah ? l10n.payTitleSadaqah : l10n.payTitleZakat,
-              subtitle: _isSadaqah ? l10n.paySubtitleSadaqah : l10n.paySubtitleZakat,
+              subtitle: _isSadaqah
+                  ? l10n.paySubtitleSadaqah
+                  : l10n.paySubtitleZakat,
               leadingIcon: _isSadaqah
                   ? Icons.favorite_outline_rounded
                   : Icons.verified_user_outlined,
@@ -136,7 +203,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (!_isSadaqah) ...[
+                  if (!_isSadaqah && a.overviewTitle != null) ...[
                     _OverviewCard(args: a),
                     gap,
                   ],
@@ -167,7 +234,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                                 controller: _firstName,
                                 textCapitalization: TextCapitalization.words,
                                 onChanged: (_) => setState(() {}),
-                                decoration: InputDecoration(labelText: l10n.payFirstName),
+                                decoration: InputDecoration(
+                                  labelText: l10n.payFirstName,
+                                ),
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -176,7 +245,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                                 controller: _fatherName,
                                 textCapitalization: TextCapitalization.words,
                                 onChanged: (_) => setState(() {}),
-                                decoration: InputDecoration(labelText: l10n.payFatherName),
+                                decoration: InputDecoration(
+                                  labelText: l10n.payFatherName,
+                                ),
                               ),
                             ),
                           ],
@@ -186,7 +257,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                           controller: _grandFatherName,
                           textCapitalization: TextCapitalization.words,
                           onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(labelText: l10n.payGrandfatherName),
+                          decoration: InputDecoration(
+                            labelText: l10n.payGrandfatherName,
+                          ),
                         ),
                         const SizedBox(height: 18),
                         ZakatFormSectionTitle(
@@ -195,26 +268,25 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                         ),
                         const SizedBox(height: 14),
                         DropdownButtonFormField<String?>(
-                          initialValue: _beneficiaryProjectTitle,
+                          initialValue: _causeId,
                           isExpanded: true,
-                          decoration: InputDecoration(labelText: l10n.payProjectLabel),
+                          decoration: InputDecoration(
+                            labelText: l10n.payProjectLabel,
+                            helperText: _causesLoading
+                                ? l10n.payProjectsLoading
+                                : null,
+                          ),
                           items: [
-                            DropdownMenuItem<String?>(
-                              value: null,
-                              child: Text(
-                                _isSadaqah
-                                    ? l10n.payGeneralFundSadaqah
-                                    : l10n.payGeneralFundZakat,
+                            for (final (id, title) in _projectOptions(l10n))
+                              DropdownMenuItem<String?>(
+                                value: id,
+                                child: Text(
+                                  title,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            ...homeUrgentNeeds.map(
-                              (p) => DropdownMenuItem<String?>(
-                                value: p.title,
-                                child: Text(p.title),
-                              ),
-                            ),
                           ],
-                          onChanged: (v) => setState(() => _beneficiaryProjectTitle = v),
+                          onChanged: (v) => setState(() => _causeId = v),
                         ),
                       ],
                     ),
@@ -233,12 +305,13 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: ZakatCheckoutMethod.values.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 1.3,
-                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 1.3,
+                              ),
                           itemBuilder: (context, index) {
                             final m = ZakatCheckoutMethod.values[index];
                             return _MethodTile(
@@ -265,7 +338,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                             l10n.payRecurringSubtitle,
                             style: AppTypography.body(
                               fontSize: 12,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ),
@@ -330,12 +405,18 @@ class _OverviewCard extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: PrimaryHero.zakatHeroGradient,
-          border: Border.all(color: AppColors.goldLight.withValues(alpha: 0.35)),
+          border: Border.all(
+            color: AppColors.goldLight.withValues(alpha: 0.35),
+          ),
           borderRadius: BorderRadius.circular(22),
         ),
         child: Stack(
           children: [
-            const IslamicPatternLayer(opacity: 0.12, cell: 36, fadeTo: Alignment.bottomLeft),
+            const IslamicPatternLayer(
+              opacity: 0.12,
+              cell: 36,
+              fadeTo: Alignment.bottomLeft,
+            ),
             Padding(
               padding: const EdgeInsets.all(18),
               child: Column(
@@ -353,8 +434,11 @@ class _OverviewCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    args.overviewTitle,
-                    style: AppTypography.displayHeading(fontSize: 18, fontWeight: FontWeight.w700),
+                    args.overviewTitle ?? '',
+                    style: AppTypography.displayHeading(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -459,11 +543,20 @@ class _AmountSection extends StatelessWidget {
             Text(args.cropTransparencyText!.trim(), style: noteStyle),
           ],
         ],
+        if ((args.amountNote ?? '').isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Text(
+            args.amountNote!,
+            style: noteStyle.copyWith(fontWeight: FontWeight.w600),
+          ),
+        ],
         const SizedBox(height: 14),
         TextField(
           controller: estimatedController,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.,]'))],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
+          ],
           onChanged: (_) => onChanged(),
           style: AppTypography.body(
             fontSize: 24,
@@ -474,7 +567,10 @@ class _AmountSection extends StatelessWidget {
             hintText: args.activeTab == ZakatCategoryTab.wealth
                 ? l10n.payAmountHintZakat
                 : l10n.payAmountHintEtb,
-            hintStyle: AppTypography.body(fontSize: 14, color: scheme.onSurfaceVariant),
+            hintStyle: AppTypography.body(
+              fontSize: 14,
+              color: scheme.onSurfaceVariant,
+            ),
             prefixIcon: const _EtbPrefix(),
             prefixIconConstraints: const BoxConstraints(),
           ),
@@ -538,7 +634,9 @@ class _MethodTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: selected
             ? AppColors.tagGreenBg.withValues(
-                alpha: Theme.of(context).brightness == Brightness.dark ? 0.12 : 1,
+                alpha: Theme.of(context).brightness == Brightness.dark
+                    ? 0.12
+                    : 1,
               )
             : scheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
@@ -566,7 +664,10 @@ class _MethodTile extends StatelessWidget {
                         shape: BoxShape.circle,
                         gradient: selected
                             ? const LinearGradient(
-                                colors: [AppColors.forestLight, AppColors.forestGreen],
+                                colors: [
+                                  AppColors.forestLight,
+                                  AppColors.forestGreen,
+                                ],
                               )
                             : null,
                         color: selected ? null : AppColors.tagGreenBg,
@@ -575,7 +676,9 @@ class _MethodTile extends StatelessWidget {
                       child: Icon(
                         _methodIcon(method),
                         size: 17,
-                        color: selected ? AppColors.goldLight : AppColors.forestMid,
+                        color: selected
+                            ? AppColors.goldLight
+                            : AppColors.forestMid,
                       ),
                     ),
                     const Spacer(),
@@ -676,7 +779,11 @@ class _SecurityRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final color = Theme.of(context).colorScheme.onSurfaceVariant;
-    final style = AppTypography.label(fontSize: 10, color: color, letterSpacing: 0.8);
+    final style = AppTypography.label(
+      fontSize: 10,
+      color: color,
+      letterSpacing: 0.8,
+    );
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 16,

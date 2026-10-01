@@ -7,7 +7,7 @@ abstract class BeneficiaryRegistrationRepository {
   Future<RegistrationCodeValidation> validateRegistrationCode(String code);
 
   Future<BeneficiaryRegistrationResult> register(
-    BeneficiaryRegistrationRequest request,
+    FullBeneficiaryCreateRequest request,
   );
 
   Future<BeneficiaryRegistrationResult> registerCompany(

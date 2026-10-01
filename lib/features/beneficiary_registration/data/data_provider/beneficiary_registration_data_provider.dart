@@ -7,7 +7,7 @@ abstract class BeneficiaryRegistrationDataProvider {
   Future<RegistrationCodeValidation> validateRegistrationCode(String code);
 
   Future<BeneficiaryRegistrationResult> createBeneficiary(
-    BeneficiaryRegistrationRequest request,
+    FullBeneficiaryCreateRequest request,
   );
 
   Future<BeneficiaryRegistrationResult> createCompany(

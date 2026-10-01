@@ -19,7 +19,6 @@
   "transparencyQuote": "Iftoomina, itti gaafatamummaa fi bu'a qabeessummaa: arjoomni kee gargaarsa biyyaalessaa ni cimsaa.",
   "payZakatCause": "Zakaa Kenni",
   "zakatAlFitr": "Zakaa Al-Fitr",
-  "zakatDueDays": "Guyyoota 22 keessatti ni ga'a jechuun tilmaama.",
   "setReminder": "Yaadachiisa kaa'i",
   "needQuickWayGive": "Kenna Saffisaa",
   "supportCommunityNeeds": "Sadaqaan fedhii hawaasaa yeroo gabaabaa keessatti deeggaru.",
@@ -220,7 +219,7 @@
   "calcTabLivestock": "Beeylada",
   "calcTabCrops": "Midhaan",
   "calcStep1NisabTitle": "Tarkaanfii 1: Ulaagaa Nisab",
-  "calcStep1NisabBody": "Zakaan kan kaffalamu yoo qabeenyi qulqulluun kee ulaagaa irra darbeedha. Nisab gatii warqee 85g platform 24k irratti hundaa'a.",
+  "calcStep1NisabBody": "Qabeenyi qulqulluun kee nisab yoo ga'e zakaan kaffalama: {metal} {grams} g gatii har'aatiin.",
   "calcNisabGoldFormula": "{grams} × {price} = {total} .",
   "@calcNisabGoldFormula": {
     "placeholders": {
@@ -235,7 +234,7 @@
       }
     }
   },
-  "calcNisabThresholdBanner": "Ulaagaa Nisab (saffisa waltajjii, warqee 85g walqixa): {amount} .",
+  "calcNisabThresholdBanner": "Ulaagaa Nisab ({metal} {grams} g): {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
       "amount": {
@@ -243,14 +242,9 @@
       }
     }
   },
-  "calcUsdEtb": "USD/ETB",
-  "calcFxLive": "Sadarkaa jijjiirraa kallattiin fayyadamuu",
-  "calcFxCache": "Sadarkaa jijjiirraa kaached fayyadamuu",
-  "calcFxFallback": "Sadarkaa jijjiirraa fallback fayyadamuu",
-  "calcTimestampUnavailable": "chaappaan yeroo hin jiru",
   "calcStep1LivestockTitle": "Tarkaanfii 1: Mala iskeelii horii",
   "calcStep1LivestockBody": "Zakaan beeyladaa kan shallagamu madaallii lakkoofsa mataa fiizikaalaatiin (% gatii miti).",
-  "calcStep1LivestockNisabNote": "Ulaagaa Nisab: Hoolaa/Re’ee 40, Loon 30, Gaala 5. Loon walnyaatinsa 30/40 fayyadama; gaalli sadarkaa sadarkaa hordofu.",
+  "calcStep1LivestockNisabNote": "Ulaagaa Nisab: Hoolaa/Re’ee {sheep}, Loon {cattle}, Gaala {camels}. Loon walitti makaa {tabiPer}/{musinnahPer} fayyadama; gaalli sadarkaalee hordofu.",
   "calcAdvisoryPrefix": "Gorsaa: {text} .",
   "@calcAdvisoryPrefix": {
     "placeholders": {
@@ -267,7 +261,7 @@
   "calcArabicDefHiqqah": "gaala dubaraa waggaa sadii",
   "calcArabicDefJadhah": "gaala dubaraa waggaa afur",
   "calcStep1CropTitle": "Tarkaanfii 1: Shallaggii midhaanii (Ushr).",
-  "calcStep1CropBody": "Zakaan midhaanii yeroo sassaabamuu qaba. Nisab 653kg dha. Saffisni %10 (roobaan kan sooramu), %5 (jallisii), ykn makaadhaaf ulfaataadha.",
+  "calcStep1CropBody": "Zakaan midhaanii yeroo sassaabamuu qaba. Nisab {nisab}kg dha. Saffisni %{rainRate} (roobaan kan sooramu), %{irrigatedRate} (jallisii), ykn makaadhaaf ulfaataadha.",
   "calcCropLineThreshold": "{kg} kg {relation} 653 kg",
   "@calcCropLineThreshold": {
     "placeholders": {
@@ -383,7 +377,7 @@
     }
   },
   "calcHowCropZakatWorksTitle": "Zakaan midhaan akkamitti akka hojjetu",
-  "calcHowCropZakatWorksBody": "Nisab: 653kg. Sadarkaa: roobaan kan nyaatame %10, kan jallisiin misoomu 5%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).",
+  "calcHowCropZakatWorksBody": "Nisab: {nisab}kg. Sadarkaa: roobaan kan nyaatame %{rainRate}, kan jallisiin misoomu {irrigatedRate}%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).",
   "calcHowCropZakatNote": "Hubachiisa: App seera kana bal'inaan hojiirra oolcha salphaa ta'eef. Ejjennoo hayyootaa bal’ina gosa midhaanii fi hir’ina baasii irratti garaagarummaa qaba; dhimmoota adda ta’aniif hayyoota gahumsa qaban mariisisuu.",
   "calcWealthNisabHeading": "Nisab & qabeenya Zakaa",
   "calcWealthNisabLine": "Ulaagaa Nisab: {nisab} .",
@@ -403,17 +397,6 @@
     }
   },
   "calcHowWealthZakatWorksTitle": "Akkamitti qabeenyi Zakaan shallagama",
-  "calcHowWealthZakatWorksBody": "Maallaqa harka jiru, hafnaan baankii, boorsaa moobaayilaa, qabeenya daldalaa, fi gatii warqee fi meetii itti daballa. Nisab warqee {grams} g gatii app’n giraama tokkoof 24k ta’een. Warqeen ati qabdu kaaraatii filatteef saffisa appii fayyadamuun gatii kennama. Meetiin wabii dhaabbataa {silverRate} ETB giraama tokkoof fayyadama. Dirqamni ati galchitu qabeenya qulqulluu argachuuf hir’ifama. Qabeenyi qulqulluun nisaab irratti yookiin isaa ol yoo ta’e, Zakaan kaffalamuu qabu qabeenya qulqulluu irraa %2.5 ta’a.",
-  "@calcHowWealthZakatWorksBody": {
-    "placeholders": {
-      "grams": {
-        "type": "int"
-      },
-      "silverRate": {
-        "type": "int"
-      }
-    }
-  },
   "calcHowWealthZakatNote": "Hubachiisa: Hayyoonni qabeenyi kam akka zakaa ta’u, liqiin qabeenya akkamitti akka hir’isu, bara ji’aa (hawl) yoom akka raawwatamuu fi bal’ina biroo irratti garaagarummaa qabu. Iskiriiniin kun tilmaama barnootaati-haala kee hayyoota gahumsa qaban waliin mirkaneessi.",
   "calcWealthBreakdownTitle": "Akkaataa maallaqni armaan olii itti shallagamu",
   "calcWealthTransLiquidsLine": "Maallaqa + baankii + moobaayila: {cash} + {bank} + {mobile} = {subtotal} .",
@@ -461,7 +444,7 @@
       }
     }
   },
-  "calcWealthTransNisabLine": "Nisab: {grams} g × 24k ({price}/g) = {nisab} .",
+  "calcWealthTransNisabLine": "Nisab: {metal} {grams} g × {price}/g = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
       "grams": {
@@ -517,7 +500,7 @@
       }
     }
   },
-  "calcWealthTransDueAbove": "{net} nisab ({nisab}) irratti ykn isaa ol waan ta'eef, Zakaa kaffalamuu = {net} × 2.5% = {due}.",
+  "calcWealthTransDueAbove": "{net} nisab ({nisab}) irratti ykn isaa ol waan ta'eef, Zakaa kaffalamuu = {net} × {rate}% = {due}.",
   "@calcWealthTransDueAbove": {
     "placeholders": {
       "net": {
@@ -597,7 +580,7 @@
     }
   },
   "calcLsNone": "Lakkoofsa amma jiruun beeylada kaffalamuu qabu hin jiru",
-  "calcTransSheep": "Ulaagaa Hoolotaa/Re'ee: {head} >= 40 => hoolaa {due} yeroon isaa ga'e.",
+  "calcTransSheep": "Ulaagaa Hoolotaa/Re'ee: {head} >= {min} => hoolaa {due} yeroon isaa ga'e.",
   "@calcTransSheep": {
     "placeholders": {
       "head": {
@@ -608,7 +591,7 @@
       }
     }
   },
-  "calcTransCattle": "Ulaagaa loon: {head} >= 30 => sababa {tabi} tabii', {musinnah} musinnah (walmakaa 30/40).",
+  "calcTransCattle": "Ulaagaa loon: {head} >= {min} => sababa {tabi} tabii', {musinnah} musinnah (walmakaa {tabiPer}/{musinnahPer}).",
   "@calcTransCattle": {
     "placeholders": {
       "head": {
@@ -622,7 +605,7 @@
       }
     }
   },
-  "calcTransCamel": "Ulaagaa gaala: {head} >= 5 => sababa {due}.",
+  "calcTransCamel": "Ulaagaa gaala: {head} >= {min} => sababa {due}.",
   "@calcTransCamel": {
     "placeholders": {
       "head": {
@@ -715,31 +698,6 @@
   "calcCamelNoDue": "Hin qabu",
   "calcCamelSheepN": "{count, plural, one{1 hoolaa} other{{count} hoolaa}}",
   "@calcCamelSheepN": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamel1BintMakhad": "1 bint makhad jedhamuun beekama",
-  "calcCamel1BintLabun": "1 bint labun jedhamuun beekama",
-  "calcCamel1Hiqqah": "1 hiqqaa",
-  "calcCamel1Jadhah": "1 jadhah",
-  "calcCamel2BintLabun": "2 bint labun jedhamuun beekama",
-  "calcCamel2Hiqqah": "2 hiqqaa",
-  "calcCamelCombo": "{hiqqah} hiqqah + {bintLabun} bint labun",
-  "@calcCamelCombo": {
-    "placeholders": {
-      "hiqqah": {
-        "type": "int"
-      },
-      "bintLabun": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamelApproxBintLabun": "{count} bint labun (tilmaamaan walnyaatinsa) .",
-  "@calcCamelApproxBintLabun": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -917,5 +875,57 @@
   "regSubmittedNoAccount": "Galmeen ergameera. Imeelii waan hin kennamneef akkaawuntiin seensaa hin uumamne.",
   "loginIdentifierLabel": "Lakkoofsa bilbilaa ykn imeelii",
   "loginIdentifierRequired": "Lakkoofsa bilbilaa ykn imeelii galchaa",
-  "loginIdentifierInvalid": "Lakkoofsa bilbilaa sirrii (fkn 0911223344) ykn imeelii sirrii galchaa"
+  "loginIdentifierInvalid": "Lakkoofsa bilbilaa sirrii (fkn 0911223344) ykn imeelii sirrii galchaa",
+  "calcCamelBintMakhadN": "{count} bint makhad jedhamuun beekama",
+  "calcCamelBintLabunN": "{count} bint labun jedhamuun beekama",
+  "calcCamelHiqqahN": "{count} hiqqaa",
+  "calcCamelJadhahN": "{count} jadhah",
+  "calcNisabMetalGold": "warqee (24k)",
+  "calcNisabMetalSilver": "meetii",
+  "calcPricesAsOf": "Gatiiwwan hanga {date} · {source}",
+  "calcPricesAsOfNoSource": "Gatiiwwan hanga {date}",
+  "calcPricesStale": "Gatiiwwan haaromfamuu dhiisuu danda'u.",
+  "calcPricesSavedCopy": "Gatiiwwan haaromsuun hin danda'amne. Gatiiwwan meeshaa kana irratti kuufaman agarsiifamaa jiru.",
+  "calcConfigErrorTitle": "Gatii zakaa har'aa fe'uun hin danda'amne",
+  "calcConfigErrorBody": "Walqunnamtii kee mirkaneessiitii irra deebi'ii yaali.",
+  "calcConfigNotReadyBody": "Gatiin warqee fi meetii ammallee hin argamne. Maaloo booda irra deebi'ii yaali.",
+  "commonRetry": "Ammas yaali",
+  "calcLivestockEstimateLine": "Gatii gabaa tilmaamame: {amount}",
+  "calcLivestockEstimateNote": "Gatii gabaa giddu-galeessaa horii tokkootiin tilmaamame. Osoo hin kaffaliin dura hanga isaa jijjiiruu dandeessa.",
+  "homeLiveCollected": "KALLATTIIN · {amount} walitti qabame",
+  "homeCollected": "{amount} walitti qabame",
+  "homeChangeUp": "↑ {percent}% ji'a darbe irraa",
+  "homeChangeDown": "↓ {percent}% ji'a darbe irraa",
+  "homeChangeFlat": "Akkuma ji'a darbee",
+  "homeBeneficiariesSubtext": "maatii",
+  "fitrStatusOpen": "AMMA BANAMAADHA",
+  "fitrStatusClosed": "CUFAMEERA",
+  "fitrStartsIn": "{days, plural, =0{Har'a jalqaba} =1{Boru jalqaba} other{Guyyaa {days} keessatti jalqaba}}",
+  "fitrDaysLeft": "{days, plural, =0{Har'a guyyaa kaffaltii dhumaati} =1{Kaffaluuf guyyaan 1 hafe} other{Kaffaluuf guyyoonni {days} hafan}}",
+  "fitrClosedOn": "{date} irratti cufame",
+  "fitrPerPerson": "nama tokkoof {amount}",
+  "causesTitle": "Pirojektoota",
+  "causesSubtitle": "Pirojektoota zakaan kee deeggaru",
+  "causesActive": "Hojii irra",
+  "causesClosed": "Cufaman",
+  "causesAllCategories": "Hunda",
+  "causeCategoryEducation": "Barnoota",
+  "causeCategoryWater": "Bishaan",
+  "causeCategoryHealth": "Fayyaa",
+  "causeCategoryFood": "Nyaata",
+  "causeCategoryShelter": "Bakka jireenyaa",
+  "causeCategoryLivelihood": "Jireenya",
+  "causeCategoryEmergency": "Ariifachiisaa",
+  "causeCategoryGeneral": "Waliigala",
+  "causeBadgeUrgent": "ARIIFACHIISAA",
+  "causeBadgeEssential": "BARBAACHISAA",
+  "causeRaisedOfGoal": "{goal} keessaa {raised} walitti qabame",
+  "causeRaised": "{raised} walitti qabame",
+  "causeEndsOn": "{date} xumurama",
+  "causeEndedOn": "{date} xumurame",
+  "causesEmpty": "Hanga ammaatti pirojektiin agarsiifamu hin jiru.",
+  "causesLoadError": "Pirojektoota fe'uun hin danda'amne.",
+  "causeNotFound": "Pirojektiin kun kana booda hin argamu.",
+  "causeAbout": "Waa'ee pirojektii kanaa",
+  "payProjectsLoading": "Pirojektoonni fe'amaa jiru…"
 }

@@ -17,7 +17,7 @@ enum BeneficiaryRegistrationStep {
   institutionDocuments,
 }
 
-enum RegistrationMethod { fastTrack, manual, institution }
+enum RegistrationMethod { manual, institution }
 
 enum Gender { male, female }
 
@@ -29,9 +29,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     required this.method,
     this.selectedCategory,
     required this.payoutMethod,
-    this.nationalId = '',
     this.registrationCode = '',
-    this.generatedNationalId,
     this.firstName = '',
     this.fatherName = '',
     this.grandFatherName = '',
@@ -68,12 +66,8 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.errorMessage,
     this.submissionSuccess = false,
     this.isSubmitting = false,
-    this.isFaydaPosting = false,
-    this.awaitingFaydaSse = false,
-    this.faydaVerificationComplete = false,
     this.manualIdentitySubmitted = false,
     this.createdBeneficiaryId,
-    this.verificationLink,
     this.registeredBeneficiary,
     this.passwordSetupToken,
     this.codeValidation,
@@ -87,9 +81,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final RegistrationMethod method;
   final AsnafCategory? selectedCategory;
   final PayoutMethod payoutMethod;
-  final String nationalId;
   final String registrationCode;
-  final String? generatedNationalId;
   final String firstName;
   final String fatherName;
   final String grandFatherName;
@@ -126,12 +118,8 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String? errorMessage;
   final bool submissionSuccess;
   final bool isSubmitting;
-  final bool isFaydaPosting;
-  final bool awaitingFaydaSse;
-  final bool faydaVerificationComplete;
   final bool manualIdentitySubmitted;
   final String? createdBeneficiaryId;
-  final String? verificationLink;
   final BeneficiaryDto? registeredBeneficiary;
   final String? passwordSetupToken;
   final RegistrationCodeValidation? codeValidation;
@@ -178,10 +166,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   }
 
   bool get isIdentityStepComplete {
-    if (method == RegistrationMethod.fastTrack) {
-      return false;
-    }
-
     return firstName.trim().isNotEmpty &&
         fatherName.trim().isNotEmpty &&
         grandFatherName.trim().isNotEmpty &&
@@ -214,9 +198,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     method,
     selectedCategory,
     payoutMethod,
-    nationalId,
     registrationCode,
-    generatedNationalId,
     firstName,
     fatherName,
     grandFatherName,
@@ -253,12 +235,8 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     errorMessage,
     submissionSuccess,
     isSubmitting,
-    isFaydaPosting,
-    awaitingFaydaSse,
-    faydaVerificationComplete,
     manualIdentitySubmitted,
     createdBeneficiaryId,
-    verificationLink,
     registeredBeneficiary,
     passwordSetupToken,
     codeValidation,
@@ -273,13 +251,10 @@ final class BeneficiaryRegistrationInitial
     extends BeneficiaryRegistrationState {
   const BeneficiaryRegistrationInitial({
     super.step = BeneficiaryRegistrationStep.welcome,
-    // Fayda fast-track is disabled; manual is the default method.
     super.method = RegistrationMethod.manual,
     super.selectedCategory,
     super.payoutMethod = PayoutMethod.telebirrWallet,
-    super.nationalId,
     super.registrationCode,
-    super.generatedNationalId,
     super.firstName,
     super.fatherName,
     super.grandFatherName,
@@ -316,12 +291,8 @@ final class BeneficiaryRegistrationInitial
     super.errorMessage,
     super.submissionSuccess,
     super.isSubmitting,
-    super.isFaydaPosting,
-    super.awaitingFaydaSse,
-    super.faydaVerificationComplete,
     super.manualIdentitySubmitted,
     super.createdBeneficiaryId,
-    super.verificationLink,
     super.registeredBeneficiary,
     super.passwordSetupToken,
     super.codeValidation,
@@ -337,10 +308,7 @@ final class BeneficiaryRegistrationInitial
     AsnafCategory? selectedCategory,
     bool clearSelectedCategory = false,
     PayoutMethod? payoutMethod,
-    String? nationalId,
     String? registrationCode,
-    String? generatedNationalId,
-    bool clearGeneratedNationalId = false,
     String? firstName,
     String? fatherName,
     String? grandFatherName,
@@ -384,16 +352,11 @@ final class BeneficiaryRegistrationInitial
     bool clearError = false,
     bool? submissionSuccess,
     bool? isSubmitting,
-    bool? isFaydaPosting,
-    bool? awaitingFaydaSse,
-    bool? faydaVerificationComplete,
     bool? manualIdentitySubmitted,
     String? createdBeneficiaryId,
-    String? verificationLink,
     BeneficiaryDto? registeredBeneficiary,
     String? passwordSetupToken,
     bool clearBeneficiaryMeta = false,
-    bool clearFaydaProgress = false,
     bool clearInstitutionMeta = false,
     RegistrationCodeValidation? codeValidation,
     bool? isValidatingCode,
@@ -410,11 +373,7 @@ final class BeneficiaryRegistrationInitial
           ? null
           : (selectedCategory ?? this.selectedCategory),
       payoutMethod: payoutMethod ?? this.payoutMethod,
-      nationalId: nationalId ?? this.nationalId,
       registrationCode: registrationCode ?? this.registrationCode,
-      generatedNationalId: clearGeneratedNationalId
-          ? null
-          : (generatedNationalId ?? this.generatedNationalId),
       firstName: firstName ?? this.firstName,
       fatherName: fatherName ?? this.fatherName,
       grandFatherName: grandFatherName ?? this.grandFatherName,
@@ -481,23 +440,11 @@ final class BeneficiaryRegistrationInitial
           ? false
           : (submissionSuccess ?? this.submissionSuccess),
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      isFaydaPosting: clearBeneficiaryMeta || clearFaydaProgress
-          ? false
-          : (isFaydaPosting ?? this.isFaydaPosting),
-      awaitingFaydaSse: clearBeneficiaryMeta || clearFaydaProgress
-          ? false
-          : (awaitingFaydaSse ?? this.awaitingFaydaSse),
-      faydaVerificationComplete: clearFaydaProgress
-          ? false
-          : (faydaVerificationComplete ?? this.faydaVerificationComplete),
       manualIdentitySubmitted:
           manualIdentitySubmitted ?? this.manualIdentitySubmitted,
       createdBeneficiaryId: clearBeneficiaryMeta || clearInstitutionMeta
           ? null
           : (createdBeneficiaryId ?? this.createdBeneficiaryId),
-      verificationLink: clearBeneficiaryMeta || clearFaydaProgress
-          ? null
-          : (verificationLink ?? this.verificationLink),
       registeredBeneficiary: clearBeneficiaryMeta
           ? null
           : (registeredBeneficiary ?? this.registeredBeneficiary),

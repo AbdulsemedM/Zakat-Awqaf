@@ -18,27 +18,10 @@ import '../../bloc/beneficiary_registration_state.dart';
 import '../../data/models/asnaf_category.dart';
 import '../../data/models/basic_detail_options.dart';
 import '../../data/models/institution_subtype.dart';
-import '../pages/fayda_verification_webview_page.dart';
 import '../widgets/payout_method_tile.dart';
 import '../widgets/registration_code_field.dart';
 import '../widgets/section_card.dart';
 import '../widgets/step_progress_header.dart';
-
-void _openFaydaVerificationWebView(BuildContext context, String link) {
-  final uri = Uri.tryParse(link.trim());
-  if (uri == null) {
-    return;
-  }
-  final bloc = context.read<BeneficiaryRegistrationBloc>();
-  Navigator.of(context).push<void>(
-    MaterialPageRoute<void>(
-      builder: (_) => BlocProvider.value(
-        value: bloc,
-        child: FaydaVerificationWebViewPage(url: uri),
-      ),
-    ),
-  );
-}
 
 class BeneficiaryRegistrationScreen extends StatelessWidget {
   const BeneficiaryRegistrationScreen({super.key});
@@ -57,25 +40,6 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
-          },
-        ),
-        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
-          listenWhen: (previous, current) {
-            if (current.method != RegistrationMethod.fastTrack) {
-              return false;
-            }
-            final link = current.verificationLink?.trim();
-            if (link == null || link.isEmpty) {
-              return false;
-            }
-            if (!current.awaitingFaydaSse) {
-              return false;
-            }
-            return !previous.awaitingFaydaSse ||
-                previous.verificationLink != current.verificationLink;
-          },
-          listener: (context, state) {
-            _openFaydaVerificationWebView(context, state.verificationLink!);
           },
         ),
         BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
@@ -120,19 +84,6 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
             context.go('/');
           },
         ),
-        BlocListener<BeneficiaryRegistrationBloc, BeneficiaryRegistrationState>(
-          listenWhen: (previous, current) =>
-              current.submissionSuccess &&
-              !previous.submissionSuccess &&
-              current.method == RegistrationMethod.fastTrack &&
-              current.step == BeneficiaryRegistrationStep.disbursement,
-          listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(context.l10n.regCompleteLocal)),
-            );
-            context.go('/');
-          },
-        ),
       ],
       child:
           BlocBuilder<
@@ -169,14 +120,6 @@ class BeneficiaryRegistrationScreen extends StatelessWidget {
                               step: state.step,
                               method: state.method,
                             ),
-                            if (state.method == RegistrationMethod.fastTrack &&
-                                state.step ==
-                                    BeneficiaryRegistrationStep.welcome &&
-                                (state.isFaydaPosting ||
-                                    state.awaitingFaydaSse)) ...[
-                              const SizedBox(height: 16),
-                              const _FaydaVerificationBanner(),
-                            ],
                             const SizedBox(height: 16),
                             _StepContent(state: state),
                           ],
@@ -206,11 +149,6 @@ class _RegistrationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final (methodTitle, methodDescription, methodIcon) = switch (state.method) {
-      RegistrationMethod.fastTrack => (
-        l10n.regMethodFastTrack,
-        l10n.regMethodFastTrackDesc,
-        Icons.qr_code_scanner_rounded,
-      ),
       RegistrationMethod.manual => (
         l10n.regMethodManual,
         l10n.regMethodManualDesc,
@@ -311,19 +249,6 @@ class _WelcomeStep extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
-              // Fayda fast-track is disabled for now.
-              // PayoutMethodTile(
-              //   title: l10n.regFastTrackFaydaTitle,
-              //   subtitle: l10n.regFastTrackFaydaSubtitle,
-              //   icon: Icons.qr_code_scanner_rounded,
-              //   selected: state.method == RegistrationMethod.fastTrack,
-              //   onTap: () => bloc.add(
-              //     const RegistrationMethodSelected(
-              //       RegistrationMethod.fastTrack,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 12),
               PayoutMethodTile(
                 title: l10n.regManualTitle,
                 subtitle: l10n.regManualSubtitle,
@@ -348,10 +273,6 @@ class _WelcomeStep extends StatelessWidget {
             ],
           ),
         ),
-        if (state.method == RegistrationMethod.fastTrack) ...[
-          const SizedBox(height: 12),
-          SectionCard(child: RegistrationCodeField(state: state)),
-        ],
         const SizedBox(height: 12),
         SectionCard(
           child: Column(
@@ -373,47 +294,6 @@ class _WelcomeStep extends StatelessWidget {
             ],
           ),
         ),
-        if (state.method == RegistrationMethod.fastTrack &&
-            !state.faydaVerificationComplete &&
-            state.createdBeneficiaryId != null &&
-            state.createdBeneficiaryId!.trim().isNotEmpty &&
-            state.errorMessage != null &&
-            state.errorMessage!.trim().isNotEmpty) ...[
-          const SizedBox(height: 12),
-          SectionCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  l10n.regVerificationInterrupted,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  state.errorMessage!,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
-                  onPressed: state.verificationLink?.trim().isNotEmpty == true
-                      ? () => _openFaydaVerificationWebView(
-                          context,
-                          state.verificationLink!,
-                        )
-                      : null,
-                  icon: const Icon(Icons.open_in_browser_outlined),
-                  label: Text(l10n.regReopenVerification),
-                ),
-                const SizedBox(height: 8),
-                FilledButton.icon(
-                  onPressed: () => bloc.add(const FaydaSseRetryRequested()),
-                  icon: const Icon(Icons.refresh),
-                  label: Text(l10n.regRetryListening),
-                ),
-              ],
-            ),
-          ),
-        ],
       ],
     );
   }
@@ -734,33 +614,6 @@ class _IdentityStep extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FaydaVerificationBanner extends StatelessWidget {
-  const _FaydaVerificationBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return SectionCard(
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 24,
-            height: 24,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              l10n.regVerifyingFaydaBanner,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -1368,14 +1221,7 @@ class _FooterActions extends StatelessWidget {
         state.step == BeneficiaryRegistrationStep.setPassword;
 
     final canContinue = switch (state.step) {
-      BeneficiaryRegistrationStep.welcome => switch (state.method) {
-        RegistrationMethod.fastTrack =>
-          state.registrationCode.trim().isNotEmpty &&
-              !state.isValidatingCode &&
-              !state.isFaydaPosting &&
-              !state.awaitingFaydaSse,
-        _ => true,
-      },
+      BeneficiaryRegistrationStep.welcome => true,
       BeneficiaryRegistrationStep.identity =>
         state.isIdentityStepComplete && !state.isValidatingCode,
       BeneficiaryRegistrationStep.institutionDetails =>
@@ -1394,13 +1240,6 @@ class _FooterActions extends StatelessWidget {
     };
 
     final continueLabel = switch (state.step) {
-      BeneficiaryRegistrationStep.welcome
-          when state.method == RegistrationMethod.fastTrack =>
-        state.isFaydaPosting || state.awaitingFaydaSse
-            ? l10n.regVerifyingFayda
-            : state.faydaVerificationComplete
-            ? l10n.commonContinue
-            : l10n.regContinueWithFayda,
       BeneficiaryRegistrationStep.identity when isManualIdentitySubmit =>
         l10n.regSubmitContinue,
       BeneficiaryRegistrationStep.institutionDetails
@@ -1417,10 +1256,9 @@ class _FooterActions extends StatelessWidget {
 
     final busy =
         (isManualIdentitySubmit ||
-                isInstitutionDetailsSubmit ||
-                isSetPasswordStep) &&
-            (state.isSubmitting || state.isSettingPassword) ||
-        state.isFaydaPosting;
+            isInstitutionDetailsSubmit ||
+            isSetPasswordStep) &&
+        (state.isSubmitting || state.isSettingPassword);
     final scheme = Theme.of(context).colorScheme;
     return SafeArea(
       top: false,
@@ -1452,8 +1290,6 @@ class _FooterActions extends StatelessWidget {
                 busy: busy,
                 onPressed:
                     !canContinue ||
-                        state.isFaydaPosting ||
-                        state.awaitingFaydaSse ||
                         state.uploadingDocumentCode != null ||
                         state.isSettingPassword
                     ? null

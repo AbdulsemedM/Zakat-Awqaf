@@ -21,7 +21,7 @@ class BeneficiaryRegistrationRepositoryImpl
 
   @override
   Future<BeneficiaryRegistrationResult> register(
-    BeneficiaryRegistrationRequest request,
+    FullBeneficiaryCreateRequest request,
   ) {
     return _dataProvider.createBeneficiary(request);
   }

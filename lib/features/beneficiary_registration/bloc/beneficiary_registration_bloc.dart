@@ -1,7 +1,3 @@
-import 'dart:async';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mejlis_digital_hub/core/common/utils/phone_e164.dart';
@@ -11,11 +7,9 @@ import 'package:mejlis_digital_hub/features/auth/data/models/set_password_reques
 import 'package:mejlis_digital_hub/features/auth/data/repository/auth_repository.dart';
 
 import '../data/beneficiary_registration_exception.dart';
-import '../data/beneficiary_sse_client.dart';
 import '../data/models/asnaf_category.dart';
 import '../data/models/beneficiary_create_request.dart';
 import '../data/models/company_beneficiary_create_request.dart';
-import '../data/national_id_generator.dart';
 import '../data/repository/beneficiary_registration_repository.dart';
 import 'beneficiary_registration_event.dart';
 import 'beneficiary_registration_state.dart';
@@ -23,22 +17,11 @@ import 'beneficiary_registration_state.dart';
 @injectable
 class BeneficiaryRegistrationBloc
     extends Bloc<BeneficiaryRegistrationEvent, BeneficiaryRegistrationState> {
-  BeneficiaryRegistrationBloc(
-    this._repository,
-    this._sseClient,
-    this._authRepository,
-  ) : super(const BeneficiaryRegistrationInitial()) {
+  BeneficiaryRegistrationBloc(this._repository, this._authRepository)
+    : super(const BeneficiaryRegistrationInitial()) {
     on<BeneficiaryRegistrationStarted>(_onStarted);
     on<RegistrationMethodSelected>(_onMethodSelected);
-    on<NationalIdUpdated>(_onNationalIdUpdated);
     on<RegistrationCodeUpdated>(_onRegistrationCodeUpdated);
-    on<FaydaRegistrationRequested>(_onFaydaRequested);
-    on<FaydaSseCompletedSuccessfully>(_onFaydaSseSuccess);
-    on<FaydaSseStreamFinished>(_onFaydaSseStreamFinished);
-    on<FaydaSseConnectionFailed>(_onFaydaSseConnectionFailed);
-    on<FaydaSseRetryRequested>(_onFaydaSseRetry);
-    on<FaydaVerificationTimedOut>(_onFaydaVerificationTimedOut);
-    on<FaydaSseReconnectRequested>(_onFaydaSseReconnectRequested);
     on<FirstNameUpdated>(_onFirstNameUpdated);
     on<FatherNameUpdated>(_onFatherNameUpdated);
     on<GrandFatherNameUpdated>(_onGrandFatherNameUpdated);
@@ -95,7 +78,6 @@ class BeneficiaryRegistrationBloc
   }
 
   final BeneficiaryRegistrationRepository _repository;
-  final BeneficiarySseClient _sseClient;
   final AuthRepository _authRepository;
 
   static final _passwordUppercase = RegExp(r'[A-Z]');
@@ -103,32 +85,15 @@ class BeneficiaryRegistrationBloc
   static final _passwordDigit = RegExp(r'\d');
   static final _passwordSpecial = RegExp(r'[^A-Za-z0-9]');
 
-  StreamSubscription<BeneficiarySseVerificationEvent>? _sseSubscription;
-  Timer? _faydaSseReconnectTimer;
-  Timer? _faydaSseTimeoutTimer;
-  bool _faydaSseMatched = false;
-  int _faydaSseReconnectAttempts = 0;
-
-  static const _faydaSseReconnectDelay = Duration(seconds: 3);
-  static const _faydaSseWatchTimeout = Duration(minutes: 10);
-  static const _maxFaydaSseReconnectAttempts = 5;
-
   BeneficiaryRegistrationInitial get _current =>
       state is BeneficiaryRegistrationInitial
       ? state as BeneficiaryRegistrationInitial
       : const BeneficiaryRegistrationInitial();
 
-  @override
-  Future<void> close() {
-    _stopFaydaVerificationWatchers();
-    return super.close();
-  }
-
   void _onStarted(
     BeneficiaryRegistrationStarted event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    _stopFaydaVerificationWatchers();
     emit(const BeneficiaryRegistrationInitial());
   }
 
@@ -136,26 +101,14 @@ class BeneficiaryRegistrationBloc
     RegistrationMethodSelected event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
-    // Fayda fast-track is disabled; ignore it if it is ever requested.
-    if (event.method == RegistrationMethod.fastTrack) {
-      return;
-    }
     emit(
       _current.copyWith(
         method: event.method,
         clearError: true,
-        clearFaydaProgress: true,
         clearBeneficiaryMeta: true,
         manualIdentitySubmitted: false,
       ),
     );
-  }
-
-  void _onNationalIdUpdated(
-    NationalIdUpdated event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(_current.copyWith(nationalId: event.nationalId, clearError: true));
   }
 
   void _onRegistrationCodeUpdated(
@@ -233,356 +186,6 @@ class BeneficiaryRegistrationBloc
       );
       return false;
     }
-  }
-
-  Future<void> _onFaydaRequested(
-    FaydaRegistrationRequested event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) async {
-    if (_current.method != RegistrationMethod.fastTrack) {
-      return;
-    }
-    if (_current.isFaydaPosting || _current.awaitingFaydaSse) {
-      return;
-    }
-    if (_current.faydaVerificationComplete) {
-      return;
-    }
-
-    _stopFaydaVerificationWatchers();
-    _faydaSseMatched = false;
-    _faydaSseReconnectAttempts = 0;
-
-    if (!await _ensureRegistrationCodeVerified(emit)) {
-      return;
-    }
-    final postingBase = _current;
-    final generatedId =
-        postingBase.generatedNationalId ?? generateFaydaNationalId();
-
-    emit(
-      postingBase.copyWith(
-        isFaydaPosting: true,
-        generatedNationalId: generatedId,
-        clearError: true,
-        clearBeneficiaryMeta: true,
-      ),
-    );
-
-    try {
-      final result = await _repository.register(
-        NationalIdBeneficiaryCreateRequest(
-          registrationCode: postingBase.registrationCode.trim(),
-          nationalId: generatedId,
-        ),
-      );
-      if (result.statusCode != 202) {
-        throw BeneficiaryRegistrationException(
-          'Unexpected registration response (${result.statusCode}).',
-        );
-      }
-      final link = result.dto.verificationLink?.trim();
-      if (link == null || link.isEmpty) {
-        throw BeneficiaryRegistrationException(
-          'No verification link returned. Please try again.',
-        );
-      }
-      final id = result.dto.id.trim();
-      if (id.isEmpty) {
-        throw BeneficiaryRegistrationException(
-          'Missing beneficiary id in response.',
-        );
-      }
-
-      final afterCreate = postingBase.copyWith(
-        isFaydaPosting: false,
-        awaitingFaydaSse: true,
-        createdBeneficiaryId: result.dto.id,
-        registeredBeneficiary: result.dto,
-        verificationLink: link,
-        generatedNationalId: generatedId,
-        clearError: true,
-      );
-      emit(afterCreate);
-      _startFaydaVerificationWatch(id);
-    } on BeneficiaryRegistrationException catch (e) {
-      emit(
-        postingBase.copyWith(
-          isFaydaPosting: false,
-          awaitingFaydaSse: false,
-          errorMessage: e.message,
-        ),
-      );
-    } catch (e) {
-      emit(
-        postingBase.copyWith(
-          isFaydaPosting: false,
-          awaitingFaydaSse: false,
-          errorMessage: e.toString(),
-        ),
-      );
-    }
-  }
-
-  void _onFaydaSseRetry(
-    FaydaSseRetryRequested event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_current.method != RegistrationMethod.fastTrack) {
-      return;
-    }
-    if (_current.faydaVerificationComplete) {
-      return;
-    }
-    if (_current.isFaydaPosting || _current.awaitingFaydaSse) {
-      return;
-    }
-
-    final id = _current.createdBeneficiaryId?.trim();
-    final link = _current.verificationLink?.trim();
-    if (id == null || id.isEmpty) {
-      emit(
-        _current.copyWith(
-          errorMessage:
-              'No beneficiary reference found. Please start verification again.',
-        ),
-      );
-      return;
-    }
-    if (link == null || link.isEmpty) {
-      emit(
-        _current.copyWith(
-          errorMessage:
-              'No verification link available. Please start verification again.',
-        ),
-      );
-      return;
-    }
-
-    _stopFaydaVerificationWatchers();
-    _faydaSseMatched = false;
-    _faydaSseReconnectAttempts = 0;
-
-    emit(_current.copyWith(awaitingFaydaSse: true, clearError: true));
-    _startFaydaVerificationWatch(id);
-  }
-
-  void _stopFaydaVerificationWatchers() {
-    _faydaSseReconnectTimer?.cancel();
-    _faydaSseReconnectTimer = null;
-    _faydaSseTimeoutTimer?.cancel();
-    _faydaSseTimeoutTimer = null;
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
-  }
-
-  void _startFaydaVerificationWatch(String beneficiaryId) {
-    final id = beneficiaryId.trim();
-    if (id.isEmpty) {
-      return;
-    }
-
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
-    _faydaSseTimeoutTimer?.cancel();
-    _faydaSseTimeoutTimer = null;
-
-    _startSseSubscription(id);
-    _startFaydaSseTimeoutWatch();
-  }
-
-  void _startFaydaSseTimeoutWatch() {
-    _faydaSseTimeoutTimer?.cancel();
-    _faydaSseTimeoutTimer = Timer(_faydaSseWatchTimeout, () {
-      if (!isClosed) {
-        add(const FaydaVerificationTimedOut());
-      }
-    });
-  }
-
-  void _scheduleFaydaSseReconnect() {
-    if (_faydaSseMatched || isClosed) {
-      return;
-    }
-    if (!_current.awaitingFaydaSse) {
-      return;
-    }
-    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
-      return;
-    }
-    if (_faydaSseReconnectTimer?.isActive == true) {
-      return;
-    }
-
-    _faydaSseReconnectTimer = Timer(_faydaSseReconnectDelay, () {
-      if (!isClosed) {
-        add(const FaydaSseReconnectRequested());
-      }
-    });
-  }
-
-  void _onFaydaSseReconnectRequested(
-    FaydaSseReconnectRequested event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_faydaSseMatched || !_current.awaitingFaydaSse) {
-      return;
-    }
-    final id = _current.createdBeneficiaryId?.trim();
-    if (id == null || id.isEmpty) {
-      return;
-    }
-    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
-      return;
-    }
-
-    _faydaSseReconnectAttempts++;
-    if (kDebugMode) {
-      debugPrint(
-        '[BeneficiarySse] Reconnect attempt $_faydaSseReconnectAttempts '
-        'for id=$id',
-      );
-    }
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
-    _startSseSubscription(id);
-  }
-
-  void _onFaydaVerificationTimedOut(
-    FaydaVerificationTimedOut event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_faydaSseMatched || !_current.awaitingFaydaSse) {
-      return;
-    }
-    _stopFaydaVerificationWatchers();
-    emit(
-      _current.copyWith(
-        awaitingFaydaSse: false,
-        isFaydaPosting: false,
-        errorMessage:
-            'Fayda verification timed out. Please retry registration or contact support.',
-      ),
-    );
-  }
-
-  void _startSseSubscription(String beneficiaryId) {
-    final id = beneficiaryId.trim();
-    if (kDebugMode) {
-      debugPrint(
-        '[BeneficiarySse] Subscribing to verification stream for id=$id',
-      );
-    }
-
-    _sseSubscription = _sseClient
-        .watchBeneficiaryVerification(id)
-        .handleError((Object e, StackTrace _) {
-          if (kDebugMode) {
-            debugPrint('[BeneficiarySse] Connection error for id=$id: $e');
-          }
-          add(FaydaSseConnectionFailed(_friendlyFaydaSseError(e)));
-        })
-        .listen(
-          (sseEvent) {
-            if (kDebugMode) {
-              debugPrint(
-                '[BeneficiarySse] Event received: beneficiaryId=${sseEvent.beneficiaryId}, '
-                'status=${sseEvent.verificationStatus}',
-              );
-            }
-            if (sseEvent.beneficiaryId.trim() == id &&
-                sseEvent.isVerificationComplete) {
-              add(
-                FaydaSseCompletedSuccessfully(
-                  passwordSetupToken: sseEvent.passwordSetupToken?.trim() ?? '',
-                ),
-              );
-            }
-          },
-          onDone: () {
-            if (kDebugMode) {
-              debugPrint('[BeneficiarySse] Stream closed for id=$id');
-            }
-            add(const FaydaSseStreamFinished());
-          },
-        );
-  }
-
-  String _friendlyFaydaSseError(Object error) {
-    if (error is DioException &&
-        error.type == DioExceptionType.receiveTimeout) {
-      return 'Still waiting for Fayda verification. We will reconnect automatically.';
-    }
-    return 'Connection to verification updates was interrupted. '
-        'We will reconnect automatically.';
-  }
-
-  void _onFaydaSseSuccess(
-    FaydaSseCompletedSuccessfully event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    _faydaSseMatched = true;
-    _stopFaydaVerificationWatchers();
-    _faydaSseReconnectAttempts = 0;
-    final token = event.passwordSetupToken.trim();
-    emit(
-      _current.copyWith(
-        awaitingFaydaSse: false,
-        faydaVerificationComplete: true,
-        isFaydaPosting: false,
-        step: BeneficiaryRegistrationStep.setPassword,
-        passwordSetupToken: token.isNotEmpty ? token : null,
-        clearError: true,
-      ),
-    );
-  }
-
-  void _onFaydaSseStreamFinished(
-    FaydaSseStreamFinished event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_faydaSseMatched) {
-      _faydaSseMatched = false;
-      return;
-    }
-    if (!_current.awaitingFaydaSse) {
-      return;
-    }
-    if (kDebugMode) {
-      debugPrint('[BeneficiarySse] Stream closed; scheduling SSE reconnect');
-    }
-    _scheduleFaydaSseReconnect();
-  }
-
-  void _onFaydaSseConnectionFailed(
-    FaydaSseConnectionFailed event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_faydaSseMatched) {
-      return;
-    }
-    if (!_current.awaitingFaydaSse) {
-      return;
-    }
-
-    unawaited(_sseSubscription?.cancel());
-    _sseSubscription = null;
-    _scheduleFaydaSseReconnect();
-
-    if (_faydaSseReconnectAttempts >= _maxFaydaSseReconnectAttempts) {
-      emit(
-        _current.copyWith(
-          awaitingFaydaSse: false,
-          isFaydaPosting: false,
-          errorMessage:
-              'Verification is still processing. If you completed Fayda in the browser, tap Retry listening or contact support.',
-        ),
-      );
-      _stopFaydaVerificationWatchers();
-      return;
-    }
-
-    emit(_current.copyWith(isFaydaPosting: false, clearError: true));
   }
 
   void _onFirstNameUpdated(
@@ -829,19 +432,6 @@ class BeneficiaryRegistrationBloc
         BeneficiaryRegistrationStep.disbursement => null,
       };
     }
-    if (c.method == RegistrationMethod.fastTrack) {
-      return switch (c.step) {
-        BeneficiaryRegistrationStep.welcome =>
-          BeneficiaryRegistrationStep.needs,
-        BeneficiaryRegistrationStep.needs =>
-          BeneficiaryRegistrationStep.disbursement,
-        BeneficiaryRegistrationStep.disbursement => null,
-        BeneficiaryRegistrationStep.identity => null,
-        BeneficiaryRegistrationStep.institutionDetails => null,
-        BeneficiaryRegistrationStep.setPassword => null,
-        BeneficiaryRegistrationStep.institutionDocuments => null,
-      };
-    }
     return switch (c.step) {
       BeneficiaryRegistrationStep.welcome =>
         BeneficiaryRegistrationStep.identity,
@@ -875,20 +465,6 @@ class BeneficiaryRegistrationBloc
         BeneficiaryRegistrationStep.disbursement => null,
       };
     }
-    if (c.method == RegistrationMethod.fastTrack) {
-      return switch (c.step) {
-        BeneficiaryRegistrationStep.setPassword =>
-          BeneficiaryRegistrationStep.welcome,
-        BeneficiaryRegistrationStep.needs =>
-          BeneficiaryRegistrationStep.welcome,
-        BeneficiaryRegistrationStep.disbursement =>
-          BeneficiaryRegistrationStep.needs,
-        BeneficiaryRegistrationStep.welcome => null,
-        BeneficiaryRegistrationStep.identity => null,
-        BeneficiaryRegistrationStep.institutionDetails => null,
-        BeneficiaryRegistrationStep.institutionDocuments => null,
-      };
-    }
     return switch (c.step) {
       BeneficiaryRegistrationStep.setPassword =>
         BeneficiaryRegistrationStep.identity,
@@ -908,19 +484,6 @@ class BeneficiaryRegistrationBloc
     Emitter<BeneficiaryRegistrationState> emit,
   ) async {
     if (!_canMoveForward(_current)) {
-      return;
-    }
-
-    if (_current.step == BeneficiaryRegistrationStep.welcome &&
-        _current.method == RegistrationMethod.fastTrack) {
-      if (_current.faydaVerificationComplete) {
-        final next = _nextStepAfter(_current);
-        if (next != null) {
-          emit(_current.copyWith(step: next, clearError: true));
-        }
-        return;
-      }
-      add(const FaydaRegistrationRequested());
       return;
     }
 
@@ -1071,8 +634,7 @@ class BeneficiaryRegistrationBloc
       beneficiaryType: 'individual',
       category: s.selectedCategory!.apiValue,
       notes: s.notes.trim(),
-      // National ID is disabled for now; the field officer records it.
-      // nationalId: s.nationalId,
+      // National ID is not collected here; the field officer records it.
       addressLine: s.address,
       maritalStatus: s.maritalStatus?.apiValue,
       religion: s.religion,
@@ -1358,7 +920,7 @@ class BeneficiaryRegistrationBloc
     }
   }
 
-  /// Phone from backend/Fayda profile only — never required from user on set-password.
+  /// Phone from the backend profile only — never required from user on set-password.
   String? _resolveAutoLoginPhone(BeneficiaryRegistrationInitial s) {
     return PhoneE164.normalize(s.registeredBeneficiary?.phone ?? '');
   }
@@ -1454,9 +1016,6 @@ class BeneficiaryRegistrationBloc
   bool _canMoveForward(BeneficiaryRegistrationInitial current) {
     switch (current.step) {
       case BeneficiaryRegistrationStep.welcome:
-        if (current.method == RegistrationMethod.fastTrack) {
-          return !current.isFaydaPosting && !current.awaitingFaydaSse;
-        }
         return true;
       case BeneficiaryRegistrationStep.identity:
         return current.method == RegistrationMethod.manual &&

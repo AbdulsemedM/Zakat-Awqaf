@@ -2,115 +2,110 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:mejlis_digital_hub/core/common/utils/money_formatter.dart';
 import 'package:mejlis_digital_hub/features/zakat_calculator/bloc/zakat_calculator_state.dart';
-import 'package:mejlis_digital_hub/features/zakat_calculator/data/repository/exchange_rate_repository_impl.dart';
+import 'package:mejlis_digital_hub/features/zakat_calculator/data/models/calculator_config.dart';
+import 'package:mejlis_digital_hub/features/zakat_calculator/data/zakat_rules.dart';
 import 'package:mejlis_digital_hub/l10n/app_localizations.dart';
 
-/// Localized copy for the Zakat calculator. Numeric rules mirror
-/// [ZakatCalculatorBloc._recompute] for advisory, transparency, and crop text.
+/// Localized copy for the Zakat calculator. Every number comes from the
+/// state that [ZakatCalculatorBloc] computed or from its [CalculatorConfig].
 final class ZakatCalculatorStrings {
   ZakatCalculatorStrings._();
 
-  static const double cropNisabKg = 653.0;
-  /// Mirrors [ZakatCalculatorBloc._recompute] wealth nisab constant.
-  static const int wealthNisabGoldGrams = 85;
-  /// Mirrors [ZakatCalculatorBloc._recompute] silver reference per gram.
-  static const int wealthSilverReferenceEtbPerGram = 50;
-  static const String _camelNoDueEnglish = 'No due';
+  /// `0.025` → `2.5`, `0.1` → `10`.
+  static String percent(double rate) => _trim(rate * 100);
 
-  static bool camelHasDue(ZakatCalculatorInitial s) =>
-      s.camelZakatDueDescription != _camelNoDueEnglish;
+  static String grams(double grams) => _trim(grams);
 
-  static String fxStatus(AppLocalizations l, FxRateSource source) {
-    switch (source) {
-      case FxRateSource.live:
-        return l.calcFxLive;
-      case FxRateSource.cache:
-        return l.calcFxCache;
-      case FxRateSource.fallback:
-        return l.calcFxFallback;
-    }
+  static String _trim(double value) {
+    final fixed = value.toStringAsFixed(2);
+    return fixed.contains('.')
+        ? fixed.replaceFirst(RegExp(r'\.?0+$'), '')
+        : fixed;
   }
 
-  static String formatRateTimestamp(
+  static String nisabMetal(AppLocalizations l, NisabBasis basis) =>
+      basis == NisabBasis.gold ? l.calcNisabMetalGold : l.calcNisabMetalSilver;
+
+  /// Price per gram of the metal nisab is based on (24k for gold).
+  static double nisabMetalPricePerGram(CalculatorConfig config) =>
+      config.nisab.basis == NisabBasis.gold
+      ? config.goldPricePerGramEtb['24k'] ?? 0
+      : config.silverPricePerGramEtb;
+
+  static String pricesAsOf(
     Locale locale,
     AppLocalizations l,
-    DateTime? timestamp,
+    CalculatorConfig config,
   ) {
-    if (timestamp == null) return l.calcTimestampUnavailable;
-    return DateFormat('yyyy-MM-dd HH:mm', locale.toString()).format(
-      timestamp.toLocal(),
+    final date = DateFormat(
+      'yyyy-MM-dd HH:mm',
+      locale.toString(),
+    ).format(config.pricesAsOf.toLocal());
+    final source = config.priceSource?.trim() ?? '';
+    return source.isEmpty
+        ? l.calcPricesAsOfNoSource(date)
+        : l.calcPricesAsOf(date, source);
+  }
+
+  static String livestockNisabNote(
+    AppLocalizations l,
+    CalculatorConfig config,
+  ) {
+    int firstMin(List<LivestockTier> tiers) =>
+        tiers.isEmpty ? 0 : tiers.first.min;
+    return l.calcStep1LivestockNisabNote(
+      firstMin(config.sheepGoats),
+      config.cattle.minimum,
+      firstMin(config.camels),
+      config.cattle.tabiPer,
+      config.cattle.musinnahPer,
     );
   }
 
-  /// Maps [ZakatCalculatorBloc] English camel tier strings to localized text.
-  static String camelDueDescription(AppLocalizations l, String english) {
-    switch (english) {
-      case _camelNoDueEnglish:
-        return l.calcCamelNoDue;
-      case '1 sheep':
-        return l.calcCamelSheepN(1);
-      case '2 sheep':
-        return l.calcCamelSheepN(2);
-      case '3 sheep':
-        return l.calcCamelSheepN(3);
-      case '4 sheep':
-        return l.calcCamelSheepN(4);
-      case '1 bint makhad':
-        return l.calcCamel1BintMakhad;
-      case '1 bint labun':
-        return l.calcCamel1BintLabun;
-      case '1 hiqqah':
-        return l.calcCamel1Hiqqah;
-      case '1 jadhah':
-        return l.calcCamel1Jadhah;
-      case '2 bint labun':
-        return l.calcCamel2BintLabun;
-      case '2 hiqqah':
-        return l.calcCamel2Hiqqah;
-    }
-
-    final combo = RegExp(
-      r'^(\d+) hiqqah \+ (\d+) bint labun$',
-    ).firstMatch(english);
-    if (combo != null) {
-      return l.calcCamelCombo(
-        int.parse(combo.group(1)!),
-        int.parse(combo.group(2)!),
+  static String cropBody(AppLocalizations l, CalculatorConfig config) =>
+      l.calcStep1CropBody(
+        grams(config.crops.nisabKg),
+        percent(config.crops.rainFedRate),
+        percent(config.crops.irrigatedRate),
       );
-    }
 
-    final approx = RegExp(
-      r'^(\d+) bint labun \(approximate combo\)$',
-    ).firstMatch(english);
-    if (approx != null) {
-      return l.calcCamelApproxBintLabun(int.parse(approx.group(1)!));
-    }
+  static String howCropZakatWorks(
+    AppLocalizations l,
+    CalculatorConfig config,
+  ) => l.calcHowCropZakatWorksBody(
+    grams(config.crops.nisabKg),
+    percent(config.crops.rainFedRate),
+    percent(config.crops.irrigatedRate),
+  );
 
-    return english;
+  static String camelDueDescription(AppLocalizations l, CamelDue due) {
+    final unparsed = due.unparsed;
+    if (unparsed != null) return unparsed;
+    final parts = [
+      if (due.sheep > 0) l.calcCamelSheepN(due.sheep),
+      if (due.bintMakhad > 0) l.calcCamelBintMakhadN(due.bintMakhad),
+      if (due.bintLabun > 0) l.calcCamelBintLabunN(due.bintLabun),
+      if (due.hiqqah > 0) l.calcCamelHiqqahN(due.hiqqah),
+      if (due.jadhaah > 0) l.calcCamelJadhahN(due.jadhaah),
+    ];
+    return parts.isEmpty ? l.calcCamelNoDue : parts.join(' + ');
   }
 
-  static String livestockSummary(AppLocalizations l, ZakatCalculatorInitial s) {
-    final sheepDue = s.sheepZakatDueCount;
+  static String livestockSummary(AppLocalizations l, ZakatCalculatorState s) {
     final tabi = s.cattleTabiDueCount;
     final musinnah = s.cattleMusinnahDueCount;
-    final camelLocalized = camelDueDescription(l, s.camelZakatDueDescription);
-    final parts = <String>[];
-    if (sheepDue > 0) {
-      parts.add(l.calcLsSheepGoats(sheepDue));
-    }
-    if (tabi > 0 || musinnah > 0) {
-      parts.add(l.calcLsCattle(tabi, musinnah));
-    }
-    if (s.camelZakatDueDescription != _camelNoDueEnglish) {
-      parts.add(l.calcLsCamels(camelLocalized));
-    }
+    final parts = <String>[
+      if (s.sheepZakatDueCount > 0) l.calcLsSheepGoats(s.sheepZakatDueCount),
+      if (tabi > 0 || musinnah > 0) l.calcLsCattle(tabi, musinnah),
+      if (s.camelDue.hasDue) l.calcLsCamels(camelDueDescription(l, s.camelDue)),
+    ];
     if (parts.isEmpty) {
       parts.add(l.calcLsNone);
     }
     return parts.join(l.calcBulletSeparator);
   }
 
-  static String livestockAdvisory(AppLocalizations l, ZakatCalculatorInitial s) {
+  static String livestockAdvisory(AppLocalizations l, ZakatCalculatorState s) {
     final parts = <String>[];
     if (!s.isPastureFedMostOfYear) {
       parts.add(l.calcAdvNotPasture);
@@ -126,22 +121,36 @@ final class ZakatCalculatorStrings {
 
   static String livestockTransparency(
     AppLocalizations l,
-    ZakatCalculatorInitial s,
+    ZakatCalculatorState s,
   ) {
-    final sheepDue = s.sheepZakatDueCount;
-    final tabi = s.cattleTabiDueCount;
-    final musinnah = s.cattleMusinnahDueCount;
-    final camelLocalized = camelDueDescription(l, s.camelZakatDueDescription);
+    final config = s.config;
+    if (config == null) return '';
+    int firstMin(List<LivestockTier> tiers) =>
+        tiers.isEmpty ? 0 : tiers.first.min;
     final lines = <String>[
-      l.calcTransSheep(s.sheepOrGoats, sheepDue),
-      l.calcTransCattle(s.cattle, tabi, musinnah),
+      l.calcTransSheep(
+        s.sheepOrGoats,
+        s.sheepZakatDueCount,
+        firstMin(config.sheepGoats),
+      ),
+      l.calcTransCattle(
+        s.cattle,
+        s.cattleTabiDueCount,
+        s.cattleMusinnahDueCount,
+        config.cattle.minimum,
+        config.cattle.tabiPer,
+        config.cattle.musinnahPer,
+      ),
       l.calcTransCamel(
         s.camels,
-        s.camelZakatDueDescription == _camelNoDueEnglish
-            ? l.calcCamelNoDue
-            : camelLocalized,
+        camelDueDescription(l, s.camelDue),
+        firstMin(config.camels),
       ),
     ];
+    final estimate = s.livestockEstimatedValueEtb;
+    if (s.livestockHasDue && estimate != null) {
+      lines.add(l.calcLivestockEstimateLine(MoneyFormatter.etb(estimate)));
+    }
     final advisory = livestockAdvisory(l, s);
     if (advisory.isNotEmpty) {
       lines.add(l.calcTransAdvisoryLine(advisory));
@@ -149,17 +158,12 @@ final class ZakatCalculatorStrings {
     return lines.join('\n');
   }
 
-  static String wealthTransparency(AppLocalizations l, ZakatCalculatorInitial s) {
-    final selectedGoldPriceEtb = switch (s.goldKarat) {
-      GoldKarat.k24 => s.platformGoldPricePerGram24kEtb,
-      GoldKarat.k22 => s.platformGoldPricePerGram22kEtb,
-      GoldKarat.k21 => s.platformGoldPricePerGram21kEtb,
-      GoldKarat.k18 => s.platformGoldPricePerGram18kEtb,
-      GoldKarat.k14 => s.platformGoldPricePerGram14kEtb,
-    };
+  static String wealthTransparency(AppLocalizations l, ZakatCalculatorState s) {
+    final config = s.config;
+    if (config == null) return '';
     final karatLabel = s.goldKarat.localizedLabel(l);
-    final rateStr = wealthSilverReferenceEtbPerGram.toStringAsFixed(2);
     final liquidSubtotal = s.cashOnHand + s.bankBalance + s.mobileWallet;
+    final nisab = config.nisab;
     final lines = <String>[
       l.calcWealthTransLiquidsLine(
         MoneyFormatter.etb(s.cashOnHand),
@@ -167,16 +171,18 @@ final class ZakatCalculatorStrings {
         MoneyFormatter.etb(s.mobileWallet),
         MoneyFormatter.etb(liquidSubtotal),
       ),
-      l.calcWealthTransBusinessLine(MoneyFormatter.etb(s.totalBusinessAssetsEtb)),
+      l.calcWealthTransBusinessLine(
+        MoneyFormatter.etb(s.totalBusinessAssetsEtb),
+      ),
       l.calcWealthTransGoldLine(
         s.goldGrams.toStringAsFixed(2),
         karatLabel,
-        MoneyFormatter.etb(selectedGoldPriceEtb),
+        MoneyFormatter.etb(s.goldPricePerGramEtb),
         MoneyFormatter.etb(s.goldValueEtb),
       ),
       l.calcWealthTransSilverLine(
         s.silverGrams.toStringAsFixed(2),
-        rateStr,
+        config.silverPricePerGramEtb.toStringAsFixed(2),
         MoneyFormatter.etb(s.silverValueEtb),
       ),
       l.calcWealthTransRollupLine(
@@ -191,8 +197,9 @@ final class ZakatCalculatorStrings {
         MoneyFormatter.etb(s.netWealthEtb),
       ),
       l.calcWealthTransNisabLine(
-        wealthNisabGoldGrams.toString(),
-        MoneyFormatter.etb(s.platformGoldPricePerGram24kEtb),
+        grams(nisab.basisGrams),
+        nisabMetal(l, nisab.basis),
+        MoneyFormatter.etb(nisabMetalPricePerGram(config)),
         MoneyFormatter.etb(s.nisabThresholdEtb),
       ),
     ];
@@ -202,6 +209,7 @@ final class ZakatCalculatorStrings {
           MoneyFormatter.etb(s.netWealthEtb),
           MoneyFormatter.etb(s.estimatedZakatDueEtb),
           MoneyFormatter.etb(s.nisabThresholdEtb),
+          percent(config.wealthRate),
         ),
       );
     } else {
@@ -216,32 +224,22 @@ final class ZakatCalculatorStrings {
     return lines.join('\n');
   }
 
-  static String cropTransparency(AppLocalizations l, ZakatCalculatorInitial s) {
-    final boundedRain = s.rainSharePercent.clamp(0, 100).toDouble();
-    final boundedIrrigated = s.irrigatedSharePercent.clamp(0, 100).toDouble();
-    final normalized = (boundedRain + boundedIrrigated) == 0
-        ? 1.0
-        : (boundedRain + boundedIrrigated);
-    final rainShare = boundedRain / normalized;
-    final irrigatedShare = boundedIrrigated / normalized;
-    final cropRate = switch (s.cropIrrigationMode) {
-      CropIrrigationMode.rainFed => 0.10,
-      CropIrrigationMode.irrigated => 0.05,
-      CropIrrigationMode.mixed =>
-        (0.10 * rainShare) + (0.05 * irrigatedShare),
-    };
-    final cropDueKg = s.cropKg >= cropNisabKg ? s.cropKg * cropRate : 0.0;
+  static String cropTransparency(AppLocalizations l, ZakatCalculatorState s) {
+    final config = s.config;
+    if (config == null) return '';
+    final cropRate = s.cropEffectiveRate;
+    final cropDueKg = s.cropZakatDueKg;
 
-    if (s.cropKg < cropNisabKg) {
+    if (!s.cropAboveNisab) {
       return l.calcCropTransBelow(
         s.cropKg.toStringAsFixed(2),
-        cropNisabKg.toStringAsFixed(0),
+        grams(config.crops.nisabKg),
       );
     }
     if (s.cropIrrigationMode == CropIrrigationMode.mixed) {
       return l.calcCropTransMixed(
-        boundedRain.toStringAsFixed(0),
-        boundedIrrigated.toStringAsFixed(0),
+        s.rainSharePercent.toStringAsFixed(0),
+        s.irrigatedSharePercent.toStringAsFixed(0),
         (cropRate * 100).toStringAsFixed(2),
         s.cropKg.toStringAsFixed(2),
         (cropRate * 100).toStringAsFixed(2),

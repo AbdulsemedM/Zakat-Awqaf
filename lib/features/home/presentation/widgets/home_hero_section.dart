@@ -8,29 +8,72 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../core/common/utils/money_formatter.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../../core/utils/number_format.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../data/models/home_summary.dart';
 
 /// Extra bottom padding so the quick-actions card can overlap the hero.
 const double kHomeHeroOverlap = 44;
 
 class HomeHeroSection extends StatelessWidget {
-  const HomeHeroSection({super.key});
+  const HomeHeroSection({super.key, this.summary});
+
+  /// Live figures; each one is hidden while it is `null`.
+  final HomeSummary? summary;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final summary = this.summary;
+    final totalCollected = summary?.totalCollectedEtb;
+    final monthCollected = summary?.currentMonthCollectedEtb;
+    final beneficiaries = summary?.totalBeneficiariesSupported;
+    final change = summary?.changePercent;
+    final panels = [
+      if (monthCollected != null)
+        _StatPanel(
+          icon: TablerIcons.coin,
+          label: l10n.thisMonth.toUpperCase(),
+          value: MoneyFormatter.etbCompact(monthCollected),
+          subtext: change == null ? null : _changeText(l10n, change),
+          gold: true,
+        ),
+      if (beneficiaries != null)
+        _StatPanel(
+          icon: TablerIcons.heart_handshake,
+          label: l10n.totalBeneficiariesSupported.toUpperCase(),
+          value: formatThousands(beneficiaries),
+          subtext: l10n.homeBeneficiariesSubtext,
+        ),
+    ];
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
       child: DecoratedBox(
-        decoration: const BoxDecoration(gradient: PrimaryHero.zakatHeroGradient),
+        decoration: const BoxDecoration(
+          gradient: PrimaryHero.zakatHeroGradient,
+        ),
         child: Stack(
           children: [
-            const IslamicPatternLayer(opacity: 0.13, fadeTo: Alignment.bottomLeft),
-            const Positioned(top: 34, right: -26, child: CrescentOrnament(size: 150)),
+            const IslamicPatternLayer(
+              opacity: 0.13,
+              fadeTo: Alignment.bottomLeft,
+            ),
+            const Positioned(
+              top: 34,
+              right: -26,
+              child: CrescentOrnament(size: 150),
+            ),
             SafeArea(
               bottom: false,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 6, 20, 24 + kHomeHeroOverlap),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  6,
+                  20,
+                  24 + kHomeHeroOverlap,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,31 +115,27 @@ class HomeHeroSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     const GoldOrnamentDivider(width: 64),
-                    const SizedBox(height: 18),
-                    const _LiveImpactPill(),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _StatPanel(
-                            icon: TablerIcons.coin,
-                            label: l10n.thisMonth.toUpperCase(),
-                            value: 'ETB 1.12M',
-                            subtext: '↑ Growing strong',
-                            gold: true,
-                          ),
+                    if (totalCollected != null) ...[
+                      const SizedBox(height: 18),
+                      _LiveImpactPill(
+                        totalCollectedEtb: totalCollected,
+                        live: summary!.isLive(DateTime.now()),
+                      ),
+                    ],
+                    if (panels.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final (index, panel) in panels.indexed) ...[
+                              if (index > 0) const SizedBox(width: 12),
+                              Expanded(child: panel),
+                            ],
+                          ],
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _StatPanel(
-                            icon: TablerIcons.heart_handshake,
-                            label: l10n.totalBeneficiariesSupported.toUpperCase(),
-                            value: '4,982',
-                            subtext: 'beneficiaries',
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -120,9 +159,9 @@ class _ModeSwitchButton extends StatelessWidget {
         final controller = context.read<AppSettingsController>();
         await controller.setAppMode(AppMode.awqaf);
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.switchedToAwqafMode)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.switchedToAwqafMode)));
         context.go('/awqaf');
       },
       itemBuilder: (context) => [
@@ -134,7 +173,9 @@ class _ModeSwitchButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white.withValues(alpha: 0.10),
-          border: Border.all(color: AppColors.goldLight.withValues(alpha: 0.45)),
+          border: Border.all(
+            color: AppColors.goldLight.withValues(alpha: 0.45),
+          ),
         ),
         child: const Icon(
           TablerIcons.switch_horizontal,
@@ -146,8 +187,19 @@ class _ModeSwitchButton extends StatelessWidget {
   }
 }
 
+String _changeText(AppLocalizations l10n, double percent) {
+  if (percent == 0) return l10n.homeChangeFlat;
+  final value = percent.abs().toStringAsFixed(1);
+  return percent > 0 ? l10n.homeChangeUp(value) : l10n.homeChangeDown(value);
+}
+
+/// Total collected; the pulsing dot and "LIVE" only while the figures are
+/// fresh (see [HomeSummary.isLive]).
 class _LiveImpactPill extends StatefulWidget {
-  const _LiveImpactPill();
+  const _LiveImpactPill({required this.totalCollectedEtb, required this.live});
+
+  final double totalCollectedEtb;
+  final bool live;
 
   @override
   State<_LiveImpactPill> createState() => _LiveImpactPillState();
@@ -168,6 +220,8 @@ class _LiveImpactPillState extends State<_LiveImpactPill>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final amount = MoneyFormatter.etb(widget.totalCollectedEtb);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
@@ -178,27 +232,31 @@ class _LiveImpactPillState extends State<_LiveImpactPill>
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FadeTransition(
-            opacity: Tween(begin: 0.35, end: 1.0).animate(_pulse),
-            child: Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                color: AppColors.goldLight,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.goldLight.withValues(alpha: 0.7),
-                    blurRadius: 8,
-                  ),
-                ],
+          if (widget.live) ...[
+            FadeTransition(
+              opacity: Tween(begin: 0.35, end: 1.0).animate(_pulse),
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: AppColors.goldLight,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.goldLight.withValues(alpha: 0.7),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 10),
+            const SizedBox(width: 10),
+          ],
           Flexible(
             child: Text(
-              'LIVE · ETB 12,842,300 collected',
+              widget.live
+                  ? l10n.homeLiveCollected(amount)
+                  : l10n.homeCollected(amount),
               overflow: TextOverflow.ellipsis,
               style: AppTypography.label(
                 fontSize: 12,
@@ -219,14 +277,14 @@ class _StatPanel extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
-    required this.subtext,
+    this.subtext,
     this.gold = false,
   });
 
   final IconData icon;
   final String label;
   final String value;
-  final String subtext;
+  final String? subtext;
   final bool gold;
 
   @override
@@ -269,11 +327,16 @@ class _StatPanel extends StatelessWidget {
               letterSpacing: -0.3,
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            subtext,
-            style: AppTypography.body(fontSize: 11, color: AppColors.mintGreenMuted),
-          ),
+          if (subtext != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              subtext!,
+              style: AppTypography.body(
+                fontSize: 11,
+                color: AppColors.mintGreenMuted,
+              ),
+            ),
+          ],
         ],
       ),
     );

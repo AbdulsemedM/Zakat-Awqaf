@@ -11,6 +11,8 @@ import '../../features/awqaf/home/presentation/screens/awqaf_home_screen.dart';
 import '../../features/awqaf/portfolio/presentation/screens/awqaf_portfolio_screen.dart';
 import '../../features/awqaf/profile/presentation/screens/awqaf_profile_screen.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
+import '../../features/causes/presentation/screens/cause_detail_screen.dart';
+import '../../features/causes/presentation/screens/causes_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/bloc/impact_bloc.dart';
 import '../../features/impact/bloc/impact_event.dart';
@@ -120,15 +122,15 @@ abstract class AppRouterModule {
       ),
       GoRoute(
         path: '/zakat/summary',
-        builder: (context, state) =>
-            const ZakatThemed(child: HomeScreen()),
+        builder: (context, state) => const ZakatThemed(child: HomeScreen()),
       ),
       GoRoute(
         path: '/beneficiary-registration',
         builder: (context, state) => ZakatThemed(
           child: BlocProvider(
-            create: (_) => getIt<BeneficiaryRegistrationBloc>()
-              ..add(const BeneficiaryRegistrationStarted()),
+            create: (_) =>
+                getIt<BeneficiaryRegistrationBloc>()
+                  ..add(const BeneficiaryRegistrationStarted()),
             child: const BeneficiaryRegistrationScreen(),
           ),
         ),
@@ -149,10 +151,19 @@ abstract class AppRouterModule {
         },
       ),
       GoRoute(
-        path: '/donation/international',
-        builder: (context, state) => const ZakatThemed(
-          child: InternationalDonationScreen(),
+        path: '/causes',
+        builder: (context, state) => const ZakatThemed(child: CausesScreen()),
+      ),
+      GoRoute(
+        path: '/causes/:id',
+        builder: (context, state) => ZakatThemed(
+          child: CauseDetailScreen(causeId: state.pathParameters['id']!),
         ),
+      ),
+      GoRoute(
+        path: '/donation/international',
+        builder: (context, state) =>
+            const ZakatThemed(child: InternationalDonationScreen()),
       ),
       GoRoute(
         path: '/zakat/certificate',
@@ -161,7 +172,9 @@ abstract class AppRouterModule {
           if (extra is! ZakatCertificateArgs) {
             return ZakatThemed(
               child: Scaffold(
-                body: Center(child: Text(context.l10n.missingCertificateDetails)),
+                body: Center(
+                  child: Text(context.l10n.missingCertificateDetails),
+                ),
               ),
             );
           }

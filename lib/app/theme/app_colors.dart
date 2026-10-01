@@ -58,6 +58,10 @@ abstract final class AppColors {
   static const Color waterGradientStart = Color(0xFF0B3C5D);
   static const Color waterGradientEnd = Color(0xFF1F7A9E);
   static const Color sadaqahGradientStart = Color(0xFFB8862A);
+  static const Color healthGradientStart = Color(0xFF0E5A5A);
+  static const Color healthGradientEnd = Color(0xFF2A9D8F);
+  static const Color emergencyGradientStart = Color(0xFF7A2E1E);
+  static const Color emergencyGradientEnd = Color(0xFFB4532A);
 
   /// Soft emerald-tinted shadow for elevated cards.
   static const Color shadow = Color(0x1A0A3A2C);

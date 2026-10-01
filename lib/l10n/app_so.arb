@@ -19,7 +19,6 @@
   "transparencyQuote": "Hufnaan, isla xisaabtan, iyo saameyn muuqata: sadaqadaadu waxay xoojisaa gargaar iyo awoodsiin qaran.",
   "payZakatCause": "Sii Zakat",
   "zakatAlFitr": "Zakat Al-Fitr",
-  "zakatDueDays": "Waxay ku egtahay qiyaastii 22 maalmood gudahood.",
   "setReminder": "Deji Xasuusin",
   "needQuickWayGive": "Bixin Degdeg ah",
   "supportCommunityNeeds": "Ku taageer baahiyaha bulshada si degdeg ah adigoo Sadaqo bixinaya.",
@@ -220,7 +219,7 @@
   "calcTabLivestock": "Xoolaha",
   "calcTabCrops": "Dalagga",
   "calcStep1NisabTitle": "Tallaabada 1: Xadka Nisab",
-  "calcStep1NisabBody": "Sakadu waxay ku xiran tahay haddii hantidaada saafiga ah ay dhaafto xadka. Nisab waxay ku salaysan tahay 85g ee madal 24k qiimaha dahabka ah.",
+  "calcStep1NisabBody": "Sakadu waa waajib haddii hantidaada saafiga ahi gaarto nisabka: {grams} g oo {metal} ah qiimaha maanta.",
   "calcNisabGoldFormula": "{grams}_ × {price} = {total}",
   "@calcNisabGoldFormula": {
     "placeholders": {
@@ -235,7 +234,7 @@
       }
     }
   },
-  "calcNisabThresholdBanner": "Xadka Nisab (heerka goobta, 85g dahab u dhigma): {amount}",
+  "calcNisabThresholdBanner": "Xadka Nisab ({grams} g {metal}): {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
       "amount": {
@@ -243,14 +242,9 @@
       }
     }
   },
-  "calcUsdEtb": "USD/ETB",
-  "calcFxLive": "Isticmaalka sarifka tooska ah",
-  "calcFxCache": "Isticmaalka sarifka kaydsan",
-  "calcFxFallback": "Isticmaalka qiimaha sarifka dib u dhaca",
-  "calcTimestampUnavailable": "timestamp lama heli karo",
   "calcStep1LivestockTitle": "Tallaabada 1: Habka cabbirka xoolaha",
   "calcStep1LivestockBody": "Sakada xoolaha waxaa lagu xisaabiyaa miisaanka madaxa-tirinta (ma aha % qiimaha).",
-  "calcStep1LivestockNisabNote": "Marinka Nisab: Idaha/Riyaha 40, Lo'da 30, Geela 5. Lo'du waxay isticmaashaa 30/40 isku-dar ah; geelu waxa ay raacaan heerarka kala duwan.",
+  "calcStep1LivestockNisabNote": "Xadka Nisab: Idaha/Riyaha {sheep}, Lo'da {cattle}, Geela {camels}. Lo'du waxay isticmaashaa isku-darka {tabiPer}/{musinnahPer}; geeluna wuxuu raacaa heerarka.",
   "calcAdvisoryPrefix": "La-talin: {text}_",
   "@calcAdvisoryPrefix": {
     "placeholders": {
@@ -267,7 +261,7 @@
   "calcArabicDefHiqqah": "hasha oo saddex jir ah",
   "calcArabicDefJadhah": "hasha afar jir ah",
   "calcStep1CropTitle": "Talaabada 1: Dalagyada (Ushr) xisaabinta",
-  "calcStep1CropBody": "Sakada dalagga waxay ku egtahay xilliga goosashada. Nisab waa 653kg. Heerku waa 10% (Roob-quut), 5% (waraabka la waraabiyo), ama lagu miisaamay isku darka.",
+  "calcStep1CropBody": "Sakada dalagga waxay ku egtahay xilliga goosashada. Nisab waa {nisab}kg. Heerku waa {rainRate}% (Roob-quut), {irrigatedRate}% (waraabka la waraabiyo), ama lagu miisaamay isku darka.",
   "calcCropLineThreshold": "{kg}_ kg {relation} 653 kg",
   "@calcCropLineThreshold": {
     "placeholders": {
@@ -383,7 +377,7 @@
     }
   },
   "calcHowCropZakatWorksTitle": "Sida sakada dalagga u shaqeyso",
-  "calcHowCropZakatWorksBody": "Nisab: 653kg. Heerarka: roobka lagu quudiyo 10%, waraabinta 5%, isku dhafan = kala qaybsanaan miisaan leh. Sakadu waxay ku beegan tahay xilliga goosashada (wax sanadle ah oo la beero ma jirto).",
+  "calcHowCropZakatWorksBody": "Nisab: {nisab}kg. Heerarka: roobka lagu quudiyo {rainRate}%, waraabinta {irrigatedRate}%, isku dhafan = kala qaybsanaan miisaan leh. Sakadu waxay ku beegan tahay xilliga goosashada (wax sanadle ah oo la beero ma jirto).",
   "calcHowCropZakatNote": "Fiiro gaar ah: Appku wuxuu u dabaqaa xeerarkan si guud si ay u fududaato. Jagooyinka aqoon-yahanku way ku kala duwan yihiin baaxadda nooca dalagga iyo dhimista kharashyada; la tasho aqoonyahanno aqoon u leh kiisas gaar ah.",
   "calcWealthNisabHeading": "Nisaab & Maal Sakada",
   "calcWealthNisabLine": "Xadka Nisab: {nisab}_",
@@ -403,17 +397,6 @@
     }
   },
   "calcHowWealthZakatWorksTitle": "Sida hantida Zakada loo xisaabiyo",
-  "calcHowWealthZakatWorksBody": "Waxaan ku darnaa lacag caddaan ah oo gacanta ku jirta, hadhaaga bangiga, boorsooyinka mobilada, hantida ganacsiga, iyo qiimaha dahabka iyo qalinka. Nisab waa {grams} g oo dahab ah 24k qiimaha appka garaamkii. Dahabka aad haysato waxaa lagu qiimeeyaa iyadoo la isticmaalayo qiimaha app ee karatka aad doorato. Silver waxay isticmaashaa tixraac go'an oo ah {silverRate} ETB garaamkii. Deymaha aad gasho waa laga jaray si aad u hesho hanti saafi ah. Haddii hantida saafiga ahi ay ka sarreyso nisaab ama ka sareeyso, Zakadu waa 2.5% hantida saafiga ah.",
-  "@calcHowWealthZakatWorksBody": {
-    "placeholders": {
-      "grams": {
-        "type": "int"
-      },
-      "silverRate": {
-        "type": "int"
-      }
-    }
-  },
   "calcHowWealthZakatNote": "Fiiro gaar ah: Culimadu waxay ku kala duwan yihiin hantida sakada lagu bixin karo, sida daymaha loo dhimo hantida, marka la qabanayo sanadka (Hawl) iyo tafaasiil kale. Shaashadani waa qiyaas waxbarasho - ka xaqiiji xaaladaada aqoonyahano aqoon leh.",
   "calcWealthBreakdownTitle": "Sida loo xisaabiyo cadadka kore",
   "calcWealthTransLiquidsLine": "Lacag caddaan ah + bangiga + mobilada: {cash}_ + {bank} + {mobile} = {subtotal}",
@@ -461,7 +444,7 @@
       }
     }
   },
-  "calcWealthTransNisabLine": "Nisab: {grams}_ g × 24k ({price}/g) = {nisab}",
+  "calcWealthTransNisabLine": "Nisab: {grams} g {metal} × {price}/g = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
       "grams": {
@@ -517,7 +500,7 @@
       }
     }
   },
-  "calcWealthTransDueAbove": "Sababtoo ah {net} waa nisab ama ka sareeya ({nisab}), Sakada la leeyahay = {net} × 2.5% = {due}.",
+  "calcWealthTransDueAbove": "Sababtoo ah {net} waa nisab ama ka sareeya ({nisab}), Sakada la leeyahay = {net} × {rate}% = {due}.",
   "@calcWealthTransDueAbove": {
     "placeholders": {
       "net": {
@@ -597,7 +580,7 @@
     }
   },
   "calcLsNone": "Ma jiraan wax xoolo ah oo loo haysto marka la eego tirada hadda",
-  "calcTransSheep": "Meesha Idaha/Riyaha: {head} >= 40 => {due} lax ah.",
+  "calcTransSheep": "Meesha Idaha/Riyaha: {head} >= {min} => {due} lax ah.",
   "@calcTransSheep": {
     "placeholders": {
       "head": {
@@ -608,7 +591,7 @@
       }
     }
   },
-  "calcTransCattle": "Xadka lo'da: {head}_ >= 30 => la'aanta {tabi} tabi', {musinnah} musinnah (isku darka 30/40).",
+  "calcTransCattle": "Xadka lo'da: {head}_ >= {min} => la'aanta {tabi} tabi', {musinnah} musinnah (isku darka {tabiPer}/{musinnahPer}).",
   "@calcTransCattle": {
     "placeholders": {
       "head": {
@@ -622,7 +605,7 @@
       }
     }
   },
-  "calcTransCamel": "Meesha geela: {head}_ >= 5 => la rabo {due}.",
+  "calcTransCamel": "Meesha geela: {head}_ >= {min} => la rabo {due}.",
   "@calcTransCamel": {
     "placeholders": {
       "head": {
@@ -715,31 +698,6 @@
   "calcCamelNoDue": "Xaq uma laha",
   "calcCamelSheepN": "{count, plural, one{1 ido} other{{count} ido}}",
   "@calcCamelSheepN": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamel1BintMakhad": "1 bint makhad",
-  "calcCamel1BintLabun": "1 bint labuun",
-  "calcCamel1Hiqqah": "1 xiqqaah",
-  "calcCamel1Jadhah": "1 jaadka",
-  "calcCamel2BintLabun": "2 bint labuun",
-  "calcCamel2Hiqqah": "2 xiqqaah",
-  "calcCamelCombo": "{hiqqah}_ xiqqah + {bintLabun} bint labuun",
-  "@calcCamelCombo": {
-    "placeholders": {
-      "hiqqah": {
-        "type": "int"
-      },
-      "bintLabun": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamelApproxBintLabun": "{count}_ bint labuun (ku dhawaad ​​isku darka)",
-  "@calcCamelApproxBintLabun": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -917,5 +875,57 @@
   "regSubmittedNoAccount": "Diiwaangelinta waa la gudbiyay. Xisaab gelitaan lama abuurin sababtoo ah iimayl lama bixin.",
   "loginIdentifierLabel": "Lambarka taleefanka ama iimayl",
   "loginIdentifierRequired": "Geli lambarka taleefankaaga ama iimaylkaaga",
-  "loginIdentifierInvalid": "Geli lambar taleefan sax ah (tusaale 0911223344) ama iimayl sax ah"
+  "loginIdentifierInvalid": "Geli lambar taleefan sax ah (tusaale 0911223344) ama iimayl sax ah",
+  "calcCamelBintMakhadN": "{count} bint makhad",
+  "calcCamelBintLabunN": "{count} bint labuun",
+  "calcCamelHiqqahN": "{count} xiqqaah",
+  "calcCamelJadhahN": "{count} jaadka",
+  "calcNisabMetalGold": "dahab (24k)",
+  "calcNisabMetalSilver": "fiddo",
+  "calcPricesAsOf": "Qiimaha ilaa {date} · {source}",
+  "calcPricesAsOfNoSource": "Qiimaha ilaa {date}",
+  "calcPricesStale": "Qiimaha waxaa laga yaabaa inuu duugoobay.",
+  "calcPricesSavedCopy": "Lama cusbooneysiin karin qiimaha. Waxaa la tusayaa qiimaha lagu kaydiyay qalabkan.",
+  "calcConfigErrorTitle": "Lama soo rarin karin qiimaha sakada maanta",
+  "calcConfigErrorBody": "Hubi xiriirkaaga oo mar kale isku day.",
+  "calcConfigNotReadyBody": "Qiimaha dahabka iyo fiddada weli lama hayo. Fadlan mar dambe isku day.",
+  "commonRetry": "Mar kale isku day",
+  "calcLivestockEstimateLine": "Qiimaha suuqa ee la qiyaasay: {amount}",
+  "calcLivestockEstimateNote": "Waxaa lagu qiyaasay celceliska qiimaha suuqa xoolaha midkiiba. Waad beddeli kartaa qadarka ka hor intaadan bixin.",
+  "homeLiveCollected": "TOOS · {amount} ayaa la ururiyay",
+  "homeCollected": "{amount} ayaa la ururiyay",
+  "homeChangeUp": "↑ {percent}% marka la barbardhigo bishii hore",
+  "homeChangeDown": "↓ {percent}% marka la barbardhigo bishii hore",
+  "homeChangeFlat": "La mid ah bishii hore",
+  "homeBeneficiariesSubtext": "qoys",
+  "fitrStatusOpen": "HADDA FURAN",
+  "fitrStatusClosed": "XIRAN",
+  "fitrStartsIn": "{days, plural, =0{Maanta ayuu bilaabmayaa} =1{Berri ayuu bilaabmayaa} other{Wuxuu bilaabmayaa {days} maalmood gudahood}}",
+  "fitrDaysLeft": "{days, plural, =0{Maanta waa maalinta ugu dambeysa ee bixinta} =1{1 maalin ayaa ka harsan bixinta} other{{days} maalmood ayaa ka harsan bixinta}}",
+  "fitrClosedOn": "Waxaa la xiray {date}",
+  "fitrPerPerson": "{amount} qofkiiba",
+  "causesTitle": "Mashaariicda",
+  "causesSubtitle": "Mashaariicda sakadaadu taageerto",
+  "causesActive": "Firfircoon",
+  "causesClosed": "Xiran",
+  "causesAllCategories": "Dhammaan",
+  "causeCategoryEducation": "Waxbarasho",
+  "causeCategoryWater": "Biyo",
+  "causeCategoryHealth": "Caafimaad",
+  "causeCategoryFood": "Cunto",
+  "causeCategoryShelter": "Hoy",
+  "causeCategoryLivelihood": "Nolol maalmeed",
+  "causeCategoryEmergency": "Gurmad degdeg ah",
+  "causeCategoryGeneral": "Guud",
+  "causeBadgeUrgent": "DEGDEG",
+  "causeBadgeEssential": "MUHIIM",
+  "causeRaisedOfGoal": "{raised} ayaa la ururiyay {goal} kamid ah",
+  "causeRaised": "{raised} ayaa la ururiyay",
+  "causeEndsOn": "Wuxuu dhammaanayaa {date}",
+  "causeEndedOn": "Wuxuu dhammaaday {date}",
+  "causesEmpty": "Weli ma jiraan mashaariic la muujiyo.",
+  "causesLoadError": "Lama soo rarin karin mashaariicda.",
+  "causeNotFound": "Mashruucan hadda lama heli karo.",
+  "causeAbout": "Ku saabsan mashruucan",
+  "payProjectsLoading": "Mashaariicda ayaa la soo rarayaa…"
 }

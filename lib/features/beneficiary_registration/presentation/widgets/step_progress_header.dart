@@ -35,17 +35,6 @@ class StepProgressHeader extends StatelessWidget {
         BeneficiaryRegistrationStep.disbursement => -1,
       };
     }
-    if (method == RegistrationMethod.fastTrack) {
-      return switch (step) {
-        BeneficiaryRegistrationStep.needs => 0,
-        BeneficiaryRegistrationStep.disbursement => 1,
-        BeneficiaryRegistrationStep.welcome => -1,
-        BeneficiaryRegistrationStep.identity => -1,
-        BeneficiaryRegistrationStep.institutionDetails => -1,
-        BeneficiaryRegistrationStep.setPassword => -1,
-        BeneficiaryRegistrationStep.institutionDocuments => -1,
-      };
-    }
     return switch (step) {
       BeneficiaryRegistrationStep.identity => 0,
       BeneficiaryRegistrationStep.needs => 1,
@@ -69,7 +58,6 @@ class StepProgressHeader extends StatelessWidget {
     }
 
     final labels = switch (method) {
-      RegistrationMethod.fastTrack => [l10n.regStepNeeds, l10n.regStepPayout],
       RegistrationMethod.institution => [
         l10n.regStepDetails,
         l10n.regStepPassword,

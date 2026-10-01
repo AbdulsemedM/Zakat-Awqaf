@@ -68,9 +68,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get zakatAlFitr => 'Zakaa Al-Fitr';
 
   @override
-  String get zakatDueDays => 'Guyyoota 22 keessatti ni ga\'a jechuun tilmaama.';
-
-  @override
   String get setReminder => 'Yaadachiisa kaa\'i';
 
   @override
@@ -142,8 +139,9 @@ class AppLocalizationsOm extends AppLocalizations {
   String get calcStep1NisabTitle => 'Tarkaanfii 1: Ulaagaa Nisab';
 
   @override
-  String get calcStep1NisabBody =>
-      'Zakaan kan kaffalamu yoo qabeenyi qulqulluun kee ulaagaa irra darbeedha. Nisab gatii warqee 85g platform 24k irratti hundaa\'a.';
+  String calcStep1NisabBody(String grams, String metal) {
+    return 'Qabeenyi qulqulluun kee nisab yoo ga\'e zakaan kaffalama: $metal $grams g gatii har\'aatiin.';
+  }
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
@@ -151,24 +149,9 @@ class AppLocalizationsOm extends AppLocalizations {
   }
 
   @override
-  String calcNisabThresholdBanner(String amount) {
-    return 'Ulaagaa Nisab (saffisa waltajjii, warqee 85g walqixa): $amount .';
+  String calcNisabThresholdBanner(String amount, String grams, String metal) {
+    return 'Ulaagaa Nisab ($metal $grams g): $amount';
   }
-
-  @override
-  String get calcUsdEtb => 'USD/ETB';
-
-  @override
-  String get calcFxLive => 'Sadarkaa jijjiirraa kallattiin fayyadamuu';
-
-  @override
-  String get calcFxCache => 'Sadarkaa jijjiirraa kaached fayyadamuu';
-
-  @override
-  String get calcFxFallback => 'Sadarkaa jijjiirraa fallback fayyadamuu';
-
-  @override
-  String get calcTimestampUnavailable => 'chaappaan yeroo hin jiru';
 
   @override
   String get calcStep1LivestockTitle => 'Tarkaanfii 1: Mala iskeelii horii';
@@ -178,8 +161,15 @@ class AppLocalizationsOm extends AppLocalizations {
       'Zakaan beeyladaa kan shallagamu madaallii lakkoofsa mataa fiizikaalaatiin (% gatii miti).';
 
   @override
-  String get calcStep1LivestockNisabNote =>
-      'Ulaagaa Nisab: Hoolaa/Re’ee 40, Loon 30, Gaala 5. Loon walnyaatinsa 30/40 fayyadama; gaalli sadarkaa sadarkaa hordofu.';
+  String calcStep1LivestockNisabNote(
+    int sheep,
+    int cattle,
+    int camels,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'Ulaagaa Nisab: Hoolaa/Re’ee $sheep, Loon $cattle, Gaala $camels. Loon walitti makaa $tabiPer/$musinnahPer fayyadama; gaalli sadarkaalee hordofu.';
+  }
 
   @override
   String calcAdvisoryPrefix(String text) {
@@ -211,8 +201,13 @@ class AppLocalizationsOm extends AppLocalizations {
   String get calcStep1CropTitle => 'Tarkaanfii 1: Shallaggii midhaanii (Ushr).';
 
   @override
-  String get calcStep1CropBody =>
-      'Zakaan midhaanii yeroo sassaabamuu qaba. Nisab 653kg dha. Saffisni %10 (roobaan kan sooramu), %5 (jallisii), ykn makaadhaaf ulfaataadha.';
+  String calcStep1CropBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'Zakaan midhaanii yeroo sassaabamuu qaba. Nisab ${nisab}kg dha. Saffisni %$rainRate (roobaan kan sooramu), %$irrigatedRate (jallisii), ykn makaadhaaf ulfaataadha.';
+  }
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -404,8 +399,13 @@ class AppLocalizationsOm extends AppLocalizations {
       'Zakaan midhaan akkamitti akka hojjetu';
 
   @override
-  String get calcHowCropZakatWorksBody =>
-      'Nisab: 653kg. Sadarkaa: roobaan kan nyaatame %10, kan jallisiin misoomu 5%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).';
+  String calcHowCropZakatWorksBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'Nisab: ${nisab}kg. Sadarkaa: roobaan kan nyaatame %$rainRate, kan jallisiin misoomu $irrigatedRate%, makaa = ulfaataa kan ta’e qoqqoodinsa. Zakaan yeroo sassaabamuu qaba (midhaniif hawl waggaa hin qabu).';
+  }
 
   @override
   String get calcHowCropZakatNote =>
@@ -427,11 +427,6 @@ class AppLocalizationsOm extends AppLocalizations {
   @override
   String get calcHowWealthZakatWorksTitle =>
       'Akkamitti qabeenyi Zakaan shallagama';
-
-  @override
-  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'Maallaqa harka jiru, hafnaan baankii, boorsaa moobaayilaa, qabeenya daldalaa, fi gatii warqee fi meetii itti daballa. Nisab warqee $grams g gatii app’n giraama tokkoof 24k ta’een. Warqeen ati qabdu kaaraatii filatteef saffisa appii fayyadamuun gatii kennama. Meetiin wabii dhaabbataa $silverRate ETB giraama tokkoof fayyadama. Dirqamni ati galchitu qabeenya qulqulluu argachuuf hir’ifama. Qabeenyi qulqulluun nisaab irratti yookiin isaa ol yoo ta’e, Zakaan kaffalamuu qabu qabeenya qulqulluu irraa %2.5 ta’a.';
-  }
 
   @override
   String get calcHowWealthZakatNote =>
@@ -468,8 +463,13 @@ class AppLocalizationsOm extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'Nisab: $grams g × 24k ($price/g) = $nisab .';
+  String calcWealthTransNisabLine(
+    String grams,
+    String metal,
+    String price,
+    String nisab,
+  ) {
+    return 'Nisab: $metal $grams g × $price/g = $nisab';
   }
 
   @override
@@ -493,8 +493,13 @@ class AppLocalizationsOm extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return '$net nisab ($nisab) irratti ykn isaa ol waan ta\'eef, Zakaa kaffalamuu = $net × 2.5% = $due.';
+  String calcWealthTransDueAbove(
+    String net,
+    String due,
+    String nisab,
+    String rate,
+  ) {
+    return '$net nisab ($nisab) irratti ykn isaa ol waan ta\'eef, Zakaa kaffalamuu = $net × $rate% = $due.';
   }
 
   @override
@@ -578,18 +583,25 @@ class AppLocalizationsOm extends AppLocalizations {
       'Lakkoofsa amma jiruun beeylada kaffalamuu qabu hin jiru';
 
   @override
-  String calcTransSheep(int head, int due) {
-    return 'Ulaagaa Hoolotaa/Re\'ee: $head >= 40 => hoolaa $due yeroon isaa ga\'e.';
+  String calcTransSheep(int head, int due, int min) {
+    return 'Ulaagaa Hoolotaa/Re\'ee: $head >= $min => hoolaa $due yeroon isaa ga\'e.';
   }
 
   @override
-  String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'Ulaagaa loon: $head >= 30 => sababa $tabi tabii\', $musinnah musinnah (walmakaa 30/40).';
+  String calcTransCattle(
+    int head,
+    int tabi,
+    int musinnah,
+    int min,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'Ulaagaa loon: $head >= $min => sababa $tabi tabii\', $musinnah musinnah (walmakaa $tabiPer/$musinnahPer).';
   }
 
   @override
-  String calcTransCamel(int head, String due) {
-    return 'Ulaagaa gaala: $head >= 5 => sababa $due.';
+  String calcTransCamel(int head, String due, int min) {
+    return 'Ulaagaa gaala: $head >= $min => sababa $due.';
   }
 
   @override
@@ -658,34 +670,6 @@ class AppLocalizationsOm extends AppLocalizations {
       one: '1 hoolaa',
     );
     return '$_temp0';
-  }
-
-  @override
-  String get calcCamel1BintMakhad => '1 bint makhad jedhamuun beekama';
-
-  @override
-  String get calcCamel1BintLabun => '1 bint labun jedhamuun beekama';
-
-  @override
-  String get calcCamel1Hiqqah => '1 hiqqaa';
-
-  @override
-  String get calcCamel1Jadhah => '1 jadhah';
-
-  @override
-  String get calcCamel2BintLabun => '2 bint labun jedhamuun beekama';
-
-  @override
-  String get calcCamel2Hiqqah => '2 hiqqaa';
-
-  @override
-  String calcCamelCombo(int hiqqah, int bintLabun) {
-    return '$hiqqah hiqqah + $bintLabun bint labun';
-  }
-
-  @override
-  String calcCamelApproxBintLabun(int count) {
-    return '$count bint labun (tilmaamaan walnyaatinsa) .';
   }
 
   @override
@@ -1673,4 +1657,217 @@ class AppLocalizationsOm extends AppLocalizations {
   @override
   String get loginIdentifierInvalid =>
       'Lakkoofsa bilbilaa sirrii (fkn 0911223344) ykn imeelii sirrii galchaa';
+
+  @override
+  String calcCamelBintMakhadN(int count) {
+    return '$count bint makhad jedhamuun beekama';
+  }
+
+  @override
+  String calcCamelBintLabunN(int count) {
+    return '$count bint labun jedhamuun beekama';
+  }
+
+  @override
+  String calcCamelHiqqahN(int count) {
+    return '$count hiqqaa';
+  }
+
+  @override
+  String calcCamelJadhahN(int count) {
+    return '$count jadhah';
+  }
+
+  @override
+  String get calcNisabMetalGold => 'warqee (24k)';
+
+  @override
+  String get calcNisabMetalSilver => 'meetii';
+
+  @override
+  String calcPricesAsOf(String date, String source) {
+    return 'Gatiiwwan hanga $date · $source';
+  }
+
+  @override
+  String calcPricesAsOfNoSource(String date) {
+    return 'Gatiiwwan hanga $date';
+  }
+
+  @override
+  String get calcPricesStale => 'Gatiiwwan haaromfamuu dhiisuu danda\'u.';
+
+  @override
+  String get calcPricesSavedCopy =>
+      'Gatiiwwan haaromsuun hin danda\'amne. Gatiiwwan meeshaa kana irratti kuufaman agarsiifamaa jiru.';
+
+  @override
+  String get calcConfigErrorTitle =>
+      'Gatii zakaa har\'aa fe\'uun hin danda\'amne';
+
+  @override
+  String get calcConfigErrorBody =>
+      'Walqunnamtii kee mirkaneessiitii irra deebi\'ii yaali.';
+
+  @override
+  String get calcConfigNotReadyBody =>
+      'Gatiin warqee fi meetii ammallee hin argamne. Maaloo booda irra deebi\'ii yaali.';
+
+  @override
+  String get commonRetry => 'Ammas yaali';
+
+  @override
+  String calcLivestockEstimateLine(String amount) {
+    return 'Gatii gabaa tilmaamame: $amount';
+  }
+
+  @override
+  String get calcLivestockEstimateNote =>
+      'Gatii gabaa giddu-galeessaa horii tokkootiin tilmaamame. Osoo hin kaffaliin dura hanga isaa jijjiiruu dandeessa.';
+
+  @override
+  String homeLiveCollected(String amount) {
+    return 'KALLATTIIN · $amount walitti qabame';
+  }
+
+  @override
+  String homeCollected(String amount) {
+    return '$amount walitti qabame';
+  }
+
+  @override
+  String homeChangeUp(String percent) {
+    return '↑ $percent% ji\'a darbe irraa';
+  }
+
+  @override
+  String homeChangeDown(String percent) {
+    return '↓ $percent% ji\'a darbe irraa';
+  }
+
+  @override
+  String get homeChangeFlat => 'Akkuma ji\'a darbee';
+
+  @override
+  String get homeBeneficiariesSubtext => 'maatii';
+
+  @override
+  String get fitrStatusOpen => 'AMMA BANAMAADHA';
+
+  @override
+  String get fitrStatusClosed => 'CUFAMEERA';
+
+  @override
+  String fitrStartsIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Guyyaa $days keessatti jalqaba',
+      one: 'Boru jalqaba',
+      zero: 'Har\'a jalqaba',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Kaffaluuf guyyoonni $days hafan',
+      one: 'Kaffaluuf guyyaan 1 hafe',
+      zero: 'Har\'a guyyaa kaffaltii dhumaati',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrClosedOn(String date) {
+    return '$date irratti cufame';
+  }
+
+  @override
+  String fitrPerPerson(String amount) {
+    return 'nama tokkoof $amount';
+  }
+
+  @override
+  String get causesTitle => 'Pirojektoota';
+
+  @override
+  String get causesSubtitle => 'Pirojektoota zakaan kee deeggaru';
+
+  @override
+  String get causesActive => 'Hojii irra';
+
+  @override
+  String get causesClosed => 'Cufaman';
+
+  @override
+  String get causesAllCategories => 'Hunda';
+
+  @override
+  String get causeCategoryEducation => 'Barnoota';
+
+  @override
+  String get causeCategoryWater => 'Bishaan';
+
+  @override
+  String get causeCategoryHealth => 'Fayyaa';
+
+  @override
+  String get causeCategoryFood => 'Nyaata';
+
+  @override
+  String get causeCategoryShelter => 'Bakka jireenyaa';
+
+  @override
+  String get causeCategoryLivelihood => 'Jireenya';
+
+  @override
+  String get causeCategoryEmergency => 'Ariifachiisaa';
+
+  @override
+  String get causeCategoryGeneral => 'Waliigala';
+
+  @override
+  String get causeBadgeUrgent => 'ARIIFACHIISAA';
+
+  @override
+  String get causeBadgeEssential => 'BARBAACHISAA';
+
+  @override
+  String causeRaisedOfGoal(String raised, String goal) {
+    return '$goal keessaa $raised walitti qabame';
+  }
+
+  @override
+  String causeRaised(String raised) {
+    return '$raised walitti qabame';
+  }
+
+  @override
+  String causeEndsOn(String date) {
+    return '$date xumurama';
+  }
+
+  @override
+  String causeEndedOn(String date) {
+    return '$date xumurame';
+  }
+
+  @override
+  String get causesEmpty => 'Hanga ammaatti pirojektiin agarsiifamu hin jiru.';
+
+  @override
+  String get causesLoadError => 'Pirojektoota fe\'uun hin danda\'amne.';
+
+  @override
+  String get causeNotFound => 'Pirojektiin kun kana booda hin argamu.';
+
+  @override
+  String get causeAbout => 'Waa\'ee pirojektii kanaa';
+
+  @override
+  String get payProjectsLoading => 'Pirojektoonni fe\'amaa jiru…';
 }

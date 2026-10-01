@@ -1,23 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../data/data_provider/zakat_local_data_provider.dart';
-import '../data/data_provider/zakat_remote_data_provider.dart';
-import '../data/repository/exchange_rate_repository_impl.dart';
-import '../data/repository/mock_gold_price_repository.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../../core/network/api_envelope.dart';
+import '../data/models/calculator_config.dart';
+import '../data/repository/calculator_config_repository.dart';
+import '../data/zakat_rules.dart';
 import 'zakat_calculator_event.dart';
 import 'zakat_calculator_state.dart';
 
-class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorState> {
-  ZakatCalculatorBloc({
-    GoldPriceRepository? goldRepository,
-    ExchangeRateRepository? exchangeRateRepository,
-  }) : _goldRepository = goldRepository ?? const SeededGoldPriceRepository(),
-       _exchangeRateRepository =
-           exchangeRateRepository ??
-           ExchangeRateRepositoryImpl(
-             remote: ZakatRemoteDataProviderImpl(),
-             local: InMemoryZakatLocalDataProvider(),
-           ),
-       super(ZakatCalculatorInitial()) {
+@injectable
+class ZakatCalculatorBloc
+    extends Bloc<ZakatCalculatorEvent, ZakatCalculatorState> {
+  ZakatCalculatorBloc(this._configRepository)
+    : super(const ZakatCalculatorInitial()) {
     on<ZakatCalculatorStarted>(_onStarted);
     on<ZakatCategoryTabChanged>(_onTabChanged);
     on<WealthFieldsUpdated>(_onWealthChanged);
@@ -29,23 +24,32 @@ class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorStat
     on<LiabilityUpdated>(_onLiabilityUpdated);
     on<LivestockFieldsUpdated>(_onLivestockChanged);
     on<CropFieldsUpdated>(_onCropChanged);
-    on<RecomputeZakatRequested>(_onRecomputeRequested);
-    on<PricingRefreshRequested>(_onPricingRefreshRequested);
+    on<CalculatorConfigRefreshRequested>(_onConfigRefreshRequested);
   }
 
-  final GoldPriceRepository _goldRepository;
-  final ExchangeRateRepository _exchangeRateRepository;
+  final CalculatorConfigRepository _configRepository;
 
-  ZakatCalculatorInitial get _current =>
-      state is ZakatCalculatorInitial
+  ZakatCalculatorInitial get _current => state is ZakatCalculatorInitial
       ? state as ZakatCalculatorInitial
-      : ZakatCalculatorInitial();
+      : const ZakatCalculatorInitial();
 
   Future<void> _onStarted(
     ZakatCalculatorStarted event,
     Emitter<ZakatCalculatorState> emit,
   ) async {
-    await _refreshPricingAndRecompute(emit, ZakatCalculatorInitial());
+    final cached = await _configRepository.readCached();
+    if (cached != null && _current.config == null) {
+      emit(
+        _recompute(
+          _current.copyWith(
+            config: cached,
+            configStatus: CalculatorConfigStatus.ready,
+            configFromCache: true,
+          ),
+        ),
+      );
+    }
+    await _loadConfig(emit);
   }
 
   void _onTabChanged(
@@ -171,59 +175,51 @@ class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorStat
     );
   }
 
-  Future<void> _onRecomputeRequested(
-    RecomputeZakatRequested event,
+  Future<void> _onConfigRefreshRequested(
+    CalculatorConfigRefreshRequested event,
     Emitter<ZakatCalculatorState> emit,
   ) async {
-    await _refreshPricingAndRecompute(emit, _current);
+    await _loadConfig(emit);
   }
 
-  Future<void> _onPricingRefreshRequested(
-    PricingRefreshRequested event,
-    Emitter<ZakatCalculatorState> emit,
-  ) async {
-    await _refreshPricingAndRecompute(emit, _current);
-  }
-
-  Future<void> _refreshPricingAndRecompute(
-    Emitter<ZakatCalculatorState> emit,
-    ZakatCalculatorInitial base,
-  ) async {
-    emit(base.copyWith(isPricingLoading: true));
-
-    final goldModel = await _goldRepository.getGoldPriceModel();
-    final fx = await _exchangeRateRepository.getUsdToEtbRate();
-
-    emit(
-      _recompute(
-        base.copyWith(
-          usdToEtbRate: fx.rate,
-          rateTimestamp: fx.timestamp,
-          rateSource: fx.source,
-          goldSeedTimestamp: goldModel.timestamp,
-          pricingStatusText: _sourceText(fx.source),
-          platformGoldPricePerGram24kEtb: goldModel.priceGram24k * fx.rate,
-          platformGoldPricePerGram22kEtb: goldModel.priceGram22k * fx.rate,
-          platformGoldPricePerGram21kEtb: goldModel.priceGram21k * fx.rate,
-          platformGoldPricePerGram18kEtb: goldModel.priceGram18k * fx.rate,
-          platformGoldPricePerGram14kEtb: goldModel.priceGram14k * fx.rate,
-          isPricingLoading: false,
+  /// Fetches the live config. On failure keeps a config already shown
+  /// (flagged as a failed refresh); never falls back to built-in numbers.
+  Future<void> _loadConfig(Emitter<ZakatCalculatorState> emit) async {
+    if (_current.config == null) {
+      emit(_current.copyWith(configStatus: CalculatorConfigStatus.loading));
+    }
+    try {
+      final config = await _configRepository.fetchLatest();
+      emit(
+        _recompute(
+          _current.copyWith(
+            config: config,
+            configStatus: CalculatorConfigStatus.ready,
+            configFromCache: false,
+            configRefreshFailed: false,
+            configNotReady: false,
+          ),
         ),
-      ),
-    );
+      );
+    } on ApiException catch (e) {
+      if (_current.config != null) {
+        emit(_current.copyWith(configRefreshFailed: true));
+        return;
+      }
+      emit(
+        _current.copyWith(
+          configStatus: CalculatorConfigStatus.failed,
+          configNotReady: e.statusCode == 503,
+        ),
+      );
+    }
   }
 
   ZakatCalculatorInitial _recompute(ZakatCalculatorInitial current) {
-    const silverPricePerGramEtb = 50.0;
-    const nisabGoldGrams = 85.0;
-    const cropNisabKg = 653.0;
-    final selectedGoldPriceEtb = switch (current.goldKarat) {
-      GoldKarat.k24 => current.platformGoldPricePerGram24kEtb,
-      GoldKarat.k22 => current.platformGoldPricePerGram22kEtb,
-      GoldKarat.k21 => current.platformGoldPricePerGram21kEtb,
-      GoldKarat.k18 => current.platformGoldPricePerGram18kEtb,
-      GoldKarat.k14 => current.platformGoldPricePerGram14kEtb,
-    };
+    final config = current.config;
+    if (config == null) return current;
+
+    final selectedGoldPriceEtb = _goldPricePerGram(config, current.goldKarat);
 
     final totalBusinessAssets = current.businessAssets.fold<double>(
       0,
@@ -234,12 +230,9 @@ class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorStat
       (sum, item) => sum + item.amount,
     );
 
-    final goldValue =
-        current.goldGrams *
-        selectedGoldPriceEtb;
-    final silverValue = current.silverGrams * silverPricePerGramEtb;
-
-    final nisabThreshold = nisabGoldGrams * current.platformGoldPricePerGram24kEtb;
+    final goldValue = current.goldGrams * selectedGoldPriceEtb;
+    final silverValue = current.silverGrams * config.silverPricePerGramEtb;
+    final nisabThreshold = config.nisab.valueEtb;
 
     final totalWealth =
         current.cashOnHand +
@@ -250,58 +243,37 @@ class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorStat
         silverValue;
     final netWealth = totalWealth - totalLiabilities;
     final aboveNisab = netWealth >= nisabThreshold;
-    final estimatedDue = aboveNisab ? netWealth * 0.025 : 0.0;
-    final sheepDue = _calculateSheepDue(current.sheepOrGoats);
-    final cattleDue = _calculateCattleDue(current.cattle);
-    final camelDue = _calculateCamelDue(current.camels);
-    final livestockSummary = [
-      if (sheepDue > 0) 'Sheep/Goats: $sheepDue sheep',
-      if (cattleDue.$1 > 0 || cattleDue.$2 > 0)
-        'Cattle: ${cattleDue.$1} tabi\' + ${cattleDue.$2} musinnah',
-      if (camelDue != 'No due') 'Camels: $camelDue',
-      if (sheepDue == 0 &&
-          cattleDue.$1 == 0 &&
-          cattleDue.$2 == 0 &&
-          camelDue == 'No due')
-        'No livestock due under current counts',
-    ].join(' • ');
-    final livestockAdvisories = [
-      if (!current.isPastureFedMostOfYear)
-        'Not pasture-fed most of the year: check trade/business treatment with scholars.',
-      if (!current.completedHawl)
-        'Hawl not completed: many scholars require one lunar year for livestock zakat.',
-      if (current.usedForWork)
-        'Work animals are typically exempt from livestock zakat.',
-    ].join(' ');
-    final livestockTransparency = [
-      'Sheep/Goats threshold: ${current.sheepOrGoats} >= 40 => due $sheepDue sheep.',
-      'Cattle threshold: ${current.cattle} >= 30 => due ${cattleDue.$1} tabi\', ${cattleDue.$2} musinnah (30/40 combination).',
-      'Camel threshold: ${current.camels} >= 5 => due $camelDue.',
-      if (livestockAdvisories.isNotEmpty) 'Advisory: $livestockAdvisories',
-    ].join('\n');
+    final estimatedDue = aboveNisab ? netWealth * config.wealthRate : 0.0;
+
+    final sheepDue = ZakatRules.sheepDue(config, current.sheepOrGoats);
+    final (tabi, musinnah) = ZakatRules.cattleDue(config, current.cattle);
+    final camelDue = ZakatRules.camelDue(config, current.camels);
+    final livestockEstimate = ZakatRules.livestockEstimateEtb(
+      config,
+      sheep: sheepDue,
+      cattle: tabi + musinnah,
+      camel: camelDue,
+    );
 
     final boundedRain = current.rainSharePercent.clamp(0, 100).toDouble();
-    final boundedIrrigated = current.irrigatedSharePercent.clamp(0, 100).toDouble();
-    final normalized = (boundedRain + boundedIrrigated) == 0 ? 1.0 : (boundedRain + boundedIrrigated);
-    final rainShare = boundedRain / normalized;
-    final irrigatedShare = boundedIrrigated / normalized;
-
+    final boundedIrrigated = current.irrigatedSharePercent
+        .clamp(0, 100)
+        .toDouble();
     final cropRate = switch (current.cropIrrigationMode) {
-      CropIrrigationMode.rainFed => 0.10,
-      CropIrrigationMode.irrigated => 0.05,
-      CropIrrigationMode.mixed => (0.10 * rainShare) + (0.05 * irrigatedShare),
+      CropIrrigationMode.rainFed => config.crops.rainFedRate,
+      CropIrrigationMode.irrigated => config.crops.irrigatedRate,
+      CropIrrigationMode.mixed => ZakatRules.mixedCropRate(
+        config.crops,
+        boundedRain,
+        boundedIrrigated,
+      ),
     };
-    final cropDueKg = current.cropKg >= cropNisabKg ? current.cropKg * cropRate : 0.0;
-    final cropTransparency = current.cropKg < cropNisabKg
-        ? 'Harvest ${current.cropKg.toStringAsFixed(2)}kg is below Nisab ($cropNisabKg kg), so no crop Zakat is due.'
-        : current.cropIrrigationMode == CropIrrigationMode.mixed
-            ? 'Mixed irrigation: rain ${boundedRain.toStringAsFixed(0)}%, irrigated ${boundedIrrigated.toStringAsFixed(0)}%. '
-                'Effective rate = ${(cropRate * 100).toStringAsFixed(2)}%. '
-                'Formula: ${current.cropKg.toStringAsFixed(2)} × ${(cropRate * 100).toStringAsFixed(2)}% = ${cropDueKg.toStringAsFixed(2)}kg.'
-            : '${current.cropIrrigationMode == CropIrrigationMode.rainFed ? 'Rain-fed' : 'Irrigated'} rate ${(cropRate * 100).toStringAsFixed(1)}%. '
-                'Formula: ${current.cropKg.toStringAsFixed(2)} × ${(cropRate * 100).toStringAsFixed(1)}% = ${cropDueKg.toStringAsFixed(2)}kg.';
+    final cropDueKg = current.cropKg >= config.crops.nisabKg
+        ? current.cropKg * cropRate
+        : 0.0;
 
     return current.copyWith(
+      goldPricePerGramEtb: selectedGoldPriceEtb,
       nisabThresholdEtb: nisabThreshold,
       totalBusinessAssetsEtb: totalBusinessAssets,
       totalLiabilitiesEtb: totalLiabilities,
@@ -312,87 +284,21 @@ class ZakatCalculatorBloc extends Bloc<ZakatCalculatorEvent, ZakatCalculatorStat
       aboveNisab: aboveNisab,
       estimatedZakatDueEtb: estimatedDue,
       sheepZakatDueCount: sheepDue,
-      cattleTabiDueCount: cattleDue.$1,
-      cattleMusinnahDueCount: cattleDue.$2,
-      camelZakatDueDescription: camelDue,
-      livestockSummaryText: livestockSummary,
-      livestockTransparencyText: livestockTransparency,
-      livestockAdvisoryText: livestockAdvisories,
+      cattleTabiDueCount: tabi,
+      cattleMusinnahDueCount: musinnah,
+      camelDue: camelDue,
+      livestockEstimatedValueEtb: () => livestockEstimate,
       rainSharePercent: boundedRain,
       irrigatedSharePercent: boundedIrrigated,
       cropEffectiveRate: cropRate,
       cropZakatDueKg: cropDueKg,
-      cropTransparencyText: cropTransparency,
     );
   }
 
-  String _sourceText(FxRateSource source) {
-    switch (source) {
-      case FxRateSource.live:
-        return 'FX source: live';
-      case FxRateSource.cache:
-        return 'FX source: cache fallback';
-      case FxRateSource.fallback:
-        return 'FX source: default fallback';
-    }
-  }
-
-  int _calculateSheepDue(int sheepOrGoats) {
-    if (sheepOrGoats < 40) return 0;
-    if (sheepOrGoats <= 120) return 1;
-    if (sheepOrGoats <= 200) return 2;
-    if (sheepOrGoats <= 300) return 3;
-    return 3 + ((sheepOrGoats - 300 + 99) ~/ 100);
-  }
-
-  (int, int) _calculateCattleDue(int cattle) {
-    if (cattle < 30) return (0, 0);
-
-    (int, int)? solveExact(int n) {
-      for (var musinnah = n ~/ 40; musinnah >= 0; musinnah--) {
-        final remainder = n - (musinnah * 40);
-        if (remainder >= 0 && remainder % 30 == 0) {
-          return (remainder ~/ 30, musinnah);
-        }
-      }
-      return null;
-    }
-
-    final exact = solveExact(cattle);
-    if (exact != null) return exact;
-
-    for (var candidate = cattle - 1; candidate >= 30; candidate--) {
-      final lower = solveExact(candidate);
-      if (lower != null) return lower;
-    }
-    return (0, 0);
-  }
-
-  String _calculateCamelDue(int camels) {
-    if (camels < 5) return 'No due';
-    if (camels <= 9) return '1 sheep';
-    if (camels <= 14) return '2 sheep';
-    if (camels <= 19) return '3 sheep';
-    if (camels <= 24) return '4 sheep';
-    if (camels <= 35) return '1 bint makhad';
-    if (camels <= 45) return '1 bint labun';
-    if (camels <= 60) return '1 hiqqah';
-    if (camels <= 75) return '1 jadhah';
-    if (camels <= 90) return '2 bint labun';
-    if (camels <= 120) return '2 hiqqah';
-
-    for (var hiqqah = camels ~/ 50; hiqqah >= 0; hiqqah--) {
-      final remainder = camels - (hiqqah * 50);
-      if (remainder >= 0 && remainder % 40 == 0) {
-        final bintLabun = remainder ~/ 40;
-        final parts = <String>[];
-        if (hiqqah > 0) parts.add('$hiqqah hiqqah');
-        if (bintLabun > 0) parts.add('$bintLabun bint labun');
-        if (parts.isNotEmpty) return parts.join(' + ');
-      }
-    }
-
-    final bintLabun = camels ~/ 40;
-    return '$bintLabun bint labun (approximate combo)';
+  /// The config's price for [karat], or the 24k price scaled by purity when
+  /// the config does not list that karat.
+  static double _goldPricePerGram(CalculatorConfig config, GoldKarat karat) {
+    final prices = config.goldPricePerGramEtb;
+    return prices[karat.label] ?? (prices['24k'] ?? 0) * karat.purity;
   }
 }

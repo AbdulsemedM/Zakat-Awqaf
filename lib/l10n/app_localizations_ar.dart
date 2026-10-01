@@ -67,9 +67,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatAlFitr => 'زكاة الفطر';
 
   @override
-  String get zakatDueDays => 'الموعد بعد حوالي 22 يوماً.';
-
-  @override
   String get setReminder => 'ضبط تذكير';
 
   @override
@@ -140,8 +137,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcStep1NisabTitle => 'الخطوة 1: عتبة النصاب';
 
   @override
-  String get calcStep1NisabBody =>
-      'تجب الزكاة إذا تجاوز صافي ثروتك الحد الأدنى. يعتمد النصاب على 85 جرامًا من سعر الذهب عيار 24 قيراطًا.';
+  String calcStep1NisabBody(String grams, String metal) {
+    return 'تجب الزكاة إذا بلغ صافي ثروتك النصاب: $grams جم من $metal بسعر اليوم.';
+  }
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
@@ -149,24 +147,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String calcNisabThresholdBanner(String amount) {
-    return 'عتبة النصاب (سعر المنصة، ما يعادل 85 جرامًا من الذهب): $amount';
+  String calcNisabThresholdBanner(String amount, String grams, String metal) {
+    return 'حد النصاب ($grams جم $metal): $amount';
   }
-
-  @override
-  String get calcUsdEtb => 'USD/ETB';
-
-  @override
-  String get calcFxLive => 'باستخدام سعر الصرف المباشر';
-
-  @override
-  String get calcFxCache => 'باستخدام سعر الصرف المخزن مؤقتا';
-
-  @override
-  String get calcFxFallback => 'باستخدام سعر الصرف الاحتياطي';
-
-  @override
-  String get calcTimestampUnavailable => 'الطابع الزمني غير متاح';
 
   @override
   String get calcStep1LivestockTitle =>
@@ -177,8 +160,15 @@ class AppLocalizationsAr extends AppLocalizations {
       'يتم احتساب زكاة الماشية بمقاييس عدد الرؤوس المادية (وليس النسبة المئوية من القيمة).';
 
   @override
-  String get calcStep1LivestockNisabNote =>
-      'عتبات النصاب: الأغنام/الماعز 40، الماشية 30، الإبل 5. تستخدم الماشية مجموعات 30/40؛ تتبع الجمال نطاقات الطبقة.';
+  String calcStep1LivestockNisabNote(
+    int sheep,
+    int cattle,
+    int camels,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'حدود النصاب: الغنم/الماعز $sheep، البقر $cattle، الإبل $camels. تُحسب البقر بتركيبات $tabiPer/$musinnahPer؛ وتتبع الإبل جدول الشرائح.';
+  }
 
   @override
   String calcAdvisoryPrefix(String text) {
@@ -210,8 +200,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcStep1CropTitle => 'الخطوة 1: حساب المحاصيل (العشر).';
 
   @override
-  String get calcStep1CropBody =>
-      'وتجب زكاة الزرع عند حصاده. النصاب 653 كيلوجرامًا. النسبة 10% (بعلي) أو 5% (مروي) أو مرجح للمختلط.';
+  String calcStep1CropBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'وتجب زكاة الزرع عند حصاده. النصاب $nisab كيلوجرامًا. النسبة $rainRate% (بعلي) أو $irrigatedRate% (مروي) أو مرجح للمختلط.';
+  }
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -399,8 +394,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcHowCropZakatWorksTitle => 'كيفية عمل زكاة المحاصيل';
 
   @override
-  String get calcHowCropZakatWorksBody =>
-      'النصاب : 653 كيلو جرام . المعدلات: البعلية 10%، المروية 5%، المختلطة = التقسيم المرجح. تجب الزكاة عند الحصاد (لا حول سنوي للمحاصيل).';
+  String calcHowCropZakatWorksBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'النصاب : $nisab كيلو جرام . المعدلات: البعلية $rainRate%، المروية $irrigatedRate%، المختلطة = التقسيم المرجح. تجب الزكاة عند الحصاد (لا حول سنوي للمحاصيل).';
+  }
 
   @override
   String get calcHowCropZakatNote =>
@@ -421,11 +421,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get calcHowWealthZakatWorksTitle => 'كيفية حساب زكاة الثروة';
-
-  @override
-  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'نضيف النقد في الصندوق، والأرصدة المصرفية، ومحافظ الهاتف المحمول، والأصول التجارية، وقيمة الذهب والفضة. النصاب هو $grams جرام من الذهب بسعر 24 ألف جرام في التطبيق. يتم تقييم الذهب الذي تمتلكه باستخدام سعر التطبيق للقيراط الذي تختاره. تستخدم الفضة مرجعًا ثابتًا قدره $silverRate ETB لكل جرام. يتم طرح الالتزامات التي تدخلها للحصول على صافي الثروة. إذا كان صافي الثروة يساوي النصاب أو يزيد عليه، فإن الزكاة الواجبة هي 2.5% من صافي الثروة.';
-  }
 
   @override
   String get calcHowWealthZakatNote =>
@@ -461,8 +456,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'النصاب: $grams جم × 24 ك ($price/جم) = $nisab';
+  String calcWealthTransNisabLine(
+    String grams,
+    String metal,
+    String price,
+    String nisab,
+  ) {
+    return 'النصاب: $grams جم $metal × $price/جم = $nisab';
   }
 
   @override
@@ -486,8 +486,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return 'لأن $net يبلغ النصاب أو يزيد عليه ($nisab)، فإن الزكاة الواجبة = $net × 2.5% = $due.';
+  String calcWealthTransDueAbove(
+    String net,
+    String due,
+    String nisab,
+    String rate,
+  ) {
+    return 'لأن $net يبلغ النصاب أو يزيد عليه ($nisab)، فإن الزكاة الواجبة = $net × $rate% = $due.';
   }
 
   @override
@@ -570,18 +575,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcLsNone => 'لا يوجد ماشية مستحقة بموجب التهم الحالية';
 
   @override
-  String calcTransSheep(int head, int due) {
-    return 'عتبة الأغنام/الماعز: $head >= 40 => بسبب $due الأغنام.';
+  String calcTransSheep(int head, int due, int min) {
+    return 'عتبة الأغنام/الماعز: $head >= $min => بسبب $due الأغنام.';
   }
 
   @override
-  String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'عتبة الماشية: $head >= 30 => بسبب $tabi تابع، $musinnah مسينة (مجموعة 30/40).';
+  String calcTransCattle(
+    int head,
+    int tabi,
+    int musinnah,
+    int min,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'عتبة الماشية: $head >= $min => بسبب $tabi تابع، $musinnah مسينة (مجموعة $tabiPer/$musinnahPer).';
   }
 
   @override
-  String calcTransCamel(int head, String due) {
-    return 'عتبة الجمل: $head >= 5 => بسبب $due.';
+  String calcTransCamel(int head, String due, int min) {
+    return 'عتبة الجمل: $head >= $min => بسبب $due.';
   }
 
   @override
@@ -649,34 +661,6 @@ class AppLocalizationsAr extends AppLocalizations {
       one: '1 خروف',
     );
     return '$_temp0';
-  }
-
-  @override
-  String get calcCamel1BintMakhad => '1 بنت مخاض';
-
-  @override
-  String get calcCamel1BintLabun => '1 بنت لبن';
-
-  @override
-  String get calcCamel1Hiqqah => '1 حقة';
-
-  @override
-  String get calcCamel1Jadhah => '1 جده';
-
-  @override
-  String get calcCamel2BintLabun => '2 بنت لبن';
-
-  @override
-  String get calcCamel2Hiqqah => '2 حقة';
-
-  @override
-  String calcCamelCombo(int hiqqah, int bintLabun) {
-    return '$hiqqah حاقة + $bintLabun بنت لبون';
-  }
-
-  @override
-  String calcCamelApproxBintLabun(int count) {
-    return '$count بنت لبون (تحرير وسرد تقريبي)';
   }
 
   @override
@@ -1639,4 +1623,215 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get loginIdentifierInvalid =>
       'أدخل رقم هاتف صالحًا (مثل 0911223344) أو بريدًا إلكترونيًا صالحًا';
+
+  @override
+  String calcCamelBintMakhadN(int count) {
+    return '$count بنت مخاض';
+  }
+
+  @override
+  String calcCamelBintLabunN(int count) {
+    return '$count بنت لبن';
+  }
+
+  @override
+  String calcCamelHiqqahN(int count) {
+    return '$count حقة';
+  }
+
+  @override
+  String calcCamelJadhahN(int count) {
+    return '$count جده';
+  }
+
+  @override
+  String get calcNisabMetalGold => 'ذهب (عيار 24)';
+
+  @override
+  String get calcNisabMetalSilver => 'فضة';
+
+  @override
+  String calcPricesAsOf(String date, String source) {
+    return 'الأسعار حتى $date · $source';
+  }
+
+  @override
+  String calcPricesAsOfNoSource(String date) {
+    return 'الأسعار حتى $date';
+  }
+
+  @override
+  String get calcPricesStale => 'قد تكون الأسعار غير محدّثة.';
+
+  @override
+  String get calcPricesSavedCopy =>
+      'تعذّر تحديث الأسعار. يتم عرض الأسعار المحفوظة على هذا الجهاز.';
+
+  @override
+  String get calcConfigErrorTitle => 'تعذّر تحميل أسعار الزكاة لليوم';
+
+  @override
+  String get calcConfigErrorBody => 'تحقق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get calcConfigNotReadyBody =>
+      'أسعار الذهب والفضة غير متوفرة بعد. يرجى المحاولة لاحقًا.';
+
+  @override
+  String get commonRetry => 'حاول مرة أخرى';
+
+  @override
+  String calcLivestockEstimateLine(String amount) {
+    return 'القيمة السوقية التقديرية: $amount';
+  }
+
+  @override
+  String get calcLivestockEstimateNote =>
+      'مقدّرة بمتوسط سعر السوق لكل رأس. يمكنك تغيير المبلغ قبل الدفع.';
+
+  @override
+  String homeLiveCollected(String amount) {
+    return 'مباشر · تم جمع $amount';
+  }
+
+  @override
+  String homeCollected(String amount) {
+    return 'تم جمع $amount';
+  }
+
+  @override
+  String homeChangeUp(String percent) {
+    return '↑ $percent% مقارنة بالشهر الماضي';
+  }
+
+  @override
+  String homeChangeDown(String percent) {
+    return '↓ $percent% مقارنة بالشهر الماضي';
+  }
+
+  @override
+  String get homeChangeFlat => 'مثل الشهر الماضي';
+
+  @override
+  String get homeBeneficiariesSubtext => 'أسرة';
+
+  @override
+  String get fitrStatusOpen => 'مفتوح الآن';
+
+  @override
+  String get fitrStatusClosed => 'مغلق';
+
+  @override
+  String fitrStartsIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'يبدأ خلال $days يوم',
+      one: 'يبدأ غدًا',
+      zero: 'يبدأ اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'بقي $days يوم للدفع',
+      one: 'بقي يوم واحد للدفع',
+      zero: 'اليوم آخر يوم للدفع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrClosedOn(String date) {
+    return 'أُغلق في $date';
+  }
+
+  @override
+  String fitrPerPerson(String amount) {
+    return '$amount للشخص';
+  }
+
+  @override
+  String get causesTitle => 'المشاريع';
+
+  @override
+  String get causesSubtitle => 'مشاريع تدعمها زكاتك';
+
+  @override
+  String get causesActive => 'نشطة';
+
+  @override
+  String get causesClosed => 'مغلقة';
+
+  @override
+  String get causesAllCategories => 'الكل';
+
+  @override
+  String get causeCategoryEducation => 'التعليم';
+
+  @override
+  String get causeCategoryWater => 'المياه';
+
+  @override
+  String get causeCategoryHealth => 'الصحة';
+
+  @override
+  String get causeCategoryFood => 'الغذاء';
+
+  @override
+  String get causeCategoryShelter => 'المأوى';
+
+  @override
+  String get causeCategoryLivelihood => 'سبل العيش';
+
+  @override
+  String get causeCategoryEmergency => 'الطوارئ';
+
+  @override
+  String get causeCategoryGeneral => 'عام';
+
+  @override
+  String get causeBadgeUrgent => 'عاجل';
+
+  @override
+  String get causeBadgeEssential => 'أساسي';
+
+  @override
+  String causeRaisedOfGoal(String raised, String goal) {
+    return 'تم جمع $raised من $goal';
+  }
+
+  @override
+  String causeRaised(String raised) {
+    return 'تم جمع $raised';
+  }
+
+  @override
+  String causeEndsOn(String date) {
+    return 'ينتهي في $date';
+  }
+
+  @override
+  String causeEndedOn(String date) {
+    return 'انتهى في $date';
+  }
+
+  @override
+  String get causesEmpty => 'لا توجد مشاريع لعرضها بعد.';
+
+  @override
+  String get causesLoadError => 'تعذّر تحميل المشاريع.';
+
+  @override
+  String get causeNotFound => 'هذا المشروع لم يعد متاحًا.';
+
+  @override
+  String get causeAbout => 'عن هذا المشروع';
+
+  @override
+  String get payProjectsLoading => 'جارٍ تحميل المشاريع…';
 }

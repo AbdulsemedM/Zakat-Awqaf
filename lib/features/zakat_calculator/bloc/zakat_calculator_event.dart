@@ -150,14 +150,7 @@ final class CropFieldsUpdated extends ZakatCalculatorEvent {
   ];
 }
 
-final class RecomputeZakatRequested extends ZakatCalculatorEvent {
-  const RecomputeZakatRequested();
-}
-
-final class PricingRefreshRequested extends ZakatCalculatorEvent {
-  const PricingRefreshRequested({this.fromCalculate = false});
-  final bool fromCalculate;
-
-  @override
-  List<Object?> get props => [fromCalculate];
+/// Reloads prices and rules (also the retry after a failure).
+final class CalculatorConfigRefreshRequested extends ZakatCalculatorEvent {
+  const CalculatorConfigRefreshRequested();
 }

@@ -218,12 +218,6 @@ abstract class AppLocalizations {
   /// **'Zakat Al-Fitr'**
   String get zakatAlFitr;
 
-  /// No description provided for @zakatDueDays.
-  ///
-  /// In en, this message translates to:
-  /// **'Due in approximately 22 days.'**
-  String get zakatDueDays;
-
   /// No description provided for @setReminder.
   ///
   /// In en, this message translates to:
@@ -365,8 +359,8 @@ abstract class AppLocalizations {
   /// No description provided for @calcStep1NisabBody.
   ///
   /// In en, this message translates to:
-  /// **'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.'**
-  String get calcStep1NisabBody;
+  /// **'Zakat is due if your net wealth reaches the nisab: {grams} g of {metal} at today\'s price.'**
+  String calcStep1NisabBody(String grams, String metal);
 
   /// No description provided for @calcNisabGoldFormula.
   ///
@@ -377,38 +371,8 @@ abstract class AppLocalizations {
   /// No description provided for @calcNisabThresholdBanner.
   ///
   /// In en, this message translates to:
-  /// **'Nisab threshold (platform rate, 85g gold equivalent): {amount}'**
-  String calcNisabThresholdBanner(String amount);
-
-  /// No description provided for @calcUsdEtb.
-  ///
-  /// In en, this message translates to:
-  /// **'USD/ETB'**
-  String get calcUsdEtb;
-
-  /// No description provided for @calcFxLive.
-  ///
-  /// In en, this message translates to:
-  /// **'Using live exchange rate'**
-  String get calcFxLive;
-
-  /// No description provided for @calcFxCache.
-  ///
-  /// In en, this message translates to:
-  /// **'Using cached exchange rate'**
-  String get calcFxCache;
-
-  /// No description provided for @calcFxFallback.
-  ///
-  /// In en, this message translates to:
-  /// **'Using fallback exchange rate'**
-  String get calcFxFallback;
-
-  /// No description provided for @calcTimestampUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'timestamp unavailable'**
-  String get calcTimestampUnavailable;
+  /// **'Nisab threshold ({grams} g {metal}): {amount}'**
+  String calcNisabThresholdBanner(String amount, String grams, String metal);
 
   /// No description provided for @calcStep1LivestockTitle.
   ///
@@ -425,8 +389,14 @@ abstract class AppLocalizations {
   /// No description provided for @calcStep1LivestockNisabNote.
   ///
   /// In en, this message translates to:
-  /// **'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.'**
-  String get calcStep1LivestockNisabNote;
+  /// **'Nisab thresholds: Sheep/Goats {sheep}, Cattle {cattle}, Camels {camels}. Cattle uses {tabiPer}/{musinnahPer} combinations; camels follow tier ranges.'**
+  String calcStep1LivestockNisabNote(
+    int sheep,
+    int cattle,
+    int camels,
+    int tabiPer,
+    int musinnahPer,
+  );
 
   /// No description provided for @calcAdvisoryPrefix.
   ///
@@ -485,8 +455,8 @@ abstract class AppLocalizations {
   /// No description provided for @calcStep1CropBody.
   ///
   /// In en, this message translates to:
-  /// **'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.'**
-  String get calcStep1CropBody;
+  /// **'Crop Zakat is due at harvest. Nisab is {nisab}kg. Rate is {rainRate}% (rain-fed), {irrigatedRate}% (irrigated), or weighted for mixed.'**
+  String calcStep1CropBody(String nisab, String rainRate, String irrigatedRate);
 
   /// No description provided for @calcCropLineThreshold.
   ///
@@ -827,8 +797,12 @@ abstract class AppLocalizations {
   /// No description provided for @calcHowCropZakatWorksBody.
   ///
   /// In en, this message translates to:
-  /// **'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).'**
-  String get calcHowCropZakatWorksBody;
+  /// **'Nisab: {nisab}kg. Rates: rain-fed {rainRate}%, irrigated {irrigatedRate}%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).'**
+  String calcHowCropZakatWorksBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  );
 
   /// No description provided for @calcHowCropZakatNote.
   ///
@@ -859,12 +833,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How wealth Zakat is calculated'**
   String get calcHowWealthZakatWorksTitle;
-
-  /// No description provided for @calcHowWealthZakatWorksBody.
-  ///
-  /// In en, this message translates to:
-  /// **'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is {grams} g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of {silverRate} ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.'**
-  String calcHowWealthZakatWorksBody(int grams, int silverRate);
 
   /// No description provided for @calcHowWealthZakatNote.
   ///
@@ -910,8 +878,13 @@ abstract class AppLocalizations {
   /// No description provided for @calcWealthTransNisabLine.
   ///
   /// In en, this message translates to:
-  /// **'Nisab: {grams} g × 24k ({price}/g) = {nisab}'**
-  String calcWealthTransNisabLine(String grams, String price, String nisab);
+  /// **'Nisab: {grams} g {metal} × {price}/g = {nisab}'**
+  String calcWealthTransNisabLine(
+    String grams,
+    String metal,
+    String price,
+    String nisab,
+  );
 
   /// No description provided for @calcWealthTransGoldLine.
   ///
@@ -939,8 +912,13 @@ abstract class AppLocalizations {
   /// No description provided for @calcWealthTransDueAbove.
   ///
   /// In en, this message translates to:
-  /// **'Because {net} is at or above nisab ({nisab}), Zakat due = {net} × 2.5% = {due}.'**
-  String calcWealthTransDueAbove(String net, String due, String nisab);
+  /// **'Because {net} is at or above nisab ({nisab}), Zakat due = {net} × {rate}% = {due}.'**
+  String calcWealthTransDueAbove(
+    String net,
+    String due,
+    String nisab,
+    String rate,
+  );
 
   /// No description provided for @calcWealthTransDueBelow.
   ///
@@ -1077,20 +1055,27 @@ abstract class AppLocalizations {
   /// No description provided for @calcTransSheep.
   ///
   /// In en, this message translates to:
-  /// **'Sheep/Goats threshold: {head} >= 40 => due {due} sheep.'**
-  String calcTransSheep(int head, int due);
+  /// **'Sheep/Goats threshold: {head} >= {min} => due {due} sheep.'**
+  String calcTransSheep(int head, int due, int min);
 
   /// No description provided for @calcTransCattle.
   ///
   /// In en, this message translates to:
-  /// **'Cattle threshold: {head} >= 30 => due {tabi} tabi\', {musinnah} musinnah (30/40 combination).'**
-  String calcTransCattle(int head, int tabi, int musinnah);
+  /// **'Cattle threshold: {head} >= {min} => due {tabi} tabi\', {musinnah} musinnah ({tabiPer}/{musinnahPer} combination).'**
+  String calcTransCattle(
+    int head,
+    int tabi,
+    int musinnah,
+    int min,
+    int tabiPer,
+    int musinnahPer,
+  );
 
   /// No description provided for @calcTransCamel.
   ///
   /// In en, this message translates to:
-  /// **'Camel threshold: {head} >= 5 => due {due}.'**
-  String calcTransCamel(int head, String due);
+  /// **'Camel threshold: {head} >= {min} => due {due}.'**
+  String calcTransCamel(int head, String due, int min);
 
   /// No description provided for @calcTransAdvisoryLine.
   ///
@@ -1163,54 +1148,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 sheep} other{{count} sheep}}'**
   String calcCamelSheepN(int count);
-
-  /// No description provided for @calcCamel1BintMakhad.
-  ///
-  /// In en, this message translates to:
-  /// **'1 bint makhad'**
-  String get calcCamel1BintMakhad;
-
-  /// No description provided for @calcCamel1BintLabun.
-  ///
-  /// In en, this message translates to:
-  /// **'1 bint labun'**
-  String get calcCamel1BintLabun;
-
-  /// No description provided for @calcCamel1Hiqqah.
-  ///
-  /// In en, this message translates to:
-  /// **'1 hiqqah'**
-  String get calcCamel1Hiqqah;
-
-  /// No description provided for @calcCamel1Jadhah.
-  ///
-  /// In en, this message translates to:
-  /// **'1 jadhah'**
-  String get calcCamel1Jadhah;
-
-  /// No description provided for @calcCamel2BintLabun.
-  ///
-  /// In en, this message translates to:
-  /// **'2 bint labun'**
-  String get calcCamel2BintLabun;
-
-  /// No description provided for @calcCamel2Hiqqah.
-  ///
-  /// In en, this message translates to:
-  /// **'2 hiqqah'**
-  String get calcCamel2Hiqqah;
-
-  /// No description provided for @calcCamelCombo.
-  ///
-  /// In en, this message translates to:
-  /// **'{hiqqah} hiqqah + {bintLabun} bint labun'**
-  String calcCamelCombo(int hiqqah, int bintLabun);
-
-  /// No description provided for @calcCamelApproxBintLabun.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} bint labun (approximate combo)'**
-  String calcCamelApproxBintLabun(int count);
 
   /// No description provided for @profileLoadErrorTitle.
   ///
@@ -3011,6 +2948,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a valid phone number (e.g. 0911223344) or email'**
   String get loginIdentifierInvalid;
+
+  /// No description provided for @calcCamelBintMakhadN.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bint makhad'**
+  String calcCamelBintMakhadN(int count);
+
+  /// No description provided for @calcCamelBintLabunN.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bint labun'**
+  String calcCamelBintLabunN(int count);
+
+  /// No description provided for @calcCamelHiqqahN.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hiqqah'**
+  String calcCamelHiqqahN(int count);
+
+  /// No description provided for @calcCamelJadhahN.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} jadhah'**
+  String calcCamelJadhahN(int count);
+
+  /// No description provided for @calcNisabMetalGold.
+  ///
+  /// In en, this message translates to:
+  /// **'gold (24k)'**
+  String get calcNisabMetalGold;
+
+  /// No description provided for @calcNisabMetalSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'silver'**
+  String get calcNisabMetalSilver;
+
+  /// No description provided for @calcPricesAsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices as of {date} · {source}'**
+  String calcPricesAsOf(String date, String source);
+
+  /// No description provided for @calcPricesAsOfNoSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices as of {date}'**
+  String calcPricesAsOfNoSource(String date);
+
+  /// No description provided for @calcPricesStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices may be out of date.'**
+  String get calcPricesStale;
+
+  /// No description provided for @calcPricesSavedCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t refresh prices. Showing the prices saved on this device.'**
+  String get calcPricesSavedCopy;
+
+  /// No description provided for @calcConfigErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load today\'s zakat rates'**
+  String get calcConfigErrorTitle;
+
+  /// No description provided for @calcConfigErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get calcConfigErrorBody;
+
+  /// No description provided for @calcConfigNotReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold and silver prices are not available yet. Please try again later.'**
+  String get calcConfigNotReadyBody;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get commonRetry;
+
+  /// No description provided for @calcLivestockEstimateLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated market value: {amount}'**
+  String calcLivestockEstimateLine(String amount);
+
+  /// No description provided for @calcLivestockEstimateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated at average market prices per animal. You can change the amount before paying.'**
+  String get calcLivestockEstimateNote;
+
+  /// No description provided for @homeLiveCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE · {amount} collected'**
+  String homeLiveCollected(String amount);
+
+  /// No description provided for @homeCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} collected'**
+  String homeCollected(String amount);
+
+  /// No description provided for @homeChangeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'↑ {percent}% vs last month'**
+  String homeChangeUp(String percent);
+
+  /// No description provided for @homeChangeDown.
+  ///
+  /// In en, this message translates to:
+  /// **'↓ {percent}% vs last month'**
+  String homeChangeDown(String percent);
+
+  /// No description provided for @homeChangeFlat.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as last month'**
+  String get homeChangeFlat;
+
+  /// No description provided for @homeBeneficiariesSubtext.
+  ///
+  /// In en, this message translates to:
+  /// **'households'**
+  String get homeBeneficiariesSubtext;
+
+  /// No description provided for @fitrStatusOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN NOW'**
+  String get fitrStatusOpen;
+
+  /// No description provided for @fitrStatusClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'CLOSED'**
+  String get fitrStatusClosed;
+
+  /// No description provided for @fitrStartsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Starts today} =1{Starts tomorrow} other{Starts in {days} days}}'**
+  String fitrStartsIn(int days);
+
+  /// No description provided for @fitrDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Today is the last day to pay} =1{1 day left to pay} other{{days} days left to pay}}'**
+  String fitrDaysLeft(int days);
+
+  /// No description provided for @fitrClosedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed on {date}'**
+  String fitrClosedOn(String date);
+
+  /// No description provided for @fitrPerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} per person'**
+  String fitrPerPerson(String amount);
+
+  /// No description provided for @causesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Causes'**
+  String get causesTitle;
+
+  /// No description provided for @causesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects your zakat supports'**
+  String get causesSubtitle;
+
+  /// No description provided for @causesActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get causesActive;
+
+  /// No description provided for @causesClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get causesClosed;
+
+  /// No description provided for @causesAllCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get causesAllCategories;
+
+  /// No description provided for @causeCategoryEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get causeCategoryEducation;
+
+  /// No description provided for @causeCategoryWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get causeCategoryWater;
+
+  /// No description provided for @causeCategoryHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get causeCategoryHealth;
+
+  /// No description provided for @causeCategoryFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get causeCategoryFood;
+
+  /// No description provided for @causeCategoryShelter.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelter'**
+  String get causeCategoryShelter;
+
+  /// No description provided for @causeCategoryLivelihood.
+  ///
+  /// In en, this message translates to:
+  /// **'Livelihood'**
+  String get causeCategoryLivelihood;
+
+  /// No description provided for @causeCategoryEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get causeCategoryEmergency;
+
+  /// No description provided for @causeCategoryGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get causeCategoryGeneral;
+
+  /// No description provided for @causeBadgeUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'URGENT'**
+  String get causeBadgeUrgent;
+
+  /// No description provided for @causeBadgeEssential.
+  ///
+  /// In en, this message translates to:
+  /// **'ESSENTIAL'**
+  String get causeBadgeEssential;
+
+  /// No description provided for @causeRaisedOfGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'{raised} raised of {goal}'**
+  String causeRaisedOfGoal(String raised, String goal);
+
+  /// No description provided for @causeRaised.
+  ///
+  /// In en, this message translates to:
+  /// **'{raised} raised'**
+  String causeRaised(String raised);
+
+  /// No description provided for @causeEndsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ends {date}'**
+  String causeEndsOn(String date);
+
+  /// No description provided for @causeEndedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ended {date}'**
+  String causeEndedOn(String date);
+
+  /// No description provided for @causesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No causes to show yet.'**
+  String get causesEmpty;
+
+  /// No description provided for @causesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load causes.'**
+  String get causesLoadError;
+
+  /// No description provided for @causeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This cause is no longer available.'**
+  String get causeNotFound;
+
+  /// No description provided for @causeAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About this cause'**
+  String get causeAbout;
+
+  /// No description provided for @payProjectsLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading projects…'**
+  String get payProjectsLoading;
 }
 
 class _AppLocalizationsDelegate

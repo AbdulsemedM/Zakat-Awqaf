@@ -67,9 +67,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get zakatAlFitr => 'ዘካት አልፊጥር';
 
   @override
-  String get zakatDueDays => 'በግምት ከ22 ቀናት በኋላ ይደርሳል።';
-
-  @override
   String get setReminder => 'ማስታወሻ ያዘጋጁ';
 
   @override
@@ -140,8 +137,9 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcStep1NisabTitle => 'ደረጃ 1፡ የኒሳብ ገደብ';
 
   @override
-  String get calcStep1NisabBody =>
-      'የእርስዎ የተጣራ ሀብት ከደረጃው ካለፈ ዘካት መከፈል አለበት። ኒሳብ በ 85g መድረክ 24k የወርቅ ዋጋ ላይ የተመሰረተ ነው።';
+  String calcStep1NisabBody(String grams, String metal) {
+    return 'የተጣራ ሀብትዎ ኒሳብ ላይ ከደረሰ ዘካት ይከፈላል፦ በዛሬው ዋጋ $grams ግ $metal።';
+  }
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
@@ -149,24 +147,9 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String calcNisabThresholdBanner(String amount) {
-    return 'የኒሳብ ገደብ (የመድረክ ደረጃ፣ 85ግ ወርቅ አቻ)፦ $amount';
+  String calcNisabThresholdBanner(String amount, String grams, String metal) {
+    return 'የኒሳብ ገደብ ($grams ግ $metal)፦ $amount';
   }
-
-  @override
-  String get calcUsdEtb => 'USD/ETB';
-
-  @override
-  String get calcFxLive => 'የቀጥታ የምንዛሬ ተመን መጠቀም';
-
-  @override
-  String get calcFxCache => 'የተሸጎጠ የምንዛሬ ተመንን በመጠቀም';
-
-  @override
-  String get calcFxFallback => 'የውድቀት ምንዛሬ ተመንን በመጠቀም';
-
-  @override
-  String get calcTimestampUnavailable => 'የጊዜ ማህተም የለም።';
 
   @override
   String get calcStep1LivestockTitle => 'ደረጃ 1፡ የከብት እርባታ ዘዴ';
@@ -176,8 +159,15 @@ class AppLocalizationsAm extends AppLocalizations {
       'የእንስሳት ዘካት የሚሰላው በአካላዊ የራስ ቆጠራ ሚዛኖች (የዋጋ % ሳይሆን) ነው።';
 
   @override
-  String get calcStep1LivestockNisabNote =>
-      'የኒሳብ ገደቦች፡ በግ/ፍየል 40፣ከብቶች 30፣ ግመሎች 5.ከብቶች 30/40 ጥምር ይጠቀማሉ። ግመሎች የደረጃ ደረጃዎችን ይከተላሉ.';
+  String calcStep1LivestockNisabNote(
+    int sheep,
+    int cattle,
+    int camels,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'የኒሳብ ገደቦች፡ በግ/ፍየል $sheep፣ ከብቶች $cattle፣ ግመሎች $camels። ከብቶች $tabiPer/$musinnahPer ጥምር ይጠቀማሉ፤ ግመሎች የደረጃ ክልሎችን ይከተላሉ።';
+  }
 
   @override
   String calcAdvisoryPrefix(String text) {
@@ -209,8 +199,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcStep1CropTitle => 'ደረጃ 1፡ የሰብል (Ushr) ስሌት';
 
   @override
-  String get calcStep1CropBody =>
-      'የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ 653 ኪ.ግ. መጠኑ 10% (ዝናብ-የተበላ)፣ 5% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።';
+  String calcStep1CropBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ $nisab ኪ.ግ. መጠኑ $rainRate% (ዝናብ-የተበላ)፣ $irrigatedRate% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።';
+  }
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -398,8 +393,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcHowCropZakatWorksTitle => 'የሰብል ዘካት እንዴት እንደሚሰራ';
 
   @override
-  String get calcHowCropZakatWorksBody =>
-      'ኒሳብ፡ 653 ኪ.ግ. ተመኖች፡- በዝናብ መመገብ 10%፣ በመስኖ 5%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።';
+  String calcHowCropZakatWorksBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'ኒሳብ፡ $nisab ኪ.ግ. ተመኖች፡- በዝናብ መመገብ $rainRate%፣ በመስኖ $irrigatedRate%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።';
+  }
 
   @override
   String get calcHowCropZakatNote =>
@@ -420,11 +420,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get calcHowWealthZakatWorksTitle => 'ዘካት ሀብት እንዴት እንደሚሰላ';
-
-  @override
-  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'በእጃችን ላይ ጥሬ ገንዘብ፣ የባንክ ሒሳቦች፣ የሞባይል ቦርሳዎች፣ የንግድ ሥራ ንብረቶች እና የወርቅ እና የብር ዋጋ እንጨምራለን። ኒሳብ $grams ግራም ወርቅ በመተግበሪያው 24k ዋጋ ግራም ነው። የያዙት ወርቅ የሚለካው ለመረጡት የካራት የመተግበሪያውን ዋጋ በመጠቀም ነው። ብር በአንድ ግራም $silverRate ETB ቋሚ ማጣቀሻ ይጠቀማል። የተጣራ ሀብት ለማግኘት የሚያስገቧቸው ዕዳዎች ይቀነሳሉ። የተጣራ ሀብት በኒሳብ ወይም ከዚያ በላይ ከሆነ, የዘካ ክፍያ ከተጣራ ሀብት 2.5% ነው.';
-  }
 
   @override
   String get calcHowWealthZakatNote =>
@@ -460,8 +455,13 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'ኒሳብ፡ ${grams}_ g × 24k ($price/ግ) = $nisab';
+  String calcWealthTransNisabLine(
+    String grams,
+    String metal,
+    String price,
+    String nisab,
+  ) {
+    return 'ኒሳብ፡ $grams ግ $metal × $price/ግ = $nisab';
   }
 
   @override
@@ -485,8 +485,13 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return 'ምክንያቱም ${net}_ በኒሳብ ($nisab) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = $net × 2.5% = $due።';
+  String calcWealthTransDueAbove(
+    String net,
+    String due,
+    String nisab,
+    String rate,
+  ) {
+    return 'ምክንያቱም ${net}_ በኒሳብ ($nisab) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = $net × $rate% = $due።';
   }
 
   @override
@@ -568,18 +573,25 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcLsNone => 'አሁን ባለው ቆጠራ ምክንያት ምንም የቤት እንስሳ የለም።';
 
   @override
-  String calcTransSheep(int head, int due) {
-    return 'የበግ/የፍየል ደጃፍ፡_ ${head}_ >= 40=የሚገባው $due በግ።';
+  String calcTransSheep(int head, int due, int min) {
+    return 'የበግ/የፍየል ደጃፍ፡_ ${head}_ >= $min=የሚገባው $due በግ።';
   }
 
   @override
-  String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'የከብት እርከን፡_ ${head}_ >= 30 => የሚከፈልበት $tabi ታቢዕ፣ $musinnah ሙሲና (30/40 ጥምር)።';
+  String calcTransCattle(
+    int head,
+    int tabi,
+    int musinnah,
+    int min,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'የከብት እርከን፡_ ${head}_ >= $min => የሚከፈልበት $tabi ታቢዕ፣ $musinnah ሙሲና ($tabiPer/$musinnahPer ጥምር)።';
   }
 
   @override
-  String calcTransCamel(int head, String due) {
-    return 'የግመል ገደብ፡_ ${head}_ >= 5=\\u003e $due።';
+  String calcTransCamel(int head, String due, int min) {
+    return 'የግመል ገደብ፡_ ${head}_ >= $min=> $due።';
   }
 
   @override
@@ -647,34 +659,6 @@ class AppLocalizationsAm extends AppLocalizations {
       one: '1 በግ',
     );
     return '$_temp0';
-  }
-
-  @override
-  String get calcCamel1BintMakhad => '1 ቢንት ማክሃድ';
-
-  @override
-  String get calcCamel1BintLabun => '1 ቢንት ላቡን';
-
-  @override
-  String get calcCamel1Hiqqah => '1 ሂቃህ';
-
-  @override
-  String get calcCamel1Jadhah => '1 ጃዳህ';
-
-  @override
-  String get calcCamel2BintLabun => '2 ቢንት ላቡን';
-
-  @override
-  String get calcCamel2Hiqqah => '2 ሂቃህ';
-
-  @override
-  String calcCamelCombo(int hiqqah, int bintLabun) {
-    return '${hiqqah}_ ሂቃህ + $bintLabun ቢንት ላቡን';
-  }
-
-  @override
-  String calcCamelApproxBintLabun(int count) {
-    return '${count}_ ቢንት ላቡን (ግምታዊ ጥምር)';
   }
 
   @override
@@ -1624,4 +1608,215 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String get loginIdentifierInvalid =>
       'ትክክለኛ ስልክ ቁጥር (ለምሳሌ 0911223344) ወይም ኢሜይል ያስገቡ';
+
+  @override
+  String calcCamelBintMakhadN(int count) {
+    return '$count ቢንት ማክሃድ';
+  }
+
+  @override
+  String calcCamelBintLabunN(int count) {
+    return '$count ቢንት ላቡን';
+  }
+
+  @override
+  String calcCamelHiqqahN(int count) {
+    return '$count ሂቃህ';
+  }
+
+  @override
+  String calcCamelJadhahN(int count) {
+    return '$count ጃዳህ';
+  }
+
+  @override
+  String get calcNisabMetalGold => 'ወርቅ (24 ካራት)';
+
+  @override
+  String get calcNisabMetalSilver => 'ብር (ማዕድን)';
+
+  @override
+  String calcPricesAsOf(String date, String source) {
+    return 'ዋጋዎች እስከ $date · $source';
+  }
+
+  @override
+  String calcPricesAsOfNoSource(String date) {
+    return 'ዋጋዎች እስከ $date';
+  }
+
+  @override
+  String get calcPricesStale => 'ዋጋዎቹ ያልተዘመኑ ሊሆኑ ይችላሉ።';
+
+  @override
+  String get calcPricesSavedCopy =>
+      'ዋጋዎችን ማደስ አልተቻለም። በዚህ መሣሪያ ላይ የተቀመጡ ዋጋዎች እየታዩ ነው።';
+
+  @override
+  String get calcConfigErrorTitle => 'የዛሬን የዘካት ተመኖች መጫን አልተቻለም';
+
+  @override
+  String get calcConfigErrorBody => 'ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።';
+
+  @override
+  String get calcConfigNotReadyBody =>
+      'የወርቅ እና የብር ዋጋዎች ገና አልተገኙም። እባክዎ ቆይተው እንደገና ይሞክሩ።';
+
+  @override
+  String get commonRetry => 'እንደገና ሞክር';
+
+  @override
+  String calcLivestockEstimateLine(String amount) {
+    return 'የተገመተ የገበያ ዋጋ፦ $amount';
+  }
+
+  @override
+  String get calcLivestockEstimateNote =>
+      'በአንድ እንስሳ አማካይ የገበያ ዋጋ የተገመተ ነው። ከመክፈልዎ በፊት መጠኑን መቀየር ይችላሉ።';
+
+  @override
+  String homeLiveCollected(String amount) {
+    return 'ቀጥታ · $amount ተሰብስቧል';
+  }
+
+  @override
+  String homeCollected(String amount) {
+    return '$amount ተሰብስቧል';
+  }
+
+  @override
+  String homeChangeUp(String percent) {
+    return '↑ $percent% ካለፈው ወር';
+  }
+
+  @override
+  String homeChangeDown(String percent) {
+    return '↓ $percent% ካለፈው ወር';
+  }
+
+  @override
+  String get homeChangeFlat => 'ካለፈው ወር ጋር እኩል';
+
+  @override
+  String get homeBeneficiariesSubtext => 'ቤተሰቦች';
+
+  @override
+  String get fitrStatusOpen => 'አሁን ክፍት';
+
+  @override
+  String get fitrStatusClosed => 'ተዘግቷል';
+
+  @override
+  String fitrStartsIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'በ$days ቀናት ውስጥ ይጀምራል',
+      one: 'ነገ ይጀምራል',
+      zero: 'ዛሬ ይጀምራል',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'ለመክፈል $days ቀናት ቀርተዋል',
+      one: 'ለመክፈል 1 ቀን ቀርቷል',
+      zero: 'ዛሬ የመክፈያው የመጨረሻ ቀን ነው',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrClosedOn(String date) {
+    return '$date ላይ ተዘግቷል';
+  }
+
+  @override
+  String fitrPerPerson(String amount) {
+    return 'በአንድ ሰው $amount';
+  }
+
+  @override
+  String get causesTitle => 'ፕሮጀክቶች';
+
+  @override
+  String get causesSubtitle => 'ዘካትዎ የሚደግፋቸው ፕሮጀክቶች';
+
+  @override
+  String get causesActive => 'ንቁ';
+
+  @override
+  String get causesClosed => 'የተዘጉ';
+
+  @override
+  String get causesAllCategories => 'ሁሉም';
+
+  @override
+  String get causeCategoryEducation => 'ትምህርት';
+
+  @override
+  String get causeCategoryWater => 'ውሃ';
+
+  @override
+  String get causeCategoryHealth => 'ጤና';
+
+  @override
+  String get causeCategoryFood => 'ምግብ';
+
+  @override
+  String get causeCategoryShelter => 'መጠለያ';
+
+  @override
+  String get causeCategoryLivelihood => 'መተዳደሪያ';
+
+  @override
+  String get causeCategoryEmergency => 'አስቸኳይ ጊዜ';
+
+  @override
+  String get causeCategoryGeneral => 'አጠቃላይ';
+
+  @override
+  String get causeBadgeUrgent => 'አስቸኳይ';
+
+  @override
+  String get causeBadgeEssential => 'አስፈላጊ';
+
+  @override
+  String causeRaisedOfGoal(String raised, String goal) {
+    return 'ከ$goal ውስጥ $raised ተሰብስቧል';
+  }
+
+  @override
+  String causeRaised(String raised) {
+    return '$raised ተሰብስቧል';
+  }
+
+  @override
+  String causeEndsOn(String date) {
+    return 'የሚያበቃው $date';
+  }
+
+  @override
+  String causeEndedOn(String date) {
+    return '$date አብቅቷል';
+  }
+
+  @override
+  String get causesEmpty => 'እስካሁን የሚታዩ ፕሮጀክቶች የሉም።';
+
+  @override
+  String get causesLoadError => 'ፕሮጀክቶችን መጫን አልተቻለም።';
+
+  @override
+  String get causeNotFound => 'ይህ ፕሮጀክት ከአሁን በኋላ አይገኝም።';
+
+  @override
+  String get causeAbout => 'ስለዚህ ፕሮጀክት';
+
+  @override
+  String get payProjectsLoading => 'ፕሮጀክቶች እየተጫኑ ነው…';
 }

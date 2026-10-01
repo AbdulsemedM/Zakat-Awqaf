@@ -33,57 +33,12 @@ final class RegistrationStepWentBack extends BeneficiaryRegistrationEvent {
   const RegistrationStepWentBack();
 }
 
-final class NationalIdUpdated extends BeneficiaryRegistrationEvent {
-  const NationalIdUpdated(this.nationalId);
-  final String nationalId;
-
-  @override
-  List<Object?> get props => [nationalId];
-}
-
 final class RegistrationCodeUpdated extends BeneficiaryRegistrationEvent {
   const RegistrationCodeUpdated(this.value);
   final String value;
 
   @override
   List<Object?> get props => [value];
-}
-
-final class FaydaRegistrationRequested extends BeneficiaryRegistrationEvent {
-  const FaydaRegistrationRequested();
-}
-
-final class FaydaSseCompletedSuccessfully extends BeneficiaryRegistrationEvent {
-  const FaydaSseCompletedSuccessfully({required this.passwordSetupToken});
-
-  final String passwordSetupToken;
-
-  @override
-  List<Object?> get props => [passwordSetupToken];
-}
-
-final class FaydaSseStreamFinished extends BeneficiaryRegistrationEvent {
-  const FaydaSseStreamFinished();
-}
-
-final class FaydaSseConnectionFailed extends BeneficiaryRegistrationEvent {
-  const FaydaSseConnectionFailed(this.message);
-  final String message;
-
-  @override
-  List<Object?> get props => [message];
-}
-
-final class FaydaSseRetryRequested extends BeneficiaryRegistrationEvent {
-  const FaydaSseRetryRequested();
-}
-
-final class FaydaVerificationTimedOut extends BeneficiaryRegistrationEvent {
-  const FaydaVerificationTimedOut();
-}
-
-final class FaydaSseReconnectRequested extends BeneficiaryRegistrationEvent {
-  const FaydaSseReconnectRequested();
 }
 
 final class FirstNameUpdated extends BeneficiaryRegistrationEvent {

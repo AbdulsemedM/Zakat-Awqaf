@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-import '../data/repository/exchange_rate_repository_impl.dart';
+
+import '../data/models/calculator_config.dart';
+import '../data/zakat_rules.dart';
 
 enum ZakatCategoryTab { wealth, livestock, crops }
 
@@ -18,7 +20,11 @@ enum GoldKarat {
 enum BusinessAssetType { inventory, receivable, other }
 
 enum LiabilityType { shortTermDebt, payable, other }
+
 enum CropIrrigationMode { rainFed, irrigated, mixed }
+
+/// Where the calculator config (prices + rules) stands.
+enum CalculatorConfigStatus { loading, ready, failed }
 
 class BusinessAssetItem extends Equatable {
   const BusinessAssetItem({
@@ -94,22 +100,15 @@ sealed class ZakatCalculatorState extends Equatable {
     required this.sheepZakatDueCount,
     required this.cattleTabiDueCount,
     required this.cattleMusinnahDueCount,
-    required this.camelZakatDueDescription,
-    required this.livestockSummaryText,
-    required this.livestockTransparencyText,
-    required this.livestockAdvisoryText,
+    required this.camelDue,
+    this.livestockEstimatedValueEtb,
     required this.cropKg,
     required this.cropIrrigationMode,
     required this.rainSharePercent,
     required this.irrigatedSharePercent,
     required this.cropEffectiveRate,
     required this.cropZakatDueKg,
-    required this.cropTransparencyText,
-    required this.platformGoldPricePerGram24kEtb,
-    required this.platformGoldPricePerGram22kEtb,
-    required this.platformGoldPricePerGram21kEtb,
-    required this.platformGoldPricePerGram18kEtb,
-    required this.platformGoldPricePerGram14kEtb,
+    required this.goldPricePerGramEtb,
     required this.nisabThresholdEtb,
     required this.totalBusinessAssetsEtb,
     required this.totalLiabilitiesEtb,
@@ -119,12 +118,11 @@ sealed class ZakatCalculatorState extends Equatable {
     required this.netWealthEtb,
     required this.aboveNisab,
     required this.estimatedZakatDueEtb,
-    required this.usdToEtbRate,
-    this.rateTimestamp,
-    required this.rateSource,
-    required this.goldSeedTimestamp,
-    required this.pricingStatusText,
-    required this.isPricingLoading,
+    this.config,
+    required this.configStatus,
+    required this.configFromCache,
+    required this.configRefreshFailed,
+    required this.configNotReady,
   });
 
   final ZakatCategoryTab activeTab;
@@ -146,23 +144,19 @@ sealed class ZakatCalculatorState extends Equatable {
   final int sheepZakatDueCount;
   final int cattleTabiDueCount;
   final int cattleMusinnahDueCount;
-  final String camelZakatDueDescription;
-  final String livestockSummaryText;
-  final String livestockTransparencyText;
-  final String livestockAdvisoryText;
+  final CamelDue camelDue;
+
+  /// Market value of the livestock due at the config's average unit prices.
+  final double? livestockEstimatedValueEtb;
   final double cropKg;
   final CropIrrigationMode cropIrrigationMode;
   final double rainSharePercent;
   final double irrigatedSharePercent;
   final double cropEffectiveRate;
   final double cropZakatDueKg;
-  final String cropTransparencyText;
 
-  final double platformGoldPricePerGram24kEtb;
-  final double platformGoldPricePerGram22kEtb;
-  final double platformGoldPricePerGram21kEtb;
-  final double platformGoldPricePerGram18kEtb;
-  final double platformGoldPricePerGram14kEtb;
+  /// Price per gram for the selected [goldKarat].
+  final double goldPricePerGramEtb;
   final double nisabThresholdEtb;
 
   final double totalBusinessAssetsEtb;
@@ -173,12 +167,27 @@ sealed class ZakatCalculatorState extends Equatable {
   final double netWealthEtb;
   final bool aboveNisab;
   final double estimatedZakatDueEtb;
-  final double usdToEtbRate;
-  final DateTime? rateTimestamp;
-  final FxRateSource rateSource;
-  final int goldSeedTimestamp;
-  final String pricingStatusText;
-  final bool isPricingLoading;
+
+  /// Prices and rules; `null` until loaded (from the server or the cache).
+  final CalculatorConfig? config;
+  final CalculatorConfigStatus configStatus;
+
+  /// [config] is the copy saved on the device, not a fresh one.
+  final bool configFromCache;
+
+  /// The last refresh failed and [config] is the saved copy.
+  final bool configRefreshFailed;
+
+  /// The server has no prices yet (503).
+  final bool configNotReady;
+
+  bool get livestockHasDue =>
+      sheepZakatDueCount > 0 ||
+      cattleTabiDueCount > 0 ||
+      cattleMusinnahDueCount > 0 ||
+      camelDue.hasDue;
+
+  bool get cropAboveNisab => config != null && cropKg >= config!.crops.nisabKg;
 
   @override
   List<Object?> get props => [
@@ -200,22 +209,15 @@ sealed class ZakatCalculatorState extends Equatable {
     sheepZakatDueCount,
     cattleTabiDueCount,
     cattleMusinnahDueCount,
-    camelZakatDueDescription,
-    livestockSummaryText,
-    livestockTransparencyText,
-    livestockAdvisoryText,
+    camelDue,
+    livestockEstimatedValueEtb,
     cropKg,
     cropIrrigationMode,
     rainSharePercent,
     irrigatedSharePercent,
     cropEffectiveRate,
     cropZakatDueKg,
-    cropTransparencyText,
-    platformGoldPricePerGram24kEtb,
-    platformGoldPricePerGram22kEtb,
-    platformGoldPricePerGram21kEtb,
-    platformGoldPricePerGram18kEtb,
-    platformGoldPricePerGram14kEtb,
+    goldPricePerGramEtb,
     nisabThresholdEtb,
     totalBusinessAssetsEtb,
     totalLiabilitiesEtb,
@@ -225,12 +227,11 @@ sealed class ZakatCalculatorState extends Equatable {
     netWealthEtb,
     aboveNisab,
     estimatedZakatDueEtb,
-    usdToEtbRate,
-    rateTimestamp,
-    rateSource,
-    goldSeedTimestamp,
-    pricingStatusText,
-    isPricingLoading,
+    config,
+    configStatus,
+    configFromCache,
+    configRefreshFailed,
+    configNotReady,
   ];
 }
 
@@ -254,23 +255,16 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
     super.sheepZakatDueCount = 0,
     super.cattleTabiDueCount = 0,
     super.cattleMusinnahDueCount = 0,
-    super.camelZakatDueDescription = 'No due',
-    super.livestockSummaryText = 'No livestock due',
-    super.livestockTransparencyText = '',
-    super.livestockAdvisoryText = '',
+    super.camelDue = CamelDue.none,
+    super.livestockEstimatedValueEtb,
     super.cropKg = 0,
     super.cropIrrigationMode = CropIrrigationMode.rainFed,
     super.rainSharePercent = 50,
     super.irrigatedSharePercent = 50,
-    super.cropEffectiveRate = 0.10,
+    super.cropEffectiveRate = 0,
     super.cropZakatDueKg = 0,
-    super.cropTransparencyText = '',
-    super.platformGoldPricePerGram24kEtb = 4165.0,
-    super.platformGoldPricePerGram22kEtb = 3818.8,
-    super.platformGoldPricePerGram21kEtb = 3645.2,
-    super.platformGoldPricePerGram18kEtb = 3120.0,
-    super.platformGoldPricePerGram14kEtb = 2426.8,
-    super.nisabThresholdEtb = 354025.0,
+    super.goldPricePerGramEtb = 0,
+    super.nisabThresholdEtb = 0,
     super.totalBusinessAssetsEtb = 0,
     super.totalLiabilitiesEtb = 0,
     super.goldValueEtb = 0,
@@ -279,12 +273,11 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
     super.netWealthEtb = 0,
     super.aboveNisab = false,
     super.estimatedZakatDueEtb = 0,
-    super.usdToEtbRate = 156.183869,
-    super.rateTimestamp,
-    super.rateSource = FxRateSource.fallback,
-    super.goldSeedTimestamp = 1777883649,
-    super.pricingStatusText = 'Using fallback FX rate',
-    super.isPricingLoading = false,
+    super.config,
+    super.configStatus = CalculatorConfigStatus.loading,
+    super.configFromCache = false,
+    super.configRefreshFailed = false,
+    super.configNotReady = false,
   });
 
   ZakatCalculatorInitial copyWith({
@@ -306,22 +299,15 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
     int? sheepZakatDueCount,
     int? cattleTabiDueCount,
     int? cattleMusinnahDueCount,
-    String? camelZakatDueDescription,
-    String? livestockSummaryText,
-    String? livestockTransparencyText,
-    String? livestockAdvisoryText,
+    CamelDue? camelDue,
+    double? Function()? livestockEstimatedValueEtb,
     double? cropKg,
     CropIrrigationMode? cropIrrigationMode,
     double? rainSharePercent,
     double? irrigatedSharePercent,
     double? cropEffectiveRate,
     double? cropZakatDueKg,
-    String? cropTransparencyText,
-    double? platformGoldPricePerGram24kEtb,
-    double? platformGoldPricePerGram22kEtb,
-    double? platformGoldPricePerGram21kEtb,
-    double? platformGoldPricePerGram18kEtb,
-    double? platformGoldPricePerGram14kEtb,
+    double? goldPricePerGramEtb,
     double? nisabThresholdEtb,
     double? totalBusinessAssetsEtb,
     double? totalLiabilitiesEtb,
@@ -331,12 +317,11 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
     double? netWealthEtb,
     bool? aboveNisab,
     double? estimatedZakatDueEtb,
-    double? usdToEtbRate,
-    DateTime? rateTimestamp,
-    FxRateSource? rateSource,
-    int? goldSeedTimestamp,
-    String? pricingStatusText,
-    bool? isPricingLoading,
+    CalculatorConfig? config,
+    CalculatorConfigStatus? configStatus,
+    bool? configFromCache,
+    bool? configRefreshFailed,
+    bool? configNotReady,
   }) {
     return ZakatCalculatorInitial(
       activeTab: activeTab ?? this.activeTab,
@@ -351,35 +336,29 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
       sheepOrGoats: sheepOrGoats ?? this.sheepOrGoats,
       cattle: cattle ?? this.cattle,
       camels: camels ?? this.camels,
-      isPastureFedMostOfYear: isPastureFedMostOfYear ?? this.isPastureFedMostOfYear,
+      isPastureFedMostOfYear:
+          isPastureFedMostOfYear ?? this.isPastureFedMostOfYear,
       completedHawl: completedHawl ?? this.completedHawl,
       usedForWork: usedForWork ?? this.usedForWork,
       sheepZakatDueCount: sheepZakatDueCount ?? this.sheepZakatDueCount,
       cattleTabiDueCount: cattleTabiDueCount ?? this.cattleTabiDueCount,
-      cattleMusinnahDueCount: cattleMusinnahDueCount ?? this.cattleMusinnahDueCount,
-      camelZakatDueDescription: camelZakatDueDescription ?? this.camelZakatDueDescription,
-      livestockSummaryText: livestockSummaryText ?? this.livestockSummaryText,
-      livestockTransparencyText: livestockTransparencyText ?? this.livestockTransparencyText,
-      livestockAdvisoryText: livestockAdvisoryText ?? this.livestockAdvisoryText,
+      cattleMusinnahDueCount:
+          cattleMusinnahDueCount ?? this.cattleMusinnahDueCount,
+      camelDue: camelDue ?? this.camelDue,
+      livestockEstimatedValueEtb: livestockEstimatedValueEtb != null
+          ? livestockEstimatedValueEtb()
+          : this.livestockEstimatedValueEtb,
       cropKg: cropKg ?? this.cropKg,
       cropIrrigationMode: cropIrrigationMode ?? this.cropIrrigationMode,
       rainSharePercent: rainSharePercent ?? this.rainSharePercent,
-      irrigatedSharePercent: irrigatedSharePercent ?? this.irrigatedSharePercent,
+      irrigatedSharePercent:
+          irrigatedSharePercent ?? this.irrigatedSharePercent,
       cropEffectiveRate: cropEffectiveRate ?? this.cropEffectiveRate,
       cropZakatDueKg: cropZakatDueKg ?? this.cropZakatDueKg,
-      cropTransparencyText: cropTransparencyText ?? this.cropTransparencyText,
-      platformGoldPricePerGram24kEtb:
-          platformGoldPricePerGram24kEtb ?? this.platformGoldPricePerGram24kEtb,
-      platformGoldPricePerGram22kEtb:
-          platformGoldPricePerGram22kEtb ?? this.platformGoldPricePerGram22kEtb,
-      platformGoldPricePerGram21kEtb:
-          platformGoldPricePerGram21kEtb ?? this.platformGoldPricePerGram21kEtb,
-      platformGoldPricePerGram18kEtb:
-          platformGoldPricePerGram18kEtb ?? this.platformGoldPricePerGram18kEtb,
-      platformGoldPricePerGram14kEtb:
-          platformGoldPricePerGram14kEtb ?? this.platformGoldPricePerGram14kEtb,
+      goldPricePerGramEtb: goldPricePerGramEtb ?? this.goldPricePerGramEtb,
       nisabThresholdEtb: nisabThresholdEtb ?? this.nisabThresholdEtb,
-      totalBusinessAssetsEtb: totalBusinessAssetsEtb ?? this.totalBusinessAssetsEtb,
+      totalBusinessAssetsEtb:
+          totalBusinessAssetsEtb ?? this.totalBusinessAssetsEtb,
       totalLiabilitiesEtb: totalLiabilitiesEtb ?? this.totalLiabilitiesEtb,
       goldValueEtb: goldValueEtb ?? this.goldValueEtb,
       silverValueEtb: silverValueEtb ?? this.silverValueEtb,
@@ -387,12 +366,11 @@ final class ZakatCalculatorInitial extends ZakatCalculatorState {
       netWealthEtb: netWealthEtb ?? this.netWealthEtb,
       aboveNisab: aboveNisab ?? this.aboveNisab,
       estimatedZakatDueEtb: estimatedZakatDueEtb ?? this.estimatedZakatDueEtb,
-      usdToEtbRate: usdToEtbRate ?? this.usdToEtbRate,
-      rateTimestamp: rateTimestamp ?? this.rateTimestamp,
-      rateSource: rateSource ?? this.rateSource,
-      goldSeedTimestamp: goldSeedTimestamp ?? this.goldSeedTimestamp,
-      pricingStatusText: pricingStatusText ?? this.pricingStatusText,
-      isPricingLoading: isPricingLoading ?? this.isPricingLoading,
+      config: config ?? this.config,
+      configStatus: configStatus ?? this.configStatus,
+      configFromCache: configFromCache ?? this.configFromCache,
+      configRefreshFailed: configRefreshFailed ?? this.configRefreshFailed,
+      configNotReady: configNotReady ?? this.configNotReady,
     );
   }
 }

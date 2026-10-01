@@ -19,7 +19,6 @@
   "transparencyQuote": "بشفافية ومساءلة وأثر حقيقي: عطاؤك يدعم الإغاثة والتمكين على مستوى الوطن.",
   "payZakatCause": "أعطِ الزكاة",
   "zakatAlFitr": "زكاة الفطر",
-  "zakatDueDays": "الموعد بعد حوالي 22 يوماً.",
   "setReminder": "ضبط تذكير",
   "needQuickWayGive": "عطاء سريع",
   "supportCommunityNeeds": "ادعم احتياجات المجتمع فوراً بالصدقة.",
@@ -220,7 +219,7 @@
   "calcTabLivestock": "الماشية",
   "calcTabCrops": "المحاصيل",
   "calcStep1NisabTitle": "الخطوة 1: عتبة النصاب",
-  "calcStep1NisabBody": "تجب الزكاة إذا تجاوز صافي ثروتك الحد الأدنى. يعتمد النصاب على 85 جرامًا من سعر الذهب عيار 24 قيراطًا.",
+  "calcStep1NisabBody": "تجب الزكاة إذا بلغ صافي ثروتك النصاب: {grams} جم من {metal} بسعر اليوم.",
   "calcNisabGoldFormula": "{grams} × {price} = {total}",
   "@calcNisabGoldFormula": {
     "placeholders": {
@@ -235,7 +234,7 @@
       }
     }
   },
-  "calcNisabThresholdBanner": "عتبة النصاب (سعر المنصة، ما يعادل 85 جرامًا من الذهب): {amount}",
+  "calcNisabThresholdBanner": "حد النصاب ({grams} جم {metal}): {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
       "amount": {
@@ -243,14 +242,9 @@
       }
     }
   },
-  "calcUsdEtb": "USD/ETB",
-  "calcFxLive": "باستخدام سعر الصرف المباشر",
-  "calcFxCache": "باستخدام سعر الصرف المخزن مؤقتا",
-  "calcFxFallback": "باستخدام سعر الصرف الاحتياطي",
-  "calcTimestampUnavailable": "الطابع الزمني غير متاح",
   "calcStep1LivestockTitle": "الخطوة 1: طريقة مقياس الثروة الحيوانية",
   "calcStep1LivestockBody": "يتم احتساب زكاة الماشية بمقاييس عدد الرؤوس المادية (وليس النسبة المئوية من القيمة).",
-  "calcStep1LivestockNisabNote": "عتبات النصاب: الأغنام/الماعز 40، الماشية 30، الإبل 5. تستخدم الماشية مجموعات 30/40؛ تتبع الجمال نطاقات الطبقة.",
+  "calcStep1LivestockNisabNote": "حدود النصاب: الغنم/الماعز {sheep}، البقر {cattle}، الإبل {camels}. تُحسب البقر بتركيبات {tabiPer}/{musinnahPer}؛ وتتبع الإبل جدول الشرائح.",
   "calcAdvisoryPrefix": "استشاري: {text}",
   "@calcAdvisoryPrefix": {
     "placeholders": {
@@ -267,7 +261,7 @@
   "calcArabicDefHiqqah": "ناقة عمرها ثلاث سنوات",
   "calcArabicDefJadhah": "ناقة عمرها أربع سنوات",
   "calcStep1CropTitle": "الخطوة 1: حساب المحاصيل (العشر).",
-  "calcStep1CropBody": "وتجب زكاة الزرع عند حصاده. النصاب 653 كيلوجرامًا. النسبة 10% (بعلي) أو 5% (مروي) أو مرجح للمختلط.",
+  "calcStep1CropBody": "وتجب زكاة الزرع عند حصاده. النصاب {nisab} كيلوجرامًا. النسبة {rainRate}% (بعلي) أو {irrigatedRate}% (مروي) أو مرجح للمختلط.",
   "calcCropLineThreshold": "{kg} كجم {relation} 653 كجم",
   "@calcCropLineThreshold": {
     "placeholders": {
@@ -383,7 +377,7 @@
     }
   },
   "calcHowCropZakatWorksTitle": "كيفية عمل زكاة المحاصيل",
-  "calcHowCropZakatWorksBody": "النصاب : 653 كيلو جرام . المعدلات: البعلية 10%، المروية 5%، المختلطة = التقسيم المرجح. تجب الزكاة عند الحصاد (لا حول سنوي للمحاصيل).",
+  "calcHowCropZakatWorksBody": "النصاب : {nisab} كيلو جرام . المعدلات: البعلية {rainRate}%، المروية {irrigatedRate}%، المختلطة = التقسيم المرجح. تجب الزكاة عند الحصاد (لا حول سنوي للمحاصيل).",
   "calcHowCropZakatNote": "ملحوظة: يطبق التطبيق هذه القواعد على نطاق واسع من أجل البساطة. تختلف المواقف العلمية على نطاق نوع المحاصيل وخصومات النفقات؛ استشارة العلماء المؤهلين لحالات محددة.",
   "calcWealthNisabHeading": "النصاب والمال والزكاة",
   "calcWealthNisabLine": "عتبة النصاب: {nisab}",
@@ -403,17 +397,6 @@
     }
   },
   "calcHowWealthZakatWorksTitle": "كيفية حساب زكاة الثروة",
-  "calcHowWealthZakatWorksBody": "نضيف النقد في الصندوق، والأرصدة المصرفية، ومحافظ الهاتف المحمول، والأصول التجارية، وقيمة الذهب والفضة. النصاب هو {grams} جرام من الذهب بسعر 24 ألف جرام في التطبيق. يتم تقييم الذهب الذي تمتلكه باستخدام سعر التطبيق للقيراط الذي تختاره. تستخدم الفضة مرجعًا ثابتًا قدره {silverRate} ETB لكل جرام. يتم طرح الالتزامات التي تدخلها للحصول على صافي الثروة. إذا كان صافي الثروة يساوي النصاب أو يزيد عليه، فإن الزكاة الواجبة هي 2.5% من صافي الثروة.",
-  "@calcHowWealthZakatWorksBody": {
-    "placeholders": {
-      "grams": {
-        "type": "int"
-      },
-      "silverRate": {
-        "type": "int"
-      }
-    }
-  },
   "calcHowWealthZakatNote": "ملاحظة: اختلف العلماء في الأصول التي تجب فيها الزكاة، وفي كيفية خصم الديون من الثروة، ومتى يتم الحول، وغير ذلك من التفاصيل. هذه الشاشة عبارة عن تقدير تعليمي، قم بتأكيد حالتك مع العلماء المؤهلين.",
   "calcWealthBreakdownTitle": "كيف يتم حساب المبالغ المذكورة أعلاه",
   "calcWealthTransLiquidsLine": "نقدًا + بنك + جوال: {cash} + {bank} + {mobile} = {subtotal}",
@@ -461,7 +444,7 @@
       }
     }
   },
-  "calcWealthTransNisabLine": "النصاب: {grams} جم × 24 ك ({price}/جم) = {nisab}",
+  "calcWealthTransNisabLine": "النصاب: {grams} جم {metal} × {price}/جم = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
       "grams": {
@@ -517,7 +500,7 @@
       }
     }
   },
-  "calcWealthTransDueAbove": "لأن {net} يبلغ النصاب أو يزيد عليه ({nisab})، فإن الزكاة الواجبة = {net} × 2.5% = {due}.",
+  "calcWealthTransDueAbove": "لأن {net} يبلغ النصاب أو يزيد عليه ({nisab})، فإن الزكاة الواجبة = {net} × {rate}% = {due}.",
   "@calcWealthTransDueAbove": {
     "placeholders": {
       "net": {
@@ -597,7 +580,7 @@
     }
   },
   "calcLsNone": "لا يوجد ماشية مستحقة بموجب التهم الحالية",
-  "calcTransSheep": "عتبة الأغنام/الماعز: {head} >= 40 => بسبب {due} الأغنام.",
+  "calcTransSheep": "عتبة الأغنام/الماعز: {head} >= {min} => بسبب {due} الأغنام.",
   "@calcTransSheep": {
     "placeholders": {
       "head": {
@@ -608,7 +591,7 @@
       }
     }
   },
-  "calcTransCattle": "عتبة الماشية: {head} >= 30 => بسبب {tabi} تابع، {musinnah} مسينة (مجموعة 30/40).",
+  "calcTransCattle": "عتبة الماشية: {head} >= {min} => بسبب {tabi} تابع، {musinnah} مسينة (مجموعة {tabiPer}/{musinnahPer}).",
   "@calcTransCattle": {
     "placeholders": {
       "head": {
@@ -622,7 +605,7 @@
       }
     }
   },
-  "calcTransCamel": "عتبة الجمل: {head} >= 5 => بسبب {due}.",
+  "calcTransCamel": "عتبة الجمل: {head} >= {min} => بسبب {due}.",
   "@calcTransCamel": {
     "placeholders": {
       "head": {
@@ -715,31 +698,6 @@
   "calcCamelNoDue": "لا مستحق",
   "calcCamelSheepN": "{count, plural, one{1 خروف} other{{count} خروف}}",
   "@calcCamelSheepN": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamel1BintMakhad": "1 بنت مخاض",
-  "calcCamel1BintLabun": "1 بنت لبن",
-  "calcCamel1Hiqqah": "1 حقة",
-  "calcCamel1Jadhah": "1 جده",
-  "calcCamel2BintLabun": "2 بنت لبن",
-  "calcCamel2Hiqqah": "2 حقة",
-  "calcCamelCombo": "{hiqqah} حاقة + {bintLabun} بنت لبون",
-  "@calcCamelCombo": {
-    "placeholders": {
-      "hiqqah": {
-        "type": "int"
-      },
-      "bintLabun": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamelApproxBintLabun": "{count} بنت لبون (تحرير وسرد تقريبي)",
-  "@calcCamelApproxBintLabun": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -917,5 +875,57 @@
   "regSubmittedNoAccount": "تم إرسال التسجيل. لم يُنشأ حساب دخول لأنه لم يُدخل بريد إلكتروني.",
   "loginIdentifierLabel": "رقم الهاتف أو البريد الإلكتروني",
   "loginIdentifierRequired": "أدخل رقم هاتفك أو بريدك الإلكتروني",
-  "loginIdentifierInvalid": "أدخل رقم هاتف صالحًا (مثل 0911223344) أو بريدًا إلكترونيًا صالحًا"
+  "loginIdentifierInvalid": "أدخل رقم هاتف صالحًا (مثل 0911223344) أو بريدًا إلكترونيًا صالحًا",
+  "calcCamelBintMakhadN": "{count} بنت مخاض",
+  "calcCamelBintLabunN": "{count} بنت لبن",
+  "calcCamelHiqqahN": "{count} حقة",
+  "calcCamelJadhahN": "{count} جده",
+  "calcNisabMetalGold": "ذهب (عيار 24)",
+  "calcNisabMetalSilver": "فضة",
+  "calcPricesAsOf": "الأسعار حتى {date} · {source}",
+  "calcPricesAsOfNoSource": "الأسعار حتى {date}",
+  "calcPricesStale": "قد تكون الأسعار غير محدّثة.",
+  "calcPricesSavedCopy": "تعذّر تحديث الأسعار. يتم عرض الأسعار المحفوظة على هذا الجهاز.",
+  "calcConfigErrorTitle": "تعذّر تحميل أسعار الزكاة لليوم",
+  "calcConfigErrorBody": "تحقق من اتصالك وحاول مرة أخرى.",
+  "calcConfigNotReadyBody": "أسعار الذهب والفضة غير متوفرة بعد. يرجى المحاولة لاحقًا.",
+  "commonRetry": "حاول مرة أخرى",
+  "calcLivestockEstimateLine": "القيمة السوقية التقديرية: {amount}",
+  "calcLivestockEstimateNote": "مقدّرة بمتوسط سعر السوق لكل رأس. يمكنك تغيير المبلغ قبل الدفع.",
+  "homeLiveCollected": "مباشر · تم جمع {amount}",
+  "homeCollected": "تم جمع {amount}",
+  "homeChangeUp": "↑ {percent}% مقارنة بالشهر الماضي",
+  "homeChangeDown": "↓ {percent}% مقارنة بالشهر الماضي",
+  "homeChangeFlat": "مثل الشهر الماضي",
+  "homeBeneficiariesSubtext": "أسرة",
+  "fitrStatusOpen": "مفتوح الآن",
+  "fitrStatusClosed": "مغلق",
+  "fitrStartsIn": "{days, plural, =0{يبدأ اليوم} =1{يبدأ غدًا} other{يبدأ خلال {days} يوم}}",
+  "fitrDaysLeft": "{days, plural, =0{اليوم آخر يوم للدفع} =1{بقي يوم واحد للدفع} other{بقي {days} يوم للدفع}}",
+  "fitrClosedOn": "أُغلق في {date}",
+  "fitrPerPerson": "{amount} للشخص",
+  "causesTitle": "المشاريع",
+  "causesSubtitle": "مشاريع تدعمها زكاتك",
+  "causesActive": "نشطة",
+  "causesClosed": "مغلقة",
+  "causesAllCategories": "الكل",
+  "causeCategoryEducation": "التعليم",
+  "causeCategoryWater": "المياه",
+  "causeCategoryHealth": "الصحة",
+  "causeCategoryFood": "الغذاء",
+  "causeCategoryShelter": "المأوى",
+  "causeCategoryLivelihood": "سبل العيش",
+  "causeCategoryEmergency": "الطوارئ",
+  "causeCategoryGeneral": "عام",
+  "causeBadgeUrgent": "عاجل",
+  "causeBadgeEssential": "أساسي",
+  "causeRaisedOfGoal": "تم جمع {raised} من {goal}",
+  "causeRaised": "تم جمع {raised}",
+  "causeEndsOn": "ينتهي في {date}",
+  "causeEndedOn": "انتهى في {date}",
+  "causesEmpty": "لا توجد مشاريع لعرضها بعد.",
+  "causesLoadError": "تعذّر تحميل المشاريع.",
+  "causeNotFound": "هذا المشروع لم يعد متاحًا.",
+  "causeAbout": "عن هذا المشروع",
+  "payProjectsLoading": "جارٍ تحميل المشاريع…"
 }

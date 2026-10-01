@@ -1,13 +1,6 @@
-/// API body for `POST /api/beneficiaries/v1/beneficiaries`.
-sealed class BeneficiaryRegistrationRequest {
-  const BeneficiaryRegistrationRequest();
-
-  Map<String, dynamic> toJson();
-}
-
-/// Mode A — full registration (expect HTTP 201).
-final class FullBeneficiaryCreateRequest
-    extends BeneficiaryRegistrationRequest {
+/// API body for `POST /api/beneficiaries/v1/beneficiaries` (multipart
+/// registration with a registration code; expect HTTP 201).
+final class FullBeneficiaryCreateRequest {
   const FullBeneficiaryCreateRequest({
     required this.fullName,
     required this.phone,
@@ -46,7 +39,6 @@ final class FullBeneficiaryCreateRequest
   final String? kebele;
   final String? profilePicturePath;
 
-  @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{
       'fullName': fullName.trim(),
@@ -74,22 +66,4 @@ final class FullBeneficiaryCreateRequest
     putText('kebele', kebele);
     return json;
   }
-}
-
-/// Mode B — national ID / Fayda path (expect HTTP 202).
-final class NationalIdBeneficiaryCreateRequest
-    extends BeneficiaryRegistrationRequest {
-  const NationalIdBeneficiaryCreateRequest({
-    required this.registrationCode,
-    required this.nationalId,
-  });
-
-  final String registrationCode;
-  final String nationalId;
-
-  @override
-  Map<String, dynamic> toJson() => {
-    'registrationCode': registrationCode.trim(),
-    'nationalId': nationalId.trim(),
-  };
 }

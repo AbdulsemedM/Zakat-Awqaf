@@ -18,10 +18,6 @@ class AuthInterceptor extends Interceptor {
     final path = options.path;
     final method = options.method.toUpperCase();
 
-    if (method == 'GET' && path.contains('api/beneficiaries/v1/sse/beneficiary/')) {
-      return true;
-    }
-
     if (method == 'POST') {
       if (_isExactBeneficiariesCollectionPath(path)) {
         return true;
@@ -33,11 +29,21 @@ class AuthInterceptor extends Interceptor {
         return true;
       }
       if (path.contains('api/beneficiaries/v1/companies')) {
-        return path.contains('/documents') || _isExactCompaniesCollectionPath(path);
+        return path.contains('/documents') ||
+            _isExactCompaniesCollectionPath(path);
       }
     }
 
     return false;
+  }
+
+  /// Public zakat content (calculator config, home summary, causes, Zakat
+  /// al-Fitr) takes no token; `admin/` routes do.
+  static bool isPublicZakatRoute(RequestOptions options) {
+    final path = options.path;
+    return options.method.toUpperCase() == 'GET' &&
+        path.contains('api/zakat/v1/') &&
+        !path.contains('api/zakat/v1/admin/');
   }
 
   static bool _isExactBeneficiariesCollectionPath(String path) {
@@ -65,8 +71,10 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final skipAuth = options.path.contains(_loginPath) ||
-        isPublicRegistrationRoute(options);
+    final skipAuth =
+        options.path.contains(_loginPath) ||
+        isPublicRegistrationRoute(options) ||
+        isPublicZakatRoute(options);
     if (!skipAuth) {
       final token = await _tokenStorage.readAccessToken();
       if (token != null && token.trim().isNotEmpty) {
@@ -83,9 +91,11 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final status = err.response?.statusCode;
     final options = err.requestOptions;
-    final shouldClearSession = status == 401 &&
+    final shouldClearSession =
+        status == 401 &&
         !options.path.contains(_loginPath) &&
-        !isPublicRegistrationRoute(options);
+        !isPublicRegistrationRoute(options) &&
+        !isPublicZakatRoute(options);
     if (shouldClearSession) {
       await _tokenStorage.clear();
       _sessionController.markLoggedOut();

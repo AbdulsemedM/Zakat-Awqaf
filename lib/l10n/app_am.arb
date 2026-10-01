@@ -19,7 +19,6 @@
   "transparencyQuote": "ግልጽ፣ ተጠያቂ እና ተፅዕኖ ያለው፤ ስጦታዎ ሀገር አቀፍ ድጋፍን እና ማበረታቻን ያበረታታል።",
   "payZakatCause": "ዘካት ይስጡ",
   "zakatAlFitr": "ዘካት አልፊጥር",
-  "zakatDueDays": "በግምት ከ22 ቀናት በኋላ ይደርሳል።",
   "setReminder": "ማስታወሻ ያዘጋጁ",
   "needQuickWayGive": "ፈጣን መስጫ",
   "supportCommunityNeeds": "በሰደቃ የማህበረሰብ ፍላጎቶችን ወዲያውኑ ይደግፉ።",
@@ -220,7 +219,7 @@
   "calcTabLivestock": "የእንስሳት እርባታ",
   "calcTabCrops": "ሰብሎች",
   "calcStep1NisabTitle": "ደረጃ 1፡ የኒሳብ ገደብ",
-  "calcStep1NisabBody": "የእርስዎ የተጣራ ሀብት ከደረጃው ካለፈ ዘካት መከፈል አለበት። ኒሳብ በ 85g መድረክ 24k የወርቅ ዋጋ ላይ የተመሰረተ ነው።",
+  "calcStep1NisabBody": "የተጣራ ሀብትዎ ኒሳብ ላይ ከደረሰ ዘካት ይከፈላል፦ በዛሬው ዋጋ {grams} ግ {metal}።",
   "calcNisabGoldFormula": "{grams}_ × {price}_ = {total}",
   "@calcNisabGoldFormula": {
     "placeholders": {
@@ -235,7 +234,7 @@
       }
     }
   },
-  "calcNisabThresholdBanner": "የኒሳብ ገደብ (የመድረክ ደረጃ፣ 85ግ ወርቅ አቻ)፦ {amount}",
+  "calcNisabThresholdBanner": "የኒሳብ ገደብ ({grams} ግ {metal})፦ {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
       "amount": {
@@ -243,14 +242,9 @@
       }
     }
   },
-  "calcUsdEtb": "USD/ETB",
-  "calcFxLive": "የቀጥታ የምንዛሬ ተመን መጠቀም",
-  "calcFxCache": "የተሸጎጠ የምንዛሬ ተመንን በመጠቀም",
-  "calcFxFallback": "የውድቀት ምንዛሬ ተመንን በመጠቀም",
-  "calcTimestampUnavailable": "የጊዜ ማህተም የለም።",
   "calcStep1LivestockTitle": "ደረጃ 1፡ የከብት እርባታ ዘዴ",
   "calcStep1LivestockBody": "የእንስሳት ዘካት የሚሰላው በአካላዊ የራስ ቆጠራ ሚዛኖች (የዋጋ % ሳይሆን) ነው።",
-  "calcStep1LivestockNisabNote": "የኒሳብ ገደቦች፡ በግ/ፍየል 40፣ከብቶች 30፣ ግመሎች 5.ከብቶች 30/40 ጥምር ይጠቀማሉ። ግመሎች የደረጃ ደረጃዎችን ይከተላሉ.",
+  "calcStep1LivestockNisabNote": "የኒሳብ ገደቦች፡ በግ/ፍየል {sheep}፣ ከብቶች {cattle}፣ ግመሎች {camels}። ከብቶች {tabiPer}/{musinnahPer} ጥምር ይጠቀማሉ፤ ግመሎች የደረጃ ክልሎችን ይከተላሉ።",
   "calcAdvisoryPrefix": "ምክር፡ {text}_",
   "@calcAdvisoryPrefix": {
     "placeholders": {
@@ -267,7 +261,7 @@
   "calcArabicDefHiqqah": "የሶስት አመት ሴት ግመል",
   "calcArabicDefJadhah": "የአራት አመት ሴት ግመል",
   "calcStep1CropTitle": "ደረጃ 1፡ የሰብል (Ushr) ስሌት",
-  "calcStep1CropBody": "የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ 653 ኪ.ግ. መጠኑ 10% (ዝናብ-የተበላ)፣ 5% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።",
+  "calcStep1CropBody": "የሰብል ዘካት በመኸር ወቅት ነው. ኒሳብ {nisab} ኪ.ግ. መጠኑ {rainRate}% (ዝናብ-የተበላ)፣ {irrigatedRate}% (የመስኖ) ወይም የተቀላቀለ ክብደት ነው።",
   "calcCropLineThreshold": "{kg}_ ኪግ {relation}_ 653 ኪ.ግ",
   "@calcCropLineThreshold": {
     "placeholders": {
@@ -383,7 +377,7 @@
     }
   },
   "calcHowCropZakatWorksTitle": "የሰብል ዘካት እንዴት እንደሚሰራ",
-  "calcHowCropZakatWorksBody": "ኒሳብ፡ 653 ኪ.ግ. ተመኖች፡- በዝናብ መመገብ 10%፣ በመስኖ 5%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።",
+  "calcHowCropZakatWorksBody": "ኒሳብ፡ {nisab} ኪ.ግ. ተመኖች፡- በዝናብ መመገብ {rainRate}%፣ በመስኖ {irrigatedRate}%፣ ድብልቅ = የክብደት ክፍፍል። ዘካ በመከር ወቅት መከፈል አለበት (ለሰብሎች አመታዊ ሃውል የለም)።",
   "calcHowCropZakatNote": "ማሳሰቢያ፡ መተግበሪያ እነዚህን ህጎች ለቀላልነት በሰፊው ይተገበራል። ምሁራዊ የስራ መደቦች በሰብል አይነት ስፋት እና በወጪ ተቀናሾች ላይ ይለያያሉ; ለተወሰኑ ጉዳዮች ብቁ ምሁራንን አማክር።",
   "calcWealthNisabHeading": "ንሰብ & ሃብት ዘካት",
   "calcWealthNisabLine": "የኒሳብ ገደብ፡ {nisab}_",
@@ -403,17 +397,6 @@
     }
   },
   "calcHowWealthZakatWorksTitle": "ዘካት ሀብት እንዴት እንደሚሰላ",
-  "calcHowWealthZakatWorksBody": "በእጃችን ላይ ጥሬ ገንዘብ፣ የባንክ ሒሳቦች፣ የሞባይል ቦርሳዎች፣ የንግድ ሥራ ንብረቶች እና የወርቅ እና የብር ዋጋ እንጨምራለን። ኒሳብ {grams} ግራም ወርቅ በመተግበሪያው 24k ዋጋ ግራም ነው። የያዙት ወርቅ የሚለካው ለመረጡት የካራት የመተግበሪያውን ዋጋ በመጠቀም ነው። ብር በአንድ ግራም {silverRate} ETB ቋሚ ማጣቀሻ ይጠቀማል። የተጣራ ሀብት ለማግኘት የሚያስገቧቸው ዕዳዎች ይቀነሳሉ። የተጣራ ሀብት በኒሳብ ወይም ከዚያ በላይ ከሆነ, የዘካ ክፍያ ከተጣራ ሀብት 2.5% ነው.",
-  "@calcHowWealthZakatWorksBody": {
-    "placeholders": {
-      "grams": {
-        "type": "int"
-      },
-      "silverRate": {
-        "type": "int"
-      }
-    }
-  },
   "calcHowWealthZakatNote": "ማሳሰቢያ፡- ሊቃውንት የየትኞቹ ንብረቶች ዘካ እንደሚሆኑ፣ ዕዳዎች ሀብትን እንዴት እንደሚቀነሱ፣ የጨረቃ ዓመት (ሀውል) በሚውልበት ጊዜ እና ሌሎች ዝርዝሮች ይለያያሉ። ይህ ማያ ገጽ ትምህርታዊ ግምት ነው - ሁኔታዎን ብቃት ካላቸው ምሁራን ጋር ያረጋግጡ።",
   "calcWealthBreakdownTitle": "ከላይ ያሉት መጠኖች እንዴት እንደሚሰሉ",
   "calcWealthTransLiquidsLine": "ጥሬ ገንዘብ + ባንክ + ሞባይል፡ {cash} + {bank} + {mobile} = {subtotal}",
@@ -461,7 +444,7 @@
       }
     }
   },
-  "calcWealthTransNisabLine": "ኒሳብ፡ {grams}_ g × 24k ({price}/ግ) = {nisab}",
+  "calcWealthTransNisabLine": "ኒሳብ፡ {grams} ግ {metal} × {price}/ግ = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
       "grams": {
@@ -517,7 +500,7 @@
       }
     }
   },
-  "calcWealthTransDueAbove": "ምክንያቱም {net}_ በኒሳብ ({nisab}) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = {net} × 2.5% = {due}።",
+  "calcWealthTransDueAbove": "ምክንያቱም {net}_ በኒሳብ ({nisab}) ላይ ወይም ከዚያ በላይ ስለሆነ፣ ዘካተ ክፍያ = {net} × {rate}% = {due}።",
   "@calcWealthTransDueAbove": {
     "placeholders": {
       "net": {
@@ -597,7 +580,7 @@
     }
   },
   "calcLsNone": "አሁን ባለው ቆጠራ ምክንያት ምንም የቤት እንስሳ የለም።",
-  "calcTransSheep": "የበግ/የፍየል ደጃፍ፡_ {head}_ >= 40=የሚገባው {due} በግ።",
+  "calcTransSheep": "የበግ/የፍየል ደጃፍ፡_ {head}_ >= {min}=የሚገባው {due} በግ።",
   "@calcTransSheep": {
     "placeholders": {
       "head": {
@@ -608,7 +591,7 @@
       }
     }
   },
-  "calcTransCattle": "የከብት እርከን፡_ {head}_ >= 30 => የሚከፈልበት {tabi} ታቢዕ፣ {musinnah} ሙሲና (30/40 ጥምር)።",
+  "calcTransCattle": "የከብት እርከን፡_ {head}_ >= {min} => የሚከፈልበት {tabi} ታቢዕ፣ {musinnah} ሙሲና ({tabiPer}/{musinnahPer} ጥምር)።",
   "@calcTransCattle": {
     "placeholders": {
       "head": {
@@ -622,7 +605,7 @@
       }
     }
   },
-  "calcTransCamel": "የግመል ገደብ፡_ {head}_ >= 5=\\u003e {due}።",
+  "calcTransCamel": "የግመል ገደብ፡_ {head}_ >= {min}=> {due}።",
   "@calcTransCamel": {
     "placeholders": {
       "head": {
@@ -715,31 +698,6 @@
   "calcCamelNoDue": "ምንም ክፍያ የለም።",
   "calcCamelSheepN": "{count, plural, one{1 በግ} other{{count} በግ}}",
   "@calcCamelSheepN": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamel1BintMakhad": "1 ቢንት ማክሃድ",
-  "calcCamel1BintLabun": "1 ቢንት ላቡን",
-  "calcCamel1Hiqqah": "1 ሂቃህ",
-  "calcCamel1Jadhah": "1 ጃዳህ",
-  "calcCamel2BintLabun": "2 ቢንት ላቡን",
-  "calcCamel2Hiqqah": "2 ሂቃህ",
-  "calcCamelCombo": "{hiqqah}_ ሂቃህ + {bintLabun} ቢንት ላቡን",
-  "@calcCamelCombo": {
-    "placeholders": {
-      "hiqqah": {
-        "type": "int"
-      },
-      "bintLabun": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamelApproxBintLabun": "{count}_ ቢንት ላቡን (ግምታዊ ጥምር)",
-  "@calcCamelApproxBintLabun": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -917,5 +875,57 @@
   "regSubmittedNoAccount": "ምዝገባው ገብቷል። ኢሜይል ስላልተሰጠ የመግቢያ መለያ አልተፈጠረም።",
   "loginIdentifierLabel": "ስልክ ቁጥር ወይም ኢሜይል",
   "loginIdentifierRequired": "ስልክ ቁጥርዎን ወይም ኢሜይልዎን ያስገቡ",
-  "loginIdentifierInvalid": "ትክክለኛ ስልክ ቁጥር (ለምሳሌ 0911223344) ወይም ኢሜይል ያስገቡ"
+  "loginIdentifierInvalid": "ትክክለኛ ስልክ ቁጥር (ለምሳሌ 0911223344) ወይም ኢሜይል ያስገቡ",
+  "calcCamelBintMakhadN": "{count} ቢንት ማክሃድ",
+  "calcCamelBintLabunN": "{count} ቢንት ላቡን",
+  "calcCamelHiqqahN": "{count} ሂቃህ",
+  "calcCamelJadhahN": "{count} ጃዳህ",
+  "calcNisabMetalGold": "ወርቅ (24 ካራት)",
+  "calcNisabMetalSilver": "ብር (ማዕድን)",
+  "calcPricesAsOf": "ዋጋዎች እስከ {date} · {source}",
+  "calcPricesAsOfNoSource": "ዋጋዎች እስከ {date}",
+  "calcPricesStale": "ዋጋዎቹ ያልተዘመኑ ሊሆኑ ይችላሉ።",
+  "calcPricesSavedCopy": "ዋጋዎችን ማደስ አልተቻለም። በዚህ መሣሪያ ላይ የተቀመጡ ዋጋዎች እየታዩ ነው።",
+  "calcConfigErrorTitle": "የዛሬን የዘካት ተመኖች መጫን አልተቻለም",
+  "calcConfigErrorBody": "ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።",
+  "calcConfigNotReadyBody": "የወርቅ እና የብር ዋጋዎች ገና አልተገኙም። እባክዎ ቆይተው እንደገና ይሞክሩ።",
+  "commonRetry": "እንደገና ሞክር",
+  "calcLivestockEstimateLine": "የተገመተ የገበያ ዋጋ፦ {amount}",
+  "calcLivestockEstimateNote": "በአንድ እንስሳ አማካይ የገበያ ዋጋ የተገመተ ነው። ከመክፈልዎ በፊት መጠኑን መቀየር ይችላሉ።",
+  "homeLiveCollected": "ቀጥታ · {amount} ተሰብስቧል",
+  "homeCollected": "{amount} ተሰብስቧል",
+  "homeChangeUp": "↑ {percent}% ካለፈው ወር",
+  "homeChangeDown": "↓ {percent}% ካለፈው ወር",
+  "homeChangeFlat": "ካለፈው ወር ጋር እኩል",
+  "homeBeneficiariesSubtext": "ቤተሰቦች",
+  "fitrStatusOpen": "አሁን ክፍት",
+  "fitrStatusClosed": "ተዘግቷል",
+  "fitrStartsIn": "{days, plural, =0{ዛሬ ይጀምራል} =1{ነገ ይጀምራል} other{በ{days} ቀናት ውስጥ ይጀምራል}}",
+  "fitrDaysLeft": "{days, plural, =0{ዛሬ የመክፈያው የመጨረሻ ቀን ነው} =1{ለመክፈል 1 ቀን ቀርቷል} other{ለመክፈል {days} ቀናት ቀርተዋል}}",
+  "fitrClosedOn": "{date} ላይ ተዘግቷል",
+  "fitrPerPerson": "በአንድ ሰው {amount}",
+  "causesTitle": "ፕሮጀክቶች",
+  "causesSubtitle": "ዘካትዎ የሚደግፋቸው ፕሮጀክቶች",
+  "causesActive": "ንቁ",
+  "causesClosed": "የተዘጉ",
+  "causesAllCategories": "ሁሉም",
+  "causeCategoryEducation": "ትምህርት",
+  "causeCategoryWater": "ውሃ",
+  "causeCategoryHealth": "ጤና",
+  "causeCategoryFood": "ምግብ",
+  "causeCategoryShelter": "መጠለያ",
+  "causeCategoryLivelihood": "መተዳደሪያ",
+  "causeCategoryEmergency": "አስቸኳይ ጊዜ",
+  "causeCategoryGeneral": "አጠቃላይ",
+  "causeBadgeUrgent": "አስቸኳይ",
+  "causeBadgeEssential": "አስፈላጊ",
+  "causeRaisedOfGoal": "ከ{goal} ውስጥ {raised} ተሰብስቧል",
+  "causeRaised": "{raised} ተሰብስቧል",
+  "causeEndsOn": "የሚያበቃው {date}",
+  "causeEndedOn": "{date} አብቅቷል",
+  "causesEmpty": "እስካሁን የሚታዩ ፕሮጀክቶች የሉም።",
+  "causesLoadError": "ፕሮጀክቶችን መጫን አልተቻለም።",
+  "causeNotFound": "ይህ ፕሮጀክት ከአሁን በኋላ አይገኝም።",
+  "causeAbout": "ስለዚህ ፕሮጀክት",
+  "payProjectsLoading": "ፕሮጀክቶች እየተጫኑ ነው…"
 }

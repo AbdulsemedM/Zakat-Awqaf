@@ -19,7 +19,6 @@
   "transparencyQuote": "Transparent, accountable, and impactful: your giving powers nationwide relief and empowerment.",
   "payZakatCause": "Give Zakat",
   "zakatAlFitr": "Zakat Al-Fitr",
-  "zakatDueDays": "Due in approximately 22 days.",
   "setReminder": "Set Reminder",
   "needQuickWayGive": "Quick Giving",
   "supportCommunityNeeds": "Support ongoing community needs instantly with Sadaqah.",
@@ -43,7 +42,7 @@
   "calcTabLivestock": "Livestock",
   "calcTabCrops": "Crops",
   "calcStep1NisabTitle": "Step 1: Nisab threshold",
-  "calcStep1NisabBody": "Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.",
+  "calcStep1NisabBody": "Zakat is due if your net wealth reaches the nisab: {grams} g of {metal} at today's price.",
   "calcNisabGoldFormula": "{grams} × {price} = {total}",
   "@calcNisabGoldFormula": {
     "placeholders": {
@@ -58,22 +57,23 @@
       }
     }
   },
-  "calcNisabThresholdBanner": "Nisab threshold (platform rate, 85g gold equivalent): {amount}",
+  "calcNisabThresholdBanner": "Nisab threshold ({grams} g {metal}): {amount}",
   "@calcNisabThresholdBanner": {
     "placeholders": {
       "amount": {
         "type": "String"
+      },
+      "grams": {
+        "type": "String"
+      },
+      "metal": {
+        "type": "String"
       }
     }
   },
-  "calcUsdEtb": "USD/ETB",
-  "calcFxLive": "Using live exchange rate",
-  "calcFxCache": "Using cached exchange rate",
-  "calcFxFallback": "Using fallback exchange rate",
-  "calcTimestampUnavailable": "timestamp unavailable",
   "calcStep1LivestockTitle": "Step 1: Livestock scale method",
   "calcStep1LivestockBody": "Livestock Zakat is calculated by physical head-count scales (not % of value).",
-  "calcStep1LivestockNisabNote": "Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.",
+  "calcStep1LivestockNisabNote": "Nisab thresholds: Sheep/Goats {sheep}, Cattle {cattle}, Camels {camels}. Cattle uses {tabiPer}/{musinnahPer} combinations; camels follow tier ranges.",
   "calcAdvisoryPrefix": "Advisory: {text}",
   "@calcAdvisoryPrefix": {
     "placeholders": {
@@ -90,7 +90,7 @@
   "calcArabicDefHiqqah": "three-year-old she-camel",
   "calcArabicDefJadhah": "four-year-old she-camel",
   "calcStep1CropTitle": "Step 1: Crop (Ushr) calculation",
-  "calcStep1CropBody": "Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.",
+  "calcStep1CropBody": "Crop Zakat is due at harvest. Nisab is {nisab}kg. Rate is {rainRate}% (rain-fed), {irrigatedRate}% (irrigated), or weighted for mixed.",
   "calcCropLineThreshold": "{kg} kg {relation} 653 kg",
   "@calcCropLineThreshold": {
     "placeholders": {
@@ -206,7 +206,7 @@
     }
   },
   "calcHowCropZakatWorksTitle": "How crop Zakat works",
-  "calcHowCropZakatWorksBody": "Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).",
+  "calcHowCropZakatWorksBody": "Nisab: {nisab}kg. Rates: rain-fed {rainRate}%, irrigated {irrigatedRate}%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).",
   "calcHowCropZakatNote": "Note: App applies these rules broadly for simplicity. Scholarly positions differ on crop-type scope and expense deductions; consult qualified scholars for specific cases.",
   "calcWealthNisabHeading": "Nisab & wealth Zakat",
   "calcWealthNisabLine": "Nisab threshold: {nisab}",
@@ -226,17 +226,6 @@
     }
   },
   "calcHowWealthZakatWorksTitle": "How wealth Zakat is calculated",
-  "calcHowWealthZakatWorksBody": "We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is {grams} g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of {silverRate} ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.",
-  "@calcHowWealthZakatWorksBody": {
-    "placeholders": {
-      "grams": {
-        "type": "int"
-      },
-      "silverRate": {
-        "type": "int"
-      }
-    }
-  },
   "calcHowWealthZakatNote": "Note: Scholars differ on which assets are zakatable, how debts discount wealth, when the lunar year (hawl) applies, and other details. This screen is an educational estimate—confirm your situation with qualified scholars.",
   "calcWealthBreakdownTitle": "How the amounts above are calculated",
   "calcWealthTransLiquidsLine": "Cash + bank + mobile: {cash} + {bank} + {mobile} = {subtotal}",
@@ -284,10 +273,13 @@
       }
     }
   },
-  "calcWealthTransNisabLine": "Nisab: {grams} g × 24k ({price}/g) = {nisab}",
+  "calcWealthTransNisabLine": "Nisab: {grams} g {metal} × {price}/g = {nisab}",
   "@calcWealthTransNisabLine": {
     "placeholders": {
       "grams": {
+        "type": "String"
+      },
+      "metal": {
         "type": "String"
       },
       "price": {
@@ -340,7 +332,7 @@
       }
     }
   },
-  "calcWealthTransDueAbove": "Because {net} is at or above nisab ({nisab}), Zakat due = {net} × 2.5% = {due}.",
+  "calcWealthTransDueAbove": "Because {net} is at or above nisab ({nisab}), Zakat due = {net} × {rate}% = {due}.",
   "@calcWealthTransDueAbove": {
     "placeholders": {
       "net": {
@@ -350,6 +342,9 @@
         "type": "String"
       },
       "nisab": {
+        "type": "String"
+      },
+      "rate": {
         "type": "String"
       }
     }
@@ -420,7 +415,7 @@
     }
   },
   "calcLsNone": "No livestock due under current counts",
-  "calcTransSheep": "Sheep/Goats threshold: {head} >= 40 => due {due} sheep.",
+  "calcTransSheep": "Sheep/Goats threshold: {head} >= {min} => due {due} sheep.",
   "@calcTransSheep": {
     "placeholders": {
       "head": {
@@ -428,10 +423,13 @@
       },
       "due": {
         "type": "int"
+      },
+      "min": {
+        "type": "int"
       }
     }
   },
-  "calcTransCattle": "Cattle threshold: {head} >= 30 => due {tabi} tabi', {musinnah} musinnah (30/40 combination).",
+  "calcTransCattle": "Cattle threshold: {head} >= {min} => due {tabi} tabi', {musinnah} musinnah ({tabiPer}/{musinnahPer} combination).",
   "@calcTransCattle": {
     "placeholders": {
       "head": {
@@ -442,10 +440,19 @@
       },
       "musinnah": {
         "type": "int"
+      },
+      "min": {
+        "type": "int"
+      },
+      "tabiPer": {
+        "type": "int"
+      },
+      "musinnahPer": {
+        "type": "int"
       }
     }
   },
-  "calcTransCamel": "Camel threshold: {head} >= 5 => due {due}.",
+  "calcTransCamel": "Camel threshold: {head} >= {min} => due {due}.",
   "@calcTransCamel": {
     "placeholders": {
       "head": {
@@ -453,6 +460,9 @@
       },
       "due": {
         "type": "String"
+      },
+      "min": {
+        "type": "int"
       }
     }
   },
@@ -538,31 +548,6 @@
   "calcCamelNoDue": "No due",
   "calcCamelSheepN": "{count, plural, one{1 sheep} other{{count} sheep}}",
   "@calcCamelSheepN": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamel1BintMakhad": "1 bint makhad",
-  "calcCamel1BintLabun": "1 bint labun",
-  "calcCamel1Hiqqah": "1 hiqqah",
-  "calcCamel1Jadhah": "1 jadhah",
-  "calcCamel2BintLabun": "2 bint labun",
-  "calcCamel2Hiqqah": "2 hiqqah",
-  "calcCamelCombo": "{hiqqah} hiqqah + {bintLabun} bint labun",
-  "@calcCamelCombo": {
-    "placeholders": {
-      "hiqqah": {
-        "type": "int"
-      },
-      "bintLabun": {
-        "type": "int"
-      }
-    }
-  },
-  "calcCamelApproxBintLabun": "{count} bint labun (approximate combo)",
-  "@calcCamelApproxBintLabun": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -924,5 +909,251 @@
   "regSubmittedNoAccount": "Registration submitted. No sign-in account was created because no email was given.",
   "loginIdentifierLabel": "Phone number or email",
   "loginIdentifierRequired": "Enter your phone number or email",
-  "loginIdentifierInvalid": "Enter a valid phone number (e.g. 0911223344) or email"
+  "loginIdentifierInvalid": "Enter a valid phone number (e.g. 0911223344) or email",
+  "calcCamelBintMakhadN": "{count} bint makhad",
+  "@calcCamelBintMakhadN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelBintLabunN": "{count} bint labun",
+  "@calcCamelBintLabunN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelHiqqahN": "{count} hiqqah",
+  "@calcCamelHiqqahN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calcCamelJadhahN": "{count} jadhah",
+  "@calcCamelJadhahN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@calcStep1CropBody": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      },
+      "rainRate": {
+        "type": "String"
+      },
+      "irrigatedRate": {
+        "type": "String"
+      }
+    }
+  },
+  "@calcHowCropZakatWorksBody": {
+    "placeholders": {
+      "nisab": {
+        "type": "String"
+      },
+      "rainRate": {
+        "type": "String"
+      },
+      "irrigatedRate": {
+        "type": "String"
+      }
+    }
+  },
+  "@calcStep1NisabBody": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      },
+      "metal": {
+        "type": "String"
+      }
+    }
+  },
+  "calcNisabMetalGold": "gold (24k)",
+  "calcNisabMetalSilver": "silver",
+  "@calcStep1LivestockNisabNote": {
+    "placeholders": {
+      "sheep": {
+        "type": "int"
+      },
+      "cattle": {
+        "type": "int"
+      },
+      "camels": {
+        "type": "int"
+      },
+      "tabiPer": {
+        "type": "int"
+      },
+      "musinnahPer": {
+        "type": "int"
+      }
+    }
+  },
+  "calcPricesAsOf": "Prices as of {date} · {source}",
+  "@calcPricesAsOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "calcPricesAsOfNoSource": "Prices as of {date}",
+  "@calcPricesAsOfNoSource": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "calcPricesStale": "Prices may be out of date.",
+  "calcPricesSavedCopy": "Couldn't refresh prices. Showing the prices saved on this device.",
+  "calcConfigErrorTitle": "Couldn't load today's zakat rates",
+  "calcConfigErrorBody": "Check your connection and try again.",
+  "calcConfigNotReadyBody": "Gold and silver prices are not available yet. Please try again later.",
+  "commonRetry": "Try again",
+  "calcLivestockEstimateLine": "Estimated market value: {amount}",
+  "@calcLivestockEstimateLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "calcLivestockEstimateNote": "Estimated at average market prices per animal. You can change the amount before paying.",
+  "homeLiveCollected": "LIVE · {amount} collected",
+  "@homeLiveCollected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeCollected": "{amount} collected",
+  "@homeCollected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeChangeUp": "↑ {percent}% vs last month",
+  "@homeChangeUp": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "homeChangeDown": "↓ {percent}% vs last month",
+  "@homeChangeDown": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "homeChangeFlat": "Same as last month",
+  "homeBeneficiariesSubtext": "households",
+  "fitrStatusOpen": "OPEN NOW",
+  "fitrStatusClosed": "CLOSED",
+  "fitrStartsIn": "{days, plural, =0{Starts today} =1{Starts tomorrow} other{Starts in {days} days}}",
+  "@fitrStartsIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "fitrDaysLeft": "{days, plural, =0{Today is the last day to pay} =1{1 day left to pay} other{{days} days left to pay}}",
+  "@fitrDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "fitrClosedOn": "Closed on {date}",
+  "@fitrClosedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fitrPerPerson": "{amount} per person",
+  "@fitrPerPerson": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "causesTitle": "Causes",
+  "causesSubtitle": "Projects your zakat supports",
+  "causesActive": "Active",
+  "causesClosed": "Closed",
+  "causesAllCategories": "All",
+  "causeCategoryEducation": "Education",
+  "causeCategoryWater": "Water",
+  "causeCategoryHealth": "Health",
+  "causeCategoryFood": "Food",
+  "causeCategoryShelter": "Shelter",
+  "causeCategoryLivelihood": "Livelihood",
+  "causeCategoryEmergency": "Emergency",
+  "causeCategoryGeneral": "General",
+  "causeBadgeUrgent": "URGENT",
+  "causeBadgeEssential": "ESSENTIAL",
+  "causeRaisedOfGoal": "{raised} raised of {goal}",
+  "@causeRaisedOfGoal": {
+    "placeholders": {
+      "raised": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "causeRaised": "{raised} raised",
+  "@causeRaised": {
+    "placeholders": {
+      "raised": {
+        "type": "String"
+      }
+    }
+  },
+  "causeEndsOn": "Ends {date}",
+  "@causeEndsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "causeEndedOn": "Ended {date}",
+  "@causeEndedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "causesEmpty": "No causes to show yet.",
+  "causesLoadError": "Couldn't load causes.",
+  "causeNotFound": "This cause is no longer available.",
+  "causeAbout": "About this cause",
+  "payProjectsLoading": "Loading projects…"
 }

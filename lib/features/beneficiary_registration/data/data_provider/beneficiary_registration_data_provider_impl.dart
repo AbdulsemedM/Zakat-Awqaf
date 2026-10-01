@@ -67,41 +67,32 @@ class BeneficiaryRegistrationDataProviderImpl
 
   @override
   Future<BeneficiaryRegistrationResult> createBeneficiary(
-    BeneficiaryRegistrationRequest request,
+    FullBeneficiaryCreateRequest request,
   ) async {
     try {
-      final Response<Map<String, dynamic>> response;
-      switch (request) {
-        case FullBeneficiaryCreateRequest(:final profilePicturePath):
-          final formMap = <String, dynamic>{
-            'data': MultipartFile.fromString(
-              jsonEncode(request.toJson()),
-              contentType: DioMediaType.parse('application/json'),
-            ),
-          };
-          final picturePath = profilePicturePath?.trim();
-          if (picturePath != null && picturePath.isNotEmpty) {
-            formMap['profilePicture'] = await MultipartFile.fromFile(
-              picturePath,
-              filename: p.basename(picturePath),
-            );
-          }
-          response = await _dio.post<Map<String, dynamic>>(
-            _beneficiariesPath,
-            data: FormData.fromMap(formMap),
-            options: Options(
-              contentType: 'multipart/form-data',
-              extra: {kLogJsonPartKey: request.toJson()},
-            ),
-          );
-        case NationalIdBeneficiaryCreateRequest():
-          response = await _dio.post<Map<String, dynamic>>(
-            _beneficiariesPath,
-            data: request.toJson(),
-          );
+      final formMap = <String, dynamic>{
+        'data': MultipartFile.fromString(
+          jsonEncode(request.toJson()),
+          contentType: DioMediaType.parse('application/json'),
+        ),
+      };
+      final picturePath = request.profilePicturePath?.trim();
+      if (picturePath != null && picturePath.isNotEmpty) {
+        formMap['profilePicture'] = await MultipartFile.fromFile(
+          picturePath,
+          filename: p.basename(picturePath),
+        );
       }
+      final response = await _dio.post<Map<String, dynamic>>(
+        _beneficiariesPath,
+        data: FormData.fromMap(formMap),
+        options: Options(
+          contentType: 'multipart/form-data',
+          extra: {kLogJsonPartKey: request.toJson()},
+        ),
+      );
       final status = response.statusCode ?? 0;
-      if (status < 200 || status > 202) {
+      if (status != 200 && status != 201) {
         throw BeneficiaryRegistrationException('Unexpected status: $status');
       }
       return _parseEnvelope(response.data, status);

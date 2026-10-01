@@ -24,8 +24,6 @@ import '../../features/auth/data/repository/auth_repository.dart' as _i104;
 import '../../features/auth/data/repository/auth_repository_impl.dart' as _i409;
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart'
     as _i424;
-import '../../features/beneficiary_registration/data/beneficiary_sse_client.dart'
-    as _i848;
 import '../../features/beneficiary_registration/data/data_provider/beneficiary_registration_data_provider.dart'
     as _i793;
 import '../../features/beneficiary_registration/data/data_provider/beneficiary_registration_data_provider_impl.dart'
@@ -34,6 +32,11 @@ import '../../features/beneficiary_registration/data/repository/beneficiary_regi
     as _i585;
 import '../../features/beneficiary_registration/data/repository/beneficiary_registration_repository_impl.dart'
     as _i744;
+import '../../features/causes/bloc/cause_detail_bloc.dart' as _i267;
+import '../../features/causes/bloc/causes_list_bloc.dart' as _i398;
+import '../../features/causes/data/data_provider/causes_remote_data_provider.dart'
+    as _i486;
+import '../../features/causes/data/repository/causes_repository.dart' as _i38;
 import '../../features/donation/data/data_provider/donation_data_provider.dart'
     as _i495;
 import '../../features/donation/data/data_provider/donation_data_provider_impl.dart'
@@ -42,6 +45,10 @@ import '../../features/donation/data/repository/donation_repository.dart'
     as _i488;
 import '../../features/donation/data/repository/donation_repository_impl.dart'
     as _i477;
+import '../../features/home/bloc/home_bloc.dart' as _i854;
+import '../../features/home/data/data_provider/home_remote_data_provider.dart'
+    as _i868;
+import '../../features/home/data/repository/home_repository.dart' as _i1047;
 import '../../features/impact/bloc/impact_bloc.dart' as _i239;
 import '../../features/impact/data/data_provider/impact_data_provider.dart'
     as _i141;
@@ -59,6 +66,14 @@ import '../../features/profile/data/repository/profile_repository.dart'
     as _i508;
 import '../../features/profile/data/repository/profile_repository_impl.dart'
     as _i309;
+import '../../features/zakat_calculator/bloc/zakat_calculator_bloc.dart'
+    as _i308;
+import '../../features/zakat_calculator/data/data_provider/calculator_config_local_data_provider.dart'
+    as _i286;
+import '../../features/zakat_calculator/data/data_provider/calculator_config_remote_data_provider.dart'
+    as _i925;
+import '../../features/zakat_calculator/data/repository/calculator_config_repository.dart'
+    as _i343;
 import '../auth/auth_interceptor.dart' as _i53;
 import '../auth/auth_session_controller.dart' as _i543;
 import '../auth/auth_token_storage.dart' as _i149;
@@ -90,6 +105,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i825.ImpactRepository>(
       () => _i994.ImpactRepositoryImpl(gh<_i141.ImpactDataProvider>()),
     );
+    gh.lazySingleton<_i286.CalculatorConfigLocalDataProvider>(
+      () => _i286.CalculatorConfigLocalDataProviderImpl(),
+    );
     gh.lazySingleton<_i53.AuthInterceptor>(
       () => _i53.AuthInterceptor(
         gh<_i149.AuthTokenStorage>(),
@@ -117,6 +135,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(instanceName: 'paymentsDio'),
       ),
     );
+    gh.lazySingleton<_i868.HomeRemoteDataProvider>(
+      () => _i868.HomeRemoteDataProviderImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i488.DonationRepository>(
       () => _i477.DonationRepositoryImpl(gh<_i495.DonationDataProvider>()),
     );
@@ -126,17 +147,32 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i149.AuthTokenStorage>(),
       ),
     );
-    gh.lazySingleton<_i848.BeneficiarySseClient>(
-      () => _i848.BeneficiarySseClient(gh<_i361.Dio>()),
+    gh.lazySingleton<_i925.CalculatorConfigRemoteDataProvider>(
+      () => _i925.CalculatorConfigRemoteDataProviderImpl(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i793.BeneficiaryRegistrationDataProvider>(
       () => _i242.BeneficiaryRegistrationDataProviderImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i486.CausesRemoteDataProvider>(
+      () => _i486.CausesRemoteDataProviderImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i1047.HomeRepository>(
+      () => _i1047.HomeRepositoryImpl(gh<_i868.HomeRemoteDataProvider>()),
     );
     gh.lazySingleton<_i104.AuthRepository>(
       () => _i409.AuthRepositoryImpl(
         gh<_i723.AuthDataProvider>(),
         gh<_i149.AuthTokenStorage>(),
         gh<_i543.AuthSessionController>(),
+      ),
+    );
+    gh.lazySingleton<_i38.CausesRepository>(
+      () => _i38.CausesRepositoryImpl(gh<_i486.CausesRemoteDataProvider>()),
+    );
+    gh.lazySingleton<_i343.CalculatorConfigRepository>(
+      () => _i343.CalculatorConfigRepositoryImpl(
+        gh<_i925.CalculatorConfigRemoteDataProvider>(),
+        gh<_i286.CalculatorConfigLocalDataProvider>(),
       ),
     );
     gh.lazySingleton<_i508.ProfileRepository>(
@@ -157,9 +193,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i424.BeneficiaryRegistrationBloc>(
       () => _i424.BeneficiaryRegistrationBloc(
         gh<_i585.BeneficiaryRegistrationRepository>(),
-        gh<_i848.BeneficiarySseClient>(),
         gh<_i104.AuthRepository>(),
       ),
+    );
+    gh.factory<_i308.ZakatCalculatorBloc>(
+      () => _i308.ZakatCalculatorBloc(gh<_i343.CalculatorConfigRepository>()),
+    );
+    gh.factory<_i854.HomeBloc>(
+      () => _i854.HomeBloc(
+        gh<_i1047.HomeRepository>(),
+        gh<_i38.CausesRepository>(),
+      ),
+    );
+    gh.factory<_i398.CausesListBloc>(
+      () => _i398.CausesListBloc(gh<_i38.CausesRepository>()),
+    );
+    gh.factory<_i267.CauseDetailBloc>(
+      () => _i267.CauseDetailBloc(gh<_i38.CausesRepository>()),
     );
     return this;
   }

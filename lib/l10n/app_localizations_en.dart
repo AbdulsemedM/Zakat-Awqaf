@@ -68,9 +68,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatAlFitr => 'Zakat Al-Fitr';
 
   @override
-  String get zakatDueDays => 'Due in approximately 22 days.';
-
-  @override
   String get setReminder => 'Set Reminder';
 
   @override
@@ -142,8 +139,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcStep1NisabTitle => 'Step 1: Nisab threshold';
 
   @override
-  String get calcStep1NisabBody =>
-      'Zakat is due if your net wealth exceeds the threshold. Nisab is based on 85g of platform 24k gold price.';
+  String calcStep1NisabBody(String grams, String metal) {
+    return 'Zakat is due if your net wealth reaches the nisab: $grams g of $metal at today\'s price.';
+  }
 
   @override
   String calcNisabGoldFormula(String grams, String price, String total) {
@@ -151,24 +149,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String calcNisabThresholdBanner(String amount) {
-    return 'Nisab threshold (platform rate, 85g gold equivalent): $amount';
+  String calcNisabThresholdBanner(String amount, String grams, String metal) {
+    return 'Nisab threshold ($grams g $metal): $amount';
   }
-
-  @override
-  String get calcUsdEtb => 'USD/ETB';
-
-  @override
-  String get calcFxLive => 'Using live exchange rate';
-
-  @override
-  String get calcFxCache => 'Using cached exchange rate';
-
-  @override
-  String get calcFxFallback => 'Using fallback exchange rate';
-
-  @override
-  String get calcTimestampUnavailable => 'timestamp unavailable';
 
   @override
   String get calcStep1LivestockTitle => 'Step 1: Livestock scale method';
@@ -178,8 +161,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Livestock Zakat is calculated by physical head-count scales (not % of value).';
 
   @override
-  String get calcStep1LivestockNisabNote =>
-      'Nisab thresholds: Sheep/Goats 40, Cattle 30, Camels 5. Cattle uses 30/40 combinations; camels follow tier ranges.';
+  String calcStep1LivestockNisabNote(
+    int sheep,
+    int cattle,
+    int camels,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'Nisab thresholds: Sheep/Goats $sheep, Cattle $cattle, Camels $camels. Cattle uses $tabiPer/$musinnahPer combinations; camels follow tier ranges.';
+  }
 
   @override
   String calcAdvisoryPrefix(String text) {
@@ -211,8 +201,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcStep1CropTitle => 'Step 1: Crop (Ushr) calculation';
 
   @override
-  String get calcStep1CropBody =>
-      'Crop Zakat is due at harvest. Nisab is 653kg. Rate is 10% (rain-fed), 5% (irrigated), or weighted for mixed.';
+  String calcStep1CropBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'Crop Zakat is due at harvest. Nisab is ${nisab}kg. Rate is $rainRate% (rain-fed), $irrigatedRate% (irrigated), or weighted for mixed.';
+  }
 
   @override
   String calcCropLineThreshold(String kg, String relation) {
@@ -403,8 +398,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcHowCropZakatWorksTitle => 'How crop Zakat works';
 
   @override
-  String get calcHowCropZakatWorksBody =>
-      'Nisab: 653kg. Rates: rain-fed 10%, irrigated 5%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
+  String calcHowCropZakatWorksBody(
+    String nisab,
+    String rainRate,
+    String irrigatedRate,
+  ) {
+    return 'Nisab: ${nisab}kg. Rates: rain-fed $rainRate%, irrigated $irrigatedRate%, mixed = weighted split. Zakat is due at harvest (no annual hawl for crops).';
+  }
 
   @override
   String get calcHowCropZakatNote =>
@@ -425,11 +425,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calcHowWealthZakatWorksTitle => 'How wealth Zakat is calculated';
-
-  @override
-  String calcHowWealthZakatWorksBody(int grams, int silverRate) {
-    return 'We add cash on hand, bank balances, mobile wallets, business assets, and the value of gold and silver. Nisab is $grams g of gold at the app’s 24k price per gram. Gold you hold is valued using the app’s rate for the karat you choose. Silver uses a fixed reference of $silverRate ETB per gram. Liabilities you enter are subtracted to get net wealth. If net wealth is at or above nisab, Zakat due is 2.5% of net wealth.';
-  }
 
   @override
   String get calcHowWealthZakatNote =>
@@ -465,8 +460,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransNisabLine(String grams, String price, String nisab) {
-    return 'Nisab: $grams g × 24k ($price/g) = $nisab';
+  String calcWealthTransNisabLine(
+    String grams,
+    String metal,
+    String price,
+    String nisab,
+  ) {
+    return 'Nisab: $grams g $metal × $price/g = $nisab';
   }
 
   @override
@@ -490,8 +490,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String calcWealthTransDueAbove(String net, String due, String nisab) {
-    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × 2.5% = $due.';
+  String calcWealthTransDueAbove(
+    String net,
+    String due,
+    String nisab,
+    String rate,
+  ) {
+    return 'Because $net is at or above nisab ($nisab), Zakat due = $net × $rate% = $due.';
   }
 
   @override
@@ -575,18 +580,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcLsNone => 'No livestock due under current counts';
 
   @override
-  String calcTransSheep(int head, int due) {
-    return 'Sheep/Goats threshold: $head >= 40 => due $due sheep.';
+  String calcTransSheep(int head, int due, int min) {
+    return 'Sheep/Goats threshold: $head >= $min => due $due sheep.';
   }
 
   @override
-  String calcTransCattle(int head, int tabi, int musinnah) {
-    return 'Cattle threshold: $head >= 30 => due $tabi tabi\', $musinnah musinnah (30/40 combination).';
+  String calcTransCattle(
+    int head,
+    int tabi,
+    int musinnah,
+    int min,
+    int tabiPer,
+    int musinnahPer,
+  ) {
+    return 'Cattle threshold: $head >= $min => due $tabi tabi\', $musinnah musinnah ($tabiPer/$musinnahPer combination).';
   }
 
   @override
-  String calcTransCamel(int head, String due) {
-    return 'Camel threshold: $head >= 5 => due $due.';
+  String calcTransCamel(int head, String due, int min) {
+    return 'Camel threshold: $head >= $min => due $due.';
   }
 
   @override
@@ -655,34 +667,6 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 sheep',
     );
     return '$_temp0';
-  }
-
-  @override
-  String get calcCamel1BintMakhad => '1 bint makhad';
-
-  @override
-  String get calcCamel1BintLabun => '1 bint labun';
-
-  @override
-  String get calcCamel1Hiqqah => '1 hiqqah';
-
-  @override
-  String get calcCamel1Jadhah => '1 jadhah';
-
-  @override
-  String get calcCamel2BintLabun => '2 bint labun';
-
-  @override
-  String get calcCamel2Hiqqah => '2 hiqqah';
-
-  @override
-  String calcCamelCombo(int hiqqah, int bintLabun) {
-    return '$hiqqah hiqqah + $bintLabun bint labun';
-  }
-
-  @override
-  String calcCamelApproxBintLabun(int count) {
-    return '$count bint labun (approximate combo)';
   }
 
   @override
@@ -1653,4 +1637,215 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get loginIdentifierInvalid =>
       'Enter a valid phone number (e.g. 0911223344) or email';
+
+  @override
+  String calcCamelBintMakhadN(int count) {
+    return '$count bint makhad';
+  }
+
+  @override
+  String calcCamelBintLabunN(int count) {
+    return '$count bint labun';
+  }
+
+  @override
+  String calcCamelHiqqahN(int count) {
+    return '$count hiqqah';
+  }
+
+  @override
+  String calcCamelJadhahN(int count) {
+    return '$count jadhah';
+  }
+
+  @override
+  String get calcNisabMetalGold => 'gold (24k)';
+
+  @override
+  String get calcNisabMetalSilver => 'silver';
+
+  @override
+  String calcPricesAsOf(String date, String source) {
+    return 'Prices as of $date · $source';
+  }
+
+  @override
+  String calcPricesAsOfNoSource(String date) {
+    return 'Prices as of $date';
+  }
+
+  @override
+  String get calcPricesStale => 'Prices may be out of date.';
+
+  @override
+  String get calcPricesSavedCopy =>
+      'Couldn\'t refresh prices. Showing the prices saved on this device.';
+
+  @override
+  String get calcConfigErrorTitle => 'Couldn\'t load today\'s zakat rates';
+
+  @override
+  String get calcConfigErrorBody => 'Check your connection and try again.';
+
+  @override
+  String get calcConfigNotReadyBody =>
+      'Gold and silver prices are not available yet. Please try again later.';
+
+  @override
+  String get commonRetry => 'Try again';
+
+  @override
+  String calcLivestockEstimateLine(String amount) {
+    return 'Estimated market value: $amount';
+  }
+
+  @override
+  String get calcLivestockEstimateNote =>
+      'Estimated at average market prices per animal. You can change the amount before paying.';
+
+  @override
+  String homeLiveCollected(String amount) {
+    return 'LIVE · $amount collected';
+  }
+
+  @override
+  String homeCollected(String amount) {
+    return '$amount collected';
+  }
+
+  @override
+  String homeChangeUp(String percent) {
+    return '↑ $percent% vs last month';
+  }
+
+  @override
+  String homeChangeDown(String percent) {
+    return '↓ $percent% vs last month';
+  }
+
+  @override
+  String get homeChangeFlat => 'Same as last month';
+
+  @override
+  String get homeBeneficiariesSubtext => 'households';
+
+  @override
+  String get fitrStatusOpen => 'OPEN NOW';
+
+  @override
+  String get fitrStatusClosed => 'CLOSED';
+
+  @override
+  String fitrStartsIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Starts in $days days',
+      one: 'Starts tomorrow',
+      zero: 'Starts today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days left to pay',
+      one: '1 day left to pay',
+      zero: 'Today is the last day to pay',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrClosedOn(String date) {
+    return 'Closed on $date';
+  }
+
+  @override
+  String fitrPerPerson(String amount) {
+    return '$amount per person';
+  }
+
+  @override
+  String get causesTitle => 'Causes';
+
+  @override
+  String get causesSubtitle => 'Projects your zakat supports';
+
+  @override
+  String get causesActive => 'Active';
+
+  @override
+  String get causesClosed => 'Closed';
+
+  @override
+  String get causesAllCategories => 'All';
+
+  @override
+  String get causeCategoryEducation => 'Education';
+
+  @override
+  String get causeCategoryWater => 'Water';
+
+  @override
+  String get causeCategoryHealth => 'Health';
+
+  @override
+  String get causeCategoryFood => 'Food';
+
+  @override
+  String get causeCategoryShelter => 'Shelter';
+
+  @override
+  String get causeCategoryLivelihood => 'Livelihood';
+
+  @override
+  String get causeCategoryEmergency => 'Emergency';
+
+  @override
+  String get causeCategoryGeneral => 'General';
+
+  @override
+  String get causeBadgeUrgent => 'URGENT';
+
+  @override
+  String get causeBadgeEssential => 'ESSENTIAL';
+
+  @override
+  String causeRaisedOfGoal(String raised, String goal) {
+    return '$raised raised of $goal';
+  }
+
+  @override
+  String causeRaised(String raised) {
+    return '$raised raised';
+  }
+
+  @override
+  String causeEndsOn(String date) {
+    return 'Ends $date';
+  }
+
+  @override
+  String causeEndedOn(String date) {
+    return 'Ended $date';
+  }
+
+  @override
+  String get causesEmpty => 'No causes to show yet.';
+
+  @override
+  String get causesLoadError => 'Couldn\'t load causes.';
+
+  @override
+  String get causeNotFound => 'This cause is no longer available.';
+
+  @override
+  String get causeAbout => 'About this cause';
+
+  @override
+  String get payProjectsLoading => 'Loading projects…';
 }

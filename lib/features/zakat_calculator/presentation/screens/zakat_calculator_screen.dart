@@ -9,6 +9,7 @@ import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
@@ -24,11 +25,13 @@ class ZakatCalculatorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ZakatCalculatorBloc()..add(const ZakatCalculatorStarted()),
+      create: (_) =>
+          getIt<ZakatCalculatorBloc>()..add(const ZakatCalculatorStarted()),
       child: Scaffold(
         body: BlocBuilder<ZakatCalculatorBloc, ZakatCalculatorState>(
           builder: (context, state) {
             final s = state as ZakatCalculatorInitial;
+            final hasConfig = s.config != null;
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,43 +45,48 @@ class ZakatCalculatorScreen extends StatelessWidget {
                         Card(
                           child: Padding(
                             padding: const EdgeInsets.all(16),
-                            child: s.isPricingLoading
-                                ? const _Step1Shimmer()
-                                : _Step1Card(state: s),
+                            child: hasConfig
+                                ? _Step1Card(state: s)
+                                : s.configStatus ==
+                                      CalculatorConfigStatus.failed
+                                ? _ConfigErrorView(notReady: s.configNotReady)
+                                : const _Step1Shimmer(),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        _CategoryPanel(state: s),
-                        const SizedBox(height: 12),
-                        _TabOverviewCard(state: s),
-                        if (s.activeTab == ZakatCategoryTab.wealth) ...[
+                        if (hasConfig) ...[
+                          const SizedBox(height: 16),
+                          _CategoryPanel(state: s),
                           const SizedBox(height: 12),
-                          _WealthPostOverviewSection(state: s),
-                        ],
-                        if (s.activeTab == ZakatCategoryTab.livestock) ...[
-                          const SizedBox(height: 12),
-                          _LivestockPostOverviewSection(state: s),
-                        ],
-                        if (s.activeTab == ZakatCategoryTab.crops) ...[
-                          const SizedBox(height: 12),
-                          _CropPostOverviewSection(state: s),
-                        ],
-                        const SizedBox(height: 20),
-                        ElevatedButton.icon(
-                          onPressed: () => context.push(
-                            '/zakat/payment',
-                            extra: ZakatPaymentArgs.fromCalculator(
-                              context.l10n,
-                              s,
+                          _TabOverviewCard(state: s),
+                          if (s.activeTab == ZakatCategoryTab.wealth) ...[
+                            const SizedBox(height: 12),
+                            _WealthPostOverviewSection(state: s),
+                          ],
+                          if (s.activeTab == ZakatCategoryTab.livestock) ...[
+                            const SizedBox(height: 12),
+                            _LivestockPostOverviewSection(state: s),
+                          ],
+                          if (s.activeTab == ZakatCategoryTab.crops) ...[
+                            const SizedBox(height: 12),
+                            _CropPostOverviewSection(state: s),
+                          ],
+                          const SizedBox(height: 20),
+                          ElevatedButton.icon(
+                            onPressed: () => context.push(
+                              '/zakat/payment',
+                              extra: ZakatPaymentArgs.fromCalculator(
+                                context.l10n,
+                                s,
+                              ),
+                            ),
+                            icon: const Icon(Icons.volunteer_activism_outlined),
+                            label: Text(context.l10n.calcPayYourZakat),
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(56),
+                              elevation: 2,
                             ),
                           ),
-                          icon: const Icon(Icons.volunteer_activism_outlined),
-                          label: Text(context.l10n.calcPayYourZakat),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(56),
-                            elevation: 2,
-                          ),
-                        ),
+                        ],
                       ],
                     ),
                   ),
@@ -281,8 +289,12 @@ class _Step1Card extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final config = state.config!;
     switch (state.activeTab) {
       case ZakatCategoryTab.wealth:
+        final nisab = config.nisab;
+        final grams = ZakatCalculatorStrings.grams(nisab.basisGrams);
+        final metal = ZakatCalculatorStrings.nisabMetal(l10n, nisab.basis);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -291,12 +303,15 @@ class _Step1Card extends StatelessWidget {
               style: CalcTextStyles.stepTitle(theme.textTheme),
             ),
             const SizedBox(height: 4),
-            Text(l10n.calcStep1NisabBody, style: theme.textTheme.bodySmall),
+            Text(
+              l10n.calcStep1NisabBody(grams, metal),
+              style: theme.textTheme.bodySmall,
+            ),
             const SizedBox(height: 4),
             CalcEmphasisText(
               text: l10n.calcNisabGoldFormula(
-                '85',
-                _money(state.platformGoldPricePerGram24kEtb),
+                '$grams g',
+                _money(ZakatCalculatorStrings.nisabMetalPricePerGram(config)),
                 _money(state.nisabThresholdEtb),
               ),
               style: theme.textTheme.labelMedium?.copyWith(
@@ -304,12 +319,7 @@ class _Step1Card extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              '${ZakatCalculatorStrings.fxStatus(l10n, state.rateSource)} • ${l10n.calcUsdEtb} ${state.usdToEtbRate.toStringAsFixed(6)} • ${ZakatCalculatorStrings.formatRateTimestamp(context.contentLocale, l10n, state.rateTimestamp)}',
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
+            _PricesStatus(state: state),
             const SizedBox(height: 12),
             Container(
               width: double.infinity,
@@ -323,6 +333,8 @@ class _Step1Card extends StatelessWidget {
               child: CalcEmphasisText(
                 text: l10n.calcNisabThresholdBanner(
                   _money(state.nisabThresholdEtb),
+                  grams,
+                  metal,
                 ),
                 style: theme.textTheme.titleSmall,
                 emphasizeAll: true,
@@ -343,7 +355,7 @@ class _Step1Card extends StatelessWidget {
             Text(l10n.calcStep1LivestockBody, style: theme.textTheme.bodySmall),
             const SizedBox(height: 8),
             CalcEmphasisText(
-              text: l10n.calcStep1LivestockNisabNote,
+              text: ZakatCalculatorStrings.livestockNisabNote(l10n, config),
               style: theme.textTheme.labelMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -365,7 +377,7 @@ class _Step1Card extends StatelessWidget {
           ],
         );
       case ZakatCategoryTab.crops:
-        final isAboveNisab = state.cropKg >= ZakatCalculatorStrings.cropNisabKg;
+        final isAboveNisab = state.cropAboveNisab;
         final ratePercent = (state.cropEffectiveRate * 100).toStringAsFixed(2);
         final formulaInner =
             '${state.cropKg.toStringAsFixed(2)} × $ratePercent% = ${state.cropZakatDueKg.toStringAsFixed(2)}kg';
@@ -378,7 +390,7 @@ class _Step1Card extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             CalcEmphasisText(
-              text: l10n.calcStep1CropBody,
+              text: ZakatCalculatorStrings.cropBody(l10n, config),
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
@@ -417,12 +429,9 @@ class _TabOverviewCard extends StatelessWidget {
     final scheme = theme.colorScheme;
     final l10n = context.l10n;
     final livestockCount = state.sheepOrGoats + state.cattle + state.camels;
-    final cropAboveNisab = state.cropKg >= ZakatCalculatorStrings.cropNisabKg;
-    final livestockHasDue =
-        state.sheepZakatDueCount > 0 ||
-        state.cattleTabiDueCount > 0 ||
-        state.cattleMusinnahDueCount > 0 ||
-        ZakatCalculatorStrings.camelHasDue(state);
+    final cropAboveNisab = state.cropAboveNisab;
+    final livestockHasDue = state.livestockHasDue;
+    final livestockEstimate = state.livestockEstimatedValueEtb;
 
     final (
       title,
@@ -564,6 +573,20 @@ class _TabOverviewCard extends StatelessWidget {
                               : scheme.onSurfaceVariant,
                         ),
                       ),
+                      if (state.activeTab == ZakatCategoryTab.livestock &&
+                          livestockHasDue &&
+                          livestockEstimate != null) ...[
+                        const SizedBox(height: 6),
+                        Text(
+                          l10n.calcLivestockEstimateLine(
+                            _money(livestockEstimate),
+                          ),
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: scheme.onSurface,
+                          ),
+                        ),
+                      ],
                       if (state.activeTab == ZakatCategoryTab.livestock) ...[
                         const SizedBox(height: 8),
                         Text(
@@ -1173,7 +1196,10 @@ class _CropPostOverviewSection extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               CalcEmphasisText(
-                text: l10n.calcHowCropZakatWorksBody,
+                text: ZakatCalculatorStrings.howCropZakatWorks(
+                  l10n,
+                  state.config!,
+                ),
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 4),
@@ -1350,6 +1376,101 @@ String _liabilityTypeLabel(AppLocalizations l, LiabilityType type) {
 }
 
 String _money(double value) => MoneyFormatter.etb(value);
+
+/// "Prices as of …" plus the stale / saved-copy notices.
+class _PricesStatus extends StatelessWidget {
+  const _PricesStatus({required this.state});
+
+  final ZakatCalculatorInitial state;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final config = state.config!;
+    final warningStyle = theme.textTheme.labelSmall?.copyWith(
+      color: theme.colorScheme.error,
+      fontWeight: FontWeight.w600,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ZakatCalculatorStrings.pricesAsOf(
+            context.contentLocale,
+            l10n,
+            config,
+          ),
+          style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        if (config.isStale(DateTime.now())) ...[
+          const SizedBox(height: 2),
+          Text(l10n.calcPricesStale, style: warningStyle),
+        ],
+        if (state.configRefreshFailed) ...[
+          const SizedBox(height: 2),
+          Row(
+            children: [
+              Expanded(
+                child: Text(l10n.calcPricesSavedCopy, style: warningStyle),
+              ),
+              TextButton(
+                onPressed: () => context.read<ZakatCalculatorBloc>().add(
+                  const CalculatorConfigRefreshRequested(),
+                ),
+                child: Text(l10n.commonRetry),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Shown instead of the calculator when no config could be loaded.
+class _ConfigErrorView extends StatelessWidget {
+  const _ConfigErrorView({required this.notReady});
+
+  final bool notReady;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    return Column(
+      children: [
+        Icon(
+          Icons.cloud_off_outlined,
+          size: 40,
+          color: theme.colorScheme.error,
+        ),
+        const SizedBox(height: 10),
+        Text(
+          l10n.calcConfigErrorTitle,
+          textAlign: TextAlign.center,
+          style: CalcTextStyles.stepTitle(theme.textTheme),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          notReady ? l10n.calcConfigNotReadyBody : l10n.calcConfigErrorBody,
+          textAlign: TextAlign.center,
+          style: theme.textTheme.bodySmall,
+        ),
+        const SizedBox(height: 14),
+        FilledButton.icon(
+          onPressed: () => context.read<ZakatCalculatorBloc>().add(
+            const CalculatorConfigRefreshRequested(),
+          ),
+          icon: const Icon(Icons.refresh),
+          label: Text(l10n.commonRetry),
+        ),
+      ],
+    );
+  }
+}
 
 class _Step1Shimmer extends StatefulWidget {
   const _Step1Shimmer();

@@ -19,7 +19,6 @@ class BeneficiaryDto {
     this.verificationReason,
     this.notes,
     this.identityProviderSub,
-    this.verificationLink,
     this.tradingName,
     this.tradeRegistrationNumber,
     this.taxIdentificationNumber,
@@ -66,7 +65,6 @@ class BeneficiaryDto {
   final String? verificationReason;
   final String? notes;
   final String? identityProviderSub;
-  final String? verificationLink;
   final String? tradingName;
   final String? tradeRegistrationNumber;
   final String? taxIdentificationNumber;
@@ -126,7 +124,6 @@ class BeneficiaryDto {
       verificationReason: json['verificationReason'] as String?,
       notes: json['notes'] as String?,
       identityProviderSub: json['identityProviderSub'] as String?,
-      verificationLink: json['verificationLink'] as String?,
       tradingName: json['tradingName'] as String?,
       tradeRegistrationNumber: json['tradeRegistrationNumber'] as String?,
       taxIdentificationNumber: json['taxIdentificationNumber'] as String?,
