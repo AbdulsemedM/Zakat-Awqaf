@@ -1545,18 +1545,6 @@ abstract class AppLocalizations {
   /// **'Baraka Stories'**
   String get impactBarakaStories;
 
-  /// No description provided for @impactActiveAwqafProjects.
-  ///
-  /// In en, this message translates to:
-  /// **'Active Awqaf Projects'**
-  String get impactActiveAwqafProjects;
-
-  /// No description provided for @impactAllProjectsComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'All projects coming soon'**
-  String get impactAllProjectsComingSoon;
-
   /// No description provided for @impactLiveImpactStream.
   ///
   /// In en, this message translates to:
@@ -1592,36 +1580,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a region to see local impact'**
   String get impactTapRegionHint;
-
-  /// No description provided for @impactRegionImpactComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'{region} impact coming soon'**
-  String impactRegionImpactComingSoon(String region);
-
-  /// No description provided for @impactStoryComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'{name} story coming soon'**
-  String impactStoryComingSoon(String name);
-
-  /// No description provided for @impactProjectDetailsComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'{title} details coming soon'**
-  String impactProjectDetailsComingSoon(String title);
-
-  /// No description provided for @impactPercentFunded.
-  ///
-  /// In en, this message translates to:
-  /// **'{percent}% Funded'**
-  String impactPercentFunded(String percent);
-
-  /// No description provided for @impactEtbLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'{amount} ETB Left'**
-  String impactEtbLeft(String amount);
 
   /// No description provided for @impactSeeYourPersonalBaraka.
   ///
@@ -3260,6 +3218,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading projects…'**
   String get payProjectsLoading;
+
+  /// No description provided for @impactAsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'As of {date}'**
+  String impactAsOf(String date);
+
+  /// No description provided for @impactBeneficiariesByAsnaf.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiaries by category'**
+  String get impactBeneficiariesByAsnaf;
+
+  /// No description provided for @impactRegionBeneficiaries.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} beneficiaries'**
+  String impactRegionBeneficiaries(String count);
+
+  /// No description provided for @impactRegionProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} projects'**
+  String impactRegionProjects(String count);
+
+  /// No description provided for @impactShowNational.
+  ///
+  /// In en, this message translates to:
+  /// **'Show national'**
+  String get impactShowNational;
+
+  /// No description provided for @impactStoryNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This story is no longer available.'**
+  String get impactStoryNotFound;
+
+  /// No description provided for @impactStoryLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this story.'**
+  String get impactStoryLoadError;
+
+  /// No description provided for @impactPublishedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Published {date}'**
+  String impactPublishedOn(String date);
 }
 
 class _AppLocalizationsDelegate

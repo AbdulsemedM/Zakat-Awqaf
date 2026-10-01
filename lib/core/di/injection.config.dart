@@ -50,13 +50,10 @@ import '../../features/home/data/data_provider/home_remote_data_provider.dart'
     as _i868;
 import '../../features/home/data/repository/home_repository.dart' as _i1047;
 import '../../features/impact/bloc/impact_bloc.dart' as _i239;
-import '../../features/impact/data/data_provider/impact_data_provider.dart'
-    as _i141;
-import '../../features/impact/data/data_provider/mock_impact_data_provider.dart'
-    as _i600;
+import '../../features/impact/bloc/impact_story_bloc.dart' as _i132;
+import '../../features/impact/data/data_provider/impact_remote_data_provider.dart'
+    as _i921;
 import '../../features/impact/data/repository/impact_repository.dart' as _i825;
-import '../../features/impact/data/repository/impact_repository_impl.dart'
-    as _i994;
 import '../../features/profile/bloc/profile_bloc.dart' as _i40;
 import '../../features/profile/data/data_provider/profile_data_provider.dart'
     as _i365;
@@ -99,12 +96,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i543.AuthSessionController>(
       () => _i543.AuthSessionController(gh<_i149.AuthTokenStorage>()),
     );
-    gh.lazySingleton<_i141.ImpactDataProvider>(
-      () => _i600.MockImpactDataProvider(),
-    );
-    gh.lazySingleton<_i825.ImpactRepository>(
-      () => _i994.ImpactRepositoryImpl(gh<_i141.ImpactDataProvider>()),
-    );
     gh.lazySingleton<_i286.CalculatorConfigLocalDataProvider>(
       () => _i286.CalculatorConfigLocalDataProviderImpl(),
     );
@@ -124,8 +115,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i723.AuthDataProvider>(
       () => _i379.AuthDataProviderImpl(gh<_i361.Dio>(instanceName: 'authDio')),
     );
-    gh.factory<_i239.ImpactBloc>(
-      () => _i239.ImpactBloc(gh<_i825.ImpactRepository>()),
+    gh.lazySingleton<_i921.ImpactRemoteDataProvider>(
+      () => _i921.ImpactRemoteDataProviderImpl(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i583.GoRouter>(
       () => appRouterModule.router(gh<_i543.AuthSessionController>()),
@@ -159,6 +150,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1047.HomeRepository>(
       () => _i1047.HomeRepositoryImpl(gh<_i868.HomeRemoteDataProvider>()),
     );
+    gh.lazySingleton<_i825.ImpactRepository>(
+      () => _i825.ImpactRepositoryImpl(gh<_i921.ImpactRemoteDataProvider>()),
+    );
     gh.lazySingleton<_i104.AuthRepository>(
       () => _i409.AuthRepositoryImpl(
         gh<_i723.AuthDataProvider>(),
@@ -177,6 +171,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i508.ProfileRepository>(
       () => _i309.ProfileRepositoryImpl(gh<_i365.ProfileDataProvider>()),
+    );
+    gh.factory<_i239.ImpactBloc>(
+      () => _i239.ImpactBloc(gh<_i825.ImpactRepository>()),
+    );
+    gh.factory<_i132.ImpactStoryBloc>(
+      () => _i132.ImpactStoryBloc(gh<_i825.ImpactRepository>()),
     );
     gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(gh<_i104.AuthRepository>()));
     gh.factory<_i40.ProfileBloc>(

@@ -109,8 +109,6 @@
   "impactCouldNotLoad": "Bu'aan biyyaalessaa fe'amuu hin dandeenye",
   "impactGeographicReach": "Dhaqqabina Naannoo",
   "impactBarakaStories": "Seenaawwan Barakaa",
-  "impactActiveAwqafProjects": "Pirojektoota Awqaaf Sochii Irra Jiran",
-  "impactAllProjectsComingSoon": "Pirojektoonni hundi yeroo dhihoo dhufu",
   "impactLiveImpactStream": "Tamsaasa Bu'aa Kallattii",
   "impactDistributedFunds": "Maallaqa Raabsame",
   "impactEtbAmount": "{amount} ETB",
@@ -124,46 +122,6 @@
   "impactLivesTouched": "Jireenyota Tuqaman",
   "impactActiveProjects": "Pirojektoota Sochii Irra Jiran",
   "impactTapRegionHint": "Bu'aa naannoo ilaaluuf naannoo tuqi",
-  "impactRegionImpactComingSoon": "Bu'aan {region} yeroo dhihoo dhufa",
-  "@impactRegionImpactComingSoon": {
-    "placeholders": {
-      "region": {
-        "type": "String"
-      }
-    }
-  },
-  "impactStoryComingSoon": "Seenaa {name} yeroo dhihoo dhufa",
-  "@impactStoryComingSoon": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "impactProjectDetailsComingSoon": "Bal'inni {title} yeroo dhihoo dhufa",
-  "@impactProjectDetailsComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "impactPercentFunded": "{percent}% guutameera",
-  "@impactPercentFunded": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
-  "impactEtbLeft": "{amount} ETB hafa",
-  "@impactEtbLeft": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "impactSeeYourPersonalBaraka": "Barakaa Dhuunfaa Kee Ilaali",
   "impactTrackStewardship": "Bulchiinsa kee keessatti saantima hunda hordofi.",
   "impactViewMyHistory": "Seenaa Koo Ilaali",
@@ -927,5 +885,13 @@
   "causesLoadError": "Pirojektoota fe'uun hin danda'amne.",
   "causeNotFound": "Pirojektiin kun kana booda hin argamu.",
   "causeAbout": "Waa'ee pirojektii kanaa",
-  "payProjectsLoading": "Pirojektoonni fe'amaa jiru…"
+  "payProjectsLoading": "Pirojektoonni fe'amaa jiru…",
+  "impactAsOf": "Hanga {date}",
+  "impactBeneficiariesByAsnaf": "Fayyadamtoota akka gosaatti",
+  "impactRegionBeneficiaries": "fayyadamtoota {count}",
+  "impactRegionProjects": "pirojektoota {count}",
+  "impactShowNational": "Sadarkaa biyyaa agarsiisi",
+  "impactStoryNotFound": "Seenaan kun kana booda hin argamu.",
+  "impactStoryLoadError": "Seenaa kana fe'uun hin danda'amne.",
+  "impactPublishedOn": "{date} maxxanfame"
 }

@@ -109,8 +109,6 @@
   "impactCouldNotLoad": "تعذر تحميل الأثر الوطني",
   "impactGeographicReach": "الانتشار الجغرافي",
   "impactBarakaStories": "قصص البركة",
-  "impactActiveAwqafProjects": "مشاريع الأوقاف النشطة",
-  "impactAllProjectsComingSoon": "جميع المشاريع قريبًا",
   "impactLiveImpactStream": "بث الأثر المباشر",
   "impactDistributedFunds": "الأموال الموزعة",
   "impactEtbAmount": "{amount} بر إثيوبي",
@@ -124,46 +122,6 @@
   "impactLivesTouched": "الأرواح المستفيدة",
   "impactActiveProjects": "المشاريع النشطة",
   "impactTapRegionHint": "اضغط على منطقة لعرض الأثر المحلي",
-  "impactRegionImpactComingSoon": "أثر {region} قريبًا",
-  "@impactRegionImpactComingSoon": {
-    "placeholders": {
-      "region": {
-        "type": "String"
-      }
-    }
-  },
-  "impactStoryComingSoon": "قصة {name} قريبًا",
-  "@impactStoryComingSoon": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "impactProjectDetailsComingSoon": "تفاصيل {title} قريبًا",
-  "@impactProjectDetailsComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "impactPercentFunded": "تم تمويل {percent}%",
-  "@impactPercentFunded": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
-  "impactEtbLeft": "متبقي {amount} بر إثيوبي",
-  "@impactEtbLeft": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "impactSeeYourPersonalBaraka": "اطلع على بركتك الشخصية",
   "impactTrackStewardship": "تتبع كل مساهمة من أمانتك.",
   "impactViewMyHistory": "عرض سجلي",
@@ -927,5 +885,13 @@
   "causesLoadError": "تعذّر تحميل المشاريع.",
   "causeNotFound": "هذا المشروع لم يعد متاحًا.",
   "causeAbout": "عن هذا المشروع",
-  "payProjectsLoading": "جارٍ تحميل المشاريع…"
+  "payProjectsLoading": "جارٍ تحميل المشاريع…",
+  "impactAsOf": "حتى {date}",
+  "impactBeneficiariesByAsnaf": "المستفيدون حسب الفئة",
+  "impactRegionBeneficiaries": "{count} مستفيد",
+  "impactRegionProjects": "{count} مشروع",
+  "impactShowNational": "عرض الوطني",
+  "impactStoryNotFound": "هذه القصة لم تعد متاحة.",
+  "impactStoryLoadError": "تعذّر تحميل هذه القصة.",
+  "impactPublishedOn": "نُشر في {date}"
 }

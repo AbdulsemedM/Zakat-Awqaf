@@ -875,12 +875,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get impactBarakaStories => 'Baraka Stories';
 
   @override
-  String get impactActiveAwqafProjects => 'Active Awqaf Projects';
-
-  @override
-  String get impactAllProjectsComingSoon => 'All projects coming soon';
-
-  @override
   String get impactLiveImpactStream => 'LIVE IMPACT STREAM';
 
   @override
@@ -899,31 +893,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get impactTapRegionHint => 'Tap a region to see local impact';
-
-  @override
-  String impactRegionImpactComingSoon(String region) {
-    return '$region impact coming soon';
-  }
-
-  @override
-  String impactStoryComingSoon(String name) {
-    return '$name story coming soon';
-  }
-
-  @override
-  String impactProjectDetailsComingSoon(String title) {
-    return '$title details coming soon';
-  }
-
-  @override
-  String impactPercentFunded(String percent) {
-    return '$percent% Funded';
-  }
-
-  @override
-  String impactEtbLeft(String amount) {
-    return '$amount ETB Left';
-  }
 
   @override
   String get impactSeeYourPersonalBaraka => 'See Your Personal Baraka';
@@ -1848,4 +1817,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payProjectsLoading => 'Loading projects…';
+
+  @override
+  String impactAsOf(String date) {
+    return 'As of $date';
+  }
+
+  @override
+  String get impactBeneficiariesByAsnaf => 'Beneficiaries by category';
+
+  @override
+  String impactRegionBeneficiaries(String count) {
+    return '$count beneficiaries';
+  }
+
+  @override
+  String impactRegionProjects(String count) {
+    return '$count projects';
+  }
+
+  @override
+  String get impactShowNational => 'Show national';
+
+  @override
+  String get impactStoryNotFound => 'This story is no longer available.';
+
+  @override
+  String get impactStoryLoadError => 'Couldn\'t load this story.';
+
+  @override
+  String impactPublishedOn(String date) {
+    return 'Published $date';
+  }
 }

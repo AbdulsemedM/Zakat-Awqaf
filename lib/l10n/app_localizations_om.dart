@@ -887,14 +887,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get impactBarakaStories => 'Seenaawwan Barakaa';
 
   @override
-  String get impactActiveAwqafProjects =>
-      'Pirojektoota Awqaaf Sochii Irra Jiran';
-
-  @override
-  String get impactAllProjectsComingSoon =>
-      'Pirojektoonni hundi yeroo dhihoo dhufu';
-
-  @override
   String get impactLiveImpactStream => 'Tamsaasa Bu\'aa Kallattii';
 
   @override
@@ -913,31 +905,6 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get impactTapRegionHint => 'Bu\'aa naannoo ilaaluuf naannoo tuqi';
-
-  @override
-  String impactRegionImpactComingSoon(String region) {
-    return 'Bu\'aan $region yeroo dhihoo dhufa';
-  }
-
-  @override
-  String impactStoryComingSoon(String name) {
-    return 'Seenaa $name yeroo dhihoo dhufa';
-  }
-
-  @override
-  String impactProjectDetailsComingSoon(String title) {
-    return 'Bal\'inni $title yeroo dhihoo dhufa';
-  }
-
-  @override
-  String impactPercentFunded(String percent) {
-    return '$percent% guutameera';
-  }
-
-  @override
-  String impactEtbLeft(String amount) {
-    return '$amount ETB hafa';
-  }
 
   @override
   String get impactSeeYourPersonalBaraka => 'Barakaa Dhuunfaa Kee Ilaali';
@@ -1870,4 +1837,36 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get payProjectsLoading => 'Pirojektoonni fe\'amaa jiru…';
+
+  @override
+  String impactAsOf(String date) {
+    return 'Hanga $date';
+  }
+
+  @override
+  String get impactBeneficiariesByAsnaf => 'Fayyadamtoota akka gosaatti';
+
+  @override
+  String impactRegionBeneficiaries(String count) {
+    return 'fayyadamtoota $count';
+  }
+
+  @override
+  String impactRegionProjects(String count) {
+    return 'pirojektoota $count';
+  }
+
+  @override
+  String get impactShowNational => 'Sadarkaa biyyaa agarsiisi';
+
+  @override
+  String get impactStoryNotFound => 'Seenaan kun kana booda hin argamu.';
+
+  @override
+  String get impactStoryLoadError => 'Seenaa kana fe\'uun hin danda\'amne.';
+
+  @override
+  String impactPublishedOn(String date) {
+    return '$date maxxanfame';
+  }
 }

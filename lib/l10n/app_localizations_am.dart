@@ -863,12 +863,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get impactBarakaStories => 'የበረከት ታሪኮች';
 
   @override
-  String get impactActiveAwqafProjects => 'ንቁ የወቅፍ ፕሮጀክቶች';
-
-  @override
-  String get impactAllProjectsComingSoon => 'ሁሉም ፕሮጀክቶች በቅርቡ ይመጣሉ';
-
-  @override
   String get impactLiveImpactStream => 'ቀጥታ የተፅዕኖ ስርጭት';
 
   @override
@@ -887,31 +881,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get impactTapRegionHint => 'አካባቢያዊ ተፅዕኖ ለማየት ክልል ይንኩ';
-
-  @override
-  String impactRegionImpactComingSoon(String region) {
-    return 'የ$region ተፅዕኖ በቅርቡ ይመጣል';
-  }
-
-  @override
-  String impactStoryComingSoon(String name) {
-    return 'የ$name ታሪክ በቅርቡ ይመጣል';
-  }
-
-  @override
-  String impactProjectDetailsComingSoon(String title) {
-    return 'የ$title ዝርዝሮች በቅርቡ ይመጣሉ';
-  }
-
-  @override
-  String impactPercentFunded(String percent) {
-    return '$percent% ተሸፍኗል';
-  }
-
-  @override
-  String impactEtbLeft(String amount) {
-    return '$amount ብር ይቀራል';
-  }
 
   @override
   String get impactSeeYourPersonalBaraka => 'የግል በረከትዎን ይመልከቱ';
@@ -1819,4 +1788,36 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get payProjectsLoading => 'ፕሮጀክቶች እየተጫኑ ነው…';
+
+  @override
+  String impactAsOf(String date) {
+    return 'እስከ $date';
+  }
+
+  @override
+  String get impactBeneficiariesByAsnaf => 'ተጠቃሚዎች በምድብ';
+
+  @override
+  String impactRegionBeneficiaries(String count) {
+    return '$count ተጠቃሚዎች';
+  }
+
+  @override
+  String impactRegionProjects(String count) {
+    return '$count ፕሮጀክቶች';
+  }
+
+  @override
+  String get impactShowNational => 'አገር አቀፍ አሳይ';
+
+  @override
+  String get impactStoryNotFound => 'ይህ ታሪክ ከአሁን በኋላ አይገኝም።';
+
+  @override
+  String get impactStoryLoadError => 'ይህን ታሪክ መጫን አልተቻለም።';
+
+  @override
+  String impactPublishedOn(String date) {
+    return '$date የታተመ';
+  }
 }

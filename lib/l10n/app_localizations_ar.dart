@@ -868,12 +868,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get impactBarakaStories => 'قصص البركة';
 
   @override
-  String get impactActiveAwqafProjects => 'مشاريع الأوقاف النشطة';
-
-  @override
-  String get impactAllProjectsComingSoon => 'جميع المشاريع قريبًا';
-
-  @override
   String get impactLiveImpactStream => 'بث الأثر المباشر';
 
   @override
@@ -892,31 +886,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get impactTapRegionHint => 'اضغط على منطقة لعرض الأثر المحلي';
-
-  @override
-  String impactRegionImpactComingSoon(String region) {
-    return 'أثر $region قريبًا';
-  }
-
-  @override
-  String impactStoryComingSoon(String name) {
-    return 'قصة $name قريبًا';
-  }
-
-  @override
-  String impactProjectDetailsComingSoon(String title) {
-    return 'تفاصيل $title قريبًا';
-  }
-
-  @override
-  String impactPercentFunded(String percent) {
-    return 'تم تمويل $percent%';
-  }
-
-  @override
-  String impactEtbLeft(String amount) {
-    return 'متبقي $amount بر إثيوبي';
-  }
 
   @override
   String get impactSeeYourPersonalBaraka => 'اطلع على بركتك الشخصية';
@@ -1834,4 +1803,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get payProjectsLoading => 'جارٍ تحميل المشاريع…';
+
+  @override
+  String impactAsOf(String date) {
+    return 'حتى $date';
+  }
+
+  @override
+  String get impactBeneficiariesByAsnaf => 'المستفيدون حسب الفئة';
+
+  @override
+  String impactRegionBeneficiaries(String count) {
+    return '$count مستفيد';
+  }
+
+  @override
+  String impactRegionProjects(String count) {
+    return '$count مشروع';
+  }
+
+  @override
+  String get impactShowNational => 'عرض الوطني';
+
+  @override
+  String get impactStoryNotFound => 'هذه القصة لم تعد متاحة.';
+
+  @override
+  String get impactStoryLoadError => 'تعذّر تحميل هذه القصة.';
+
+  @override
+  String impactPublishedOn(String date) {
+    return 'نُشر في $date';
+  }
 }

@@ -109,8 +109,6 @@
   "impactCouldNotLoad": "Lama soo dejin karin saameynta qaranka",
   "impactGeographicReach": "Gaarsiinta Juqraafiyeed",
   "impactBarakaStories": "Sheekooyinka Barako",
-  "impactActiveAwqafProjects": "Mashaariicda Awqaafta ee Firfircoon",
-  "impactAllProjectsComingSoon": "Dhammaan mashaariicda dhawaan ayay imanayaan",
   "impactLiveImpactStream": "TOOS: QUUDINTA SAAMEYNTA",
   "impactDistributedFunds": "LACAGTA LA QAYBIYEY",
   "impactEtbAmount": "{amount} ETB",
@@ -124,46 +122,6 @@
   "impactLivesTouched": "NOLOLAL LA TAABTAY",
   "impactActiveProjects": "MASHAAARIIC FIRFIRCOON",
   "impactTapRegionHint": "Taabo gobol si aad u aragto saameynta deegaanka",
-  "impactRegionImpactComingSoon": "Saameynta {region} dhawaan ayay imanaysaa",
-  "@impactRegionImpactComingSoon": {
-    "placeholders": {
-      "region": {
-        "type": "String"
-      }
-    }
-  },
-  "impactStoryComingSoon": "Sheekada {name} dhawaan ayay imanaysaa",
-  "@impactStoryComingSoon": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "impactProjectDetailsComingSoon": "Faahfaahinta {title} dhawaan ayay imanaysaa",
-  "@impactProjectDetailsComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "impactPercentFunded": "{percent}% la maalgeliyey",
-  "@impactPercentFunded": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
-  "impactEtbLeft": "{amount} ETB ayaa hadhay",
-  "@impactEtbLeft": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "impactSeeYourPersonalBaraka": "Arag Barakadaada Shaqsiga ah",
   "impactTrackStewardship": "La soco senti kasta oo masuuliyaddaada ah.",
   "impactViewMyHistory": "Eeg Taariikhdhayda",
@@ -927,5 +885,13 @@
   "causesLoadError": "Lama soo rarin karin mashaariicda.",
   "causeNotFound": "Mashruucan hadda lama heli karo.",
   "causeAbout": "Ku saabsan mashruucan",
-  "payProjectsLoading": "Mashaariicda ayaa la soo rarayaa…"
+  "payProjectsLoading": "Mashaariicda ayaa la soo rarayaa…",
+  "impactAsOf": "Ilaa {date}",
+  "impactBeneficiariesByAsnaf": "Ka-faa’iideystayaasha qaybaha",
+  "impactRegionBeneficiaries": "{count} ka-faa’iideyste",
+  "impactRegionProjects": "{count} mashruuc",
+  "impactShowNational": "Muuji heerka qaranka",
+  "impactStoryNotFound": "Sheekadan hadda lama heli karo.",
+  "impactStoryLoadError": "Lama soo rarin karin sheekadan.",
+  "impactPublishedOn": "La daabacay {date}"
 }

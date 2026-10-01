@@ -883,13 +883,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get impactBarakaStories => 'Sheekooyinka Barako';
 
   @override
-  String get impactActiveAwqafProjects => 'Mashaariicda Awqaafta ee Firfircoon';
-
-  @override
-  String get impactAllProjectsComingSoon =>
-      'Dhammaan mashaariicda dhawaan ayay imanayaan';
-
-  @override
   String get impactLiveImpactStream => 'TOOS: QUUDINTA SAAMEYNTA';
 
   @override
@@ -909,31 +902,6 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get impactTapRegionHint =>
       'Taabo gobol si aad u aragto saameynta deegaanka';
-
-  @override
-  String impactRegionImpactComingSoon(String region) {
-    return 'Saameynta $region dhawaan ayay imanaysaa';
-  }
-
-  @override
-  String impactStoryComingSoon(String name) {
-    return 'Sheekada $name dhawaan ayay imanaysaa';
-  }
-
-  @override
-  String impactProjectDetailsComingSoon(String title) {
-    return 'Faahfaahinta $title dhawaan ayay imanaysaa';
-  }
-
-  @override
-  String impactPercentFunded(String percent) {
-    return '$percent% la maalgeliyey';
-  }
-
-  @override
-  String impactEtbLeft(String amount) {
-    return '$amount ETB ayaa hadhay';
-  }
 
   @override
   String get impactSeeYourPersonalBaraka => 'Arag Barakadaada Shaqsiga ah';
@@ -1865,4 +1833,36 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get payProjectsLoading => 'Mashaariicda ayaa la soo rarayaa…';
+
+  @override
+  String impactAsOf(String date) {
+    return 'Ilaa $date';
+  }
+
+  @override
+  String get impactBeneficiariesByAsnaf => 'Ka-faa’iideystayaasha qaybaha';
+
+  @override
+  String impactRegionBeneficiaries(String count) {
+    return '$count ka-faa’iideyste';
+  }
+
+  @override
+  String impactRegionProjects(String count) {
+    return '$count mashruuc';
+  }
+
+  @override
+  String get impactShowNational => 'Muuji heerka qaranka';
+
+  @override
+  String get impactStoryNotFound => 'Sheekadan hadda lama heli karo.';
+
+  @override
+  String get impactStoryLoadError => 'Lama soo rarin karin sheekadan.';
+
+  @override
+  String impactPublishedOn(String date) {
+    return 'La daabacay $date';
+  }
 }

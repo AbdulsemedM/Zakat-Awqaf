@@ -109,8 +109,6 @@
   "impactCouldNotLoad": "ሀገር አቀፍ ተፅዕኖ መጫን አልተቻለም",
   "impactGeographicReach": "የአካባቢ ስፋት",
   "impactBarakaStories": "የበረከት ታሪኮች",
-  "impactActiveAwqafProjects": "ንቁ የወቅፍ ፕሮጀክቶች",
-  "impactAllProjectsComingSoon": "ሁሉም ፕሮጀክቶች በቅርቡ ይመጣሉ",
   "impactLiveImpactStream": "ቀጥታ የተፅዕኖ ስርጭት",
   "impactDistributedFunds": "የተከፋፈለ ገንዘብ",
   "impactEtbAmount": "{amount} ብር",
@@ -124,46 +122,6 @@
   "impactLivesTouched": "የተነኩ ሕይወቶች",
   "impactActiveProjects": "ንቁ ፕሮጀክቶች",
   "impactTapRegionHint": "አካባቢያዊ ተፅዕኖ ለማየት ክልል ይንኩ",
-  "impactRegionImpactComingSoon": "የ{region} ተፅዕኖ በቅርቡ ይመጣል",
-  "@impactRegionImpactComingSoon": {
-    "placeholders": {
-      "region": {
-        "type": "String"
-      }
-    }
-  },
-  "impactStoryComingSoon": "የ{name} ታሪክ በቅርቡ ይመጣል",
-  "@impactStoryComingSoon": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "impactProjectDetailsComingSoon": "የ{title} ዝርዝሮች በቅርቡ ይመጣሉ",
-  "@impactProjectDetailsComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "impactPercentFunded": "{percent}% ተሸፍኗል",
-  "@impactPercentFunded": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
-  "impactEtbLeft": "{amount} ብር ይቀራል",
-  "@impactEtbLeft": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "impactSeeYourPersonalBaraka": "የግል በረከትዎን ይመልከቱ",
   "impactTrackStewardship": "የእርስዎን አስተዳደር እያንዳንዱን ሳንቲም ይከታተሉ።",
   "impactViewMyHistory": "ታሪኬን ይመልከቱ",
@@ -927,5 +885,13 @@
   "causesLoadError": "ፕሮጀክቶችን መጫን አልተቻለም።",
   "causeNotFound": "ይህ ፕሮጀክት ከአሁን በኋላ አይገኝም።",
   "causeAbout": "ስለዚህ ፕሮጀክት",
-  "payProjectsLoading": "ፕሮጀክቶች እየተጫኑ ነው…"
+  "payProjectsLoading": "ፕሮጀክቶች እየተጫኑ ነው…",
+  "impactAsOf": "እስከ {date}",
+  "impactBeneficiariesByAsnaf": "ተጠቃሚዎች በምድብ",
+  "impactRegionBeneficiaries": "{count} ተጠቃሚዎች",
+  "impactRegionProjects": "{count} ፕሮጀክቶች",
+  "impactShowNational": "አገር አቀፍ አሳይ",
+  "impactStoryNotFound": "ይህ ታሪክ ከአሁን በኋላ አይገኝም።",
+  "impactStoryLoadError": "ይህን ታሪክ መጫን አልተቻለም።",
+  "impactPublishedOn": "{date} የታተመ"
 }

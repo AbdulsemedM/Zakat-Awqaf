@@ -15,7 +15,7 @@ import '../../features/causes/presentation/screens/cause_detail_screen.dart';
 import '../../features/causes/presentation/screens/causes_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/impact/bloc/impact_bloc.dart';
-import '../../features/impact/bloc/impact_event.dart';
+import '../../features/impact/presentation/screens/impact_story_screen.dart';
 import '../../features/impact/presentation/screens/impact_screen.dart';
 import '../../features/onboarding/presentation/screens/first_start_onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/startup_splash_screen.dart';
@@ -70,9 +70,9 @@ abstract class AppRouterModule {
             routes: [
               GoRoute(
                 path: '/impact',
+                // ImpactScreen starts the load with the content language.
                 builder: (context, state) => BlocProvider(
-                  create: (_) =>
-                      getIt<ImpactBloc>()..add(const ImpactStarted()),
+                  create: (_) => getIt<ImpactBloc>(),
                   child: const ImpactScreen(),
                 ),
               ),
@@ -158,6 +158,12 @@ abstract class AppRouterModule {
         path: '/causes/:id',
         builder: (context, state) => ZakatThemed(
           child: CauseDetailScreen(causeId: state.pathParameters['id']!),
+        ),
+      ),
+      GoRoute(
+        path: '/impact/stories/:id',
+        builder: (context, state) => ZakatThemed(
+          child: ImpactStoryScreen(storyId: state.pathParameters['id']!),
         ),
       ),
       GoRoute(

@@ -627,8 +627,6 @@
   "impactCouldNotLoad": "Could not load national impact",
   "impactGeographicReach": "Geographic Reach",
   "impactBarakaStories": "Baraka Stories",
-  "impactActiveAwqafProjects": "Active Awqaf Projects",
-  "impactAllProjectsComingSoon": "All projects coming soon",
   "impactLiveImpactStream": "LIVE IMPACT STREAM",
   "impactDistributedFunds": "DISTRIBUTED FUNDS",
   "impactEtbAmount": "{amount} ETB",
@@ -642,46 +640,6 @@
   "impactLivesTouched": "LIVES TOUCHED",
   "impactActiveProjects": "ACTIVE PROJECTS",
   "impactTapRegionHint": "Tap a region to see local impact",
-  "impactRegionImpactComingSoon": "{region} impact coming soon",
-  "@impactRegionImpactComingSoon": {
-    "placeholders": {
-      "region": {
-        "type": "String"
-      }
-    }
-  },
-  "impactStoryComingSoon": "{name} story coming soon",
-  "@impactStoryComingSoon": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "impactProjectDetailsComingSoon": "{title} details coming soon",
-  "@impactProjectDetailsComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "impactPercentFunded": "{percent}% Funded",
-  "@impactPercentFunded": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
-  "impactEtbLeft": "{amount} ETB Left",
-  "@impactEtbLeft": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "impactSeeYourPersonalBaraka": "See Your Personal Baraka",
   "impactTrackStewardship": "Track every cent of your stewardship.",
   "impactViewMyHistory": "View My History",
@@ -1155,5 +1113,41 @@
   "causesLoadError": "Couldn't load causes.",
   "causeNotFound": "This cause is no longer available.",
   "causeAbout": "About this cause",
-  "payProjectsLoading": "Loading projects…"
+  "payProjectsLoading": "Loading projects…",
+  "impactAsOf": "As of {date}",
+  "@impactAsOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "impactBeneficiariesByAsnaf": "Beneficiaries by category",
+  "impactRegionBeneficiaries": "{count} beneficiaries",
+  "@impactRegionBeneficiaries": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "impactRegionProjects": "{count} projects",
+  "@impactRegionProjects": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "impactShowNational": "Show national",
+  "impactStoryNotFound": "This story is no longer available.",
+  "impactStoryLoadError": "Couldn't load this story.",
+  "impactPublishedOn": "Published {date}",
+  "@impactPublishedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }
