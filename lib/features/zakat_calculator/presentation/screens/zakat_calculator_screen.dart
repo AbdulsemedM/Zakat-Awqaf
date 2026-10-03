@@ -8,6 +8,7 @@ import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/app_logo.dart';
+import '../../../../app/widgets/payer_only.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
@@ -71,7 +72,8 @@ class ZakatCalculatorScreen extends StatelessWidget {
                             _CropPostOverviewSection(state: s),
                           ],
                           const SizedBox(height: 20),
-                          ElevatedButton.icon(
+                          PayerOnly(
+                            child: ElevatedButton.icon(
                             onPressed: () => context.push(
                               '/zakat/payment',
                               extra: ZakatPaymentArgs.fromCalculator(
@@ -85,6 +87,7 @@ class ZakatCalculatorScreen extends StatelessWidget {
                               minimumSize: const Size.fromHeight(56),
                               elevation: 2,
                             ),
+                          ),
                           ),
                         ],
                       ],

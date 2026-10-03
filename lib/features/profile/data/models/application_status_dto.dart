@@ -1,47 +1,39 @@
-/// `GET /api/beneficiaries/v1/me/application`.
+/// `GET /api/beneficiaries/v1/me/application` (zakat API guide, section 8).
 ///
-/// The response shape is not documented yet, so common key names are read
-/// defensively. It never contains score, risk or assessment data.
+/// Fields with no value are left out by the server. It never contains
+/// score, risk or assessment data.
 class ApplicationStatusDto {
   const ApplicationStatusDto({
-    this.status,
-    this.branchName,
-    this.submittedAt,
-    this.message,
+    this.verificationStatus,
+    this.verificationReason,
+    this.caseStatus,
+    this.beneficiaryCategory,
   });
 
-  final String? status;
-  final String? branchName;
-  final DateTime? submittedAt;
-  final String? message;
+  /// `pending`, `verified` or `rejected`.
+  final String? verificationStatus;
+
+  /// Present only when staff gave one (e.g. on rejection).
+  final String? verificationReason;
+
+  /// `SUBMITTED`, `VERIFIED`, `APPROVED`, `ACTIVE` or `CLOSED`; absent while
+  /// no case exists.
+  final String? caseStatus;
+
+  /// Asnaf value, e.g. `poor`, `fi_sabilillah`.
+  final String? beneficiaryCategory;
 
   factory ApplicationStatusDto.fromJson(Map<String, dynamic> json) {
-    String? text(List<String> keys) {
-      for (final key in keys) {
-        final value = json[key];
-        if (value is String && value.trim().isNotEmpty) {
-          return value.trim();
-        }
-      }
-      return null;
+    String? text(String key) {
+      final value = json[key];
+      return value is String && value.trim().isNotEmpty ? value.trim() : null;
     }
 
-    final branch = json['branch'];
-    final branchName = text(const ['branchName']) ??
-        (branch is Map ? branch['name']?.toString() : null);
-    final submitted =
-        text(const ['submittedAt', 'appliedAt', 'registeredAt', 'createdAt']);
-
     return ApplicationStatusDto(
-      status: text(const [
-        'status',
-        'applicationStatus',
-        'verificationStatus',
-        'caseStatus',
-      ]),
-      branchName: branchName,
-      submittedAt: submitted == null ? null : DateTime.tryParse(submitted),
-      message: text(const ['message', 'statusMessage', 'description']),
+      verificationStatus: text('verificationStatus'),
+      verificationReason: text('verificationReason'),
+      caseStatus: text('caseStatus'),
+      beneficiaryCategory: text('beneficiaryCategory'),
     );
   }
 }

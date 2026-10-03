@@ -19,7 +19,6 @@
   "transparencyQuote": "Transparent, accountable, and impactful: your giving powers nationwide relief and empowerment.",
   "payZakatCause": "Give Zakat",
   "zakatAlFitr": "Zakat Al-Fitr",
-  "setReminder": "Set Reminder",
   "needQuickWayGive": "Quick Giving",
   "supportCommunityNeeds": "Support ongoing community needs instantly with Sadaqah.",
   "donateSadaqah": "Donate Sadaqah",
@@ -35,7 +34,6 @@
   "profileBiometricLogin": "Biometric Login",
   "profileBiometricSubtitle": "Use fingerprint or face ID",
   "missingPaymentDetails": "Missing payment details.",
-  "missingCertificateDetails": "Missing certificate details.",
   "calcAppBarTitle": "Zakat Calculator",
   "calcPayYourZakat": "Pay Your Zakat",
   "calcTabWealth": "Wealth",
@@ -375,9 +373,6 @@
   "calcGoldK18": "18k",
   "calcGoldK14": "14k",
   "calcMethodologyPlaceholder": "Zakat methodology content placeholder.",
-  "calcPayBlockedWealth": "No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.",
-  "calcPayBlockedLivestock": "No livestock Zakat is due for your current counts.",
-  "calcPayBlockedCrops": "Crop Zakat is not due yet (below harvest nisab or zero kg due).",
   "calcCertCropDueLine": "Crop Zakat due: {kg} kg",
   "@calcCertCropDueLine": {
     "placeholders": {
@@ -556,7 +551,6 @@
   },
   "profileLoadErrorTitle": "Could not load your profile",
   "profileTryAgain": "Try again",
-  "profileSectionImpactDashboard": "Impact Dashboard",
   "profileSectionBeneficiaryInsights": "Beneficiary Insights",
   "profileSectionPersonalInformation": "Personal Information",
   "profileSectionSpiritualSettings": "Spiritual Settings",
@@ -565,14 +559,6 @@
   "profileSectionSupport": "Support",
   "profileNoNewNotifications": "No new notifications",
   "profileVerificationStatus": "Verification Status",
-  "profileFaydaVerified": "Fayda Verified",
-  "profileNotVerified": "Not verified",
-  "profileTotalZakatPaid": "Total Zakat Paid",
-  "profileFySummary": "FY 2023 Summary",
-  "profileActiveEndowments": "Active Endowments",
-  "profileSustainableImpact": "Sustainable impact",
-  "profileBeneficiariesHelped": "Beneficiaries Helped",
-  "profileAcrossPrograms": "Across programs",
   "profileApplicationStatus": "Application Status",
   "profileLastDisbursement": "Last Disbursement",
   "profileTotalAidReceived": "Total Aid Received",
@@ -592,7 +578,6 @@
   "profileChangePinComingSoon": "Change PIN coming soon",
   "profileMyZakatHistory": "My Zakat History",
   "profileMyZakatHistorySubtitle": "View ledger & certificates",
-  "profileZakatHistoryComingSoon": "Zakat history coming soon",
   "profileMyAwqafEndowments": "My Awqaf Endowments",
   "profileMyAwqafEndowmentsSubtitle": "View schools & wells",
   "profileBeneficiaryApplication": "Beneficiary Application",
@@ -656,8 +641,6 @@
   "onboardingSubtitleCompassionInAction": "Support beneficiaries and projects with clarity, trust, and baraka.",
   "donationCurrencySheetTitle": "How would you like to give?",
   "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
-  "donationLocalPaymentTitle": "Local payment (ETB)",
-  "donationLocalPaymentSubtitle": "Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.",
   "donationInternationalPaymentTitle": "International payment",
   "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
   "donationInternationalTitle": "International Sadaqah",
@@ -822,17 +805,13 @@
   "regMaritalWidowed": "Widowed",
   "regMaritalDivorced": "Divorced",
   "regMaritalSeparated": "Separated",
-  "profileApplicationBranch": "Branch",
-  "profileApplicationSubmittedOn": "Applied on",
   "regVerifyCodeFirst": "Enter your registration code and tap Verify. The form opens once the code is accepted.",
   "homeQuickCalculate": "Calculate",
   "homeQuickSadaqah": "Sadaqah",
   "homeQuickApply": "Apply",
   "homeUpcoming": "UPCOMING",
   "payTitleZakat": "Complete your Zakat",
-  "payTitleSadaqah": "Give Sadaqah",
   "paySubtitleZakat": "Fulfil your obligation securely through trusted local channels.",
-  "paySubtitleSadaqah": "Give voluntary charity securely through trusted local channels.",
   "payTotalZakatDue": "TOTAL ZAKAT DUE",
   "payCalculatedOverview": "CALCULATED OVERVIEW",
   "payAmountLabel": "Amount to pay (ETB)",
@@ -840,20 +819,12 @@
   "payAmountHintEtb": "Enter an ETB amount",
   "payNaturalUnitsLivestock": "Zakat on livestock is due in animals. You may pay its ETB value based on current local market prices.",
   "payNaturalUnitsCrops": "Zakat on crops is due in harvest. You may pay its ETB value based on current local market prices.",
-  "payPayerName": "Payer name",
-  "payFirstName": "First name",
-  "payFatherName": "Father's name",
-  "payGrandfatherName": "Grandfather's name",
   "payBeneficiary": "Beneficiary (optional)",
   "payProjectLabel": "Beneficiary project",
   "payGeneralFundZakat": "General Zakat fund",
-  "payGeneralFundSadaqah": "General Sadaqah fund",
   "payMethod": "Payment method",
-  "payRecurringTitle": "Repeat every month",
-  "payRecurringSubtitle": "We'll remind you to give again each lunar month.",
   "paySecureSsl": "256-BIT SSL",
   "paySecureBank": "BANK-GRADE SECURITY",
-  "payButtonSadaqah": "Give Sadaqah",
   "payImpactTitle": "Your impact",
   "payImpactBody": "Every contribution is allocated transparently through the commission's programmes.",
   "regStepIdentity": "Identity",
@@ -1149,5 +1120,183 @@
         "type": "String"
       }
     }
-  }
+  },
+  "payNotAllowedBeneficiary": "Beneficiary accounts receive zakat and can't pay it. Sign out to pay as a guest.",
+  "payEnterAmount": "Enter an amount.",
+  "payAmountOutOfRange": "Enter an amount between {min} and {max}.",
+  "@payAmountOutOfRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "payAccountNumberLabel": "Coop Bank account number",
+  "payAccountNumberHelper": "The account you pay from. We'll show the account holder's name for you to confirm.",
+  "payAccountNumberInvalid": "Enter a valid account number (6–20 digits).",
+  "payNetworkError": "No connection. Check your internet and try again.",
+  "payMethodsLoading": "Loading payment methods…",
+  "payMethodsError": "Couldn't load payment methods.",
+  "payNoMethods": "No payment method is available right now.",
+  "payMethodUnavailable": "Not available yet",
+  "payCancelConfirmTitle": "Cancel this payment?",
+  "payCancelConfirmBody": "No money has been taken. You can start again at any time.",
+  "payKeepPaying": "Keep paying",
+  "payCancelPayment": "Cancel payment",
+  "payForCause": "For: {cause}",
+  "@payForCause": {
+    "placeholders": {
+      "cause": {
+        "type": "String"
+      }
+    }
+  },
+  "payAccountHolder": "Account holder",
+  "payAccountNumberShort": "Account",
+  "payConfirmTitle": "Is this your account?",
+  "payConfirmBody": "If it is, Coop Bank will send a confirmation code to the phone registered on this account.",
+  "payYesSendCode": "Yes, send code",
+  "payNotMyAccount": "Not my account",
+  "payOtpTitle": "Enter the confirmation code",
+  "payOtpBody": "We sent a 6-digit code to the phone registered on your Coop Bank account.",
+  "payOtpLabel": "Confirmation code",
+  "payOtpAttemptsLeft": "{count, plural, =1{1 attempt left} other{{count} attempts left}}",
+  "@payOtpAttemptsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "payResendCode": "Send a new code",
+  "payPayAmount": "Pay {amount}",
+  "@payPayAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payProcessingTitle": "We are confirming your payment",
+  "payProcessingBody": "Coop Bank hasn't answered yet. This page updates by itself; please don't pay again.",
+  "payCheckAgain": "Check again",
+  "paySucceededTitle": "Payment successful",
+  "paySucceededBody": "Your zakat of {amount} has been paid. May Allah accept it from you.",
+  "@paySucceededBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payReference": "Bank reference: {reference}",
+  "@payReference": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "payViewCertificate": "View certificate",
+  "payDone": "Done",
+  "payCancelledTitle": "Payment cancelled",
+  "payExpiredTitle": "Payment expired",
+  "payExpiredBody": "It wasn't finished within 15 minutes. No money was taken; please start again.",
+  "payFailedTitle": "Payment not completed",
+  "payNoMoneyTaken": "No money was taken.",
+  "payStartAgain": "Start again",
+  "certTitle": "Zakat certificate",
+  "certNumber": "Certificate {id}",
+  "@certNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "certSharePdf": "Download / share PDF",
+  "certPdfError": "Couldn't download the certificate.",
+  "certLoadError": "Couldn't load the certificate.",
+  "certNotFound": "Certificate not found.",
+  "certPayer": "Payer",
+  "certType": "Zakat type",
+  "certCause": "Project",
+  "certNaturalUnits": "Calculated due",
+  "certMethod": "Method",
+  "certReference": "Bank reference",
+  "certPaidAt": "Paid",
+  "certIssuedAt": "Issued",
+  "certHijriDate": "Hijri date",
+  "certVerifyHint": "The QR code on the PDF lets anyone verify this certificate.",
+  "zakatTypeWealth": "Wealth",
+  "zakatTypeLivestock": "Livestock",
+  "zakatTypeCrops": "Crops",
+  "zakatTypeGeneral": "General zakat",
+  "historyTitle": "My zakat payments",
+  "historyEmpty": "No payments yet.",
+  "historyLoadError": "Couldn't load your payments.",
+  "payStatusSucceeded": "Paid",
+  "payStatusPending": "In progress",
+  "payStatusFailed": "Failed",
+  "payStatusCancelled": "Cancelled",
+  "payStatusExpired": "Expired",
+  "fitrPayButton": "Pay Zakat al-Fitr",
+  "fitrHouseholdTitle": "How many people are you paying for?",
+  "fitrHouseholdOf": "{count, plural, =1{1 person} other{{count} people}}",
+  "@fitrHouseholdOf": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fitrTotal": "Total: {amount}",
+  "@fitrTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "profileCaseStatus": "Case",
+  "caseStatusSubmitted": "Submitted",
+  "caseStatusVerified": "Verified",
+  "caseStatusApproved": "Approved",
+  "caseStatusActive": "Active — receiving support",
+  "caseStatusClosed": "Closed",
+  "impactComingSoonTitle": "Impact data is coming soon",
+  "impactComingSoonBody": "This page will show how zakat reaches communities across Ethiopia.",
+  "payFinishWithin": "Finish within {time}",
+  "@payFinishWithin": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "payOtpExpiresIn": "Code expires in {time}",
+  "@payOtpExpiresIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "payOtpExpiredLocal": "The code has expired. Send a new one.",
+  "unfinishedPaymentTitle": "Unfinished payment",
+  "unfinishedPaymentContinue": "Continue",
+  "payCheckStatus": "Check status",
+  "recentPaymentsTitle": "Recent payments on this device",
+  "recentPaymentsSubtitle": "Resume an unfinished payment or open a certificate.",
+  "recentPaymentsEmpty": "No payments on this device yet.",
+  "payOpenError": "Couldn't open this payment.",
+  "profileSectionPayoutAccount": "Payout Account",
+  "profileRoleBeneficiary": "Beneficiary",
+  "profileRoleDonor": "Donor",
+  "profileVerificationVerified": "Verified",
+  "profileVerificationPending": "Pending review",
+  "profileVerificationRejected": "Not approved"
 }

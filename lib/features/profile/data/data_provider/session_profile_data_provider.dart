@@ -13,7 +13,6 @@ class SessionProfileDataProvider implements ProfileDataProvider {
     phone: '',
     avatarAsset: null,
     roleLabel: 'Member',
-    isFaydaVerified: false,
     madhhab: Madhhab.hanafi,
     nisabAlerts: true,
     biometricEnabled: false,
@@ -23,9 +22,6 @@ class SessionProfileDataProvider implements ProfileDataProvider {
     beneficiaryStatus: BeneficiaryStatus.pending,
     lastDisbursement: null,
     totalAidReceived: 0,
-    totalZakatPaid: 0,
-    activeEndowments: 0,
-    beneficiariesHelped: 0,
   );
 
   @override
@@ -41,7 +37,6 @@ class SessionProfileDataProvider implements ProfileDataProvider {
       email: user.email,
       phone: user.phone,
       roleLabel: roleLabel,
-      isFaydaVerified: true,
       isBeneficiary: user.isBeneficiary,
       beneficiaryStatus: user.isBeneficiary
           ? BeneficiaryStatus.approved

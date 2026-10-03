@@ -41,8 +41,13 @@ class AuthInterceptor extends Interceptor {
   /// al-Fitr) takes no token; `admin/` routes do.
   static bool isPublicZakatRoute(RequestOptions options) {
     final path = options.path;
-    return options.method.toUpperCase() == 'GET' &&
-        path.contains('api/zakat/v1/') &&
+    if (options.method.toUpperCase() != 'GET') return false;
+    // Payment methods and certificate verification are public too.
+    if (path.contains('api/payments/v1/methods') ||
+        path.contains('api/payments/v1/certificates/verify/')) {
+      return true;
+    }
+    return path.contains('api/zakat/v1/') &&
         !path.contains('api/zakat/v1/admin/');
   }
 

@@ -142,6 +142,18 @@ void main() {
       expect(bloc2.state.regions, isEmpty);
     });
 
+    test('a missing route (401/404) shows coming soon', () async {
+      final repository = _FakeImpactRepository()
+        ..summaryError = const ApiException(
+          'Authentication required',
+          statusCode: 401,
+        );
+      final bloc = ImpactBloc(repository)..add(const ImpactStarted('en'));
+      addTearDown(bloc.close);
+      await _settle();
+      expect(bloc.state.status, ImpactLoadStatus.unavailable);
+    });
+
     test('selecting a region loads its summary; null goes national', () async {
       final repository = _FakeImpactRepository();
       final bloc = ImpactBloc(repository)..add(const ImpactStarted('en'));

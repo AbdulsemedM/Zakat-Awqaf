@@ -68,9 +68,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get zakatAlFitr => 'Zakat Al-Fitr';
 
   @override
-  String get setReminder => 'Deji Xasuusin';
-
-  @override
   String get needQuickWayGive => 'Bixin Degdeg ah';
 
   @override
@@ -116,9 +113,6 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get missingPaymentDetails => 'Faahfaahinta lacag-bixinta maqan.';
-
-  @override
-  String get missingCertificateDetails => 'Faahfaahinta shahaadada maqan.';
 
   @override
   String get calcAppBarTitle => 'Xisaabiyaha Sakada';
@@ -540,18 +534,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get calcMethodologyPlaceholder => 'Habka Sakada meel hayaha nuxurka.';
 
   @override
-  String get calcPayBlockedWealth =>
-      'Sakada maalka ah ee laguma leeyahay (wax ka hooseeya nisab ama eber ETB ee la leeyahay). Hagaajin gelintaada';
-
-  @override
-  String get calcPayBlockedLivestock =>
-      'Ma jirto Sakada Xoolaha oo lagugu leeyahay tiradaada hadda.';
-
-  @override
-  String get calcPayBlockedCrops =>
-      'Sakada dalagga weli lama bixin (wax ka hooseeya nisab goosashada ama eber kg ee la filayo).';
-
-  @override
   String calcCertCropDueLine(String kg) {
     return 'Sakada dalagga ee la rabo: ${kg}_ kg';
   }
@@ -675,9 +657,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get profileTryAgain => 'Mar kale isku day';
 
   @override
-  String get profileSectionImpactDashboard => 'Dashboard-ka Saameynta';
-
-  @override
   String get profileSectionBeneficiaryInsights =>
       'Aragtiyada Ka-faa\'iideystaha';
 
@@ -701,30 +680,6 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get profileVerificationStatus => 'Xaaladda Xaqiijinta';
-
-  @override
-  String get profileFaydaVerified => 'Fayda waa la xaqiijiyey';
-
-  @override
-  String get profileNotVerified => 'Lama xaqiijin';
-
-  @override
-  String get profileTotalZakatPaid => 'Wadarta Zakat la bixiyay';
-
-  @override
-  String get profileFySummary => 'Soo koobidda FY 2023';
-
-  @override
-  String get profileActiveEndowments => 'Awqaafta Firfircoon';
-
-  @override
-  String get profileSustainableImpact => 'Saameyn waarta';
-
-  @override
-  String get profileBeneficiariesHelped => 'Ka-faa\'iideystayaal la caawiyay';
-
-  @override
-  String get profileAcrossPrograms => 'Dhammaan barnaamijyada';
 
   @override
   String get profileApplicationStatus => 'Xaaladda Codsiga';
@@ -766,10 +721,6 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get profileMyZakatHistorySubtitle =>
       'Eeg ledger-ka iyo shahaadooyinka';
-
-  @override
-  String get profileZakatHistoryComingSoon =>
-      'Taariikhda zakat-ka dhawaan ayay imanaysaa';
 
   @override
   String get profileMyAwqafEndowments => 'Awqaaftayda';
@@ -957,13 +908,6 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get donationCurrencySheetSubtitle =>
       'Dooro lacag bixinta ETB ee gudaha ama bixinta kaadhka caalamiga ah.';
-
-  @override
-  String get donationLocalPaymentTitle => 'Lacag bixinta maxaliga ah (ETB)';
-
-  @override
-  String get donationLocalPaymentSubtitle =>
-      'Telebirr, CBE Birr, M-Pesa, iyo albaabada kale ee Itoobiya.';
 
   @override
   String get donationInternationalPaymentTitle => 'Lacag bixinta caalamiga ah';
@@ -1475,12 +1419,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get regMaritalSeparated => 'Kala tagay';
 
   @override
-  String get profileApplicationBranch => 'Laanta';
-
-  @override
-  String get profileApplicationSubmittedOn => 'Taariikhda codsiga';
-
-  @override
   String get regVerifyCodeFirst =>
       'Geli koodhka diiwaangelinta oo taabo «Xaaqiiji». Foomku wuu furmayaa marka koodhka la aqbalo.';
 
@@ -1500,15 +1438,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get payTitleZakat => 'Dhammaystir Sakadaada';
 
   @override
-  String get payTitleSadaqah => 'Bixi Sadaqo';
-
-  @override
   String get paySubtitleZakat =>
       'Waajibkaaga si ammaan ah ugu gut kanaalada maxalliga ah ee la isku halleyn karo.';
-
-  @override
-  String get paySubtitleSadaqah =>
-      'Sadaqo ikhtiyaari ah si ammaan ah ugu bixi kanaalada maxalliga ah.';
 
   @override
   String get payTotalZakatDue => 'WADARTA SAKADA LAGU LEEYAHAY';
@@ -1534,18 +1465,6 @@ class AppLocalizationsSo extends AppLocalizations {
       'Sakada dalagga waxaa lagu bixiyaa goosashada. Waxaad bixin kartaa qiimaheeda ETB ahaan iyadoo loo eegayo qiimaha suuqa maxalliga ah.';
 
   @override
-  String get payPayerName => 'Magaca bixiyaha';
-
-  @override
-  String get payFirstName => 'Magaca koowaad';
-
-  @override
-  String get payFatherName => 'Magaca aabbaha';
-
-  @override
-  String get payGrandfatherName => 'Magaca awowga';
-
-  @override
   String get payBeneficiary => 'Ka faa\'iideystaha (ikhtiyaari)';
 
   @override
@@ -1555,26 +1474,13 @@ class AppLocalizationsSo extends AppLocalizations {
   String get payGeneralFundZakat => 'Sanduuqa guud ee Sakada';
 
   @override
-  String get payGeneralFundSadaqah => 'Sanduuqa guud ee Sadaqada';
-
-  @override
   String get payMethod => 'Habka lacag bixinta';
-
-  @override
-  String get payRecurringTitle => 'Ku celi bil kasta';
-
-  @override
-  String get payRecurringSubtitle =>
-      'Waxaan kuu xusuusin doonnaa inaad mar kale bixiso bil kasta oo qamari ah.';
 
   @override
   String get paySecureSsl => 'SSL 256-BIT';
 
   @override
   String get paySecureBank => 'AMNI HEER BANGI';
-
-  @override
-  String get payButtonSadaqah => 'Bixi Sadaqo';
 
   @override
   String get payImpactTitle => 'Saamaynta aad leedahay';
@@ -1865,4 +1771,345 @@ class AppLocalizationsSo extends AppLocalizations {
   String impactPublishedOn(String date) {
     return 'La daabacay $date';
   }
+
+  @override
+  String get payNotAllowedBeneficiary =>
+      'Xisaabaadka ka-faa’iideystayaashu sakada way helaan, ma bixiyaan. Ka bax si aad marti ahaan u bixiso.';
+
+  @override
+  String get payEnterAmount => 'Geli qadarka.';
+
+  @override
+  String payAmountOutOfRange(String min, String max) {
+    return 'Geli qadar u dhexeeya $min iyo $max.';
+  }
+
+  @override
+  String get payAccountNumberLabel => 'Lambarka xisaabta Coop Bank';
+
+  @override
+  String get payAccountNumberHelper =>
+      'Xisaabta aad ka bixinayso. Waxaan ku tusi doonnaa magaca milkiilaha si aad u xaqiijiso.';
+
+  @override
+  String get payAccountNumberInvalid => 'Geli lambar xisaab sax ah (6–20 god).';
+
+  @override
+  String get payNetworkError =>
+      'Xiriir ma jiro. Hubi internetkaaga oo mar kale isku day.';
+
+  @override
+  String get payMethodsLoading => 'Hababka lacag bixinta ayaa la soo rarayaa…';
+
+  @override
+  String get payMethodsError => 'Lama soo rarin karin hababka lacag bixinta.';
+
+  @override
+  String get payNoMethods =>
+      'Hadda ma jiro hab lacag bixin ah oo la heli karo.';
+
+  @override
+  String get payMethodUnavailable => 'Weli lama heli karo';
+
+  @override
+  String get payCancelConfirmTitle => 'Ma joojinaysaa lacag bixintan?';
+
+  @override
+  String get payCancelConfirmBody =>
+      'Lacag lagama jarin. Waad dib u bilaabi kartaa wakhti kasta.';
+
+  @override
+  String get payKeepPaying => 'Sii wad bixinta';
+
+  @override
+  String get payCancelPayment => 'Jooji lacag bixinta';
+
+  @override
+  String payForCause(String cause) {
+    return 'Loogu talagalay: $cause';
+  }
+
+  @override
+  String get payAccountHolder => 'Milkiilaha xisaabta';
+
+  @override
+  String get payAccountNumberShort => 'Xisaabta';
+
+  @override
+  String get payConfirmTitle => 'Xisaabtani ma taada baa?';
+
+  @override
+  String get payConfirmBody =>
+      'Haddii ay tahay, Coop Bank waxay kood xaqiijin ah u diri doontaa taleefanka ku diiwaangashan xisaabtan.';
+
+  @override
+  String get payYesSendCode => 'Haa, dir koodka';
+
+  @override
+  String get payNotMyAccount => 'Ma aha xisaabtayda';
+
+  @override
+  String get payOtpTitle => 'Geli koodka xaqiijinta';
+
+  @override
+  String get payOtpBody =>
+      'Waxaan kood 6 god ah u dirnay taleefanka ku diiwaangashan xisaabtaada Coop Bank.';
+
+  @override
+  String get payOtpLabel => 'Koodka xaqiijinta';
+
+  @override
+  String payOtpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count isku day ayaa haray',
+      one: '1 isku day ayaa haray',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get payResendCode => 'Dir kood cusub';
+
+  @override
+  String payPayAmount(String amount) {
+    return 'Bixi $amount';
+  }
+
+  @override
+  String get payProcessingTitle => 'Waxaan xaqiijinaynaa lacag bixintaada';
+
+  @override
+  String get payProcessingBody =>
+      'Coop Bank weli kama jawaabin. Boggani si toos ah ayuu isu cusbooneysiiyaa; fadlan mar kale ha bixin.';
+
+  @override
+  String get payCheckAgain => 'Mar kale hubi';
+
+  @override
+  String get paySucceededTitle => 'Lacag bixintu way guulaysatay';
+
+  @override
+  String paySucceededBody(String amount) {
+    return 'Sakadaadii $amount waa la bixiyay. Alle ha kaa aqbalo.';
+  }
+
+  @override
+  String payReference(String reference) {
+    return 'Tixraaca bangiga: $reference';
+  }
+
+  @override
+  String get payViewCertificate => 'Eeg shahaadada';
+
+  @override
+  String get payDone => 'Dhammaad';
+
+  @override
+  String get payCancelledTitle => 'Lacag bixinta waa la joojiyay';
+
+  @override
+  String get payExpiredTitle => 'Waqtiga lacag bixintu wuu dhacay';
+
+  @override
+  String get payExpiredBody =>
+      'Laguma dhammayn 15 daqiiqo gudahood. Lacag lagama jarin; fadlan dib u bilow.';
+
+  @override
+  String get payFailedTitle => 'Lacag bixintu ma dhammaystirmin';
+
+  @override
+  String get payNoMoneyTaken => 'Lacag lagama jarin.';
+
+  @override
+  String get payStartAgain => 'Dib u bilow';
+
+  @override
+  String get certTitle => 'Shahaadada sakada';
+
+  @override
+  String certNumber(String id) {
+    return 'Shahaadada $id';
+  }
+
+  @override
+  String get certSharePdf => 'Soo deji / wadaag PDF';
+
+  @override
+  String get certPdfError => 'Lama soo dejin karin shahaadada.';
+
+  @override
+  String get certLoadError => 'Lama soo rarin karin shahaadada.';
+
+  @override
+  String get certNotFound => 'Shahaadada lama helin.';
+
+  @override
+  String get certPayer => 'Bixiyaha';
+
+  @override
+  String get certType => 'Nooca sakada';
+
+  @override
+  String get certCause => 'Mashruuca';
+
+  @override
+  String get certNaturalUnits => 'Waajibka la xisaabiyay';
+
+  @override
+  String get certMethod => 'Habka';
+
+  @override
+  String get certReference => 'Tixraaca bangiga';
+
+  @override
+  String get certPaidAt => 'La bixiyay';
+
+  @override
+  String get certIssuedAt => 'La bixiyay (shahaado)';
+
+  @override
+  String get certHijriDate => 'Taariikhda Hijriga';
+
+  @override
+  String get certVerifyHint =>
+      'Koodka QR ee PDF-ka ku yaal wuxuu qof kasta u oggolaanayaa inuu xaqiijiyo shahaadadan.';
+
+  @override
+  String get zakatTypeWealth => 'Hanti';
+
+  @override
+  String get zakatTypeLivestock => 'Xoolo';
+
+  @override
+  String get zakatTypeCrops => 'Dalag';
+
+  @override
+  String get zakatTypeGeneral => 'Sakada guud';
+
+  @override
+  String get historyTitle => 'Lacag bixinadayda sakada';
+
+  @override
+  String get historyEmpty => 'Weli lacag bixin ma jirto.';
+
+  @override
+  String get historyLoadError => 'Lama soo rarin karin lacag bixinadaada.';
+
+  @override
+  String get payStatusSucceeded => 'La bixiyay';
+
+  @override
+  String get payStatusPending => 'Socda';
+
+  @override
+  String get payStatusFailed => 'Fashilmay';
+
+  @override
+  String get payStatusCancelled => 'La joojiyay';
+
+  @override
+  String get payStatusExpired => 'Waqtigu wuu dhacay';
+
+  @override
+  String get fitrPayButton => 'Bixi Sakada Fitriga';
+
+  @override
+  String get fitrHouseholdTitle => 'Imisa qof ayaad u bixinaysaa?';
+
+  @override
+  String fitrHouseholdOf(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count qof',
+      one: '1 qof',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrTotal(String amount) {
+    return 'Wadarta: $amount';
+  }
+
+  @override
+  String get profileCaseStatus => 'Kiiska';
+
+  @override
+  String get caseStatusSubmitted => 'La gudbiyay';
+
+  @override
+  String get caseStatusVerified => 'La xaqiijiyay';
+
+  @override
+  String get caseStatusApproved => 'La ansixiyay';
+
+  @override
+  String get caseStatusActive => 'Firfircoon — taageero helaya';
+
+  @override
+  String get caseStatusClosed => 'La xiray';
+
+  @override
+  String get impactComingSoonTitle => 'Xogta saamaynta dhowaan ayay imanaysaa';
+
+  @override
+  String get impactComingSoonBody =>
+      'Boggani wuxuu muujin doonaa sida sakadu u gaarto bulshooyinka Itoobiya oo dhan.';
+
+  @override
+  String payFinishWithin(String time) {
+    return 'Ku dhammee $time gudahood';
+  }
+
+  @override
+  String payOtpExpiresIn(String time) {
+    return 'Koodku wuxuu dhacayaa $time kadib';
+  }
+
+  @override
+  String get payOtpExpiredLocal =>
+      'Koodka waqtigiisii wuu dhacay. Dir mid cusub.';
+
+  @override
+  String get unfinishedPaymentTitle => 'Lacag bixin aan dhammaan';
+
+  @override
+  String get unfinishedPaymentContinue => 'Sii wad';
+
+  @override
+  String get payCheckStatus => 'Hubi xaaladda';
+
+  @override
+  String get recentPaymentsTitle => 'Lacag bixinada dhowaan qalabkan';
+
+  @override
+  String get recentPaymentsSubtitle =>
+      'Sii wad lacag bixin aan dhammaan ama fur shahaado.';
+
+  @override
+  String get recentPaymentsEmpty => 'Weli lacag bixin kuma jirto qalabkan.';
+
+  @override
+  String get payOpenError => 'Lama furi karin lacag bixintan.';
+
+  @override
+  String get profileSectionPayoutAccount => 'Xisaabta lacag qaadashada';
+
+  @override
+  String get profileRoleBeneficiary => 'Ka-faa’iideyste';
+
+  @override
+  String get profileRoleDonor => 'Deeq-bixiye';
+
+  @override
+  String get profileVerificationVerified => 'La xaqiijiyay';
+
+  @override
+  String get profileVerificationPending => 'Dib-u-eegis ayaa socda';
+
+  @override
+  String get profileVerificationRejected => 'Lama ansixin';
 }

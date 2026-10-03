@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/network/api_envelope.dart';
+import '../../../zakat_payment/presentation/widgets/device_payments_section.dart';
 import '../../bloc/home_bloc.dart';
 import '../widgets/home_about_card.dart';
 import '../widgets/home_hero_section.dart';
@@ -80,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             const HomeQuickActions(),
+                            const DevicePaymentsSection(),
                             const SizedBox(height: 20),
                             const RegisterZakatCta(),
                             if (state.urgentCauses.isNotEmpty) ...[

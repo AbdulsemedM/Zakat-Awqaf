@@ -11,17 +11,17 @@ class _CoreActionsCard extends StatelessWidget {
       elevation: 0,
       child: Column(
         children: [
-          _ActionTile(
-            icon: Icons.history_rounded,
-            iconColor: Theme.of(context).colorScheme.primary,
-            title: context.l10n.profileMyZakatHistory,
-            subtitle: context.l10n.profileMyZakatHistorySubtitle,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileZakatHistoryComingSoon)),
-              );
-            },
-          ),
+          // Beneficiaries never pay zakat, so they have no payment history.
+          if (!profile.isBeneficiary) ...[
+            _ActionTile(
+              icon: Icons.history_rounded,
+              iconColor: Theme.of(context).colorScheme.primary,
+              title: context.l10n.profileMyZakatHistory,
+              subtitle: context.l10n.profileMyZakatHistorySubtitle,
+              onTap: () => context.push('/zakat/history'),
+            ),
+            const Divider(height: 1, indent: 56, endIndent: 16),
+          ],
           // const Divider(height: 1, indent: 56, endIndent: 16),
           // _ActionTile(
           //   icon: Icons.account_balance_rounded,
@@ -30,7 +30,6 @@ class _CoreActionsCard extends StatelessWidget {
           //   subtitle: context.l10n.profileMyAwqafEndowmentsSubtitle,
           //   onTap: () => context.go('/awqaf'),
           // ),
-          const Divider(height: 1, indent: 56, endIndent: 16),
           _ActionTile(
             icon: Icons.assignment_outlined,
             iconColor: Theme.of(context).colorScheme.tertiary,
@@ -42,18 +41,25 @@ class _CoreActionsCard extends StatelessWidget {
                 : context.l10n.profileApplyAsBeneficiarySubtitle,
             onTap: () => context.go('/beneficiary-registration'),
           ),
-          const Divider(height: 1, indent: 56, endIndent: 16),
-          _ActionTile(
-            icon: Icons.receipt_long_outlined,
-            iconColor: Theme.of(context).colorScheme.primary,
-            title: context.l10n.profileDonationHistory,
-            subtitle: context.l10n.profileDonationHistorySubtitle,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileDonationHistoryComingSoon)),
-              );
-            },
-          ),
+          // Sadaqah donations are made by donors, not beneficiaries.
+          if (!profile.isBeneficiary) ...[
+            const Divider(height: 1, indent: 56, endIndent: 16),
+            _ActionTile(
+              icon: Icons.receipt_long_outlined,
+              iconColor: Theme.of(context).colorScheme.primary,
+              title: context.l10n.profileDonationHistory,
+              subtitle: context.l10n.profileDonationHistorySubtitle,
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      context.l10n.profileDonationHistoryComingSoon,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
         ],
       ),
     );
@@ -108,11 +114,9 @@ class _ActionTile extends StatelessWidget {
           color: scheme.onSurfaceVariant,
         ),
       ),
-      trailing: trailing ??
-          Icon(
-            Icons.chevron_right_rounded,
-            color: scheme.onSurfaceVariant,
-          ),
+      trailing:
+          trailing ??
+          Icon(Icons.chevron_right_rounded, color: scheme.onSurfaceVariant),
     );
   }
 }
@@ -135,7 +139,9 @@ class _SupportCard extends StatelessWidget {
             subtitle: context.l10n.profileHelpCenterSubtitle,
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileHelpCenterComingSoon)),
+                SnackBar(
+                  content: Text(context.l10n.profileHelpCenterComingSoon),
+                ),
               );
             },
           ),
@@ -147,7 +153,9 @@ class _SupportCard extends StatelessWidget {
             subtitle: context.l10n.profileSupportAndGrievancesSubtitle,
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileSupportCenterComingSoon)),
+                SnackBar(
+                  content: Text(context.l10n.profileSupportCenterComingSoon),
+                ),
               );
             },
           ),
@@ -218,9 +226,7 @@ class _HadithOfTheDayCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.35),
-        ),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.35)),
       ),
       child: Column(
         children: [

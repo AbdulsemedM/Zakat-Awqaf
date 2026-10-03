@@ -7,12 +7,11 @@ import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
-import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
-import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 
 enum DonationCurrencyChoice { local, international }
 
-/// Opens the local vs international payment picker for Sadaqah donations.
+/// Opens the payment picker for Sadaqah donations (international only until
+/// local Sadaqah is available).
 Future<void> showDonationCurrencySheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
@@ -24,23 +23,6 @@ Future<void> showDonationCurrencySheet(BuildContext context) {
 
 class _DonationCurrencySheet extends StatelessWidget {
   const _DonationCurrencySheet();
-
-  void _onLocalTap(BuildContext context) {
-    final l10n = context.l10n;
-    Navigator.of(context).pop();
-    context.push(
-      '/zakat/payment',
-      extra: ZakatPaymentArgs(
-        activeTab: ZakatCategoryTab.wealth,
-        amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
-        overviewTitle: l10n.donateSadaqah,
-        overviewPrimaryValue: l10n.supportCommunityNeeds,
-        overviewDueLabel: 'Amount',
-        overviewDueValue: 'Enter an amount',
-        purpose: PaymentPurpose.sadaqah,
-      ),
-    );
-  }
 
   void _onInternationalTap(BuildContext context) {
     Navigator.of(context).pop();
@@ -103,15 +85,8 @@ class _DonationCurrencySheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _CurrencyOptionTile(
-                title: l10n.donationLocalPaymentTitle,
-                subtitle: l10n.donationLocalPaymentSubtitle,
-                icon: TablerIcons.wallet,
-                gradient: PrimaryHero.sadaqahGradient,
-                dark: false,
-                onTap: () => _onLocalTap(context),
-              ),
-              const SizedBox(height: 12),
+              // Local (ETB) Sadaqah is not in the payments API yet (B3.6):
+              // only international donations are offered.
               _CurrencyOptionTile(
                 title: l10n.donationInternationalPaymentTitle,
                 subtitle: l10n.donationInternationalPaymentSubtitle,

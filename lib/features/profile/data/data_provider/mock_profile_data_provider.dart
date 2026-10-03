@@ -8,7 +8,6 @@ class MockProfileDataProvider implements ProfileDataProvider {
     phone: '+251 91 234 5678',
     avatarAsset: null,
     roleLabel: 'Verified Steward',
-    isFaydaVerified: true,
     madhhab: Madhhab.hanafi,
     nisabAlerts: true,
     biometricEnabled: true,
@@ -18,9 +17,6 @@ class MockProfileDataProvider implements ProfileDataProvider {
     beneficiaryStatus: BeneficiaryStatus.approved,
     lastDisbursement: DateTime(2023, 10, 12),
     totalAidReceived: 15000,
-    totalZakatPaid: 124500,
-    activeEndowments: 3,
-    beneficiariesHelped: 87,
   );
 
   @override

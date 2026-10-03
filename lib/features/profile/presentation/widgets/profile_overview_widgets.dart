@@ -8,7 +8,6 @@ class _ProfileHeroHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -43,7 +42,10 @@ class _ProfileHeroHeader extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const AppLogo(height: 28, borderRadius: BorderRadius.all(Radius.circular(6))),
+                        const AppLogo(
+                          height: 28,
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                        ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
@@ -57,14 +59,21 @@ class _ProfileHeroHeader extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(context.l10n.profileNoNewNotifications)),
+                              SnackBar(
+                                content: Text(
+                                  context.l10n.profileNoNewNotifications,
+                                ),
+                              ),
                             );
                           },
                           style: IconButton.styleFrom(
-                            backgroundColor:
-                                Colors.white.withValues(alpha: 0.10),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.10,
+                            ),
                             side: BorderSide(
-                              color: AppColors.goldLight.withValues(alpha: 0.45),
+                              color: AppColors.goldLight.withValues(
+                                alpha: 0.45,
+                              ),
                             ),
                           ),
                           icon: const Icon(
@@ -80,6 +89,10 @@ class _ProfileHeroHeader extends StatelessWidget {
                         _Avatar(
                           name: profile.name,
                           asset: profile.avatarAsset,
+                          verified:
+                              profile.isBeneficiary &&
+                              profile.beneficiaryStatus ==
+                                  BeneficiaryStatus.approved,
                           ringColor: AppColors.goldLight,
                           fillColor: Colors.white.withValues(alpha: 0.12),
                         ),
@@ -108,7 +121,10 @@ class _ProfileHeroHeader extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(999),
                                 ),
                                 child: Text(
-                                  profile.roleLabel.toUpperCase(),
+                                  (profile.isBeneficiary
+                                          ? context.l10n.profileRoleBeneficiary
+                                          : context.l10n.profileRoleDonor)
+                                      .toUpperCase(),
                                   style: theme.textTheme.labelSmall?.copyWith(
                                     color: AppColors.onSecondary,
                                     letterSpacing: 1,
@@ -127,90 +143,98 @@ class _ProfileHeroHeader extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          left: 16,
-          right: 16,
-          bottom: -22,
-          child: PremiumCard(
-            radius: 18,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-            child: Padding(
-              padding: EdgeInsets.zero,
-              child: Row(
-                children: [
-                  Icon(
-                    profile.isFaydaVerified
-                        ? Icons.verified_rounded
-                        : Icons.gpp_maybe_rounded,
-                    color: profile.isFaydaVerified
-                        ? AppColors.primary
-                        : scheme.error,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.l10n.profileVerificationStatus,
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: scheme.onSurfaceVariant,
-                          ),
-                        ),
-                        Text(
-                          profile.isFaydaVerified
-                              ? context.l10n.profileFaydaVerified
-                              : context.l10n.profileNotVerified,
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: AppColors.tagGoldBg,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.tagGoldBorder),
-                    ),
-                    child: Icon(
-                      Icons.check_rounded,
-                      color: AppColors.primary,
-                      size: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        // Beneficiaries: verification of their application. Donors have
+        // nothing to verify, so no card.
+        if (profile.isBeneficiary) ...[
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: -22,
+            child: _VerificationCard(status: profile.beneficiaryStatus),
           ),
-        ),
-        const Positioned(
-          left: 0,
-          right: 0,
-          bottom: -38,
-          child: SizedBox(height: 16),
-        ),
+          const Positioned(
+            left: 0,
+            right: 0,
+            bottom: -38,
+            child: SizedBox(height: 16),
+          ),
+        ],
       ],
     );
   }
+}
+
+/// The beneficiary's verification, from `GET /me/application`.
+class _VerificationCard extends StatelessWidget {
+  const _VerificationCard({required this.status});
+
+  final BeneficiaryStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final (icon, color) = switch (status) {
+      BeneficiaryStatus.approved => (Icons.verified_rounded, AppColors.primary),
+      BeneficiaryStatus.pending => (Icons.schedule_rounded, scheme.secondary),
+      BeneficiaryStatus.rejected => (Icons.gpp_bad_rounded, scheme.error),
+    };
+    return PremiumCard(
+      radius: 18,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      child: Row(
+        children: [
+          Icon(icon, color: color),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.l10n.profileVerificationStatus,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
+                Text(
+                  beneficiaryStatusLabel(context, status),
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Localized verification status of a beneficiary.
+String beneficiaryStatusLabel(BuildContext context, BeneficiaryStatus status) {
+  final l10n = context.l10n;
+  return switch (status) {
+    BeneficiaryStatus.approved => l10n.profileVerificationVerified,
+    BeneficiaryStatus.pending => l10n.profileVerificationPending,
+    BeneficiaryStatus.rejected => l10n.profileVerificationRejected,
+  };
 }
 
 class _Avatar extends StatelessWidget {
   const _Avatar({
     required this.name,
     required this.asset,
+    required this.verified,
     required this.ringColor,
     required this.fillColor,
   });
 
   final String name;
   final String? asset;
+
+  /// Shows the check badge (a verified beneficiary).
+  final bool verified;
   final Color ringColor;
   final Color fillColor;
 
@@ -227,12 +251,12 @@ class _Avatar extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: fillColor,
-            border: Border.all(color: ringColor.withValues(alpha: 0.6), width: 2),
+            border: Border.all(
+              color: ringColor.withValues(alpha: 0.6),
+              width: 2,
+            ),
             image: asset != null
-                ? DecorationImage(
-                    image: AssetImage(asset!),
-                    fit: BoxFit.cover,
-                  )
+                ? DecorationImage(image: AssetImage(asset!), fit: BoxFit.cover)
                 : null,
           ),
           alignment: Alignment.center,
@@ -247,24 +271,21 @@ class _Avatar extends StatelessWidget {
                 )
               : null,
         ),
-        Positioned(
-          right: -2,
-          bottom: -2,
-          child: Container(
-            width: 22,
-            height: 22,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
-              border: Border.all(color: ringColor, width: 2),
-            ),
-            child: Icon(
-              Icons.check_rounded,
-              size: 14,
-              color: ringColor,
+        if (verified)
+          Positioned(
+            right: -2,
+            bottom: -2,
+            child: Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+                border: Border.all(color: ringColor, width: 2),
+              ),
+              child: Icon(Icons.check_rounded, size: 14, color: ringColor),
             ),
           ),
-        ),
       ],
     );
   }
@@ -277,130 +298,6 @@ class _Avatar extends StatelessWidget {
     }
     return (parts.first.substring(0, 1) + parts.last.substring(0, 1))
         .toUpperCase();
-  }
-}
-
-class _ImpactDashboardRow extends StatelessWidget {
-  const _ImpactDashboardRow({required this.profile});
-
-  final ProfileModel profile;
-
-  @override
-  Widget build(BuildContext context) {
-    final stats = <_ImpactStat>[
-      _ImpactStat(
-        icon: Icons.volunteer_activism_rounded,
-        label: context.l10n.profileTotalZakatPaid,
-        primary: 'ETB ${formatThousands(profile.totalZakatPaid)}',
-        secondary: context.l10n.profileFySummary,
-      ),
-      _ImpactStat(
-        icon: Icons.account_balance_rounded,
-        label: context.l10n.profileActiveEndowments,
-        primary: profile.activeEndowments.toString(),
-        secondary: context.l10n.profileSustainableImpact,
-      ),
-      _ImpactStat(
-        icon: Icons.groups_2_rounded,
-        label: context.l10n.profileBeneficiariesHelped,
-        primary: profile.beneficiariesHelped.toString(),
-        secondary: context.l10n.profileAcrossPrograms,
-      ),
-    ];
-
-    return SizedBox(
-      height: 132,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: stats.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
-        itemBuilder: (context, index) => _ImpactStatCard(stat: stats[index]),
-      ),
-    );
-  }
-}
-
-class _ImpactStat {
-  const _ImpactStat({
-    required this.icon,
-    required this.label,
-    required this.primary,
-    required this.secondary,
-  });
-
-  final IconData icon;
-  final String label;
-  final String primary;
-  final String secondary;
-}
-
-class _ImpactStatCard extends StatelessWidget {
-  const _ImpactStatCard({required this.stat});
-
-  final _ImpactStat stat;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    return SizedBox(
-      width: 200,
-      child: Card(
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondary.withValues(alpha: 0.22),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(stat.icon, size: 18, color: AppColors.primary),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      stat.label,
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Text(
-                stat.primary,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                stat.secondary,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: scheme.onSurfaceVariant,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -448,19 +345,21 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        profile.beneficiaryStatus ==
-                                BeneficiaryStatus.approved
+                        profile.beneficiaryStatus == BeneficiaryStatus.approved
                             ? Icons.check_circle_rounded
                             : profile.beneficiaryStatus ==
-                                    BeneficiaryStatus.pending
-                                ? Icons.schedule_rounded
-                                : Icons.cancel_rounded,
+                                  BeneficiaryStatus.pending
+                            ? Icons.schedule_rounded
+                            : Icons.cancel_rounded,
                         size: 16,
                         color: statusColor,
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        profile.beneficiaryStatus.label,
+                        beneficiaryStatusLabel(
+                          context,
+                          profile.beneficiaryStatus,
+                        ),
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: statusColor,
                           fontWeight: FontWeight.w700,
@@ -481,19 +380,14 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
               ),
             ],
             const Divider(height: 24),
-            if (profile.applicationBranch != null) ...[
+            if (profile.applicationCaseStatus != null) ...[
               _InsightRow(
-                icon: Icons.account_balance_outlined,
-                label: context.l10n.profileApplicationBranch,
-                value: profile.applicationBranch!,
-              ),
-              const SizedBox(height: 12),
-            ],
-            if (profile.applicationSubmittedAt != null) ...[
-              _InsightRow(
-                icon: Icons.edit_calendar_outlined,
-                label: context.l10n.profileApplicationSubmittedOn,
-                value: _formatDate(profile.applicationSubmittedAt!.toLocal()),
+                icon: Icons.assignment_turned_in_outlined,
+                label: context.l10n.profileCaseStatus,
+                value: _caseStatusLabel(
+                  context,
+                  profile.applicationCaseStatus!,
+                ),
               ),
               const SizedBox(height: 12),
             ],
@@ -668,7 +562,9 @@ class _EditableInfoRow extends StatelessWidget {
           IconButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.profileEditFieldComingSoon(label))),
+                SnackBar(
+                  content: Text(context.l10n.profileEditFieldComingSoon(label)),
+                ),
               );
             },
             icon: Icon(Icons.edit_outlined, color: AppColors.primary, size: 20),
@@ -677,4 +573,17 @@ class _EditableInfoRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Localized `caseStatus`; the raw value for one the app does not know.
+String _caseStatusLabel(BuildContext context, String caseStatus) {
+  final l10n = context.l10n;
+  return switch (caseStatus.toUpperCase()) {
+    'SUBMITTED' => l10n.caseStatusSubmitted,
+    'VERIFIED' => l10n.caseStatusVerified,
+    'APPROVED' => l10n.caseStatusApproved,
+    'ACTIVE' => l10n.caseStatusActive,
+    'CLOSED' => l10n.caseStatusClosed,
+    _ => caseStatus,
+  };
 }

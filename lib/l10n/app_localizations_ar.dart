@@ -67,9 +67,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zakatAlFitr => 'زكاة الفطر';
 
   @override
-  String get setReminder => 'ضبط تذكير';
-
-  @override
   String get needQuickWayGive => 'عطاء سريع';
 
   @override
@@ -114,9 +111,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get missingPaymentDetails => 'تفاصيل الدفع غير متوفرة.';
-
-  @override
-  String get missingCertificateDetails => 'تفاصيل الشهادة غير متوفرة.';
 
   @override
   String get calcAppBarTitle => 'حاسبة الزكاة';
@@ -537,18 +531,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcMethodologyPlaceholder => 'عنصر نائب لمحتوى منهجية الزكاة.';
 
   @override
-  String get calcPayBlockedWealth =>
-      'لا توجد زكاة على الثروة (أقل من النصاب أو صفر مكتسب). ضبط المدخلات الخاصة بك.';
-
-  @override
-  String get calcPayBlockedLivestock =>
-      'لا تجب زكاة الماشية على أعدادك الحالية.';
-
-  @override
-  String get calcPayBlockedCrops =>
-      'لم تجب زكاة المحصول بعد (أقل من نصاب الحصاد أو صفر كيلو).';
-
-  @override
   String calcCertCropDueLine(String kg) {
     return 'زكاة الزرع الواجبة: $kg كيلو';
   }
@@ -670,9 +652,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileTryAgain => 'حاول مرة أخرى';
 
   @override
-  String get profileSectionImpactDashboard => 'لوحة الأثر';
-
-  @override
   String get profileSectionBeneficiaryInsights => 'رؤى المستفيد';
 
   @override
@@ -695,30 +674,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileVerificationStatus => 'حالة التحقق';
-
-  @override
-  String get profileFaydaVerified => 'موثّق بفايدة';
-
-  @override
-  String get profileNotVerified => 'غير موثّق';
-
-  @override
-  String get profileTotalZakatPaid => 'إجمالي الزكاة المدفوعة';
-
-  @override
-  String get profileFySummary => 'ملخص السنة المالية 2023';
-
-  @override
-  String get profileActiveEndowments => 'الأوقاف النشطة';
-
-  @override
-  String get profileSustainableImpact => 'أثر مستدام';
-
-  @override
-  String get profileBeneficiariesHelped => 'المستفيدون الذين تمت مساعدتهم';
-
-  @override
-  String get profileAcrossPrograms => 'عبر البرامج';
 
   @override
   String get profileApplicationStatus => 'حالة الطلب';
@@ -758,9 +713,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileMyZakatHistorySubtitle => 'عرض السجل والشهادات';
-
-  @override
-  String get profileZakatHistoryComingSoon => 'سجل الزكاة قريبًا';
 
   @override
   String get profileMyAwqafEndowments => 'أوقافي';
@@ -939,13 +891,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get donationCurrencySheetSubtitle =>
       'اختر الدفع ETB المحلي أو الدفع بالبطاقة الدولية.';
-
-  @override
-  String get donationLocalPaymentTitle => 'الدفع المحلي (ETB)';
-
-  @override
-  String get donationLocalPaymentSubtitle =>
-      'Telebirr وCBE Birr وM-Pesa والبوابات الإثيوبية الأخرى.';
 
   @override
   String get donationInternationalPaymentTitle => 'الدفع الدولي';
@@ -1451,12 +1396,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get regMaritalSeparated => 'منفصل';
 
   @override
-  String get profileApplicationBranch => 'الفرع';
-
-  @override
-  String get profileApplicationSubmittedOn => 'تاريخ التقديم';
-
-  @override
   String get regVerifyCodeFirst =>
       'أدخل رمز التسجيل واضغط «تحقق». سيُفتح النموذج بعد قبول الرمز.';
 
@@ -1476,13 +1415,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payTitleZakat => 'أكمل زكاتك';
 
   @override
-  String get payTitleSadaqah => 'تصدّق';
-
-  @override
   String get paySubtitleZakat => 'أدِّ فريضتك بأمان عبر قنوات محلية موثوقة.';
-
-  @override
-  String get paySubtitleSadaqah => 'تصدّق طوعًا بأمان عبر قنوات محلية موثوقة.';
 
   @override
   String get payTotalZakatDue => 'إجمالي الزكاة المستحقة';
@@ -1508,18 +1441,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'زكاة الزروع تُخرج من المحصول. يمكنك دفع قيمتها بالبر وفق أسعار السوق المحلية الحالية.';
 
   @override
-  String get payPayerName => 'اسم الدافع';
-
-  @override
-  String get payFirstName => 'الاسم الأول';
-
-  @override
-  String get payFatherName => 'اسم الأب';
-
-  @override
-  String get payGrandfatherName => 'اسم الجد';
-
-  @override
   String get payBeneficiary => 'المستفيد (اختياري)';
 
   @override
@@ -1529,25 +1450,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payGeneralFundZakat => 'صندوق الزكاة العام';
 
   @override
-  String get payGeneralFundSadaqah => 'صندوق الصدقات العام';
-
-  @override
   String get payMethod => 'طريقة الدفع';
-
-  @override
-  String get payRecurringTitle => 'كرّر كل شهر';
-
-  @override
-  String get payRecurringSubtitle => 'سنذكّرك بالعطاء مجددًا كل شهر قمري.';
 
   @override
   String get paySecureSsl => 'تشفير SSL 256 بت';
 
   @override
   String get paySecureBank => 'أمان بمستوى البنوك';
-
-  @override
-  String get payButtonSadaqah => 'تصدّق الآن';
 
   @override
   String get payImpactTitle => 'أثرك';
@@ -1835,4 +1744,342 @@ class AppLocalizationsAr extends AppLocalizations {
   String impactPublishedOn(String date) {
     return 'نُشر في $date';
   }
+
+  @override
+  String get payNotAllowedBeneficiary =>
+      'حسابات المستفيدين تستلم الزكاة ولا تدفعها. سجّل الخروج للدفع كضيف.';
+
+  @override
+  String get payEnterAmount => 'أدخل المبلغ.';
+
+  @override
+  String payAmountOutOfRange(String min, String max) {
+    return 'أدخل مبلغًا بين $min و$max.';
+  }
+
+  @override
+  String get payAccountNumberLabel => 'رقم حساب بنك كوب';
+
+  @override
+  String get payAccountNumberHelper =>
+      'الحساب الذي تدفع منه. سنعرض اسم صاحب الحساب لتأكيده.';
+
+  @override
+  String get payAccountNumberInvalid => 'أدخل رقم حساب صالحًا (6–20 رقمًا).';
+
+  @override
+  String get payNetworkError =>
+      'لا يوجد اتصال. تحقق من الإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get payMethodsLoading => 'جارٍ تحميل طرق الدفع…';
+
+  @override
+  String get payMethodsError => 'تعذّر تحميل طرق الدفع.';
+
+  @override
+  String get payNoMethods => 'لا توجد طريقة دفع متاحة حاليًا.';
+
+  @override
+  String get payMethodUnavailable => 'غير متاح بعد';
+
+  @override
+  String get payCancelConfirmTitle => 'إلغاء هذه الدفعة؟';
+
+  @override
+  String get payCancelConfirmBody =>
+      'لم يُخصم أي مبلغ. يمكنك البدء من جديد في أي وقت.';
+
+  @override
+  String get payKeepPaying => 'متابعة الدفع';
+
+  @override
+  String get payCancelPayment => 'إلغاء الدفعة';
+
+  @override
+  String payForCause(String cause) {
+    return 'لـ: $cause';
+  }
+
+  @override
+  String get payAccountHolder => 'صاحب الحساب';
+
+  @override
+  String get payAccountNumberShort => 'الحساب';
+
+  @override
+  String get payConfirmTitle => 'هل هذا حسابك؟';
+
+  @override
+  String get payConfirmBody =>
+      'إذا كان كذلك، سيرسل بنك كوب رمز تأكيد إلى الهاتف المسجّل لهذا الحساب.';
+
+  @override
+  String get payYesSendCode => 'نعم، أرسل الرمز';
+
+  @override
+  String get payNotMyAccount => 'ليس حسابي';
+
+  @override
+  String get payOtpTitle => 'أدخل رمز التأكيد';
+
+  @override
+  String get payOtpBody =>
+      'أرسلنا رمزًا من 6 أرقام إلى الهاتف المسجّل لحسابك في بنك كوب.';
+
+  @override
+  String get payOtpLabel => 'رمز التأكيد';
+
+  @override
+  String payOtpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تبقّى $count محاولات',
+      one: 'تبقّت محاولة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get payResendCode => 'إرسال رمز جديد';
+
+  @override
+  String payPayAmount(String amount) {
+    return 'ادفع $amount';
+  }
+
+  @override
+  String get payProcessingTitle => 'نحن نؤكد دفعتك';
+
+  @override
+  String get payProcessingBody =>
+      'لم يرد بنك كوب بعد. تتحدث هذه الصفحة تلقائيًا؛ يُرجى عدم الدفع مرة أخرى.';
+
+  @override
+  String get payCheckAgain => 'تحقق مرة أخرى';
+
+  @override
+  String get paySucceededTitle => 'تم الدفع بنجاح';
+
+  @override
+  String paySucceededBody(String amount) {
+    return 'تم دفع زكاتك البالغة $amount. تقبّل الله منك.';
+  }
+
+  @override
+  String payReference(String reference) {
+    return 'مرجع البنك: $reference';
+  }
+
+  @override
+  String get payViewCertificate => 'عرض الشهادة';
+
+  @override
+  String get payDone => 'تم';
+
+  @override
+  String get payCancelledTitle => 'تم إلغاء الدفعة';
+
+  @override
+  String get payExpiredTitle => 'انتهت صلاحية الدفعة';
+
+  @override
+  String get payExpiredBody =>
+      'لم تكتمل خلال 15 دقيقة. لم يُخصم أي مبلغ؛ يُرجى البدء من جديد.';
+
+  @override
+  String get payFailedTitle => 'لم تكتمل الدفعة';
+
+  @override
+  String get payNoMoneyTaken => 'لم يُخصم أي مبلغ.';
+
+  @override
+  String get payStartAgain => 'ابدأ من جديد';
+
+  @override
+  String get certTitle => 'شهادة الزكاة';
+
+  @override
+  String certNumber(String id) {
+    return 'الشهادة $id';
+  }
+
+  @override
+  String get certSharePdf => 'تنزيل / مشاركة PDF';
+
+  @override
+  String get certPdfError => 'تعذّر تنزيل الشهادة.';
+
+  @override
+  String get certLoadError => 'تعذّر تحميل الشهادة.';
+
+  @override
+  String get certNotFound => 'الشهادة غير موجودة.';
+
+  @override
+  String get certPayer => 'الدافع';
+
+  @override
+  String get certType => 'نوع الزكاة';
+
+  @override
+  String get certCause => 'المشروع';
+
+  @override
+  String get certNaturalUnits => 'المستحق المحسوب';
+
+  @override
+  String get certMethod => 'الطريقة';
+
+  @override
+  String get certReference => 'مرجع البنك';
+
+  @override
+  String get certPaidAt => 'تاريخ الدفع';
+
+  @override
+  String get certIssuedAt => 'تاريخ الإصدار';
+
+  @override
+  String get certHijriDate => 'التاريخ الهجري';
+
+  @override
+  String get certVerifyHint =>
+      'يتيح رمز QR في ملف PDF لأي شخص التحقق من هذه الشهادة.';
+
+  @override
+  String get zakatTypeWealth => 'المال';
+
+  @override
+  String get zakatTypeLivestock => 'الأنعام';
+
+  @override
+  String get zakatTypeCrops => 'الزروع';
+
+  @override
+  String get zakatTypeGeneral => 'زكاة عامة';
+
+  @override
+  String get historyTitle => 'مدفوعات زكاتي';
+
+  @override
+  String get historyEmpty => 'لا توجد مدفوعات بعد.';
+
+  @override
+  String get historyLoadError => 'تعذّر تحميل مدفوعاتك.';
+
+  @override
+  String get payStatusSucceeded => 'مدفوع';
+
+  @override
+  String get payStatusPending => 'قيد التنفيذ';
+
+  @override
+  String get payStatusFailed => 'فشل';
+
+  @override
+  String get payStatusCancelled => 'ملغى';
+
+  @override
+  String get payStatusExpired => 'منتهي';
+
+  @override
+  String get fitrPayButton => 'ادفع زكاة الفطر';
+
+  @override
+  String get fitrHouseholdTitle => 'عن كم شخص تدفع؟';
+
+  @override
+  String fitrHouseholdOf(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count أشخاص',
+      one: 'شخص واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrTotal(String amount) {
+    return 'الإجمالي: $amount';
+  }
+
+  @override
+  String get profileCaseStatus => 'الحالة';
+
+  @override
+  String get caseStatusSubmitted => 'مُقدَّم';
+
+  @override
+  String get caseStatusVerified => 'تم التحقق';
+
+  @override
+  String get caseStatusApproved => 'مُعتمد';
+
+  @override
+  String get caseStatusActive => 'نشط — يتلقى الدعم';
+
+  @override
+  String get caseStatusClosed => 'مغلق';
+
+  @override
+  String get impactComingSoonTitle => 'بيانات الأثر قريبًا';
+
+  @override
+  String get impactComingSoonBody =>
+      'ستعرض هذه الصفحة كيف تصل الزكاة إلى المجتمعات في أنحاء إثيوبيا.';
+
+  @override
+  String payFinishWithin(String time) {
+    return 'أكمل خلال $time';
+  }
+
+  @override
+  String payOtpExpiresIn(String time) {
+    return 'تنتهي صلاحية الرمز خلال $time';
+  }
+
+  @override
+  String get payOtpExpiredLocal => 'انتهت صلاحية الرمز. أرسل رمزًا جديدًا.';
+
+  @override
+  String get unfinishedPaymentTitle => 'دفعة غير مكتملة';
+
+  @override
+  String get unfinishedPaymentContinue => 'متابعة';
+
+  @override
+  String get payCheckStatus => 'تحقق من الحالة';
+
+  @override
+  String get recentPaymentsTitle => 'المدفوعات الأخيرة على هذا الجهاز';
+
+  @override
+  String get recentPaymentsSubtitle => 'تابع دفعة غير مكتملة أو افتح شهادة.';
+
+  @override
+  String get recentPaymentsEmpty => 'لا توجد مدفوعات على هذا الجهاز بعد.';
+
+  @override
+  String get payOpenError => 'تعذّر فتح هذه الدفعة.';
+
+  @override
+  String get profileSectionPayoutAccount => 'حساب الصرف';
+
+  @override
+  String get profileRoleBeneficiary => 'مستفيد';
+
+  @override
+  String get profileRoleDonor => 'متبرّع';
+
+  @override
+  String get profileVerificationVerified => 'تم التحقق';
+
+  @override
+  String get profileVerificationPending => 'قيد المراجعة';
+
+  @override
+  String get profileVerificationRejected => 'لم تتم الموافقة';
 }

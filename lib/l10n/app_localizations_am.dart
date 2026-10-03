@@ -67,9 +67,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get zakatAlFitr => 'ዘካት አልፊጥር';
 
   @override
-  String get setReminder => 'ማስታወሻ ያዘጋጁ';
-
-  @override
   String get needQuickWayGive => 'ፈጣን መስጫ';
 
   @override
@@ -114,9 +111,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get missingPaymentDetails => 'የክፍያ ዝርዝር የለም።';
-
-  @override
-  String get missingCertificateDetails => 'የምስክር ወረቀት ዝርዝር የለም።';
 
   @override
   String get calcAppBarTitle => 'ዘካት ካልኩሌተር';
@@ -536,17 +530,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get calcMethodologyPlaceholder => 'የዘካት ዘዴ ይዘት ቦታ ያዥ።';
 
   @override
-  String get calcPayBlockedWealth =>
-      'ዘካት ምንም አይነት ሀብት አይከፈልም ​​(ከኒሳብ በታች ወይም ከዜሮ ኢቲቢ ክፍያ በታች)። ግብዓቶችዎን ያስተካክሉ።';
-
-  @override
-  String get calcPayBlockedLivestock => 'ለአሁኑ ቆጠራዎ ምንም የእንስሳት ዘካት አይከፈልበትም።';
-
-  @override
-  String get calcPayBlockedCrops =>
-      'የሰብል ዘካት ገና አልገባም (ከመከር ኒሳብ በታች ወይም ከዜሮ ኪሎ ግራም በታች)።';
-
-  @override
   String calcCertCropDueLine(String kg) {
     return 'የሚከፈልበት ዘካ: ${kg}_ ኪ.ግ';
   }
@@ -668,9 +651,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get profileTryAgain => 'እንደገና ሞክር';
 
   @override
-  String get profileSectionImpactDashboard => 'የተፅዕኖ ዳሽቦርድ';
-
-  @override
   String get profileSectionBeneficiaryInsights => 'የተጠቃሚ ግንዛቤዎች';
 
   @override
@@ -693,30 +673,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get profileVerificationStatus => 'የማረጋገጫ ሁኔታ';
-
-  @override
-  String get profileFaydaVerified => 'በፋይዳ የተረጋገጠ';
-
-  @override
-  String get profileNotVerified => 'አልተረጋገጠም';
-
-  @override
-  String get profileTotalZakatPaid => 'ጠቅላላ የተከፈለ ዘካት';
-
-  @override
-  String get profileFySummary => 'የ2015 በጀት ዓመት ማጠቃለያ';
-
-  @override
-  String get profileActiveEndowments => 'ንቁ ወቅፎች';
-
-  @override
-  String get profileSustainableImpact => 'ዘላቂ ተፅዕኖ';
-
-  @override
-  String get profileBeneficiariesHelped => 'የተረዱ ተጠቃሚዎች';
-
-  @override
-  String get profileAcrossPrograms => 'በፕሮግራሞች ውስጥ';
 
   @override
   String get profileApplicationStatus => 'የማመልከቻ ሁኔታ';
@@ -755,9 +711,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get profileMyZakatHistorySubtitle => 'መዝገብ እና ሰርቲፊኬቶችን ይመልከቱ';
-
-  @override
-  String get profileZakatHistoryComingSoon => 'የዘካት ታሪክ በቅርቡ ይመጣል';
 
   @override
   String get profileMyAwqafEndowments => 'የእኔ ወቅፍ ንብረቶች';
@@ -934,13 +887,6 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String get donationCurrencySheetSubtitle =>
       'የሀገር ውስጥ የኢቲቢ ክፍያ ወይም የአለምአቀፍ ካርድ ክፍያ ይምረጡ።';
-
-  @override
-  String get donationLocalPaymentTitle => 'የአካባቢ ክፍያ (ኢ.ቲ.ቢ.)';
-
-  @override
-  String get donationLocalPaymentSubtitle =>
-      'ቴሌቢር፣ ንግድ ባንክ ብር፣ ኤም-ፔሳ እና ሌሎች የኢትዮጵያ መግቢያ መንገዶች።';
 
   @override
   String get donationInternationalPaymentTitle => 'ዓለም አቀፍ ክፍያ';
@@ -1435,12 +1381,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get regMaritalSeparated => 'ተለያይቶ የሚኖር';
 
   @override
-  String get profileApplicationBranch => 'ቅርንጫፍ';
-
-  @override
-  String get profileApplicationSubmittedOn => 'የተመዘገቡበት ቀን';
-
-  @override
   String get regVerifyCodeFirst =>
       'የምዝገባ ኮድዎን አስገብተው «አረጋግጥ»ን ይጫኑ። ኮዱ ከተቀበለ በኋላ ቅጹ ይከፈታል።';
 
@@ -1460,14 +1400,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get payTitleZakat => 'ዘካትዎን ያጠናቅቁ';
 
   @override
-  String get payTitleSadaqah => 'ሰደቃ ይስጡ';
-
-  @override
   String get paySubtitleZakat => 'ግዴታዎን በታመኑ የሀገር ውስጥ መንገዶች በደህንነት ይወጡ።';
-
-  @override
-  String get paySubtitleSadaqah =>
-      'የበጎ ፈቃድ ምጽዋትን በታመኑ የሀገር ውስጥ መንገዶች በደህንነት ይስጡ።';
 
   @override
   String get payTotalZakatDue => 'ጠቅላላ የሚከፈል ዘካት';
@@ -1493,18 +1426,6 @@ class AppLocalizationsAm extends AppLocalizations {
       'የሰብል ዘካት የሚከፈለው በምርት ነው። አሁን ባለው የአካባቢ ገበያ ዋጋ መሠረት በብር መክፈል ይችላሉ።';
 
   @override
-  String get payPayerName => 'የከፋይ ስም';
-
-  @override
-  String get payFirstName => 'ስም';
-
-  @override
-  String get payFatherName => 'የአባት ስም';
-
-  @override
-  String get payGrandfatherName => 'የአያት ስም';
-
-  @override
   String get payBeneficiary => 'ተጠቃሚ (አማራጭ)';
 
   @override
@@ -1514,25 +1435,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get payGeneralFundZakat => 'አጠቃላይ የዘካት ፈንድ';
 
   @override
-  String get payGeneralFundSadaqah => 'አጠቃላይ የሰደቃ ፈንድ';
-
-  @override
   String get payMethod => 'የክፍያ ዘዴ';
-
-  @override
-  String get payRecurringTitle => 'በየወሩ ይድገሙ';
-
-  @override
-  String get payRecurringSubtitle => 'በየጨረቃ ወሩ እንደገና እንዲሰጡ እናስታውስዎታለን።';
 
   @override
   String get paySecureSsl => '256-ቢት SSL';
 
   @override
   String get paySecureBank => 'የባንክ ደረጃ ደህንነት';
-
-  @override
-  String get payButtonSadaqah => 'ሰደቃ ይስጡ';
 
   @override
   String get payImpactTitle => 'የእርስዎ አስተዋጽኦ';
@@ -1820,4 +1729,340 @@ class AppLocalizationsAm extends AppLocalizations {
   String impactPublishedOn(String date) {
     return '$date የታተመ';
   }
+
+  @override
+  String get payNotAllowedBeneficiary =>
+      'የተጠቃሚ መለያዎች ዘካት ይቀበላሉ እንጂ አይከፍሉም። እንደ እንግዳ ለመክፈል ከመለያዎ ይውጡ።';
+
+  @override
+  String get payEnterAmount => 'መጠን ያስገቡ።';
+
+  @override
+  String payAmountOutOfRange(String min, String max) {
+    return 'ከ$min እስከ $max ያለ መጠን ያስገቡ።';
+  }
+
+  @override
+  String get payAccountNumberLabel => 'የኩፕ ባንክ ሂሳብ ቁጥር';
+
+  @override
+  String get payAccountNumberHelper =>
+      'የሚከፍሉበት ሂሳብ። እንዲያረጋግጡ የሂሳቡን ባለቤት ስም እናሳይዎታለን።';
+
+  @override
+  String get payAccountNumberInvalid => 'ትክክለኛ የሂሳብ ቁጥር ያስገቡ (6–20 አሃዞች)።';
+
+  @override
+  String get payNetworkError => 'ግንኙነት የለም። ኢንተርኔትዎን ያረጋግጡ እና እንደገና ይሞክሩ።';
+
+  @override
+  String get payMethodsLoading => 'የክፍያ መንገዶች እየተጫኑ ነው…';
+
+  @override
+  String get payMethodsError => 'የክፍያ መንገዶችን መጫን አልተቻለም።';
+
+  @override
+  String get payNoMethods => 'አሁን ምንም የክፍያ መንገድ የለም።';
+
+  @override
+  String get payMethodUnavailable => 'ገና አልተገኘም';
+
+  @override
+  String get payCancelConfirmTitle => 'ይህን ክፍያ ይሰርዙ?';
+
+  @override
+  String get payCancelConfirmBody =>
+      'ምንም ገንዘብ አልተወሰደም። በማንኛውም ጊዜ እንደገና መጀመር ይችላሉ።';
+
+  @override
+  String get payKeepPaying => 'መክፈሉን ቀጥል';
+
+  @override
+  String get payCancelPayment => 'ክፍያውን ሰርዝ';
+
+  @override
+  String payForCause(String cause) {
+    return 'ለ፦ $cause';
+  }
+
+  @override
+  String get payAccountHolder => 'የሂሳብ ባለቤት';
+
+  @override
+  String get payAccountNumberShort => 'ሂሳብ';
+
+  @override
+  String get payConfirmTitle => 'ይህ የእርስዎ ሂሳብ ነው?';
+
+  @override
+  String get payConfirmBody =>
+      'ከሆነ፣ ኩፕ ባንክ በዚህ ሂሳብ ላይ ወደተመዘገበው ስልክ የማረጋገጫ ኮድ ይልካል።';
+
+  @override
+  String get payYesSendCode => 'አዎ፣ ኮድ ላክ';
+
+  @override
+  String get payNotMyAccount => 'የእኔ ሂሳብ አይደለም';
+
+  @override
+  String get payOtpTitle => 'የማረጋገጫ ኮዱን ያስገቡ';
+
+  @override
+  String get payOtpBody => 'በኩፕ ባንክ ሂሳብዎ ላይ ወደተመዘገበው ስልክ ባለ 6 አሃዝ ኮድ ልከናል።';
+
+  @override
+  String get payOtpLabel => 'የማረጋገጫ ኮድ';
+
+  @override
+  String payOtpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ሙከራዎች ቀርተዋል',
+      one: '1 ሙከራ ቀርቷል',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get payResendCode => 'አዲስ ኮድ ላክ';
+
+  @override
+  String payPayAmount(String amount) {
+    return '$amount ክፈል';
+  }
+
+  @override
+  String get payProcessingTitle => 'ክፍያዎን እያረጋገጥን ነው';
+
+  @override
+  String get payProcessingBody =>
+      'ኩፕ ባንክ ገና መልስ አልሰጠም። ይህ ገጽ በራሱ ይዘምናል፤ እባክዎ እንደገና አይክፈሉ።';
+
+  @override
+  String get payCheckAgain => 'እንደገና አረጋግጥ';
+
+  @override
+  String get paySucceededTitle => 'ክፍያው ተሳክቷል';
+
+  @override
+  String paySucceededBody(String amount) {
+    return 'የ$amount ዘካትዎ ተከፍሏል። አላህ ይቀበልዎ።';
+  }
+
+  @override
+  String payReference(String reference) {
+    return 'የባንክ ማጣቀሻ፦ $reference';
+  }
+
+  @override
+  String get payViewCertificate => 'የምስክር ወረቀቱን ይመልከቱ';
+
+  @override
+  String get payDone => 'ተጠናቋል';
+
+  @override
+  String get payCancelledTitle => 'ክፍያው ተሰርዟል';
+
+  @override
+  String get payExpiredTitle => 'የክፍያው ጊዜ አልፏል';
+
+  @override
+  String get payExpiredBody =>
+      'በ15 ደቂቃ ውስጥ አልተጠናቀቀም። ምንም ገንዘብ አልተወሰደም፤ እባክዎ እንደገና ይጀምሩ።';
+
+  @override
+  String get payFailedTitle => 'ክፍያው አልተጠናቀቀም';
+
+  @override
+  String get payNoMoneyTaken => 'ምንም ገንዘብ አልተወሰደም።';
+
+  @override
+  String get payStartAgain => 'እንደገና ጀምር';
+
+  @override
+  String get certTitle => 'የዘካት ምስክር ወረቀት';
+
+  @override
+  String certNumber(String id) {
+    return 'የምስክር ወረቀት $id';
+  }
+
+  @override
+  String get certSharePdf => 'PDF አውርድ / አጋራ';
+
+  @override
+  String get certPdfError => 'የምስክር ወረቀቱን ማውረድ አልተቻለም።';
+
+  @override
+  String get certLoadError => 'የምስክር ወረቀቱን መጫን አልተቻለም።';
+
+  @override
+  String get certNotFound => 'የምስክር ወረቀቱ አልተገኘም።';
+
+  @override
+  String get certPayer => 'ከፋይ';
+
+  @override
+  String get certType => 'የዘካት አይነት';
+
+  @override
+  String get certCause => 'ፕሮጀክት';
+
+  @override
+  String get certNaturalUnits => 'የተሰላ ግዴታ';
+
+  @override
+  String get certMethod => 'ዘዴ';
+
+  @override
+  String get certReference => 'የባንክ ማጣቀሻ';
+
+  @override
+  String get certPaidAt => 'የተከፈለበት';
+
+  @override
+  String get certIssuedAt => 'የተሰጠበት';
+
+  @override
+  String get certHijriDate => 'የሂጅራ ቀን';
+
+  @override
+  String get certVerifyHint =>
+      'በPDFው ላይ ያለው QR ኮድ ማንኛውም ሰው ይህን የምስክር ወረቀት እንዲያረጋግጥ ያስችላል።';
+
+  @override
+  String get zakatTypeWealth => 'ሀብት';
+
+  @override
+  String get zakatTypeLivestock => 'የቤት እንስሳት';
+
+  @override
+  String get zakatTypeCrops => 'ሰብል';
+
+  @override
+  String get zakatTypeGeneral => 'አጠቃላይ ዘካት';
+
+  @override
+  String get historyTitle => 'የእኔ የዘካት ክፍያዎች';
+
+  @override
+  String get historyEmpty => 'እስካሁን ምንም ክፍያ የለም።';
+
+  @override
+  String get historyLoadError => 'ክፍያዎችዎን መጫን አልተቻለም።';
+
+  @override
+  String get payStatusSucceeded => 'ተከፍሏል';
+
+  @override
+  String get payStatusPending => 'በሂደት ላይ';
+
+  @override
+  String get payStatusFailed => 'አልተሳካም';
+
+  @override
+  String get payStatusCancelled => 'ተሰርዟል';
+
+  @override
+  String get payStatusExpired => 'ጊዜው አልፏል';
+
+  @override
+  String get fitrPayButton => 'ዘካተል ፊጥር ይክፈሉ';
+
+  @override
+  String get fitrHouseholdTitle => 'ለስንት ሰው ነው የሚከፍሉት?';
+
+  @override
+  String fitrHouseholdOf(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ሰዎች',
+      one: '1 ሰው',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrTotal(String amount) {
+    return 'ጠቅላላ፦ $amount';
+  }
+
+  @override
+  String get profileCaseStatus => 'ጉዳይ';
+
+  @override
+  String get caseStatusSubmitted => 'ቀርቧል';
+
+  @override
+  String get caseStatusVerified => 'ተረጋግጧል';
+
+  @override
+  String get caseStatusApproved => 'ጸድቋል';
+
+  @override
+  String get caseStatusActive => 'ንቁ — ድጋፍ እየተቀበለ';
+
+  @override
+  String get caseStatusClosed => 'ተዘግቷል';
+
+  @override
+  String get impactComingSoonTitle => 'የተፅዕኖ መረጃ በቅርቡ ይመጣል';
+
+  @override
+  String get impactComingSoonBody =>
+      'ይህ ገጽ ዘካት በመላው ኢትዮጵያ ማህበረሰቦችን እንዴት እንደሚደርስ ያሳያል።';
+
+  @override
+  String payFinishWithin(String time) {
+    return 'በ$time ውስጥ ያጠናቅቁ';
+  }
+
+  @override
+  String payOtpExpiresIn(String time) {
+    return 'ኮዱ በ$time ውስጥ ጊዜው ያልፋል';
+  }
+
+  @override
+  String get payOtpExpiredLocal => 'ኮዱ ጊዜው አልፏል። አዲስ ይላኩ።';
+
+  @override
+  String get unfinishedPaymentTitle => 'ያልተጠናቀቀ ክፍያ';
+
+  @override
+  String get unfinishedPaymentContinue => 'ቀጥል';
+
+  @override
+  String get payCheckStatus => 'ሁኔታውን ይመልከቱ';
+
+  @override
+  String get recentPaymentsTitle => 'በዚህ መሣሪያ ላይ የቅርብ ጊዜ ክፍያዎች';
+
+  @override
+  String get recentPaymentsSubtitle => 'ያልተጠናቀቀ ክፍያ ይቀጥሉ ወይም የምስክር ወረቀት ይክፈቱ።';
+
+  @override
+  String get recentPaymentsEmpty => 'በዚህ መሣሪያ ላይ እስካሁን ምንም ክፍያ የለም።';
+
+  @override
+  String get payOpenError => 'ይህን ክፍያ መክፈት አልተቻለም።';
+
+  @override
+  String get profileSectionPayoutAccount => 'የክፍያ መቀበያ ሂሳብ';
+
+  @override
+  String get profileRoleBeneficiary => 'ተጠቃሚ';
+
+  @override
+  String get profileRoleDonor => 'ለጋሽ';
+
+  @override
+  String get profileVerificationVerified => 'ተረጋግጧል';
+
+  @override
+  String get profileVerificationPending => 'በግምገማ ላይ';
+
+  @override
+  String get profileVerificationRejected => 'አልጸደቀም';
 }

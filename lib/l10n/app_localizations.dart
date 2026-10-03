@@ -218,12 +218,6 @@ abstract class AppLocalizations {
   /// **'Zakat Al-Fitr'**
   String get zakatAlFitr;
 
-  /// No description provided for @setReminder.
-  ///
-  /// In en, this message translates to:
-  /// **'Set Reminder'**
-  String get setReminder;
-
   /// No description provided for @needQuickWayGive.
   ///
   /// In en, this message translates to:
@@ -313,12 +307,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Missing payment details.'**
   String get missingPaymentDetails;
-
-  /// No description provided for @missingCertificateDetails.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing certificate details.'**
-  String get missingCertificateDetails;
 
   /// No description provided for @calcAppBarTitle.
   ///
@@ -998,24 +986,6 @@ abstract class AppLocalizations {
   /// **'Zakat methodology content placeholder.'**
   String get calcMethodologyPlaceholder;
 
-  /// No description provided for @calcPayBlockedWealth.
-  ///
-  /// In en, this message translates to:
-  /// **'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.'**
-  String get calcPayBlockedWealth;
-
-  /// No description provided for @calcPayBlockedLivestock.
-  ///
-  /// In en, this message translates to:
-  /// **'No livestock Zakat is due for your current counts.'**
-  String get calcPayBlockedLivestock;
-
-  /// No description provided for @calcPayBlockedCrops.
-  ///
-  /// In en, this message translates to:
-  /// **'Crop Zakat is not due yet (below harvest nisab or zero kg due).'**
-  String get calcPayBlockedCrops;
-
   /// No description provided for @calcCertCropDueLine.
   ///
   /// In en, this message translates to:
@@ -1161,12 +1131,6 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get profileTryAgain;
 
-  /// No description provided for @profileSectionImpactDashboard.
-  ///
-  /// In en, this message translates to:
-  /// **'Impact Dashboard'**
-  String get profileSectionImpactDashboard;
-
   /// No description provided for @profileSectionBeneficiaryInsights.
   ///
   /// In en, this message translates to:
@@ -1214,54 +1178,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Verification Status'**
   String get profileVerificationStatus;
-
-  /// No description provided for @profileFaydaVerified.
-  ///
-  /// In en, this message translates to:
-  /// **'Fayda Verified'**
-  String get profileFaydaVerified;
-
-  /// No description provided for @profileNotVerified.
-  ///
-  /// In en, this message translates to:
-  /// **'Not verified'**
-  String get profileNotVerified;
-
-  /// No description provided for @profileTotalZakatPaid.
-  ///
-  /// In en, this message translates to:
-  /// **'Total Zakat Paid'**
-  String get profileTotalZakatPaid;
-
-  /// No description provided for @profileFySummary.
-  ///
-  /// In en, this message translates to:
-  /// **'FY 2023 Summary'**
-  String get profileFySummary;
-
-  /// No description provided for @profileActiveEndowments.
-  ///
-  /// In en, this message translates to:
-  /// **'Active Endowments'**
-  String get profileActiveEndowments;
-
-  /// No description provided for @profileSustainableImpact.
-  ///
-  /// In en, this message translates to:
-  /// **'Sustainable impact'**
-  String get profileSustainableImpact;
-
-  /// No description provided for @profileBeneficiariesHelped.
-  ///
-  /// In en, this message translates to:
-  /// **'Beneficiaries Helped'**
-  String get profileBeneficiariesHelped;
-
-  /// No description provided for @profileAcrossPrograms.
-  ///
-  /// In en, this message translates to:
-  /// **'Across programs'**
-  String get profileAcrossPrograms;
 
   /// No description provided for @profileApplicationStatus.
   ///
@@ -1334,12 +1250,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View ledger & certificates'**
   String get profileMyZakatHistorySubtitle;
-
-  /// No description provided for @profileZakatHistoryComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'Zakat history coming soon'**
-  String get profileZakatHistoryComingSoon;
 
   /// No description provided for @profileMyAwqafEndowments.
   ///
@@ -1676,18 +1586,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose local ETB payment or international card payment.'**
   String get donationCurrencySheetSubtitle;
-
-  /// No description provided for @donationLocalPaymentTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Local payment (ETB)'**
-  String get donationLocalPaymentTitle;
-
-  /// No description provided for @donationLocalPaymentSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.'**
-  String get donationLocalPaymentSubtitle;
 
   /// No description provided for @donationInternationalPaymentTitle.
   ///
@@ -2631,18 +2529,6 @@ abstract class AppLocalizations {
   /// **'Separated'**
   String get regMaritalSeparated;
 
-  /// No description provided for @profileApplicationBranch.
-  ///
-  /// In en, this message translates to:
-  /// **'Branch'**
-  String get profileApplicationBranch;
-
-  /// No description provided for @profileApplicationSubmittedOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Applied on'**
-  String get profileApplicationSubmittedOn;
-
   /// No description provided for @regVerifyCodeFirst.
   ///
   /// In en, this message translates to:
@@ -2679,23 +2565,11 @@ abstract class AppLocalizations {
   /// **'Complete your Zakat'**
   String get payTitleZakat;
 
-  /// No description provided for @payTitleSadaqah.
-  ///
-  /// In en, this message translates to:
-  /// **'Give Sadaqah'**
-  String get payTitleSadaqah;
-
   /// No description provided for @paySubtitleZakat.
   ///
   /// In en, this message translates to:
   /// **'Fulfil your obligation securely through trusted local channels.'**
   String get paySubtitleZakat;
-
-  /// No description provided for @paySubtitleSadaqah.
-  ///
-  /// In en, this message translates to:
-  /// **'Give voluntary charity securely through trusted local channels.'**
-  String get paySubtitleSadaqah;
 
   /// No description provided for @payTotalZakatDue.
   ///
@@ -2739,30 +2613,6 @@ abstract class AppLocalizations {
   /// **'Zakat on crops is due in harvest. You may pay its ETB value based on current local market prices.'**
   String get payNaturalUnitsCrops;
 
-  /// No description provided for @payPayerName.
-  ///
-  /// In en, this message translates to:
-  /// **'Payer name'**
-  String get payPayerName;
-
-  /// No description provided for @payFirstName.
-  ///
-  /// In en, this message translates to:
-  /// **'First name'**
-  String get payFirstName;
-
-  /// No description provided for @payFatherName.
-  ///
-  /// In en, this message translates to:
-  /// **'Father\'s name'**
-  String get payFatherName;
-
-  /// No description provided for @payGrandfatherName.
-  ///
-  /// In en, this message translates to:
-  /// **'Grandfather\'s name'**
-  String get payGrandfatherName;
-
   /// No description provided for @payBeneficiary.
   ///
   /// In en, this message translates to:
@@ -2781,29 +2631,11 @@ abstract class AppLocalizations {
   /// **'General Zakat fund'**
   String get payGeneralFundZakat;
 
-  /// No description provided for @payGeneralFundSadaqah.
-  ///
-  /// In en, this message translates to:
-  /// **'General Sadaqah fund'**
-  String get payGeneralFundSadaqah;
-
   /// No description provided for @payMethod.
   ///
   /// In en, this message translates to:
   /// **'Payment method'**
   String get payMethod;
-
-  /// No description provided for @payRecurringTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Repeat every month'**
-  String get payRecurringTitle;
-
-  /// No description provided for @payRecurringSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'We\'ll remind you to give again each lunar month.'**
-  String get payRecurringSubtitle;
 
   /// No description provided for @paySecureSsl.
   ///
@@ -2816,12 +2648,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'BANK-GRADE SECURITY'**
   String get paySecureBank;
-
-  /// No description provided for @payButtonSadaqah.
-  ///
-  /// In en, this message translates to:
-  /// **'Give Sadaqah'**
-  String get payButtonSadaqah;
 
   /// No description provided for @payImpactTitle.
   ///
@@ -3266,6 +3092,594 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Published {date}'**
   String impactPublishedOn(String date);
+
+  /// No description provided for @payNotAllowedBeneficiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary accounts receive zakat and can\'t pay it. Sign out to pay as a guest.'**
+  String get payNotAllowedBeneficiary;
+
+  /// No description provided for @payEnterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount.'**
+  String get payEnterAmount;
+
+  /// No description provided for @payAmountOutOfRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount between {min} and {max}.'**
+  String payAmountOutOfRange(String min, String max);
+
+  /// No description provided for @payAccountNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Coop Bank account number'**
+  String get payAccountNumberLabel;
+
+  /// No description provided for @payAccountNumberHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'The account you pay from. We\'ll show the account holder\'s name for you to confirm.'**
+  String get payAccountNumberHelper;
+
+  /// No description provided for @payAccountNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid account number (6–20 digits).'**
+  String get payAccountNumberInvalid;
+
+  /// No description provided for @payNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Check your internet and try again.'**
+  String get payNetworkError;
+
+  /// No description provided for @payMethodsLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading payment methods…'**
+  String get payMethodsLoading;
+
+  /// No description provided for @payMethodsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load payment methods.'**
+  String get payMethodsError;
+
+  /// No description provided for @payNoMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment method is available right now.'**
+  String get payNoMethods;
+
+  /// No description provided for @payMethodUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available yet'**
+  String get payMethodUnavailable;
+
+  /// No description provided for @payCancelConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this payment?'**
+  String get payCancelConfirmTitle;
+
+  /// No description provided for @payCancelConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No money has been taken. You can start again at any time.'**
+  String get payCancelConfirmBody;
+
+  /// No description provided for @payKeepPaying.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep paying'**
+  String get payKeepPaying;
+
+  /// No description provided for @payCancelPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel payment'**
+  String get payCancelPayment;
+
+  /// No description provided for @payForCause.
+  ///
+  /// In en, this message translates to:
+  /// **'For: {cause}'**
+  String payForCause(String cause);
+
+  /// No description provided for @payAccountHolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder'**
+  String get payAccountHolder;
+
+  /// No description provided for @payAccountNumberShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get payAccountNumberShort;
+
+  /// No description provided for @payConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Is this your account?'**
+  String get payConfirmTitle;
+
+  /// No description provided for @payConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If it is, Coop Bank will send a confirmation code to the phone registered on this account.'**
+  String get payConfirmBody;
+
+  /// No description provided for @payYesSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, send code'**
+  String get payYesSendCode;
+
+  /// No description provided for @payNotMyAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Not my account'**
+  String get payNotMyAccount;
+
+  /// No description provided for @payOtpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the confirmation code'**
+  String get payOtpTitle;
+
+  /// No description provided for @payOtpBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a 6-digit code to the phone registered on your Coop Bank account.'**
+  String get payOtpBody;
+
+  /// No description provided for @payOtpLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation code'**
+  String get payOtpLabel;
+
+  /// No description provided for @payOtpAttemptsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 attempt left} other{{count} attempts left}}'**
+  String payOtpAttemptsLeft(int count);
+
+  /// No description provided for @payResendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a new code'**
+  String get payResendCode;
+
+  /// No description provided for @payPayAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String payPayAmount(String amount);
+
+  /// No description provided for @payProcessingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We are confirming your payment'**
+  String get payProcessingTitle;
+
+  /// No description provided for @payProcessingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Coop Bank hasn\'t answered yet. This page updates by itself; please don\'t pay again.'**
+  String get payProcessingBody;
+
+  /// No description provided for @payCheckAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get payCheckAgain;
+
+  /// No description provided for @paySucceededTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment successful'**
+  String get paySucceededTitle;
+
+  /// No description provided for @paySucceededBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your zakat of {amount} has been paid. May Allah accept it from you.'**
+  String paySucceededBody(String amount);
+
+  /// No description provided for @payReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reference: {reference}'**
+  String payReference(String reference);
+
+  /// No description provided for @payViewCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'View certificate'**
+  String get payViewCertificate;
+
+  /// No description provided for @payDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get payDone;
+
+  /// No description provided for @payCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment cancelled'**
+  String get payCancelledTitle;
+
+  /// No description provided for @payExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment expired'**
+  String get payExpiredTitle;
+
+  /// No description provided for @payExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It wasn\'t finished within 15 minutes. No money was taken; please start again.'**
+  String get payExpiredBody;
+
+  /// No description provided for @payFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment not completed'**
+  String get payFailedTitle;
+
+  /// No description provided for @payNoMoneyTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'No money was taken.'**
+  String get payNoMoneyTaken;
+
+  /// No description provided for @payStartAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get payStartAgain;
+
+  /// No description provided for @certTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat certificate'**
+  String get certTitle;
+
+  /// No description provided for @certNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate {id}'**
+  String certNumber(String id);
+
+  /// No description provided for @certSharePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download / share PDF'**
+  String get certSharePdf;
+
+  /// No description provided for @certPdfError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t download the certificate.'**
+  String get certPdfError;
+
+  /// No description provided for @certLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the certificate.'**
+  String get certLoadError;
+
+  /// No description provided for @certNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate not found.'**
+  String get certNotFound;
+
+  /// No description provided for @certPayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Payer'**
+  String get certPayer;
+
+  /// No description provided for @certType.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat type'**
+  String get certType;
+
+  /// No description provided for @certCause.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get certCause;
+
+  /// No description provided for @certNaturalUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated due'**
+  String get certNaturalUnits;
+
+  /// No description provided for @certMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get certMethod;
+
+  /// No description provided for @certReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reference'**
+  String get certReference;
+
+  /// No description provided for @certPaidAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get certPaidAt;
+
+  /// No description provided for @certIssuedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get certIssuedAt;
+
+  /// No description provided for @certHijriDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri date'**
+  String get certHijriDate;
+
+  /// No description provided for @certVerifyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The QR code on the PDF lets anyone verify this certificate.'**
+  String get certVerifyHint;
+
+  /// No description provided for @zakatTypeWealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth'**
+  String get zakatTypeWealth;
+
+  /// No description provided for @zakatTypeLivestock.
+  ///
+  /// In en, this message translates to:
+  /// **'Livestock'**
+  String get zakatTypeLivestock;
+
+  /// No description provided for @zakatTypeCrops.
+  ///
+  /// In en, this message translates to:
+  /// **'Crops'**
+  String get zakatTypeCrops;
+
+  /// No description provided for @zakatTypeGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General zakat'**
+  String get zakatTypeGeneral;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My zakat payments'**
+  String get historyTitle;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments yet.'**
+  String get historyEmpty;
+
+  /// No description provided for @historyLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your payments.'**
+  String get historyLoadError;
+
+  /// No description provided for @payStatusSucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get payStatusSucceeded;
+
+  /// No description provided for @payStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get payStatusPending;
+
+  /// No description provided for @payStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get payStatusFailed;
+
+  /// No description provided for @payStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get payStatusCancelled;
+
+  /// No description provided for @payStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get payStatusExpired;
+
+  /// No description provided for @fitrPayButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Zakat al-Fitr'**
+  String get fitrPayButton;
+
+  /// No description provided for @fitrHouseholdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How many people are you paying for?'**
+  String get fitrHouseholdTitle;
+
+  /// No description provided for @fitrHouseholdOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person} other{{count} people}}'**
+  String fitrHouseholdOf(int count);
+
+  /// No description provided for @fitrTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount}'**
+  String fitrTotal(String amount);
+
+  /// No description provided for @profileCaseStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Case'**
+  String get profileCaseStatus;
+
+  /// No description provided for @caseStatusSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get caseStatusSubmitted;
+
+  /// No description provided for @caseStatusVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get caseStatusVerified;
+
+  /// No description provided for @caseStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get caseStatusApproved;
+
+  /// No description provided for @caseStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active — receiving support'**
+  String get caseStatusActive;
+
+  /// No description provided for @caseStatusClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get caseStatusClosed;
+
+  /// No description provided for @impactComingSoonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact data is coming soon'**
+  String get impactComingSoonTitle;
+
+  /// No description provided for @impactComingSoonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This page will show how zakat reaches communities across Ethiopia.'**
+  String get impactComingSoonBody;
+
+  /// No description provided for @payFinishWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish within {time}'**
+  String payFinishWithin(String time);
+
+  /// No description provided for @payOtpExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Code expires in {time}'**
+  String payOtpExpiresIn(String time);
+
+  /// No description provided for @payOtpExpiredLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'The code has expired. Send a new one.'**
+  String get payOtpExpiredLocal;
+
+  /// No description provided for @unfinishedPaymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfinished payment'**
+  String get unfinishedPaymentTitle;
+
+  /// No description provided for @unfinishedPaymentContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get unfinishedPaymentContinue;
+
+  /// No description provided for @payCheckStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Check status'**
+  String get payCheckStatus;
+
+  /// No description provided for @recentPaymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent payments on this device'**
+  String get recentPaymentsTitle;
+
+  /// No description provided for @recentPaymentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume an unfinished payment or open a certificate.'**
+  String get recentPaymentsSubtitle;
+
+  /// No description provided for @recentPaymentsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments on this device yet.'**
+  String get recentPaymentsEmpty;
+
+  /// No description provided for @payOpenError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open this payment.'**
+  String get payOpenError;
+
+  /// No description provided for @profileSectionPayoutAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout Account'**
+  String get profileSectionPayoutAccount;
+
+  /// No description provided for @profileRoleBeneficiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary'**
+  String get profileRoleBeneficiary;
+
+  /// No description provided for @profileRoleDonor.
+  ///
+  /// In en, this message translates to:
+  /// **'Donor'**
+  String get profileRoleDonor;
+
+  /// No description provided for @profileVerificationVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get profileVerificationVerified;
+
+  /// No description provided for @profileVerificationPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending review'**
+  String get profileVerificationPending;
+
+  /// No description provided for @profileVerificationRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get profileVerificationRejected;
 }
 
 class _AppLocalizationsDelegate

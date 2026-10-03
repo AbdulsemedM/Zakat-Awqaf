@@ -68,6 +68,12 @@ class _ImpactPageState extends State<ImpactPage> {
                   Expanded(child: _ErrorView()),
                 ],
               ),
+              ImpactLoadStatus.unavailable => const Column(
+                children: [
+                  _ImpactHeader(summary: null),
+                  Expanded(child: _ComingSoonView()),
+                ],
+              ),
               ImpactLoadStatus.loaded => RefreshIndicator(
                 color: AppColors.warmGold,
                 onRefresh: () {
@@ -112,6 +118,45 @@ class _ErrorView extends StatelessWidget {
                 const ImpactRefreshRequested(),
               ),
               child: Text(context.l10n.profileTryAgain),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ComingSoonView extends StatelessWidget {
+  const _ComingSoonView();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.auto_graph_rounded,
+              size: 48,
+              color: AppColors.goldDeep,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l10n.impactComingSoonTitle,
+              style: theme.textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              l10n.impactComingSoonBody,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

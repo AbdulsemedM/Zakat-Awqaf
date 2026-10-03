@@ -43,8 +43,9 @@ class ProfilePage extends StatelessWidget {
         },
         builder: (context, state) {
           return switch (state) {
-            ProfileInitial() || ProfileLoading() =>
-              const Center(child: CircularProgressIndicator()),
+            ProfileInitial() || ProfileLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
             ProfileError(:final message) => _ErrorView(message: message),
             ProfileLoaded(:final profile) => _ProfileContent(profile: profile),
           };
@@ -68,11 +69,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 48,
-              color: theme.colorScheme.error,
-            ),
+            Icon(Icons.error_outline, size: 48, color: theme.colorScheme.error),
             const SizedBox(height: 12),
             Text(
               context.l10n.profileLoadErrorTitle,
@@ -89,9 +86,8 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             FilledButton(
-              onPressed: () => context
-                  .read<ProfileBloc>()
-                  .add(const ProfileStarted()),
+              onPressed: () =>
+                  context.read<ProfileBloc>().add(const ProfileStarted()),
               child: Text(context.l10n.profileTryAgain),
             ),
           ],
@@ -116,18 +112,16 @@ class _ProfileContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _ProfileHeroHeader(profile: profile),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader(context.l10n.profileSectionImpactDashboard),
-            ),
-            const SizedBox(height: 8),
-            _ImpactDashboardRow(profile: profile),
+            // Beneficiaries receive zakat; donors pay it. Each sees only the
+            // sections for their role. (The donor "impact dashboard" stays
+            // hidden until the giving-summary API (B5.1) exists.)
             if (profile.isBeneficiary) ...[
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _SectionHeader(context.l10n.profileSectionBeneficiaryInsights),
+                child: _SectionHeader(
+                  context.l10n.profileSectionBeneficiaryInsights,
+                ),
               ),
               const SizedBox(height: 8),
               Padding(
@@ -138,33 +132,43 @@ class _ProfileContent extends StatelessWidget {
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader(context.l10n.profileSectionPersonalInformation),
+              child: _SectionHeader(
+                context.l10n.profileSectionPersonalInformation,
+              ),
             ),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _PersonalInfoCard(profile: profile),
             ),
-            const SizedBox(height: 16),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader('Payout Account'),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _PayoutAccountSetupCard(profile: profile),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader(context.l10n.profileSectionSpiritualSettings),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SpiritualSettingsCard(profile: profile),
-            ),
+            // Where disbursements are paid: beneficiaries only.
+            if (profile.isBeneficiary) ...[
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _SectionHeader(context.l10n.profileSectionPayoutAccount),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _PayoutAccountSetupCard(profile: profile),
+              ),
+            ],
+            // Nisab alerts are for people who pay zakat: donors only.
+            if (!profile.isBeneficiary) ...[
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _SectionHeader(
+                  context.l10n.profileSectionSpiritualSettings,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _SpiritualSettingsCard(profile: profile),
+              ),
+            ],
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -178,7 +182,9 @@ class _ProfileContent extends StatelessWidget {
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader(context.l10n.profileSectionSettingsSecurity),
+              child: _SectionHeader(
+                context.l10n.profileSectionSettingsSecurity,
+              ),
             ),
             const SizedBox(height: 8),
             Padding(
@@ -239,4 +245,3 @@ class _SectionHeader extends StatelessWidget {
     );
   }
 }
-

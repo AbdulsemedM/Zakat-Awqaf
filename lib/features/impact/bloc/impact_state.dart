@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 
 import '../data/models/impact_model.dart';
 
-enum ImpactLoadStatus { loading, loaded, failed }
+/// `unavailable`: the impact API is not deployed yet (B4 is "Later"); the
+/// gateway answers unknown routes with 401, so 401/404 mean "coming soon".
+enum ImpactLoadStatus { loading, loaded, failed, unavailable }
 
 /// Summary, regions and stories load on their own. The screen fails only
 /// when no summary could be loaded; empty regions or stories just hide

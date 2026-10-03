@@ -21,7 +21,6 @@ abstract final class ProfileMapper {
           ? dto.phone!.trim()
           : localOverlay.phone,
       roleLabel: 'Beneficiary',
-      isFaydaVerified: _isFaydaVerified(dto),
       isBeneficiary: true,
       beneficiaryStatus: _mapVerificationStatus(dto.verificationStatus),
       bankName: dto.bankName,
@@ -38,12 +37,11 @@ abstract final class ProfileMapper {
     ApplicationStatusDto application,
   ) {
     return profile.copyWith(
-      beneficiaryStatus: application.status != null
-          ? _mapVerificationStatus(application.status)
+      beneficiaryStatus: application.verificationStatus != null
+          ? _mapVerificationStatus(application.verificationStatus)
           : null,
-      applicationBranch: application.branchName,
-      applicationSubmittedAt: application.submittedAt,
-      applicationMessage: application.message,
+      applicationCaseStatus: application.caseStatus,
+      applicationMessage: application.verificationReason,
     );
   }
 
@@ -61,30 +59,25 @@ abstract final class ProfileMapper {
       beneficiaryStatus: user.isBeneficiary
           ? BeneficiaryStatus.pending
           : BeneficiaryStatus.pending,
-      isFaydaVerified: user.isBeneficiary,
     );
   }
 
   static ProfileModel defaultLocalOverlay() => const ProfileModel(
-        name: 'Guest',
-        email: '',
-        phone: '',
-        avatarAsset: null,
-        roleLabel: 'Member',
-        isFaydaVerified: false,
-        madhhab: Madhhab.hanafi,
-        nisabAlerts: true,
-        biometricEnabled: false,
-        language: AppLanguage.english,
-        themePreference: AppThemePreference.light,
-        isBeneficiary: false,
-        beneficiaryStatus: BeneficiaryStatus.pending,
-        lastDisbursement: null,
-        totalAidReceived: 0,
-        totalZakatPaid: 0,
-        activeEndowments: 0,
-        beneficiariesHelped: 0,
-      );
+    name: 'Guest',
+    email: '',
+    phone: '',
+    avatarAsset: null,
+    roleLabel: 'Member',
+    madhhab: Madhhab.hanafi,
+    nisabAlerts: true,
+    biometricEnabled: false,
+    language: AppLanguage.english,
+    themePreference: AppThemePreference.light,
+    isBeneficiary: false,
+    beneficiaryStatus: BeneficiaryStatus.pending,
+    lastDisbursement: null,
+    totalAidReceived: 0,
+  );
 
   static BeneficiaryStatus _mapVerificationStatus(String? status) {
     switch (status?.toLowerCase()) {
@@ -97,14 +90,5 @@ abstract final class ProfileMapper {
       default:
         return BeneficiaryStatus.pending;
     }
-  }
-
-  static bool _isFaydaVerified(BeneficiaryDto dto) {
-    final status = dto.verificationStatus?.toLowerCase();
-    if (status == 'approved' || status == 'verified') {
-      return true;
-    }
-    return dto.hasProfilePicture == true ||
-        (dto.nationalId?.trim().isNotEmpty ?? false);
   }
 }

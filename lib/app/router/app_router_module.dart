@@ -24,8 +24,11 @@ import '../../features/zakat_calculator/presentation/screens/zakat_calculator_sc
 import '../../core/di/injection.dart';
 import '../../core/l10n/l10n.dart';
 import '../../features/donation/presentation/screens/international_donation_screen.dart';
-import '../../features/zakat_payment/presentation/models/zakat_certificate_args.dart';
+import '../../features/zakat_payment/data/models/zakat_payment_models.dart';
 import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
+import '../../features/zakat_payment/presentation/screens/device_payments_screen.dart';
+import '../../features/zakat_payment/presentation/screens/payment_flow_screen.dart';
+import '../../features/zakat_payment/presentation/screens/payment_history_screen.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_certificate_screen.dart';
 import '../../features/zakat_payment/presentation/screens/zakat_payment_screen.dart';
 import '../pages/main_nav_shell_page.dart';
@@ -172,20 +175,36 @@ abstract class AppRouterModule {
             const ZakatThemed(child: InternationalDonationScreen()),
       ),
       GoRoute(
-        path: '/zakat/certificate',
+        path: '/zakat/payment/flow',
         builder: (context, state) {
           final extra = state.extra;
-          if (extra is! ZakatCertificateArgs) {
+          if (extra is! ZakatPayment) {
             return ZakatThemed(
               child: Scaffold(
-                body: Center(
-                  child: Text(context.l10n.missingCertificateDetails),
-                ),
+                body: Center(child: Text(context.l10n.missingPaymentDetails)),
               ),
             );
           }
-          return ZakatThemed(child: ZakatCertificateScreen(args: extra));
+          return ZakatThemed(child: PaymentFlowScreen(payment: extra));
         },
+      ),
+      GoRoute(
+        path: '/zakat/certificate/:certificateId',
+        builder: (context, state) => ZakatThemed(
+          child: ZakatCertificateScreen(
+            certificateId: state.pathParameters['certificateId']!,
+          ),
+        ),
+      ),
+      GoRoute(
+        path: '/zakat/recent',
+        builder: (context, state) =>
+            const ZakatThemed(child: DevicePaymentsScreen()),
+      ),
+      GoRoute(
+        path: '/zakat/history',
+        builder: (context, state) =>
+            const ZakatThemed(child: PaymentHistoryScreen()),
       ),
     ],
   );

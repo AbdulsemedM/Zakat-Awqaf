@@ -68,9 +68,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakatAlFitr => 'Zakat Al-Fitr';
 
   @override
-  String get setReminder => 'Set Reminder';
-
-  @override
   String get needQuickWayGive => 'Quick Giving';
 
   @override
@@ -116,9 +113,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get missingPaymentDetails => 'Missing payment details.';
-
-  @override
-  String get missingCertificateDetails => 'Missing certificate details.';
 
   @override
   String get calcAppBarTitle => 'Zakat Calculator';
@@ -542,18 +536,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Zakat methodology content placeholder.';
 
   @override
-  String get calcPayBlockedWealth =>
-      'No wealth Zakat is due (below nisab or zero ETB due). Adjust your inputs.';
-
-  @override
-  String get calcPayBlockedLivestock =>
-      'No livestock Zakat is due for your current counts.';
-
-  @override
-  String get calcPayBlockedCrops =>
-      'Crop Zakat is not due yet (below harvest nisab or zero kg due).';
-
-  @override
   String calcCertCropDueLine(String kg) {
     return 'Crop Zakat due: $kg kg';
   }
@@ -676,9 +658,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileTryAgain => 'Try again';
 
   @override
-  String get profileSectionImpactDashboard => 'Impact Dashboard';
-
-  @override
   String get profileSectionBeneficiaryInsights => 'Beneficiary Insights';
 
   @override
@@ -701,30 +680,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileVerificationStatus => 'Verification Status';
-
-  @override
-  String get profileFaydaVerified => 'Fayda Verified';
-
-  @override
-  String get profileNotVerified => 'Not verified';
-
-  @override
-  String get profileTotalZakatPaid => 'Total Zakat Paid';
-
-  @override
-  String get profileFySummary => 'FY 2023 Summary';
-
-  @override
-  String get profileActiveEndowments => 'Active Endowments';
-
-  @override
-  String get profileSustainableImpact => 'Sustainable impact';
-
-  @override
-  String get profileBeneficiariesHelped => 'Beneficiaries Helped';
-
-  @override
-  String get profileAcrossPrograms => 'Across programs';
 
   @override
   String get profileApplicationStatus => 'Application Status';
@@ -764,9 +719,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileMyZakatHistorySubtitle => 'View ledger & certificates';
-
-  @override
-  String get profileZakatHistoryComingSoon => 'Zakat history coming soon';
 
   @override
   String get profileMyAwqafEndowments => 'My Awqaf Endowments';
@@ -946,13 +898,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get donationCurrencySheetSubtitle =>
       'Choose local ETB payment or international card payment.';
-
-  @override
-  String get donationLocalPaymentTitle => 'Local payment (ETB)';
-
-  @override
-  String get donationLocalPaymentSubtitle =>
-      'Telebirr, CBE Birr, M-Pesa, and other Ethiopian gateways.';
 
   @override
   String get donationInternationalPaymentTitle => 'International payment';
@@ -1461,12 +1406,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get regMaritalSeparated => 'Separated';
 
   @override
-  String get profileApplicationBranch => 'Branch';
-
-  @override
-  String get profileApplicationSubmittedOn => 'Applied on';
-
-  @override
   String get regVerifyCodeFirst =>
       'Enter your registration code and tap Verify. The form opens once the code is accepted.';
 
@@ -1486,15 +1425,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payTitleZakat => 'Complete your Zakat';
 
   @override
-  String get payTitleSadaqah => 'Give Sadaqah';
-
-  @override
   String get paySubtitleZakat =>
       'Fulfil your obligation securely through trusted local channels.';
-
-  @override
-  String get paySubtitleSadaqah =>
-      'Give voluntary charity securely through trusted local channels.';
 
   @override
   String get payTotalZakatDue => 'TOTAL ZAKAT DUE';
@@ -1520,18 +1452,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Zakat on crops is due in harvest. You may pay its ETB value based on current local market prices.';
 
   @override
-  String get payPayerName => 'Payer name';
-
-  @override
-  String get payFirstName => 'First name';
-
-  @override
-  String get payFatherName => 'Father\'s name';
-
-  @override
-  String get payGrandfatherName => 'Grandfather\'s name';
-
-  @override
   String get payBeneficiary => 'Beneficiary (optional)';
 
   @override
@@ -1541,26 +1461,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payGeneralFundZakat => 'General Zakat fund';
 
   @override
-  String get payGeneralFundSadaqah => 'General Sadaqah fund';
-
-  @override
   String get payMethod => 'Payment method';
-
-  @override
-  String get payRecurringTitle => 'Repeat every month';
-
-  @override
-  String get payRecurringSubtitle =>
-      'We\'ll remind you to give again each lunar month.';
 
   @override
   String get paySecureSsl => '256-BIT SSL';
 
   @override
   String get paySecureBank => 'BANK-GRADE SECURITY';
-
-  @override
-  String get payButtonSadaqah => 'Give Sadaqah';
 
   @override
   String get payImpactTitle => 'Your impact';
@@ -1849,4 +1756,344 @@ class AppLocalizationsEn extends AppLocalizations {
   String impactPublishedOn(String date) {
     return 'Published $date';
   }
+
+  @override
+  String get payNotAllowedBeneficiary =>
+      'Beneficiary accounts receive zakat and can\'t pay it. Sign out to pay as a guest.';
+
+  @override
+  String get payEnterAmount => 'Enter an amount.';
+
+  @override
+  String payAmountOutOfRange(String min, String max) {
+    return 'Enter an amount between $min and $max.';
+  }
+
+  @override
+  String get payAccountNumberLabel => 'Coop Bank account number';
+
+  @override
+  String get payAccountNumberHelper =>
+      'The account you pay from. We\'ll show the account holder\'s name for you to confirm.';
+
+  @override
+  String get payAccountNumberInvalid =>
+      'Enter a valid account number (6–20 digits).';
+
+  @override
+  String get payNetworkError =>
+      'No connection. Check your internet and try again.';
+
+  @override
+  String get payMethodsLoading => 'Loading payment methods…';
+
+  @override
+  String get payMethodsError => 'Couldn\'t load payment methods.';
+
+  @override
+  String get payNoMethods => 'No payment method is available right now.';
+
+  @override
+  String get payMethodUnavailable => 'Not available yet';
+
+  @override
+  String get payCancelConfirmTitle => 'Cancel this payment?';
+
+  @override
+  String get payCancelConfirmBody =>
+      'No money has been taken. You can start again at any time.';
+
+  @override
+  String get payKeepPaying => 'Keep paying';
+
+  @override
+  String get payCancelPayment => 'Cancel payment';
+
+  @override
+  String payForCause(String cause) {
+    return 'For: $cause';
+  }
+
+  @override
+  String get payAccountHolder => 'Account holder';
+
+  @override
+  String get payAccountNumberShort => 'Account';
+
+  @override
+  String get payConfirmTitle => 'Is this your account?';
+
+  @override
+  String get payConfirmBody =>
+      'If it is, Coop Bank will send a confirmation code to the phone registered on this account.';
+
+  @override
+  String get payYesSendCode => 'Yes, send code';
+
+  @override
+  String get payNotMyAccount => 'Not my account';
+
+  @override
+  String get payOtpTitle => 'Enter the confirmation code';
+
+  @override
+  String get payOtpBody =>
+      'We sent a 6-digit code to the phone registered on your Coop Bank account.';
+
+  @override
+  String get payOtpLabel => 'Confirmation code';
+
+  @override
+  String payOtpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attempts left',
+      one: '1 attempt left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get payResendCode => 'Send a new code';
+
+  @override
+  String payPayAmount(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get payProcessingTitle => 'We are confirming your payment';
+
+  @override
+  String get payProcessingBody =>
+      'Coop Bank hasn\'t answered yet. This page updates by itself; please don\'t pay again.';
+
+  @override
+  String get payCheckAgain => 'Check again';
+
+  @override
+  String get paySucceededTitle => 'Payment successful';
+
+  @override
+  String paySucceededBody(String amount) {
+    return 'Your zakat of $amount has been paid. May Allah accept it from you.';
+  }
+
+  @override
+  String payReference(String reference) {
+    return 'Bank reference: $reference';
+  }
+
+  @override
+  String get payViewCertificate => 'View certificate';
+
+  @override
+  String get payDone => 'Done';
+
+  @override
+  String get payCancelledTitle => 'Payment cancelled';
+
+  @override
+  String get payExpiredTitle => 'Payment expired';
+
+  @override
+  String get payExpiredBody =>
+      'It wasn\'t finished within 15 minutes. No money was taken; please start again.';
+
+  @override
+  String get payFailedTitle => 'Payment not completed';
+
+  @override
+  String get payNoMoneyTaken => 'No money was taken.';
+
+  @override
+  String get payStartAgain => 'Start again';
+
+  @override
+  String get certTitle => 'Zakat certificate';
+
+  @override
+  String certNumber(String id) {
+    return 'Certificate $id';
+  }
+
+  @override
+  String get certSharePdf => 'Download / share PDF';
+
+  @override
+  String get certPdfError => 'Couldn\'t download the certificate.';
+
+  @override
+  String get certLoadError => 'Couldn\'t load the certificate.';
+
+  @override
+  String get certNotFound => 'Certificate not found.';
+
+  @override
+  String get certPayer => 'Payer';
+
+  @override
+  String get certType => 'Zakat type';
+
+  @override
+  String get certCause => 'Project';
+
+  @override
+  String get certNaturalUnits => 'Calculated due';
+
+  @override
+  String get certMethod => 'Method';
+
+  @override
+  String get certReference => 'Bank reference';
+
+  @override
+  String get certPaidAt => 'Paid';
+
+  @override
+  String get certIssuedAt => 'Issued';
+
+  @override
+  String get certHijriDate => 'Hijri date';
+
+  @override
+  String get certVerifyHint =>
+      'The QR code on the PDF lets anyone verify this certificate.';
+
+  @override
+  String get zakatTypeWealth => 'Wealth';
+
+  @override
+  String get zakatTypeLivestock => 'Livestock';
+
+  @override
+  String get zakatTypeCrops => 'Crops';
+
+  @override
+  String get zakatTypeGeneral => 'General zakat';
+
+  @override
+  String get historyTitle => 'My zakat payments';
+
+  @override
+  String get historyEmpty => 'No payments yet.';
+
+  @override
+  String get historyLoadError => 'Couldn\'t load your payments.';
+
+  @override
+  String get payStatusSucceeded => 'Paid';
+
+  @override
+  String get payStatusPending => 'In progress';
+
+  @override
+  String get payStatusFailed => 'Failed';
+
+  @override
+  String get payStatusCancelled => 'Cancelled';
+
+  @override
+  String get payStatusExpired => 'Expired';
+
+  @override
+  String get fitrPayButton => 'Pay Zakat al-Fitr';
+
+  @override
+  String get fitrHouseholdTitle => 'How many people are you paying for?';
+
+  @override
+  String fitrHouseholdOf(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people',
+      one: '1 person',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrTotal(String amount) {
+    return 'Total: $amount';
+  }
+
+  @override
+  String get profileCaseStatus => 'Case';
+
+  @override
+  String get caseStatusSubmitted => 'Submitted';
+
+  @override
+  String get caseStatusVerified => 'Verified';
+
+  @override
+  String get caseStatusApproved => 'Approved';
+
+  @override
+  String get caseStatusActive => 'Active — receiving support';
+
+  @override
+  String get caseStatusClosed => 'Closed';
+
+  @override
+  String get impactComingSoonTitle => 'Impact data is coming soon';
+
+  @override
+  String get impactComingSoonBody =>
+      'This page will show how zakat reaches communities across Ethiopia.';
+
+  @override
+  String payFinishWithin(String time) {
+    return 'Finish within $time';
+  }
+
+  @override
+  String payOtpExpiresIn(String time) {
+    return 'Code expires in $time';
+  }
+
+  @override
+  String get payOtpExpiredLocal => 'The code has expired. Send a new one.';
+
+  @override
+  String get unfinishedPaymentTitle => 'Unfinished payment';
+
+  @override
+  String get unfinishedPaymentContinue => 'Continue';
+
+  @override
+  String get payCheckStatus => 'Check status';
+
+  @override
+  String get recentPaymentsTitle => 'Recent payments on this device';
+
+  @override
+  String get recentPaymentsSubtitle =>
+      'Resume an unfinished payment or open a certificate.';
+
+  @override
+  String get recentPaymentsEmpty => 'No payments on this device yet.';
+
+  @override
+  String get payOpenError => 'Couldn\'t open this payment.';
+
+  @override
+  String get profileSectionPayoutAccount => 'Payout Account';
+
+  @override
+  String get profileRoleBeneficiary => 'Beneficiary';
+
+  @override
+  String get profileRoleDonor => 'Donor';
+
+  @override
+  String get profileVerificationVerified => 'Verified';
+
+  @override
+  String get profileVerificationPending => 'Pending review';
+
+  @override
+  String get profileVerificationRejected => 'Not approved';
 }

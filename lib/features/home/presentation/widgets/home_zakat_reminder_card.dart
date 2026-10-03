@@ -6,9 +6,12 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../core/auth/payer_access.dart';
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../data/models/zakat_al_fitr_season.dart';
+import 'fitr_household_sheet.dart';
 
 /// Zakat al-Fitr season card; the caller hides it when there is no season.
 class ZakatReminderCard extends StatelessWidget {
@@ -102,24 +105,39 @@ class ZakatReminderCard extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        if (season.status != FitrSeasonStatus.closed) ...[
-                          const SizedBox(height: 16),
-                          ElevatedButton.icon(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(0, 42),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                              ),
-                              textStyle: AppTypography.body(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            icon: const Icon(TablerIcons.bell, size: 18),
-                            label: Text(l10n.setReminder),
+                        // Pay only while the season is open; reminders
+                        // (B1.4) are not live yet.
+                        if (season.status == FitrSeasonStatus.open)
+                          ListenableBuilder(
+                            listenable: getIt<PayerAccess>(),
+                            builder: (context, _) {
+                              if (!getIt<PayerAccess>().canPay) {
+                                return const SizedBox.shrink();
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: ElevatedButton.icon(
+                                  onPressed: () =>
+                                      showFitrHouseholdSheet(context, season),
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(0, 42),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    textStyle: AppTypography.body(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    TablerIcons.moon_stars,
+                                    size: 18,
+                                  ),
+                                  label: Text(l10n.fitrPayButton),
+                                ),
+                              );
+                            },
                           ),
-                        ],
                       ],
                     ),
                   ),

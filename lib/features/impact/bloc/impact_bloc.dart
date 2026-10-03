@@ -38,9 +38,16 @@ class ImpactBloc extends Bloc<ImpactEvent, ImpactState> {
           emit(
             state.copyWith(summary: summary, status: ImpactLoadStatus.loaded),
           );
-        } on ApiException {
+        } on ApiException catch (e) {
           if (state.summary == null) {
-            emit(state.copyWith(status: ImpactLoadStatus.failed));
+            final notDeployed = e.statusCode == 401 || e.statusCode == 404;
+            emit(
+              state.copyWith(
+                status: notDeployed
+                    ? ImpactLoadStatus.unavailable
+                    : ImpactLoadStatus.failed,
+              ),
+            );
           }
         }
       }(),

@@ -71,9 +71,21 @@ import '../../features/zakat_calculator/data/data_provider/calculator_config_rem
     as _i925;
 import '../../features/zakat_calculator/data/repository/calculator_config_repository.dart'
     as _i343;
+import '../../features/zakat_payment/bloc/payment_flow_bloc.dart' as _i484;
+import '../../features/zakat_payment/data/data_provider/device_payments_store.dart'
+    as _i272;
+import '../../features/zakat_payment/data/data_provider/guest_payment_token_store.dart'
+    as _i760;
+import '../../features/zakat_payment/data/data_provider/zakat_payment_remote_data_provider.dart'
+    as _i425;
+import '../../features/zakat_payment/data/models/zakat_payment_models.dart'
+    as _i978;
+import '../../features/zakat_payment/data/repository/zakat_payment_repository.dart'
+    as _i978;
 import '../auth/auth_interceptor.dart' as _i53;
 import '../auth/auth_session_controller.dart' as _i543;
 import '../auth/auth_token_storage.dart' as _i149;
+import '../auth/payer_access.dart' as _i266;
 import '../network/dio_module.dart' as _i614;
 import '../network_info/network_info.dart' as _i845;
 import '../network_info/network_info_impl.dart' as _i137;
@@ -88,6 +100,9 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     final appRouterModule = _$AppRouterModule();
     gh.lazySingleton<_i149.AuthTokenStorage>(() => _i149.AuthTokenStorage());
+    gh.lazySingleton<_i272.DevicePaymentsStore>(
+      () => _i272.DevicePaymentsStore(),
+    );
     gh.lazySingleton<_i845.NetworkInfo>(() => _i137.NetworkInfoImpl());
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.authDio(),
@@ -96,8 +111,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i543.AuthSessionController>(
       () => _i543.AuthSessionController(gh<_i149.AuthTokenStorage>()),
     );
+    gh.lazySingleton<_i760.GuestPaymentTokenStore>(
+      () => _i760.SecureGuestPaymentTokenStore(),
+    );
     gh.lazySingleton<_i286.CalculatorConfigLocalDataProvider>(
       () => _i286.CalculatorConfigLocalDataProviderImpl(),
+    );
+    gh.lazySingleton<_i266.PayerAccess>(
+      () => _i266.PayerAccess(
+        gh<_i543.AuthSessionController>(),
+        gh<_i149.AuthTokenStorage>(),
+      ),
     );
     gh.lazySingleton<_i53.AuthInterceptor>(
       () => _i53.AuthInterceptor(
@@ -138,6 +162,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i149.AuthTokenStorage>(),
       ),
     );
+    gh.lazySingleton<_i425.ZakatPaymentRemoteDataProvider>(
+      () => _i425.ZakatPaymentRemoteDataProviderImpl(
+        gh<_i361.Dio>(instanceName: 'paymentsDio'),
+      ),
+    );
     gh.lazySingleton<_i925.CalculatorConfigRemoteDataProvider>(
       () => _i925.CalculatorConfigRemoteDataProviderImpl(gh<_i361.Dio>()),
     );
@@ -171,6 +200,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i508.ProfileRepository>(
       () => _i309.ProfileRepositoryImpl(gh<_i365.ProfileDataProvider>()),
+    );
+    gh.lazySingleton<_i978.ZakatPaymentRepository>(
+      () => _i978.ZakatPaymentRepositoryImpl(
+        gh<_i425.ZakatPaymentRemoteDataProvider>(),
+        gh<_i760.GuestPaymentTokenStore>(),
+        gh<_i272.DevicePaymentsStore>(),
+      ),
     );
     gh.factory<_i239.ImpactBloc>(
       () => _i239.ImpactBloc(gh<_i825.ImpactRepository>()),
@@ -210,6 +246,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i267.CauseDetailBloc>(
       () => _i267.CauseDetailBloc(gh<_i38.CausesRepository>()),
+    );
+    gh.factoryParam<_i484.PaymentFlowBloc, _i978.ZakatPayment, dynamic>(
+      (payment, _) =>
+          _i484.PaymentFlowBloc(gh<_i978.ZakatPaymentRepository>(), payment),
     );
     return this;
   }

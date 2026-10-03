@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../app/widgets/payer_only.dart';
 import '../../../../core/common/utils/money_formatter.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../home/presentation/widgets/home_shared.dart';
@@ -69,22 +70,24 @@ class CauseCard extends StatelessWidget {
                         CauseProgressRow(cause: cause),
                         const SizedBox(height: 10),
                         if (cause.acceptsZakat)
-                          SizedBox(
-                            width: double.infinity,
-                            child: FilledButton(
-                              onPressed: () => context.push(
-                                '/zakat/payment',
-                                extra: ZakatPaymentArgs.forCause(cause),
-                              ),
-                              style: FilledButton.styleFrom(
-                                minimumSize: const Size(0, 40),
-                                padding: EdgeInsets.zero,
-                                textStyle: AppTypography.body(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
+                          PayerOnly(
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: FilledButton(
+                                onPressed: () => context.push(
+                                  '/zakat/payment',
+                                  extra: ZakatPaymentArgs.forCause(cause),
                                 ),
+                                style: FilledButton.styleFrom(
+                                  minimumSize: const Size(0, 40),
+                                  padding: EdgeInsets.zero,
+                                  textStyle: AppTypography.body(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                child: Text(l10n.payZakatCause),
                               ),
-                              child: Text(l10n.payZakatCause),
                             ),
                           ),
                       ],

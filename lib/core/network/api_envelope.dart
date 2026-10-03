@@ -4,15 +4,35 @@ import 'package:dio/dio.dart';
 
 /// Failure from the gateway's `{ success, data, message, errors }` envelope.
 class ApiException implements Exception {
-  const ApiException(this.message, {this.statusCode});
+  const ApiException(
+    this.message, {
+    this.statusCode,
+    this.code,
+    this.data = const {},
+    this.fieldErrors = const {},
+    this.noResponse = false,
+  });
 
   final String message;
   final int? statusCode;
 
+  /// Machine-readable error, e.g. `OTP_WRONG` (payments API).
+  final String? code;
+
+  /// Error details, e.g. `{ "attemptsLeft": 3 }`.
+  final Map<String, dynamic> data;
+
+  /// `errors[]` by field name.
+  final Map<String, String> fieldErrors;
+
+  /// No response arrived (timeout, connection lost): the request may or may
+  /// not have reached the server.
+  final bool noResponse;
+
   bool get isNotFound => statusCode == 404;
 
   @override
-  String toString() => 'ApiException($statusCode): $message';
+  String toString() => 'ApiException($statusCode, $code): $message';
 }
 
 /// Languages the public zakat endpoints accept in `?lang=`.
@@ -52,10 +72,26 @@ Map<String, dynamic> unwrapApiObject(Response<dynamic> response) {
 
 ApiException apiExceptionFromDio(DioException e) {
   final body = e.response?.data;
-  final message = body is Map ? body['message']?.toString() : null;
+  if (body is! Map) {
+    return ApiException(
+      e.message ?? 'Network error',
+      statusCode: e.response?.statusCode,
+      noResponse: e.response == null,
+    );
+  }
+  final data = body['data'];
+  final errors = body['errors'];
   return ApiException(
-    message ?? e.message ?? 'Network error',
+    body['message']?.toString() ?? e.message ?? 'Request failed',
     statusCode: e.response?.statusCode,
+    code: body['code']?.toString(),
+    data: data is Map ? Map<String, dynamic>.from(data) : const {},
+    fieldErrors: {
+      if (errors is List)
+        for (final error in errors)
+          if (error is Map && error['field'] != null)
+            error['field'].toString(): error['message']?.toString() ?? '',
+    },
   );
 }
 

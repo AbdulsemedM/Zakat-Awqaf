@@ -16,12 +16,12 @@ enum FinancialInstitution {
   teleBirr;
 
   String get label => switch (this) {
-        FinancialInstitution.hijraBank => 'Hijra Bank',
-        FinancialInstitution.zamzamBank => 'Zamzam Bank',
-        FinancialInstitution.coopBank => 'Coop Bank',
-        FinancialInstitution.cbe => 'CBE',
-        FinancialInstitution.teleBirr => 'TeleBirr',
-      };
+    FinancialInstitution.hijraBank => 'Hijra Bank',
+    FinancialInstitution.zamzamBank => 'Zamzam Bank',
+    FinancialInstitution.coopBank => 'Coop Bank',
+    FinancialInstitution.cbe => 'CBE',
+    FinancialInstitution.teleBirr => 'TeleBirr',
+  };
 
   bool get isAvailable => this == FinancialInstitution.coopBank;
 }
@@ -69,19 +69,6 @@ extension AppThemePreferenceX on AppThemePreference {
   }
 }
 
-extension BeneficiaryStatusX on BeneficiaryStatus {
-  String get label {
-    switch (this) {
-      case BeneficiaryStatus.approved:
-        return 'Approved';
-      case BeneficiaryStatus.pending:
-        return 'Pending';
-      case BeneficiaryStatus.rejected:
-        return 'Rejected';
-    }
-  }
-}
-
 class ProfileModel extends Equatable {
   const ProfileModel({
     required this.name,
@@ -89,7 +76,6 @@ class ProfileModel extends Equatable {
     required this.phone,
     required this.avatarAsset,
     required this.roleLabel,
-    required this.isFaydaVerified,
     required this.madhhab,
     required this.nisabAlerts,
     required this.biometricEnabled,
@@ -99,16 +85,12 @@ class ProfileModel extends Equatable {
     required this.beneficiaryStatus,
     required this.lastDisbursement,
     required this.totalAidReceived,
-    required this.totalZakatPaid,
-    required this.activeEndowments,
-    required this.beneficiariesHelped,
     this.coopBankAccountNumber,
     this.bankName,
     this.nationalId,
     this.region,
     this.city,
-    this.applicationBranch,
-    this.applicationSubmittedAt,
+    this.applicationCaseStatus,
     this.applicationMessage,
   });
 
@@ -120,7 +102,6 @@ class ProfileModel extends Equatable {
   final String? avatarAsset;
 
   final String roleLabel;
-  final bool isFaydaVerified;
 
   final Madhhab madhhab;
   final bool nisabAlerts;
@@ -133,9 +114,6 @@ class ProfileModel extends Equatable {
   final DateTime? lastDisbursement;
   final double totalAidReceived;
 
-  final double totalZakatPaid;
-  final int activeEndowments;
-  final int beneficiariesHelped;
   final String? coopBankAccountNumber;
   final String? bankName;
   final String? nationalId;
@@ -143,8 +121,10 @@ class ProfileModel extends Equatable {
   final String? city;
 
   // From `GET /me/application` (beneficiary-safe fields only).
-  final String? applicationBranch;
-  final DateTime? applicationSubmittedAt;
+  /// `SUBMITTED`, `VERIFIED`, `APPROVED`, `ACTIVE` or `CLOSED`.
+  final String? applicationCaseStatus;
+
+  /// `verificationReason`: staff's reason, e.g. on rejection.
   final String? applicationMessage;
 
   ProfileModel copyWith({
@@ -153,7 +133,6 @@ class ProfileModel extends Equatable {
     String? phone,
     String? avatarAsset,
     String? roleLabel,
-    bool? isFaydaVerified,
     Madhhab? madhhab,
     bool? nisabAlerts,
     bool? biometricEnabled,
@@ -163,17 +142,13 @@ class ProfileModel extends Equatable {
     BeneficiaryStatus? beneficiaryStatus,
     DateTime? lastDisbursement,
     double? totalAidReceived,
-    double? totalZakatPaid,
-    int? activeEndowments,
-    int? beneficiariesHelped,
     String? coopBankAccountNumber,
     bool clearCoopBankAccountNumber = false,
     String? bankName,
     String? nationalId,
     String? region,
     String? city,
-    String? applicationBranch,
-    DateTime? applicationSubmittedAt,
+    String? applicationCaseStatus,
     String? applicationMessage,
   }) {
     return ProfileModel(
@@ -182,7 +157,6 @@ class ProfileModel extends Equatable {
       phone: phone ?? this.phone,
       avatarAsset: avatarAsset ?? this.avatarAsset,
       roleLabel: roleLabel ?? this.roleLabel,
-      isFaydaVerified: isFaydaVerified ?? this.isFaydaVerified,
       madhhab: madhhab ?? this.madhhab,
       nisabAlerts: nisabAlerts ?? this.nisabAlerts,
       biometricEnabled: biometricEnabled ?? this.biometricEnabled,
@@ -192,9 +166,6 @@ class ProfileModel extends Equatable {
       beneficiaryStatus: beneficiaryStatus ?? this.beneficiaryStatus,
       lastDisbursement: lastDisbursement ?? this.lastDisbursement,
       totalAidReceived: totalAidReceived ?? this.totalAidReceived,
-      totalZakatPaid: totalZakatPaid ?? this.totalZakatPaid,
-      activeEndowments: activeEndowments ?? this.activeEndowments,
-      beneficiariesHelped: beneficiariesHelped ?? this.beneficiariesHelped,
       coopBankAccountNumber: clearCoopBankAccountNumber
           ? null
           : (coopBankAccountNumber ?? this.coopBankAccountNumber),
@@ -202,40 +173,34 @@ class ProfileModel extends Equatable {
       nationalId: nationalId ?? this.nationalId,
       region: region ?? this.region,
       city: city ?? this.city,
-      applicationBranch: applicationBranch ?? this.applicationBranch,
-      applicationSubmittedAt:
-          applicationSubmittedAt ?? this.applicationSubmittedAt,
+      applicationCaseStatus:
+          applicationCaseStatus ?? this.applicationCaseStatus,
       applicationMessage: applicationMessage ?? this.applicationMessage,
     );
   }
 
   @override
   List<Object?> get props => [
-        name,
-        email,
-        phone,
-        avatarAsset,
-        roleLabel,
-        isFaydaVerified,
-        madhhab,
-        nisabAlerts,
-        biometricEnabled,
-        language,
-        themePreference,
-        isBeneficiary,
-        beneficiaryStatus,
-        lastDisbursement,
-        totalAidReceived,
-        totalZakatPaid,
-        activeEndowments,
-        beneficiariesHelped,
-        coopBankAccountNumber,
-        bankName,
-        nationalId,
-        region,
-        city,
-        applicationBranch,
-        applicationSubmittedAt,
-        applicationMessage,
-      ];
+    name,
+    email,
+    phone,
+    avatarAsset,
+    roleLabel,
+    madhhab,
+    nisabAlerts,
+    biometricEnabled,
+    language,
+    themePreference,
+    isBeneficiary,
+    beneficiaryStatus,
+    lastDisbursement,
+    totalAidReceived,
+    coopBankAccountNumber,
+    bankName,
+    nationalId,
+    region,
+    city,
+    applicationCaseStatus,
+    applicationMessage,
+  ];
 }

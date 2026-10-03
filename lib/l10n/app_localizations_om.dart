@@ -68,9 +68,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get zakatAlFitr => 'Zakaa Al-Fitr';
 
   @override
-  String get setReminder => 'Yaadachiisa kaa\'i';
-
-  @override
   String get needQuickWayGive => 'Kenna Saffisaa';
 
   @override
@@ -116,9 +113,6 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get missingPaymentDetails => 'Bal\'ina kaffaltii hin jiru.';
-
-  @override
-  String get missingCertificateDetails => 'Bal\'ina ragaa hin jiru.';
 
   @override
   String get calcAppBarTitle => 'Shallaggii Zakaa';
@@ -544,18 +538,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get calcMethodologyPlaceholder => 'Qabiyyee mala Zakaa iddoo.';
 
   @override
-  String get calcPayBlockedWealth =>
-      'Qabeenyi Zakaan hin kaffalamu (nisab gadi ykn zeeroo ETB kaffalamuu qabu). Galtee kee sirreessaa.';
-
-  @override
-  String get calcPayBlockedLivestock =>
-      'Lakkoofsa ammaa keessaniif Zakaan beeyladaa tokkollee hin kaffalamu.';
-
-  @override
-  String get calcPayBlockedCrops =>
-      'Zakaan midhaanii ammallee yeroon isaa hin geenye (nisab midhaan sassaabuu gadi ykn zeeroo kg yeroon isaa kaffalamuu qaba).';
-
-  @override
   String calcCertCropDueLine(String kg) {
     return 'Zakaa midhaanii kaffalamuu qabu: $kg kg';
   }
@@ -680,9 +662,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get profileTryAgain => 'Ammas yaali';
 
   @override
-  String get profileSectionImpactDashboard => 'Daashboordii Bu\'aa';
-
-  @override
   String get profileSectionBeneficiaryInsights => 'Hubannoo Fayyadamtootaa';
 
   @override
@@ -705,30 +684,6 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get profileVerificationStatus => 'Haala Mirkaneessaa';
-
-  @override
-  String get profileFaydaVerified => 'Faydaan mirkanaa\'eera';
-
-  @override
-  String get profileNotVerified => 'Hin mirkanoofne';
-
-  @override
-  String get profileTotalZakatPaid => 'Walitti qabama zakaa kaffalame';
-
-  @override
-  String get profileFySummary => 'Cuunfaa bara baajataa 2023';
-
-  @override
-  String get profileActiveEndowments => 'Awqaafa hojii irra jiran';
-
-  @override
-  String get profileSustainableImpact => 'Bu\'aa itti fufiinsa qabu';
-
-  @override
-  String get profileBeneficiariesHelped => 'Fayyadamtoota deeggarsa argatan';
-
-  @override
-  String get profileAcrossPrograms => 'Sagantaalee hunda keessatti';
 
   @override
   String get profileApplicationStatus => 'Haala iyyannoo';
@@ -768,9 +723,6 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get profileMyZakatHistorySubtitle => 'Galmee fi ragaa ilaali';
-
-  @override
-  String get profileZakatHistoryComingSoon => 'Seenaa zakaa yeroo dhihoo dhufa';
 
   @override
   String get profileMyAwqafEndowments => 'Awqaafa Koo';
@@ -959,13 +911,6 @@ class AppLocalizationsOm extends AppLocalizations {
   @override
   String get donationCurrencySheetSubtitle =>
       'Kaffaltii ETB biyya keessaa ykn kaffaltii kaardii idil-addunyaa filadhu.';
-
-  @override
-  String get donationLocalPaymentTitle => 'Kaffaltii biyya keessaa (ETB) .';
-
-  @override
-  String get donationLocalPaymentSubtitle =>
-      'Telebirr, CBE Birr, M-Pesa, fi karra Itoophiyaa biroo.';
 
   @override
   String get donationInternationalPaymentTitle => 'Kaffaltii idil-addunyaa';
@@ -1478,12 +1423,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get regMaritalSeparated => 'Kan addaan bahe';
 
   @override
-  String get profileApplicationBranch => 'Damee';
-
-  @override
-  String get profileApplicationSubmittedOn => 'Guyyaa galmee';
-
-  @override
   String get regVerifyCodeFirst =>
       'Koodii galmee keessanii galchaatii «Mirkaneessi» tuqaa. Koodiin erga fudhatamee booda unkaan ni banama.';
 
@@ -1503,15 +1442,8 @@ class AppLocalizationsOm extends AppLocalizations {
   String get payTitleZakat => 'Zakaa keessan xumuraa';
 
   @override
-  String get payTitleSadaqah => 'Sadaqaa kennaa';
-
-  @override
   String get paySubtitleZakat =>
       'Dirqama keessan karaa biyya keessaa amanamoo ta\'een nageenyaan bahaa.';
-
-  @override
-  String get paySubtitleSadaqah =>
-      'Arjummaa fedhii keessaniin karaa biyya keessaa amanamoo ta\'een kennaa.';
 
   @override
   String get payTotalZakatDue => 'WALIIGALA ZAKAA KAFFALAMU';
@@ -1537,18 +1469,6 @@ class AppLocalizationsOm extends AppLocalizations {
       'Zakaan midhaan oomishaan kaffalama. Gatii gabaa naannoo amma jiruun ETB\'n kaffaluu dandeessu.';
 
   @override
-  String get payPayerName => 'Maqaa kaffalaa';
-
-  @override
-  String get payFirstName => 'Maqaa';
-
-  @override
-  String get payFatherName => 'Maqaa abbaa';
-
-  @override
-  String get payGrandfatherName => 'Maqaa akaakayyuu';
-
-  @override
   String get payBeneficiary => 'Fayyadamaa (filannoo)';
 
   @override
@@ -1558,26 +1478,13 @@ class AppLocalizationsOm extends AppLocalizations {
   String get payGeneralFundZakat => 'Maallaqa Zakaa waliigalaa';
 
   @override
-  String get payGeneralFundSadaqah => 'Maallaqa Sadaqaa waliigalaa';
-
-  @override
   String get payMethod => 'Mala kaffaltii';
-
-  @override
-  String get payRecurringTitle => 'Ji\'a ji\'aan irra deebi\'aa';
-
-  @override
-  String get payRecurringSubtitle =>
-      'Ji\'a baatii hundaa akka irra deebitanii kennitan isin yaadachiifna.';
 
   @override
   String get paySecureSsl => 'SSL 256-BIT';
 
   @override
   String get paySecureBank => 'NAGEENYA SADARKAA BAANKII';
-
-  @override
-  String get payButtonSadaqah => 'Sadaqaa kennaa';
 
   @override
   String get payImpactTitle => 'Dhiibbaa keessan';
@@ -1869,4 +1776,345 @@ class AppLocalizationsOm extends AppLocalizations {
   String impactPublishedOn(String date) {
     return '$date maxxanfame';
   }
+
+  @override
+  String get payNotAllowedBeneficiary =>
+      'Herregni fayyadamaa zakaa fudhata malee hin kaffalu. Akka keessummaatti kaffaluuf ba\'i.';
+
+  @override
+  String get payEnterAmount => 'Hanga galchi.';
+
+  @override
+  String payAmountOutOfRange(String min, String max) {
+    return 'Hanga $min fi $max gidduu jiru galchi.';
+  }
+
+  @override
+  String get payAccountNumberLabel => 'Lakkoofsa herregaa Baankii Coop';
+
+  @override
+  String get payAccountNumberHelper =>
+      'Herrega irraa kaffaltu. Akka mirkaneessituuf maqaa abbaa herregaa siif agarsiifna.';
+
+  @override
+  String get payAccountNumberInvalid =>
+      'Lakkoofsa herregaa sirrii galchi (dijiitii 6–20).';
+
+  @override
+  String get payNetworkError =>
+      'Walqunnamtiin hin jiru. Interneetii kee mirkaneessiitii irra deebi\'ii yaali.';
+
+  @override
+  String get payMethodsLoading => 'Malootni kaffaltii fe\'amaa jiru…';
+
+  @override
+  String get payMethodsError => 'Malootni kaffaltii fe\'amuu hin dandeenye.';
+
+  @override
+  String get payNoMethods => 'Amma maloon kaffaltii tokkoyyuu hin jiru.';
+
+  @override
+  String get payMethodUnavailable => 'Ammallee hin argamu';
+
+  @override
+  String get payCancelConfirmTitle => 'Kaffaltii kana haquu?';
+
+  @override
+  String get payCancelConfirmBody =>
+      'Maallaqni tokkoyyuu hin fudhatamne. Yeroo kamiyyuu irra deebi\'uu dandeessa.';
+
+  @override
+  String get payKeepPaying => 'Kaffaltii itti fufi';
+
+  @override
+  String get payCancelPayment => 'Kaffaltii haqi';
+
+  @override
+  String payForCause(String cause) {
+    return 'Kanaaf: $cause';
+  }
+
+  @override
+  String get payAccountHolder => 'Abbaa herregaa';
+
+  @override
+  String get payAccountNumberShort => 'Herrega';
+
+  @override
+  String get payConfirmTitle => 'Herregni kun kan keeti?';
+
+  @override
+  String get payConfirmBody =>
+      'Yoo ta’e, Baankiin Coop koodii mirkaneessaa bilbila herrega kana irratti galmaa’etti ni erga.';
+
+  @override
+  String get payYesSendCode => 'Eeyyee, koodii ergi';
+
+  @override
+  String get payNotMyAccount => 'Herrega koo miti';
+
+  @override
+  String get payOtpTitle => 'Koodii mirkaneessaa galchi';
+
+  @override
+  String get payOtpBody =>
+      'Bilbila herrega Baankii Coop kee irratti galmaa’etti koodii dijiitii 6 ergineerra.';
+
+  @override
+  String get payOtpLabel => 'Koodii mirkaneessaa';
+
+  @override
+  String payOtpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Yaaliiwwan $count hafan',
+      one: 'Yaaliin 1 hafe',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get payResendCode => 'Koodii haaraa ergi';
+
+  @override
+  String payPayAmount(String amount) {
+    return '$amount kaffali';
+  }
+
+  @override
+  String get payProcessingTitle => 'Kaffaltii kee mirkaneessaa jirra';
+
+  @override
+  String get payProcessingBody =>
+      'Baankiin Coop ammallee deebii hin kennine. Fuulli kun ofumaan haaromfama; maaloo irra deebi\'itii hin kaffalin.';
+
+  @override
+  String get payCheckAgain => 'Irra deebi\'ii mirkaneessi';
+
+  @override
+  String get paySucceededTitle => 'Kaffaltiin milkaa\'eera';
+
+  @override
+  String paySucceededBody(String amount) {
+    return 'Zakaan kee $amount kaffalameera. Rabbiin si irraa haa fudhatu.';
+  }
+
+  @override
+  String payReference(String reference) {
+    return 'Wabii baankii: $reference';
+  }
+
+  @override
+  String get payViewCertificate => 'Ragaa ilaali';
+
+  @override
+  String get payDone => 'Xumurame';
+
+  @override
+  String get payCancelledTitle => 'Kaffaltiin haqameera';
+
+  @override
+  String get payExpiredTitle => 'Yeroon kaffaltii darbeera';
+
+  @override
+  String get payExpiredBody =>
+      'Daqiiqaa 15 keessatti hin xumuramne. Maallaqni hin fudhatamne; maaloo irra deebi\'ii jalqabi.';
+
+  @override
+  String get payFailedTitle => 'Kaffaltiin hin xumuramne';
+
+  @override
+  String get payNoMoneyTaken => 'Maallaqni tokkoyyuu hin fudhatamne.';
+
+  @override
+  String get payStartAgain => 'Irra deebi\'ii jalqabi';
+
+  @override
+  String get certTitle => 'Ragaa zakaa';
+
+  @override
+  String certNumber(String id) {
+    return 'Ragaa $id';
+  }
+
+  @override
+  String get certSharePdf => 'PDF buusi / qooddi';
+
+  @override
+  String get certPdfError => 'Ragaa buusuun hin danda\'amne.';
+
+  @override
+  String get certLoadError => 'Ragaa fe\'uun hin danda\'amne.';
+
+  @override
+  String get certNotFound => 'Ragaan hin argamne.';
+
+  @override
+  String get certPayer => 'Kaffalaa';
+
+  @override
+  String get certType => 'Gosa zakaa';
+
+  @override
+  String get certCause => 'Pirojektii';
+
+  @override
+  String get certNaturalUnits => 'Kan herregame';
+
+  @override
+  String get certMethod => 'Mala';
+
+  @override
+  String get certReference => 'Wabii baankii';
+
+  @override
+  String get certPaidAt => 'Kan kaffalame';
+
+  @override
+  String get certIssuedAt => 'Kan kenname';
+
+  @override
+  String get certHijriDate => 'Guyyaa Hijraa';
+
+  @override
+  String get certVerifyHint =>
+      'Koodiin QR PDF irra jiru namni kamiyyuu ragaa kana akka mirkaneessu taasisa.';
+
+  @override
+  String get zakatTypeWealth => 'Qabeenya';
+
+  @override
+  String get zakatTypeLivestock => 'Horii';
+
+  @override
+  String get zakatTypeCrops => 'Midhaan';
+
+  @override
+  String get zakatTypeGeneral => 'Zakaa waliigalaa';
+
+  @override
+  String get historyTitle => 'Kaffaltiiwwan zakaa koo';
+
+  @override
+  String get historyEmpty => 'Hanga ammaatti kaffaltiin hin jiru.';
+
+  @override
+  String get historyLoadError => 'Kaffaltiiwwan kee fe\'uun hin danda\'amne.';
+
+  @override
+  String get payStatusSucceeded => 'Kaffalameera';
+
+  @override
+  String get payStatusPending => 'Adeemsa irra';
+
+  @override
+  String get payStatusFailed => 'Hin milkoofne';
+
+  @override
+  String get payStatusCancelled => 'Haqameera';
+
+  @override
+  String get payStatusExpired => 'Yeroon darbeera';
+
+  @override
+  String get fitrPayButton => 'Zakaa Fitrii kaffali';
+
+  @override
+  String get fitrHouseholdTitle => 'Nama meeqaaf kaffalta?';
+
+  @override
+  String fitrHouseholdOf(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Namoota $count',
+      one: 'Nama 1',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fitrTotal(String amount) {
+    return 'Walumaagala: $amount';
+  }
+
+  @override
+  String get profileCaseStatus => 'Dhimma';
+
+  @override
+  String get caseStatusSubmitted => 'Dhiyaateera';
+
+  @override
+  String get caseStatusVerified => 'Mirkanaa’eera';
+
+  @override
+  String get caseStatusApproved => 'Raggaasifameera';
+
+  @override
+  String get caseStatusActive => 'Hojii irra — deeggarsa argachaa jira';
+
+  @override
+  String get caseStatusClosed => 'Cufameera';
+
+  @override
+  String get impactComingSoonTitle => 'Odeeffannoon bu\'aa dhiyootti ni dhufa';
+
+  @override
+  String get impactComingSoonBody =>
+      'Fuulli kun zakaan hawaasa Itoophiyaa guutuu akkamitti akka ga\'u ni agarsiisa.';
+
+  @override
+  String payFinishWithin(String time) {
+    return '$time keessatti xumuri';
+  }
+
+  @override
+  String payOtpExpiresIn(String time) {
+    return 'Koodiin $time keessatti yeroon isaa darba';
+  }
+
+  @override
+  String get payOtpExpiredLocal => 'Yeroon koodii darbeera. Haaraa ergi.';
+
+  @override
+  String get unfinishedPaymentTitle => 'Kaffaltii hin xumuramne';
+
+  @override
+  String get unfinishedPaymentContinue => 'Itti fufi';
+
+  @override
+  String get payCheckStatus => 'Haala ilaali';
+
+  @override
+  String get recentPaymentsTitle => 'Kaffaltiiwwan dhiyoo meeshaa kana irratti';
+
+  @override
+  String get recentPaymentsSubtitle =>
+      'Kaffaltii hin xumuramne itti fufi ykn ragaa bani.';
+
+  @override
+  String get recentPaymentsEmpty =>
+      'Hanga ammaatti meeshaa kana irratti kaffaltiin hin jiru.';
+
+  @override
+  String get payOpenError => 'Kaffaltii kana banuun hin danda\'amne.';
+
+  @override
+  String get profileSectionPayoutAccount => 'Herrega kaffaltii fudhatan';
+
+  @override
+  String get profileRoleBeneficiary => 'Fayyadamaa';
+
+  @override
+  String get profileRoleDonor => 'Arjoomaa';
+
+  @override
+  String get profileVerificationVerified => 'Mirkanaa\'eera';
+
+  @override
+  String get profileVerificationPending => 'Ilaalamaa jira';
+
+  @override
+  String get profileVerificationRejected => 'Hin raggaasifamne';
 }
