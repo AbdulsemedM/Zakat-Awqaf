@@ -84,6 +84,9 @@ class _FakeRepository implements ZakatPaymentRepository {
   @override
   Future<PaymentHistoryPage> fetchHistory({required int page}) =>
       throw UnimplementedError();
+
+  @override
+  Future<GivingSummary> fetchGivingSummary() => throw UnimplementedError();
 }
 
 Future<void> _settle() => Future<void>.delayed(const Duration(milliseconds: 1));

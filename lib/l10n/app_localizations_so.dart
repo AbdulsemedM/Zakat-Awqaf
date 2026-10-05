@@ -2112,4 +2112,29 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get profileVerificationRejected => 'Lama ansixin';
+
+  @override
+  String get givingSectionTitle => 'Bixintayda';
+
+  @override
+  String get givingTotalPaid => 'Sakada la bixiyay';
+
+  @override
+  String givingTotalPaidIn(String period) {
+    return 'Sakada la bixiyay $period';
+  }
+
+  @override
+  String get givingPayments => 'lacag bixinno';
+
+  @override
+  String get givingCausesSupported => 'mashaariic la taageeray';
+
+  @override
+  String get givingBeneficiariesHelped => 'ka-faa’iideystayaal la caawiyay';
+
+  @override
+  String givingAllTime(String amount) {
+    return 'Wadarta guud: $amount';
+  }
 }

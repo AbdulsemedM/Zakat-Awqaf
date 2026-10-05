@@ -113,19 +113,18 @@ class _LiveFundsSummary extends StatelessWidget {
     final funds = summary.distributedFundsEtb;
     final lives = summary.livesTouched;
     final projects = summary.activeProjects;
+    // `null` means "temporarily unavailable" (never a hidden 0): show "—".
     final panels = [
-      if (lives != null)
-        _MetricPanel(
-          icon: Icons.groups_2_rounded,
-          title: l10n.impactLivesTouched,
-          value: formatThousands(lives),
-        ),
-      if (projects != null)
-        _MetricPanel(
-          icon: Icons.account_balance_rounded,
-          title: l10n.impactActiveProjects,
-          value: formatThousands(projects),
-        ),
+      _MetricPanel(
+        icon: Icons.groups_2_rounded,
+        title: l10n.impactLivesTouched,
+        value: lives == null ? '—' : formatThousands(lives),
+      ),
+      _MetricPanel(
+        icon: Icons.account_balance_rounded,
+        title: l10n.impactActiveProjects,
+        value: projects == null ? '—' : formatThousands(projects),
+      ),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -510,8 +509,10 @@ class _ImpactMapCard extends StatelessWidget {
     final projects = region.activeProjects;
     final parts = [
       if (funds != null) l10n.impactEtbAmount(formatThousands(funds)),
-      if (beneficiaries != null)
-        l10n.impactRegionBeneficiaries(formatThousands(beneficiaries)),
+      // `null`: figures temporarily unavailable, shown as "—".
+      l10n.impactRegionBeneficiaries(
+        beneficiaries == null ? '—' : formatThousands(beneficiaries),
+      ),
       if (projects != null)
         l10n.impactRegionProjects(formatThousands(projects)),
     ];

@@ -1298,5 +1298,26 @@
   "profileRoleDonor": "Donor",
   "profileVerificationVerified": "Verified",
   "profileVerificationPending": "Pending review",
-  "profileVerificationRejected": "Not approved"
+  "profileVerificationRejected": "Not approved",
+  "givingSectionTitle": "My giving",
+  "givingTotalPaid": "Zakat paid",
+  "givingTotalPaidIn": "Zakat paid in {period}",
+  "@givingTotalPaidIn": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "givingPayments": "payments",
+  "givingCausesSupported": "causes supported",
+  "givingBeneficiariesHelped": "beneficiaries helped",
+  "givingAllTime": "All time: {amount}",
+  "@givingAllTime": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }

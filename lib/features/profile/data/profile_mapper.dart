@@ -22,6 +22,7 @@ abstract final class ProfileMapper {
           : localOverlay.phone,
       roleLabel: 'Beneficiary',
       isBeneficiary: true,
+      isDonor: false,
       beneficiaryStatus: _mapVerificationStatus(dto.verificationStatus),
       bankName: dto.bankName,
       coopBankAccountNumber: dto.accountNumber,
@@ -45,6 +46,24 @@ abstract final class ProfileMapper {
     );
   }
 
+  /// Overlays `GET /api/auth/v1/me` (a donor's account) onto [profile].
+  /// `donorSummary` there is an old placeholder and is ignored.
+  static ProfileModel withAuthMe(
+    ProfileModel profile,
+    Map<String, dynamic> me,
+  ) {
+    String? text(String key) {
+      final value = me[key]?.toString().trim();
+      return value == null || value.isEmpty ? null : value;
+    }
+
+    return profile.copyWith(
+      name: text('displayName'),
+      phone: text('phone'),
+      email: text('email'),
+    );
+  }
+
   static ProfileModel fromSessionUser(
     StoredAuthUser user, {
     required ProfileModel localOverlay,
@@ -56,6 +75,7 @@ abstract final class ProfileMapper {
       phone: user.phone,
       roleLabel: roleLabel,
       isBeneficiary: user.isBeneficiary,
+      isDonor: user.isDonor,
       beneficiaryStatus: user.isBeneficiary
           ? BeneficiaryStatus.pending
           : BeneficiaryStatus.pending,

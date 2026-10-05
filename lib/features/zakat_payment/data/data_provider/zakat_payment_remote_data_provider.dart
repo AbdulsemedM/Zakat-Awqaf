@@ -39,6 +39,8 @@ abstract class ZakatPaymentRemoteDataProvider {
   });
 
   Future<PaymentHistoryPage> fetchHistory({required int page, int limit});
+
+  Future<GivingSummary> fetchGivingSummary();
 }
 
 @LazySingleton(as: ZakatPaymentRemoteDataProvider)
@@ -159,6 +161,12 @@ class ZakatPaymentRemoteDataProviderImpl
       throw const ApiException('Empty certificate PDF');
     }
     return Uint8List.fromList(bytes);
+  });
+
+  @override
+  Future<GivingSummary> fetchGivingSummary() => guardApi(() async {
+    final response = await _dio.get<dynamic>('$_base/me/giving-summary');
+    return GivingSummary.fromJson(unwrapApiObject(response));
   });
 
   @override

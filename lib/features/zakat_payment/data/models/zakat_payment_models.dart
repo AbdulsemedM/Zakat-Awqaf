@@ -416,3 +416,55 @@ class PaymentHistoryPage extends Equatable {
   @override
   List<Object?> get props => [items, page, totalPages];
 }
+
+/// `GET /api/payments/v1/me/giving-summary` (signed-in donor): succeeded
+/// payments (Zakat al-Fitr included, linked guest payments too) in the
+/// current Hijri year, plus all time.
+class GivingSummary extends Equatable {
+  const GivingSummary({
+    this.periodLabel,
+    this.totalZakatPaidEtb,
+    this.paymentsCount,
+    this.beneficiariesHelped,
+    this.causesSupported,
+    this.allTimeZakatPaidEtb,
+    this.allTimePaymentsCount,
+  });
+
+  /// e.g. `1448 AH`.
+  final String? periodLabel;
+  final double? totalZakatPaidEtb;
+  final int? paymentsCount;
+
+  /// `null` until disbursements are recorded: hide it.
+  final int? beneficiariesHelped;
+  final int? causesSupported;
+  final double? allTimeZakatPaidEtb;
+  final int? allTimePaymentsCount;
+
+  factory GivingSummary.fromJson(Map<String, dynamic> json) {
+    final period = json['period'];
+    final allTime = json['allTime'];
+    final allTimeMap = allTime is Map ? allTime : const {};
+    return GivingSummary(
+      periodLabel: period is Map ? jsonString(period['label']) : null,
+      totalZakatPaidEtb: jsonDouble(json['totalZakatPaidEtb']),
+      paymentsCount: jsonInt(json['paymentsCount']),
+      beneficiariesHelped: jsonInt(json['beneficiariesHelped']),
+      causesSupported: jsonInt(json['causesSupported']),
+      allTimeZakatPaidEtb: jsonDouble(allTimeMap['totalZakatPaidEtb']),
+      allTimePaymentsCount: jsonInt(allTimeMap['paymentsCount']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    periodLabel,
+    totalZakatPaidEtb,
+    paymentsCount,
+    beneficiariesHelped,
+    causesSupported,
+    allTimeZakatPaidEtb,
+    allTimePaymentsCount,
+  ];
+}

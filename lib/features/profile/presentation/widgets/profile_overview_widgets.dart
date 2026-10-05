@@ -123,7 +123,9 @@ class _ProfileHeroHeader extends StatelessWidget {
                                 child: Text(
                                   (profile.isBeneficiary
                                           ? context.l10n.profileRoleBeneficiary
-                                          : context.l10n.profileRoleDonor)
+                                          : profile.isDonor
+                                          ? context.l10n.profileRoleDonor
+                                          : profile.roleLabel)
                                       .toUpperCase(),
                                   style: theme.textTheme.labelSmall?.copyWith(
                                     color: AppColors.onSecondary,

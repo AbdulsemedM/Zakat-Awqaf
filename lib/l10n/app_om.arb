@@ -962,5 +962,12 @@
   "profileRoleDonor": "Arjoomaa",
   "profileVerificationVerified": "Mirkanaa'eera",
   "profileVerificationPending": "Ilaalamaa jira",
-  "profileVerificationRejected": "Hin raggaasifamne"
+  "profileVerificationRejected": "Hin raggaasifamne",
+  "givingSectionTitle": "Kennaa koo",
+  "givingTotalPaid": "Zakaa kaffalame",
+  "givingTotalPaidIn": "Zakaa {period} keessatti kaffalame",
+  "givingPayments": "kaffaltiiwwan",
+  "givingCausesSupported": "pirojektoota deeggaraman",
+  "givingBeneficiariesHelped": "fayyadamtoota gargaaraman",
+  "givingAllTime": "Walumaagalatti: {amount}"
 }

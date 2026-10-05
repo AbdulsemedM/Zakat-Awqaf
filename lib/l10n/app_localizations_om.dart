@@ -2117,4 +2117,29 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get profileVerificationRejected => 'Hin raggaasifamne';
+
+  @override
+  String get givingSectionTitle => 'Kennaa koo';
+
+  @override
+  String get givingTotalPaid => 'Zakaa kaffalame';
+
+  @override
+  String givingTotalPaidIn(String period) {
+    return 'Zakaa $period keessatti kaffalame';
+  }
+
+  @override
+  String get givingPayments => 'kaffaltiiwwan';
+
+  @override
+  String get givingCausesSupported => 'pirojektoota deeggaraman';
+
+  @override
+  String get givingBeneficiariesHelped => 'fayyadamtoota gargaaraman';
+
+  @override
+  String givingAllTime(String amount) {
+    return 'Walumaagalatti: $amount';
+  }
 }

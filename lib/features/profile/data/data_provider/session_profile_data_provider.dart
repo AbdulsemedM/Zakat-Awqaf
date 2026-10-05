@@ -38,6 +38,7 @@ class SessionProfileDataProvider implements ProfileDataProvider {
       phone: user.phone,
       roleLabel: roleLabel,
       isBeneficiary: user.isBeneficiary,
+      isDonor: user.isDonor,
       beneficiaryStatus: user.isBeneficiary
           ? BeneficiaryStatus.approved
           : BeneficiaryStatus.pending,

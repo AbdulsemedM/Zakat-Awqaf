@@ -21,12 +21,25 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
   static const _mePath = 'api/beneficiaries/v1/me';
   static const _bankAccountPath = 'api/beneficiaries/v1/me/bank-account';
   static const _applicationPath = 'api/beneficiaries/v1/me/application';
+  static const _authMePath = 'api/auth/v1/me';
 
   ProfileModel _localCache = ProfileMapper.defaultLocalOverlay();
 
   @override
   Future<ProfileModel> fetchProfile() async {
     final user = await _tokenStorage.readUser();
+    // Donors have no beneficiary record: their profile is the auth account.
+    if (user != null && user.isDonor) {
+      _localCache = ProfileMapper.fromSessionUser(
+        user,
+        localOverlay: _localCache,
+      );
+      final me = await _fetchAuthMe();
+      if (me != null) {
+        _localCache = ProfileMapper.withAuthMe(_localCache, me);
+      }
+      return _localCache;
+    }
     try {
       final response = await _dio.get<Map<String, dynamic>>(_mePath);
       final dto = _parseEnvelope(response.data, response.statusCode ?? 0);
@@ -76,6 +89,22 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
       rethrow;
     } on DioException catch (e) {
       throw _mapDioException(e);
+    }
+  }
+
+  /// `GET /api/auth/v1/me`: `displayName`, `phone` (and no `email` for
+  /// donors). Optional: the profile falls back to the token's claims.
+  Future<Map<String, dynamic>?> _fetchAuthMe() async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(_authMePath);
+      final body = response.data;
+      final data = body?['data'];
+      if (body?['success'] != true || data is! Map) {
+        return null;
+      }
+      return Map<String, dynamic>.from(data);
+    } on DioException {
+      return null;
     }
   }
 

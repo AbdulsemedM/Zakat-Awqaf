@@ -962,5 +962,12 @@
   "profileRoleDonor": "متبرّع",
   "profileVerificationVerified": "تم التحقق",
   "profileVerificationPending": "قيد المراجعة",
-  "profileVerificationRejected": "لم تتم الموافقة"
+  "profileVerificationRejected": "لم تتم الموافقة",
+  "givingSectionTitle": "عطائي",
+  "givingTotalPaid": "الزكاة المدفوعة",
+  "givingTotalPaidIn": "الزكاة المدفوعة في {period}",
+  "givingPayments": "دفعات",
+  "givingCausesSupported": "مشاريع مدعومة",
+  "givingBeneficiariesHelped": "مستفيدون تمت مساعدتهم",
+  "givingAllTime": "الإجمالي: {amount}"
 }

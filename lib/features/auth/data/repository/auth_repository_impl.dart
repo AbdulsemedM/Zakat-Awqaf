@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/auth/auth_session_controller.dart';
 import '../../../../core/auth/auth_token_storage.dart';
+import '../../../../core/auth/token_refresher.dart';
 import '../data_provider/auth_data_provider.dart';
 import '../models/login_request.dart';
 import '../models/set_password_request.dart';
@@ -13,11 +14,13 @@ class AuthRepositoryImpl implements AuthRepository {
     this._dataProvider,
     this._tokenStorage,
     this._sessionController,
+    this._refresher,
   );
 
   final AuthDataProvider _dataProvider;
   final AuthTokenStorage _tokenStorage;
   final AuthSessionController _sessionController;
+  final TokenRefresher _refresher;
 
   @override
   Future<void> login(LoginRequest request) async {
@@ -36,8 +39,11 @@ class AuthRepositoryImpl implements AuthRepository {
     return _dataProvider.setBeneficiaryPassword(request);
   }
 
+  /// Ends the session on the server (`POST /auth/v1/logout`, best effort),
+  /// then on the phone whatever the result.
   @override
   Future<void> logout() async {
+    await _refresher.logout();
     await _tokenStorage.clear();
     _sessionController.markLoggedOut();
   }

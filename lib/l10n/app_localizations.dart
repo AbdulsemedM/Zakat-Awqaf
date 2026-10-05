@@ -3680,6 +3680,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not approved'**
   String get profileVerificationRejected;
+
+  /// No description provided for @givingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My giving'**
+  String get givingSectionTitle;
+
+  /// No description provided for @givingTotalPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat paid'**
+  String get givingTotalPaid;
+
+  /// No description provided for @givingTotalPaidIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat paid in {period}'**
+  String givingTotalPaidIn(String period);
+
+  /// No description provided for @givingPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'payments'**
+  String get givingPayments;
+
+  /// No description provided for @givingCausesSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'causes supported'**
+  String get givingCausesSupported;
+
+  /// No description provided for @givingBeneficiariesHelped.
+  ///
+  /// In en, this message translates to:
+  /// **'beneficiaries helped'**
+  String get givingBeneficiariesHelped;
+
+  /// No description provided for @givingAllTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All time: {amount}'**
+  String givingAllTime(String amount);
 }
 
 class _AppLocalizationsDelegate

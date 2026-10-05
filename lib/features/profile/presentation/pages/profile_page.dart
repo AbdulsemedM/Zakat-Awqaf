@@ -14,6 +14,7 @@ import '../../bloc/profile_bloc.dart';
 import '../../bloc/profile_event.dart';
 import '../../bloc/profile_state.dart';
 import '../../data/models/profile_model.dart';
+import '../../../zakat_payment/presentation/widgets/giving_summary_card.dart';
 
 part '../widgets/profile_settings_widgets.dart';
 part '../widgets/profile_overview_widgets.dart';
@@ -113,8 +114,19 @@ class _ProfileContent extends StatelessWidget {
           children: [
             _ProfileHeroHeader(profile: profile),
             // Beneficiaries receive zakat; donors pay it. Each sees only the
-            // sections for their role. (The donor "impact dashboard" stays
-            // hidden until the giving-summary API (B5.1) exists.)
+            // sections for their role.
+            if (profile.isDonor) ...[
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _SectionHeader(context.l10n.givingSectionTitle),
+              ),
+              const SizedBox(height: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: GivingSummaryCard(),
+              ),
+            ],
             if (profile.isBeneficiary) ...[
               const SizedBox(height: 16),
               Padding(
@@ -154,8 +166,9 @@ class _ProfileContent extends StatelessWidget {
                 child: _PayoutAccountSetupCard(profile: profile),
               ),
             ],
-            // Nisab alerts are for people who pay zakat: donors only.
-            if (!profile.isBeneficiary) ...[
+            // Nisab alerts and giving figures are for people who pay zakat:
+            // donors only.
+            if (profile.isDonor) ...[
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

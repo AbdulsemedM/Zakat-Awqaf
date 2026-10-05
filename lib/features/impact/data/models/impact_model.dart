@@ -9,6 +9,7 @@ import '../../../causes/data/models/cause.dart';
 class ImpactSummary extends Equatable {
   const ImpactSummary({
     this.scope,
+    this.regionCode,
     this.regionName,
     this.distributedFundsEtb,
     this.livesTouched,
@@ -22,6 +23,9 @@ class ImpactSummary extends Equatable {
 
   /// `national` or `region`.
   final String? scope;
+
+  /// Set when `scope` is `region` (the code sent as `?region=`).
+  final String? regionCode;
   final String? regionName;
   final double? distributedFundsEtb;
   final int? livesTouched;
@@ -38,6 +42,7 @@ class ImpactSummary extends Equatable {
     final asnaf = json['beneficiariesByAsnaf'];
     return ImpactSummary(
       scope: jsonString(json['scope']),
+      regionCode: jsonString(json['regionCode']),
       regionName: jsonString(json['regionName']),
       distributedFundsEtb: jsonDouble(json['distributedFundsEtb']),
       livesTouched: jsonInt(json['livesTouched']),
@@ -59,6 +64,7 @@ class ImpactSummary extends Equatable {
   @override
   List<Object?> get props => [
     scope,
+    regionCode,
     regionName,
     distributedFundsEtb,
     livesTouched,

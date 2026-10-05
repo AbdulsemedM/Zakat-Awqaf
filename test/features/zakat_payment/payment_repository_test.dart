@@ -117,6 +117,9 @@ class _FakeRemote implements ZakatPaymentRemoteDataProvider {
     required int page,
     int limit = 20,
   }) => throw UnimplementedError();
+
+  @override
+  Future<GivingSummary> fetchGivingSummary() => throw UnimplementedError();
 }
 
 const _request = ZakatPaymentRequest(

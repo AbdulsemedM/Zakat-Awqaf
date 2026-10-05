@@ -53,6 +53,12 @@ abstract final class ZakatRules {
     if (tier == null) return 0;
     final perHundred = tier.perHundred;
     if (perHundred != null) return (count ~/ 100) * perHundred;
+    if (tier.dueItems.isNotEmpty) {
+      return tier.dueItems
+          .where((item) => item.kind == 'sheep')
+          .fold(0, (sum, item) => sum + item.count);
+    }
+    // Configs before `dueItems` (version 1): read the English text.
     return _leadingCount(tier.due) ?? 0;
   }
 
@@ -72,7 +78,31 @@ abstract final class ZakatRules {
       final (bintLabun, hiqqah) = bestCover(count, bintLabunPer, hiqqahPer);
       return CamelDue(bintLabun: bintLabun, hiqqah: hiqqah);
     }
+    if (tier.dueItems.isNotEmpty) return _camelDueFromItems(tier.dueItems);
+    // Configs before `dueItems` (version 1): read the English text.
     return _parseCamelDue(tier.due);
+  }
+
+  static CamelDue _camelDueFromItems(List<DueItem> items) {
+    int count(String kind) => items
+        .where((item) => item.kind == kind)
+        .fold(0, (sum, item) => sum + item.count);
+    const known = {'sheep', 'bint_makhad', 'bint_labun', 'hiqqah', 'jadhaah'};
+    final unknown = items.where((item) => !known.contains(item.kind));
+    if (unknown.isNotEmpty) {
+      return CamelDue(
+        unparsed: [
+          for (final item in items) '${item.count} ${item.kind}',
+        ].join(', '),
+      );
+    }
+    return CamelDue(
+      sheep: count('sheep'),
+      bintMakhad: count('bint_makhad'),
+      bintLabun: count('bint_labun'),
+      hiqqah: count('hiqqah'),
+      jadhaah: count('jadhaah'),
+    );
   }
 
   /// Picks `(a, b)` so that `a × perA + b × perB` covers as much of [count]

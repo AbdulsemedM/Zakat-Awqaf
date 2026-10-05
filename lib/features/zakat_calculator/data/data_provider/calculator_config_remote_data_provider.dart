@@ -20,8 +20,9 @@ class CalculatorConfigRemoteDataProviderImpl
 
   @override
   Future<Map<String, dynamic>> fetchConfig() => guardApi(() async {
-    // Always English: the app reads the livestock `due` texts to work out
-    // the animals and localizes them itself.
+    // English for now: configs before `dueItems` (version 1, and copies
+    // cached from them) only have the `due` text, which the app reads in
+    // English. Once every config has `dueItems`, send the user's language.
     final response = await _dio.get<dynamic>(
       _configPath,
       queryParameters: const {'lang': 'en'},

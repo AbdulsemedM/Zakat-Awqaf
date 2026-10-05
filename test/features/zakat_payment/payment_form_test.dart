@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_session_controller.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_token_storage.dart';
 import 'package:mejlis_digital_hub/core/auth/payer_access.dart';
+import 'package:mejlis_digital_hub/core/auth/token_refresher.dart';
 import 'package:mejlis_digital_hub/core/di/injection.dart';
 import 'package:mejlis_digital_hub/core/network/api_envelope.dart';
 import 'package:mejlis_digital_hub/features/causes/data/models/cause.dart';
@@ -72,7 +74,10 @@ Future<_FakePayments> _pumpForm(
     ..registerSingleton<ZakatPaymentRepository>(payments)
     ..registerSingleton<CausesRepository>(_FakeCauses())
     ..registerSingleton<PayerAccess>(
-      PayerAccess(AuthSessionController(storage), storage),
+      PayerAccess(
+        AuthSessionController(storage, TokenRefresher(Dio(), storage)),
+        storage,
+      ),
     );
   await tester.pumpWidget(
     MaterialApp(

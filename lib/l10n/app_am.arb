@@ -962,5 +962,12 @@
   "profileRoleDonor": "ለጋሽ",
   "profileVerificationVerified": "ተረጋግጧል",
   "profileVerificationPending": "በግምገማ ላይ",
-  "profileVerificationRejected": "አልጸደቀም"
+  "profileVerificationRejected": "አልጸደቀም",
+  "givingSectionTitle": "የእኔ ልገሳ",
+  "givingTotalPaid": "የተከፈለ ዘካት",
+  "givingTotalPaidIn": "በ{period} የተከፈለ ዘካት",
+  "givingPayments": "ክፍያዎች",
+  "givingCausesSupported": "የተደገፉ ፕሮጀክቶች",
+  "givingBeneficiariesHelped": "የተረዱ ተጠቃሚዎች",
+  "givingAllTime": "በአጠቃላይ፦ {amount}"
 }

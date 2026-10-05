@@ -82,6 +82,7 @@ class ProfileModel extends Equatable {
     required this.language,
     required this.themePreference,
     required this.isBeneficiary,
+    this.isDonor = false,
     required this.beneficiaryStatus,
     required this.lastDisbursement,
     required this.totalAidReceived,
@@ -110,6 +111,10 @@ class ProfileModel extends Equatable {
   final AppThemePreference themePreference;
 
   final bool isBeneficiary;
+
+  /// A donor account (`DONOR` and no beneficiary or staff role): pays zakat,
+  /// has payment history and giving figures.
+  final bool isDonor;
   final BeneficiaryStatus beneficiaryStatus;
   final DateTime? lastDisbursement;
   final double totalAidReceived;
@@ -139,6 +144,7 @@ class ProfileModel extends Equatable {
     AppLanguage? language,
     AppThemePreference? themePreference,
     bool? isBeneficiary,
+    bool? isDonor,
     BeneficiaryStatus? beneficiaryStatus,
     DateTime? lastDisbursement,
     double? totalAidReceived,
@@ -163,6 +169,7 @@ class ProfileModel extends Equatable {
       language: language ?? this.language,
       themePreference: themePreference ?? this.themePreference,
       isBeneficiary: isBeneficiary ?? this.isBeneficiary,
+      isDonor: isDonor ?? this.isDonor,
       beneficiaryStatus: beneficiaryStatus ?? this.beneficiaryStatus,
       lastDisbursement: lastDisbursement ?? this.lastDisbursement,
       totalAidReceived: totalAidReceived ?? this.totalAidReceived,
@@ -192,6 +199,7 @@ class ProfileModel extends Equatable {
     language,
     themePreference,
     isBeneficiary,
+    isDonor,
     beneficiaryStatus,
     lastDisbursement,
     totalAidReceived,

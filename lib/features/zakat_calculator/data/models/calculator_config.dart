@@ -161,14 +161,21 @@ class LivestockTier extends Equatable {
     this.perHundred,
     this.bintLabunPer,
     this.hiqqahPer,
+    this.dueItems = const [],
   });
 
   final int min;
   final int? max;
+
+  /// Display text only (it will be translated); read [dueItems] instead.
   final String due;
   final int? perHundred;
   final int? bintLabunPer;
   final int? hiqqahPer;
+
+  /// The animals due on a closed row, e.g. `[(bint_labun, 2)]`. Empty on
+  /// open-ended rows (they use the per-N fields) and on older configs.
+  final List<DueItem> dueItems;
 
   bool covers(int count) => count >= min && (max == null || count <= max!);
 
@@ -179,6 +186,12 @@ class LivestockTier extends Equatable {
     perHundred: (json['perHundred'] as num?)?.toInt(),
     bintLabunPer: (json['bintLabunPer'] as num?)?.toInt(),
     hiqqahPer: (json['hiqqahPer'] as num?)?.toInt(),
+    dueItems: [
+      if (json['dueItems'] case final List items)
+        for (final item in items)
+          if (item case {'kind': final String kind, 'count': final num count})
+            DueItem(kind: kind, count: count.toInt()),
+    ],
   );
 
   @override
@@ -189,7 +202,20 @@ class LivestockTier extends Equatable {
     perHundred,
     bintLabunPer,
     hiqqahPer,
+    dueItems,
   ];
+}
+
+/// One animal kind and count in a livestock row's `dueItems`. `kind` is one of
+/// `sheep`, `bint_makhad`, `bint_labun`, `hiqqah`, `jadhaah`.
+class DueItem extends Equatable {
+  const DueItem({required this.kind, required this.count});
+
+  final String kind;
+  final int count;
+
+  @override
+  List<Object?> get props => [kind, count];
 }
 
 Map<String, dynamic> _map(Map<String, dynamic> json, String key) {

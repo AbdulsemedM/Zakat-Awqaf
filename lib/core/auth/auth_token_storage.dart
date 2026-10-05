@@ -16,7 +16,16 @@ class StoredAuthUser {
   final String phone;
   final List<String> roles;
 
-  bool get isBeneficiary => roles.any((r) => r.toUpperCase() == 'BENEFICIARY');
+  bool get isBeneficiary => _has('BENEFICIARY');
+
+  /// Staff accounts; they never pay zakat in the app.
+  bool get isStaff => _has('ADMIN') || _has('BRANCH') || _has('FIELD_OFFICER');
+
+  /// The backend's rule: `DONOR` and none of the beneficiary or staff roles
+  /// (some older beneficiary accounts still carry `DONOR`).
+  bool get isDonor => _has('DONOR') && !isBeneficiary && !isStaff;
+
+  bool _has(String role) => roles.any((r) => r.toUpperCase() == role);
 }
 
 @lazySingleton
@@ -40,25 +49,39 @@ class AuthTokenStorage {
     return prefs.getString(_refreshTokenKey);
   }
 
+  /// Signed in: an access token that is still valid, or a refresh token to
+  /// get a new one (the server decides whether the session is still alive;
+  /// app sessions last 30 days without use, 90 at most).
   Future<bool> hasValidSession() async {
     final token = await readAccessToken();
     if (token == null || token.trim().isEmpty) {
       return false;
     }
-    final prefs = await SharedPreferences.getInstance();
-    final expiresAt = prefs.getInt(_expiresAtKey);
-    if (expiresAt == null) {
+    final refreshToken = await readRefreshToken();
+    if (refreshToken != null && refreshToken.trim().isNotEmpty) {
       return true;
     }
-    return DateTime.now().millisecondsSinceEpoch < expiresAt;
+    final expiresAt = await readAccessTokenExpiry();
+    return expiresAt == null || DateTime.now().isBefore(expiresAt);
+  }
+
+  /// When the stored access token expires, if known.
+  Future<DateTime?> readAccessTokenExpiry() async {
+    final prefs = await SharedPreferences.getInstance();
+    final expiresAt = prefs.getInt(_expiresAtKey);
+    return expiresAt == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(expiresAt);
   }
 
   Future<StoredAuthUser?> readUser() async {
     final prefs = await SharedPreferences.getInstance();
-    final name = prefs.getString(_userNameKey);
-    if (name == null || name.trim().isEmpty) {
+    // Signed in when a session was saved; the token may carry no name (e.g.
+    // a donor, whose name comes from `GET /auth/v1/me`).
+    if (prefs.getString(_accessTokenKey) == null) {
       return null;
     }
+    final name = prefs.getString(_userNameKey) ?? '';
     final rolesRaw = prefs.getStringList(_userRolesKey) ?? const [];
     return StoredAuthUser(
       name: name,
@@ -80,7 +103,8 @@ class AuthTokenStorage {
         .millisecondsSinceEpoch;
     final claims = JwtPayload.decode(accessToken) ?? const <String, dynamic>{};
     final roles = JwtPayload.roles(claims);
-    final name = claims['name']?.toString().trim() ??
+    final name =
+        claims['name']?.toString().trim() ??
         [
           claims['given_name']?.toString(),
           claims['family_name']?.toString(),

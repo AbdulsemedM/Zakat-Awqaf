@@ -30,6 +30,9 @@ abstract class ZakatPaymentRepository {
   Future<Uint8List> downloadCertificatePdf(String certificateId);
 
   Future<PaymentHistoryPage> fetchHistory({required int page});
+
+  /// Signed-in donors only.
+  Future<GivingSummary> fetchGivingSummary();
 }
 
 @LazySingleton(as: ZakatPaymentRepository)
@@ -115,4 +118,7 @@ class ZakatPaymentRepositoryImpl implements ZakatPaymentRepository {
   @override
   Future<PaymentHistoryPage> fetchHistory({required int page}) =>
       _remote.fetchHistory(page: page);
+
+  @override
+  Future<GivingSummary> fetchGivingSummary() => _remote.fetchGivingSummary();
 }

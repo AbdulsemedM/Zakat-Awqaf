@@ -2096,4 +2096,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileVerificationRejected => 'Not approved';
+
+  @override
+  String get givingSectionTitle => 'My giving';
+
+  @override
+  String get givingTotalPaid => 'Zakat paid';
+
+  @override
+  String givingTotalPaidIn(String period) {
+    return 'Zakat paid in $period';
+  }
+
+  @override
+  String get givingPayments => 'payments';
+
+  @override
+  String get givingCausesSupported => 'causes supported';
+
+  @override
+  String get givingBeneficiariesHelped => 'beneficiaries helped';
+
+  @override
+  String givingAllTime(String amount) {
+    return 'All time: $amount';
+  }
 }

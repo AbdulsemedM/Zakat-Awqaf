@@ -2082,4 +2082,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileVerificationRejected => 'لم تتم الموافقة';
+
+  @override
+  String get givingSectionTitle => 'عطائي';
+
+  @override
+  String get givingTotalPaid => 'الزكاة المدفوعة';
+
+  @override
+  String givingTotalPaidIn(String period) {
+    return 'الزكاة المدفوعة في $period';
+  }
+
+  @override
+  String get givingPayments => 'دفعات';
+
+  @override
+  String get givingCausesSupported => 'مشاريع مدعومة';
+
+  @override
+  String get givingBeneficiariesHelped => 'مستفيدون تمت مساعدتهم';
+
+  @override
+  String givingAllTime(String amount) {
+    return 'الإجمالي: $amount';
+  }
 }

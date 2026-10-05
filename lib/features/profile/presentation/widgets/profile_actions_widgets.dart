@@ -11,8 +11,8 @@ class _CoreActionsCard extends StatelessWidget {
       elevation: 0,
       child: Column(
         children: [
-          // Beneficiaries never pay zakat, so they have no payment history.
-          if (!profile.isBeneficiary) ...[
+          // Only donors pay zakat, so only they have a payment history.
+          if (profile.isDonor) ...[
             _ActionTile(
               icon: Icons.history_rounded,
               iconColor: Theme.of(context).colorScheme.primary,
@@ -42,7 +42,7 @@ class _CoreActionsCard extends StatelessWidget {
             onTap: () => context.go('/beneficiary-registration'),
           ),
           // Sadaqah donations are made by donors, not beneficiaries.
-          if (!profile.isBeneficiary) ...[
+          if (profile.isDonor) ...[
             const Divider(height: 1, indent: 56, endIndent: 16),
             _ActionTile(
               icon: Icons.receipt_long_outlined,

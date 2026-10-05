@@ -2065,4 +2065,29 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get profileVerificationRejected => 'አልጸደቀም';
+
+  @override
+  String get givingSectionTitle => 'የእኔ ልገሳ';
+
+  @override
+  String get givingTotalPaid => 'የተከፈለ ዘካት';
+
+  @override
+  String givingTotalPaidIn(String period) {
+    return 'በ$period የተከፈለ ዘካት';
+  }
+
+  @override
+  String get givingPayments => 'ክፍያዎች';
+
+  @override
+  String get givingCausesSupported => 'የተደገፉ ፕሮጀክቶች';
+
+  @override
+  String get givingBeneficiariesHelped => 'የተረዱ ተጠቃሚዎች';
+
+  @override
+  String givingAllTime(String amount) {
+    return 'በአጠቃላይ፦ $amount';
+  }
 }

@@ -962,5 +962,12 @@
   "profileRoleDonor": "Deeq-bixiye",
   "profileVerificationVerified": "La xaqiijiyay",
   "profileVerificationPending": "Dib-u-eegis ayaa socda",
-  "profileVerificationRejected": "Lama ansixin"
+  "profileVerificationRejected": "Lama ansixin",
+  "givingSectionTitle": "Bixintayda",
+  "givingTotalPaid": "Sakada la bixiyay",
+  "givingTotalPaidIn": "Sakada la bixiyay {period}",
+  "givingPayments": "lacag bixinno",
+  "givingCausesSupported": "mashaariic la taageeray",
+  "givingBeneficiariesHelped": "ka-faa’iideystayaal la caawiyay",
+  "givingAllTime": "Wadarta guud: {amount}"
 }
