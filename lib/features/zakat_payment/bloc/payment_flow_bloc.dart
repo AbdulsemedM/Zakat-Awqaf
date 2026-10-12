@@ -15,40 +15,33 @@ sealed class PaymentFlowEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Step 2: "Yes, this is my account, send the code".
-final class PaymentAccountConfirmed extends PaymentFlowEvent {
-  const PaymentAccountConfirmed();
+/// The donor says they paid the QR: show "We are confirming your payment"
+/// while the commission confirms it.
+final class PaymentQrPaidReported extends PaymentFlowEvent {
+  const PaymentQrPaidReported();
 }
 
-/// "Not my account" or leaving before paying.
+/// The donor did not pay and leaves: the QR is not shown again.
 final class PaymentCancelRequested extends PaymentFlowEvent {
   const PaymentCancelRequested();
 }
 
-final class PaymentOtpResendRequested extends PaymentFlowEvent {
-  const PaymentOtpResendRequested();
-}
-
-/// Step 3: verify the code and pay.
-final class PaymentOtpSubmitted extends PaymentFlowEvent {
-  const PaymentOtpSubmitted(this.otp);
-
-  final String otp;
-
-  @override
-  List<Object?> get props => [otp];
-}
-
-/// Reloads the payment (polling while processing, or after an unclear
-/// response).
+/// "Check again".
 final class PaymentStatusRefreshRequested extends PaymentFlowEvent {
   const PaymentStatusRefreshRequested();
+}
+
+/// A background status check: no spinner, and a failed check is ignored
+/// (the next one tries again).
+final class _PaymentPolled extends PaymentFlowEvent {
+  const _PaymentPolled();
 }
 
 class PaymentFlowState extends Equatable {
   const PaymentFlowState({
     required this.payment,
     this.busy = false,
+    this.qrPaidReported = false,
     this.errorMessage,
     this.errorCode,
   });
@@ -56,67 +49,64 @@ class PaymentFlowState extends Equatable {
   final ZakatPayment payment;
   final bool busy;
 
+  /// The donor tapped "I have paid" on the QR.
+  final bool qrPaidReported;
+
   /// The server's message for the last failed action (shown as is).
   final String? errorMessage;
 
-  /// Its `code`, e.g. `OTP_WRONG`, `OTP_EXPIRED`, `OTP_RESEND_LIMIT`.
+  /// Its `code`, e.g. `INVALID_STATE`.
   final String? errorCode;
-
-  bool get otpExpired => errorCode == 'OTP_EXPIRED';
-
-  bool get canResend =>
-      (payment.otpResendsLeft ?? 1) > 0 && errorCode != 'OTP_RESEND_LIMIT';
 
   PaymentFlowState copyWith({
     ZakatPayment? payment,
     bool? busy,
+    bool? qrPaidReported,
     String? Function()? errorMessage,
     String? Function()? errorCode,
   }) {
     return PaymentFlowState(
       payment: payment ?? this.payment,
       busy: busy ?? this.busy,
+      qrPaidReported: qrPaidReported ?? this.qrPaidReported,
       errorMessage: errorMessage != null ? errorMessage() : this.errorMessage,
       errorCode: errorCode != null ? errorCode() : this.errorCode,
     );
   }
 
   @override
-  List<Object?> get props => [payment, busy, errorMessage, errorCode];
+  List<Object?> get props => [
+    payment,
+    busy,
+    qrPaidReported,
+    errorMessage,
+    errorCode,
+  ];
 }
 
-/// Drives a started zakat payment from the account confirmation to the
-/// result. Step 1 (start) happens on the payment form.
+/// Watches a started zakat payment until it is final: the QR waiting for
+/// the donor's bank app and the commission's confirmation. The payment is
+/// started on the payment form.
 @injectable
 class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
   PaymentFlowBloc(this._repository, @factoryParam ZakatPayment payment)
     : super(PaymentFlowState(payment: payment)) {
-    on<PaymentAccountConfirmed>(
-      (event, emit) =>
-          _run(emit, () => _repository.confirmAccount(state.payment.paymentId)),
-    );
-    on<PaymentOtpResendRequested>(
-      (event, emit) =>
-          _run(emit, () => _repository.resendOtp(state.payment.paymentId)),
+    on<PaymentQrPaidReported>(
+      (event, emit) => emit(state.copyWith(qrPaidReported: true)),
     );
     on<PaymentCancelRequested>(
       (event, emit) =>
           _run(emit, () => _repository.cancel(state.payment.paymentId)),
     );
-    on<PaymentOtpSubmitted>(
-      (event, emit) => _run(
-        emit,
-        () => _repository.verifyOtp(state.payment.paymentId, event.otp),
-      ),
-    );
     on<PaymentStatusRefreshRequested>(
       (event, emit) =>
           _run(emit, () => _repository.fetchPayment(state.payment.paymentId)),
     );
+    on<_PaymentPolled>(_onPolled);
     _schedulePolling(state.payment);
   }
 
-  /// How often to check a payment the bank has not answered yet.
+  /// How often to check a pending payment while its screen is open.
   static const pollInterval = Duration(seconds: 10);
 
   final ZakatPaymentRepository _repository;
@@ -136,70 +126,18 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
     );
     try {
       final payment = await call();
-      _apply(emit, payment);
+      emit(state.copyWith(payment: payment, busy: false));
+      _schedulePolling(payment);
     } on ApiException catch (e) {
       await _onError(emit, e);
     }
   }
 
-  void _apply(Emitter<PaymentFlowState> emit, ZakatPayment payment) {
-    emit(state.copyWith(payment: payment, busy: false));
-    _schedulePolling(payment);
-  }
-
   Future<void> _onError(Emitter<PaymentFlowState> emit, ApiException e) async {
-    switch (e.code) {
-      // The server's state moved on: show what it is now.
-      case 'OTP_LOCKED' ||
-          'PAYMENT_EXPIRED' ||
-          'INVALID_STATE' ||
-          'ALREADY_PROCESSING':
-        await _recover(emit, message: e.message, code: e.code);
-      case 'OTP_WRONG' || 'OTP_EXPIRED' || 'OTP_RESEND_LIMIT':
-        emit(
-          state.copyWith(
-            busy: false,
-            payment: _withOtpCounts(state.payment, e.data),
-            errorMessage: () => e.message,
-            errorCode: () => e.code,
-          ),
-        );
-      default:
-        // No response: the action may have happened. Never repeat
-        // verify-otp blindly; ask for the payment's current state.
-        if (e.noResponse || e.statusCode == null) {
-          await _recover(emit, message: e.message, code: null);
-        } else {
-          emit(
-            state.copyWith(
-              busy: false,
-              errorMessage: () => e.message,
-              errorCode: () => e.code,
-            ),
-          );
-        }
-    }
-  }
-
-  Future<void> _recover(
-    Emitter<PaymentFlowState> emit, {
-    required String message,
-    required String? code,
-  }) async {
-    try {
-      final payment = await _repository.fetchPayment(state.payment.paymentId);
-      emit(
-        state.copyWith(
-          payment: payment,
-          busy: false,
-          // Keep the message only when the payment is still waiting for
-          // the donor (e.g. a code that was not accepted).
-          errorMessage: () => payment.isFinal ? null : message,
-          errorCode: () => payment.isFinal ? null : code,
-        ),
-      );
-      _schedulePolling(payment);
-    } on ApiException catch (e) {
+    // The payment moved on (e.g. confirmed or expired before a cancel), or
+    // there was no response: show what the server has now.
+    final moved = e.code == 'INVALID_STATE' || e.code == 'PAYMENT_EXPIRED';
+    if (!moved && !e.noResponse && e.statusCode != null) {
       emit(
         state.copyWith(
           busy: false,
@@ -207,29 +145,54 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
           errorCode: () => e.code,
         ),
       );
+      return;
+    }
+    try {
+      final payment = await _repository.fetchPayment(state.payment.paymentId);
+      emit(
+        state.copyWith(
+          payment: payment,
+          busy: false,
+          errorMessage: () => payment.isFinal ? null : e.message,
+          errorCode: () => payment.isFinal ? null : e.code,
+        ),
+      );
+      _schedulePolling(payment);
+    } on ApiException catch (again) {
+      emit(
+        state.copyWith(
+          busy: false,
+          errorMessage: () => again.message,
+          errorCode: () => again.code,
+        ),
+      );
     }
   }
 
-  static ZakatPayment _withOtpCounts(
-    ZakatPayment payment,
-    Map<String, dynamic> data,
-  ) => payment.withOtpCounts(
-    attemptsLeft: jsonInt(data['attemptsLeft']),
-    resendsLeft: jsonInt(data['resendsLeft']),
-  );
+  Future<void> _onPolled(
+    _PaymentPolled event,
+    Emitter<PaymentFlowState> emit,
+  ) async {
+    if (state.busy) return;
+    try {
+      final payment = await _repository.fetchPayment(state.payment.paymentId);
+      if (state.busy) return;
+      emit(state.copyWith(payment: payment));
+      _schedulePolling(payment);
+    } on ApiException {
+      // Try again on the next tick.
+    }
+  }
 
   void _schedulePolling(ZakatPayment payment) {
-    final processing =
-        payment.status == PaymentStatus.pending &&
-        payment.step == PaymentStep.processing;
-    if (!processing) {
+    if (payment.isFinal) {
       _pollTimer?.cancel();
       _pollTimer = null;
       return;
     }
     _pollTimer ??= Timer.periodic(
       pollInterval,
-      (_) => add(const PaymentStatusRefreshRequested()),
+      (_) => add(const _PaymentPolled()),
     );
   }
 

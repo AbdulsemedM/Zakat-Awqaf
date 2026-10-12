@@ -50,11 +50,7 @@ class CalcEmphasisText extends StatelessWidget {
     final boldStyle = baseStyle?.copyWith(fontWeight: FontWeight.w700);
 
     if (emphasizeAll) {
-      return Text(
-        text,
-        textAlign: textAlign,
-        style: boldStyle ?? baseStyle,
-      );
+      return Text(text, textAlign: textAlign, style: boldStyle ?? baseStyle);
     }
 
     return Text.rich(

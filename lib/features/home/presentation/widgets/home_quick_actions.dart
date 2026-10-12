@@ -16,9 +16,21 @@ class HomeQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final actions = [
-      (TablerIcons.calculator, l10n.homeQuickCalculate, () => context.go('/calculator')),
-      (TablerIcons.heart, l10n.homeQuickSadaqah, () => showDonationCurrencySheet(context)),
-      (TablerIcons.user_plus, l10n.homeQuickApply, () => context.go('/beneficiary-registration')),
+      (
+        TablerIcons.calculator,
+        l10n.homeQuickCalculate,
+        () => context.go('/calculator'),
+      ),
+      (
+        TablerIcons.heart,
+        l10n.homeQuickSadaqah,
+        () => showDonationCurrencySheet(context),
+      ),
+      (
+        TablerIcons.user_plus,
+        l10n.homeQuickApply,
+        () => context.go('/beneficiary-registration'),
+      ),
       (TablerIcons.chart_pie, l10n.navImpact, () => context.go('/impact')),
     ];
     return PremiumCard(

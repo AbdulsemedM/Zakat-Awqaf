@@ -7,21 +7,16 @@ import '../data_provider/guest_payment_token_store.dart';
 import '../data_provider/zakat_payment_remote_data_provider.dart';
 import '../models/zakat_payment_models.dart';
 
-/// Zakat payments, certificates and history. Saves a guest's token from
-/// step 1 and sends it on every later call for that payment or certificate,
-/// and records every payment on this device ([DevicePaymentsStore]).
+/// Zakat payments, certificates and history. Saves a guest's token from the
+/// start response and sends it on every later call for that payment or
+/// certificate, and records every payment on this device
+/// ([DevicePaymentsStore]).
 abstract class ZakatPaymentRepository {
   Future<List<PaymentMethod>> fetchMethods();
 
   Future<ZakatPayment> startPayment(ZakatPaymentRequest request);
 
-  Future<ZakatPayment> confirmAccount(String paymentId);
-
-  Future<ZakatPayment> resendOtp(String paymentId);
-
   Future<ZakatPayment> cancel(String paymentId);
-
-  Future<ZakatPayment> verifyOtp(String paymentId, String otp);
 
   Future<ZakatPayment> fetchPayment(String paymentId);
 
@@ -72,27 +67,9 @@ class ZakatPaymentRepositoryImpl implements ZakatPaymentRepository {
       _remember(await _remote.startPayment(request));
 
   @override
-  Future<ZakatPayment> confirmAccount(String paymentId) => _withToken(
-    paymentId,
-    (token) => _remote.confirmAccount(paymentId, guestToken: token),
-  );
-
-  @override
-  Future<ZakatPayment> resendOtp(String paymentId) => _withToken(
-    paymentId,
-    (token) => _remote.resendOtp(paymentId, guestToken: token),
-  );
-
-  @override
   Future<ZakatPayment> cancel(String paymentId) => _withToken(
     paymentId,
     (token) => _remote.cancel(paymentId, guestToken: token),
-  );
-
-  @override
-  Future<ZakatPayment> verifyOtp(String paymentId, String otp) => _withToken(
-    paymentId,
-    (token) => _remote.verifyOtp(paymentId, otp, guestToken: token),
   );
 
   @override

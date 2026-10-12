@@ -174,8 +174,10 @@ abstract final class ZakatTheme {
         filled: true,
         fillColor: isDark ? scheme.surfaceContainerHigh : AppColors.ivory,
         alignLabelWithHint: true,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         labelStyle: textTheme.bodyMedium?.copyWith(
           color: scheme.onSurfaceVariant,
         ),
@@ -202,8 +204,9 @@ abstract final class ZakatTheme {
         side: BorderSide(color: scheme.outlineVariant),
         shape: const StadiumBorder(),
         labelStyle: textTheme.labelLarge,
-        secondaryLabelStyle:
-            textTheme.labelLarge?.copyWith(color: scheme.onPrimary),
+        secondaryLabelStyle: textTheme.labelLarge?.copyWith(
+          color: scheme.onPrimary,
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
@@ -244,8 +247,9 @@ abstract final class ZakatTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.warmGold,
-        linearTrackColor:
-            isDark ? scheme.surfaceContainerHighest : AppColors.progressTrack,
+        linearTrackColor: isDark
+            ? scheme.surfaceContainerHighest
+            : AppColors.progressTrack,
         circularTrackColor: Colors.transparent,
       ),
       dividerTheme: DividerThemeData(
@@ -255,18 +259,21 @@ abstract final class ZakatTheme {
       ),
       listTileTheme: ListTileThemeData(
         iconColor: scheme.primary,
-        titleTextStyle:
-            textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-        subtitleTextStyle:
-            textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
+        titleTextStyle: textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        subtitleTextStyle: textTheme.bodySmall?.copyWith(
+          color: scheme.onSurfaceVariant,
+        ),
         shape: controlShape,
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         elevation: 0,
         backgroundColor: AppColors.forestGreen,
-        contentTextStyle:
-            textTheme.bodyMedium?.copyWith(color: AppColors.mintGreen),
+        contentTextStyle: textTheme.bodyMedium?.copyWith(
+          color: AppColors.mintGreen,
+        ),
         actionTextColor: AppColors.goldLight,
         shape: controlShape,
       ),

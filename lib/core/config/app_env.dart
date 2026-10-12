@@ -54,8 +54,8 @@ abstract final class AppEnv {
     final source = _bundled.isNotEmpty
         ? 'bundled .env asset'
         : String.fromEnvironment('API_BASE_URL').trim().isNotEmpty
-            ? 'dart-define'
-            : 'FlutterConfig (native)';
+        ? 'dart-define'
+        : 'FlutterConfig (native)';
     debugPrint('AppEnv: API_BASE_URL from $source → $apiBaseUrl');
   }
 

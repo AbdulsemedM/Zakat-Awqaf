@@ -9,6 +9,7 @@ import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/zakat_page_header.dart';
 import '../../../../core/auth/payer_access.dart';
 import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../core/common/utils/phone_e164.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/network/api_envelope.dart';
@@ -21,9 +22,9 @@ import '../../data/models/zakat_payment_models.dart';
 import '../../data/repository/zakat_payment_repository.dart';
 import '../models/zakat_payment_args.dart';
 
-/// Step 1 of a zakat payment: amount, project, method and the donor's Coop
-/// Bank account. "Continue" starts the payment; steps 2–3 are on
-/// [`PaymentFlowScreen`].
+/// Start of a zakat payment: amount, project and method; a guest also gives
+/// the name for the certificate (a signed-in donor's comes from the
+/// account). "Pay by QR" creates the QR, shown on [`PaymentFlowScreen`].
 class ZakatPaymentScreen extends StatefulWidget {
   const ZakatPaymentScreen({super.key, required this.args});
 
@@ -35,7 +36,9 @@ class ZakatPaymentScreen extends StatefulWidget {
 
 class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   final _amount = TextEditingController();
-  final _account = TextEditingController();
+  final _fullName = TextEditingController();
+  final _phone = TextEditingController();
+  bool _anonymous = false;
   final _repository = getIt<ZakatPaymentRepository>();
   final _payerAccess = getIt<PayerAccess>();
 
@@ -50,14 +53,17 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   bool _methodsFailed = false;
   String? _methodCode;
 
-  /// One key per attempt. Kept when step 1 gets no response, so repeating
-  /// it returns the same payment instead of starting a second one.
+  /// One key per attempt. Kept while the inputs stay the same, so repeating
+  /// step 1 after no response returns the same payment (and, for a guest, a
+  /// new token) instead of starting a second one. Changing the amount,
+  /// payer or project makes it a new attempt with a new key.
   String _idempotencyKey = uuidV4();
+
+  void _inputsChanged() => _idempotencyKey = uuidV4();
   bool _starting = false;
   String? _amountError;
-  String? _accountError;
-
-  static final _accountPattern = RegExp(r'^\d{6,20}$');
+  String? _fullNameError;
+  String? _phoneError;
 
   @override
   void initState() {
@@ -83,7 +89,8 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   @override
   void dispose() {
     _amount.dispose();
-    _account.dispose();
+    _fullName.dispose();
+    _phone.dispose();
     super.dispose();
   }
 
@@ -116,10 +123,10 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     try {
       final methods = await _repository.fetchMethods();
       if (!mounted) return;
-      final usable = methods.where((m) => m.available && m.isAccountOtp);
+      final usable = methods.where((m) => m.available && m.isQr);
       setState(() {
         _methods = methods;
-        _methodCode = usable.isEmpty ? null : usable.first.code;
+        _methodCode = usable.firstOrNull?.code;
         _methodsLoading = false;
       });
     } on ApiException {
@@ -152,6 +159,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     return null;
   }
 
+  /// A guest gives the name printed on the certificate.
+  bool get _needsPayerName => !_payerAccess.isSignedInDonor;
+
   double get _amountEtb {
     final a = widget.args;
     if (a.amountEntryMode == ZakatAmountEntryMode.fixed) {
@@ -178,22 +188,43 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
       !_starting &&
       _method != null &&
       _amountEtb > 0 &&
-      _accountPattern.hasMatch(_account.text.trim());
+      (!_needsPayerName || _fullName.text.trim().isNotEmpty);
+
+  /// `payer` for the request, or `null` when there is nothing to send.
+  PaymentPayer? _payer() {
+    final fullName = _needsPayerName ? _fullName.text.trim() : null;
+    final phone = _needsPayerName && _phone.text.trim().isNotEmpty
+        ? PhoneE164.normalize(_phone.text)
+        : null;
+    if (fullName == null && phone == null && !_anonymous) return null;
+    return PaymentPayer(
+      fullName: fullName,
+      phone: phone,
+      anonymous: _anonymous,
+    );
+  }
 
   Future<void> _onContinue() async {
     final l10n = context.l10n;
     final method = _method;
     if (method == null) return;
     final amountError = _validateAmount(l10n);
-    final account = _account.text.trim();
-    final accountError = _accountPattern.hasMatch(account)
+    final fullNameError = !_needsPayerName || _fullName.text.trim().isNotEmpty
         ? null
-        : l10n.payAccountNumberInvalid;
+        : l10n.payPayerNameRequired;
+    final phone = _phone.text.trim();
+    final phoneError =
+        !_needsPayerName || phone.isEmpty || PhoneE164.normalize(phone) != null
+        ? null
+        : l10n.payPayerPhoneInvalid;
     setState(() {
       _amountError = amountError;
-      _accountError = accountError;
+      _fullNameError = fullNameError;
+      _phoneError = phoneError;
     });
-    if (amountError != null || accountError != null) return;
+    if (amountError != null || fullNameError != null || phoneError != null) {
+      return;
+    }
 
     setState(() => _starting = true);
     try {
@@ -203,7 +234,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
           amountEtb: _amountEtb,
           methodCode: method.code,
           causeId: _causeId,
-          accountNumber: account,
+          payer: _payer(),
           idempotencyKey: _idempotencyKey,
           calculation: widget.args.calculation,
         ),
@@ -224,19 +255,27 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
 
   void _showStartError(AppLocalizations l10n, ApiException e) {
     switch (e.code) {
-      case 'ACCOUNT_NOT_FOUND' || 'ACCOUNT_NOT_ALLOWED':
-        // The bank's own text, under the account field.
-        _accountError = e.message;
-        return;
       case 'AMOUNT_OUT_OF_RANGE':
         _amountError = e.message;
         return;
-      case 'VALIDATION_FAILED':
+      case 'VALIDATION_FAILED' || 'INVALID_REQUEST':
         _amountError = e.fieldErrors['amountEtb'];
-        _accountError = e.fieldErrors['accountNumber'];
-        if (_amountError != null || _accountError != null) return;
+        _fullNameError = e.fieldErrors['payer.fullName'];
+        _phoneError = e.fieldErrors['payer.phone'];
+        if (_amountError != null ||
+            _fullNameError != null ||
+            _phoneError != null) {
+          return;
+        }
       case 'DUPLICATE_REQUEST':
         _idempotencyKey = uuidV4();
+      case 'CAUSE_INVALID':
+        // The cause ended or stopped accepting zakat: fall back to the
+        // general fund and reload the list.
+        _causeId = Cause.generalFundId;
+        _inputsChanged();
+        final lang = _causesLang;
+        if (lang != null) _loadCauses(lang);
     }
     final message = e.noResponse ? l10n.payNetworkError : e.message;
     ScaffoldMessenger.of(
@@ -282,7 +321,10 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                           args: a,
                           controller: _amount,
                           errorText: _amountError,
-                          onChanged: () => setState(() => _amountError = null),
+                          onChanged: () => setState(() {
+                            _amountError = null;
+                            _inputsChanged();
+                          }),
                         ),
                       ),
                       gap,
@@ -315,7 +357,12 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                                   ),
                               ],
                               onChanged: (v) {
-                                if (v != null) setState(() => _causeId = v);
+                                if (v != null) {
+                                  setState(() {
+                                    _causeId = v;
+                                    _inputsChanged();
+                                  });
+                                }
                               },
                             ),
                           ],
@@ -332,31 +379,11 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                             ),
                             const SizedBox(height: 14),
                             ..._methodSection(l10n),
-                            const SizedBox(height: 16),
-                            TextField(
-                              controller: _account,
-                              enabled: _method != null,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(20),
-                              ],
-                              onChanged: (_) =>
-                                  setState(() => _accountError = null),
-                              decoration: InputDecoration(
-                                labelText: l10n.payAccountNumberLabel,
-                                helperText: l10n.payAccountNumberHelper,
-                                helperMaxLines: 2,
-                                errorText: _accountError,
-                                errorMaxLines: 3,
-                                prefixIcon: const Icon(
-                                  Icons.account_balance_outlined,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
+                      gap,
+                      PremiumCard(child: _payerSection(l10n)),
                       gap,
                       const _ImpactNote(),
                       const SizedBox(height: 14),
@@ -377,8 +404,8 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                       child: Center(child: CircularProgressIndicator()),
                     )
                   : GoldActionButton(
-                      label: l10n.commonContinue,
-                      icon: Icons.lock_outline_rounded,
+                      label: l10n.payByQr,
+                      icon: Icons.qr_code_2_rounded,
                       onPressed: canPay && _canContinue ? _onContinue : null,
                     ),
             ),
@@ -424,12 +451,71 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
         _MethodTile(
           method: method,
           selected: method.code == _methodCode,
-          onTap: method.available && method.isAccountOtp
-              ? () => setState(() => _methodCode = method.code)
+          onTap: method.available && method.isQr
+              ? () => setState(() {
+                  _methodCode = method.code;
+                  _inputsChanged();
+                })
               : null,
         ),
       ],
     ];
+  }
+
+  /// Name for the certificate (guests) and the anonymous option.
+  Widget _payerSection(AppLocalizations l10n) {
+    void changed(VoidCallback clear) => setState(() {
+      clear();
+      _inputsChanged();
+    });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ZakatFormSectionTitle(
+          icon: Icons.workspace_premium_outlined,
+          label: l10n.payCertificateSection,
+        ),
+        if (_needsPayerName) ...[
+          const SizedBox(height: 14),
+          TextField(
+            controller: _fullName,
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+            onChanged: (_) => changed(() => _fullNameError = null),
+            decoration: InputDecoration(
+              labelText: l10n.payPayerNameLabel,
+              helperText: l10n.payPayerNameHelper,
+              helperMaxLines: 2,
+              errorText: _fullNameError,
+              prefixIcon: const Icon(Icons.person_outline_rounded),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _phone,
+            keyboardType: TextInputType.phone,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[\d+ ]')),
+              LengthLimitingTextInputFormatter(16),
+            ],
+            onChanged: (_) => changed(() => _phoneError = null),
+            decoration: InputDecoration(
+              labelText: l10n.payPayerPhoneLabel,
+              errorText: _phoneError,
+              prefixIcon: const Icon(Icons.phone_outlined),
+            ),
+          ),
+        ],
+        const SizedBox(height: 4),
+        SwitchListTile.adaptive(
+          contentPadding: EdgeInsets.zero,
+          value: _anonymous,
+          onChanged: (v) => changed(() => _anonymous = v),
+          title: Text(l10n.payAnonymousLabel),
+          subtitle: Text(l10n.payAnonymousHelper),
+        ),
+      ],
+    );
   }
 }
 
@@ -748,13 +834,14 @@ class _MethodTile extends StatelessWidget {
                       color: selected ? null : AppColors.tagGreenBg,
                       border: Border.all(color: AppColors.goldHairline),
                     ),
-                    child: Icon(
-                      Icons.account_balance_rounded,
-                      size: 18,
-                      color: selected
-                          ? AppColors.goldLight
-                          : AppColors.forestMid,
-                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: method.logoUrl == null
+                        ? _methodIcon(selected)
+                        : Image.network(
+                            method.logoUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => _methodIcon(selected),
+                          ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -884,3 +971,9 @@ class _SecurityRow extends StatelessWidget {
     );
   }
 }
+
+Widget _methodIcon(bool selected) => Icon(
+  Icons.qr_code_2_rounded,
+  size: 18,
+  color: selected ? AppColors.goldLight : AppColors.forestMid,
+);

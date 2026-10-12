@@ -13,7 +13,8 @@ class FirstStartOnboardingPage extends StatefulWidget {
   const FirstStartOnboardingPage({super.key});
 
   @override
-  State<FirstStartOnboardingPage> createState() => _FirstStartOnboardingPageState();
+  State<FirstStartOnboardingPage> createState() =>
+      _FirstStartOnboardingPageState();
 }
 
 class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
@@ -23,7 +24,8 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
 
   final List<_OnboardingSlideData> _slides = const [
     _OnboardingSlideData(
-      lottieAsset: 'assets/animations/Young Muslims give alms in the charity box.json',
+      lottieAsset:
+          'assets/animations/Young Muslims give alms in the charity box.json',
       icon: Icons.volunteer_activism_rounded,
     ),
     _OnboardingSlideData(
@@ -95,7 +97,10 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
               children: [
                 Row(
                   children: [
-                    const AppLogo(height: 36, borderRadius: BorderRadius.all(Radius.circular(8))),
+                    const AppLogo(
+                      height: 36,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                     const SizedBox(width: 10),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -112,7 +117,11 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(_slides[_index].icon, size: 16, color: AppColors.primary),
+                          Icon(
+                            _slides[_index].icon,
+                            size: 16,
+                            color: AppColors.primary,
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             l10n.appTitle,
@@ -163,7 +172,9 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                                   left: -10,
                                   child: _DecorCircle(
                                     size: 140,
-                                    color: AppColors.primary.withValues(alpha: 0.10),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.10,
+                                    ),
                                   ),
                                 ),
                                 Positioned(
@@ -171,21 +182,27 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                                   bottom: 10,
                                   child: _DecorCircle(
                                     size: 104,
-                                    color: AppColors.secondary.withValues(alpha: 0.12),
+                                    color: AppColors.secondary.withValues(
+                                      alpha: 0.12,
+                                    ),
                                   ),
                                 ),
                                 Positioned(
                                   top: 60 + (i * 10),
                                   right: i.isEven ? 26 : 42,
                                   child: _DecorCapsule(
-                                    color: AppColors.primary.withValues(alpha: 0.14),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.14,
+                                    ),
                                   ),
                                 ),
                                 Positioned(
                                   left: i.isEven ? 26 : 12,
                                   bottom: 36 + (i * 6),
                                   child: _DecorDot(
-                                    color: AppColors.secondary.withValues(alpha: 0.22),
+                                    color: AppColors.secondary.withValues(
+                                      alpha: 0.22,
+                                    ),
                                   ),
                                 ),
                                 Positioned.fill(
@@ -202,7 +219,8 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                           const SizedBox(height: 8),
                           Text(
                             _titleForIndex(l10n, i),
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -211,8 +229,11 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
                           const SizedBox(height: 8),
                           Text(
                             _subtitleForIndex(l10n, i),
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
                                 ),
                             textAlign: TextAlign.center,
                           ),
@@ -273,25 +294,22 @@ class _FirstStartOnboardingPageState extends State<FirstStartOnboardingPage> {
   }
 
   String _titleForIndex(AppLocalizations l10n, int index) => switch (index) {
-        0 => l10n.onboardingTitleFaithAndPurpose,
-        1 => l10n.onboardingTitleTransparentGiving,
-        2 => l10n.onboardingTitleEasyPayments,
-        _ => l10n.onboardingTitleCompassionInAction,
-      };
+    0 => l10n.onboardingTitleFaithAndPurpose,
+    1 => l10n.onboardingTitleTransparentGiving,
+    2 => l10n.onboardingTitleEasyPayments,
+    _ => l10n.onboardingTitleCompassionInAction,
+  };
 
   String _subtitleForIndex(AppLocalizations l10n, int index) => switch (index) {
-        0 => l10n.onboardingSubtitleFaithAndPurpose,
-        1 => l10n.onboardingSubtitleTransparentGiving,
-        2 => l10n.onboardingSubtitleEasyPayments,
-        _ => l10n.onboardingSubtitleCompassionInAction,
-      };
+    0 => l10n.onboardingSubtitleFaithAndPurpose,
+    1 => l10n.onboardingSubtitleTransparentGiving,
+    2 => l10n.onboardingSubtitleEasyPayments,
+    _ => l10n.onboardingSubtitleCompassionInAction,
+  };
 }
 
 class _OnboardingSlideData {
-  const _OnboardingSlideData({
-    required this.lottieAsset,
-    required this.icon,
-  });
+  const _OnboardingSlideData({required this.lottieAsset, required this.icon});
 
   final String lottieAsset;
   final IconData icon;
@@ -309,10 +327,7 @@ class _DecorCircle extends StatelessWidget {
       child: Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: color),
       ),
     );
   }
@@ -352,10 +367,7 @@ class _DecorDot extends StatelessWidget {
       child: Container(
         width: 12,
         height: 12,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       ),
     );
   }

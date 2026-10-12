@@ -16,7 +16,8 @@ class DonationPaymentWebViewPage extends StatefulWidget {
       _DonationPaymentWebViewPageState();
 }
 
-class _DonationPaymentWebViewPageState extends State<DonationPaymentWebViewPage> {
+class _DonationPaymentWebViewPageState
+    extends State<DonationPaymentWebViewPage> {
   late final WebViewController _controller;
 
   @override
@@ -30,9 +31,7 @@ class _DonationPaymentWebViewPageState extends State<DonationPaymentWebViewPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: WebViewWidget(controller: _controller),
     );
   }

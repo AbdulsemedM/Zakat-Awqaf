@@ -36,9 +36,7 @@ class SplashAtmosphereBackground extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-              child: CustomPaint(
-                painter: _SplashParticlePainter(),
-              ),
+              child: CustomPaint(painter: _SplashParticlePainter()),
             ),
           ],
         );
@@ -58,7 +56,11 @@ class _SplashParticlePainter extends CustomPainter {
       final y = random.nextDouble() * size.height;
       final alpha = 0.08 + random.nextDouble() * 0.14;
       dotPaint.color = AppColors.warmGold.withValues(alpha: alpha);
-      canvas.drawCircle(Offset(x, y), 0.8 + random.nextDouble() * 1.2, dotPaint);
+      canvas.drawCircle(
+        Offset(x, y),
+        0.8 + random.nextDouble() * 1.2,
+        dotPaint,
+      );
     }
   }
 
@@ -68,10 +70,7 @@ class _SplashParticlePainter extends CustomPainter {
 
 /// Gold concentric rings and geometric star centered on the logo.
 class SplashLogoBackdrop extends StatelessWidget {
-  const SplashLogoBackdrop({
-    super.key,
-    required this.size,
-  });
+  const SplashLogoBackdrop({super.key, required this.size});
 
   final double size;
 

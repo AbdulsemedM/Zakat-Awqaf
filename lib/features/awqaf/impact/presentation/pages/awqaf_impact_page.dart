@@ -19,7 +19,9 @@ class AwqafImpactPage extends StatelessWidget {
         children: [
           Text(
             'Awqaf Impact (Mock)',
-            style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
           ),
           const SizedBox(height: 10),
           const _ImpactTile(
@@ -34,7 +36,8 @@ class AwqafImpactPage extends StatelessWidget {
           ),
           const _ImpactTile(
             title: 'Livelihood Projects',
-            description: '620 households benefit from micro-enterprise tooling.',
+            description:
+                '620 households benefit from micro-enterprise tooling.',
             icon: Icons.handshake_rounded,
           ),
         ],

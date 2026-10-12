@@ -50,3 +50,6 @@ app.*.map.json
 
 # flutter_config generated iOS xcconfig
 **/ios/Flutter/tmp.xcconfig
+
+# Project notes and backend Q&A (kept locally, not in git)
+docs/

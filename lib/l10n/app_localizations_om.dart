@@ -1790,17 +1790,6 @@ class AppLocalizationsOm extends AppLocalizations {
   }
 
   @override
-  String get payAccountNumberLabel => 'Lakkoofsa herregaa Baankii Coop';
-
-  @override
-  String get payAccountNumberHelper =>
-      'Herrega irraa kaffaltu. Akka mirkaneessituuf maqaa abbaa herregaa siif agarsiifna.';
-
-  @override
-  String get payAccountNumberInvalid =>
-      'Lakkoofsa herregaa sirrii galchi (dijiitii 6–20).';
-
-  @override
   String get payNetworkError =>
       'Walqunnamtiin hin jiru. Interneetii kee mirkaneessiitii irra deebi\'ii yaali.';
 
@@ -1820,10 +1809,6 @@ class AppLocalizationsOm extends AppLocalizations {
   String get payCancelConfirmTitle => 'Kaffaltii kana haquu?';
 
   @override
-  String get payCancelConfirmBody =>
-      'Maallaqni tokkoyyuu hin fudhatamne. Yeroo kamiyyuu irra deebi\'uu dandeessa.';
-
-  @override
   String get payKeepPaying => 'Kaffaltii itti fufi';
 
   @override
@@ -1832,54 +1817,6 @@ class AppLocalizationsOm extends AppLocalizations {
   @override
   String payForCause(String cause) {
     return 'Kanaaf: $cause';
-  }
-
-  @override
-  String get payAccountHolder => 'Abbaa herregaa';
-
-  @override
-  String get payAccountNumberShort => 'Herrega';
-
-  @override
-  String get payConfirmTitle => 'Herregni kun kan keeti?';
-
-  @override
-  String get payConfirmBody =>
-      'Yoo ta’e, Baankiin Coop koodii mirkaneessaa bilbila herrega kana irratti galmaa’etti ni erga.';
-
-  @override
-  String get payYesSendCode => 'Eeyyee, koodii ergi';
-
-  @override
-  String get payNotMyAccount => 'Herrega koo miti';
-
-  @override
-  String get payOtpTitle => 'Koodii mirkaneessaa galchi';
-
-  @override
-  String get payOtpBody =>
-      'Bilbila herrega Baankii Coop kee irratti galmaa’etti koodii dijiitii 6 ergineerra.';
-
-  @override
-  String get payOtpLabel => 'Koodii mirkaneessaa';
-
-  @override
-  String payOtpAttemptsLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Yaaliiwwan $count hafan',
-      one: 'Yaaliin 1 hafe',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get payResendCode => 'Koodii haaraa ergi';
-
-  @override
-  String payPayAmount(String amount) {
-    return '$amount kaffali';
   }
 
   @override
@@ -1916,10 +1853,6 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get payExpiredTitle => 'Yeroon kaffaltii darbeera';
-
-  @override
-  String get payExpiredBody =>
-      'Daqiiqaa 15 keessatti hin xumuramne. Maallaqni hin fudhatamne; maaloo irra deebi\'ii jalqabi.';
 
   @override
   String get payFailedTitle => 'Kaffaltiin hin xumuramne';
@@ -2070,14 +2003,6 @@ class AppLocalizationsOm extends AppLocalizations {
   }
 
   @override
-  String payOtpExpiresIn(String time) {
-    return 'Koodiin $time keessatti yeroon isaa darba';
-  }
-
-  @override
-  String get payOtpExpiredLocal => 'Yeroon koodii darbeera. Haaraa ergi.';
-
-  @override
   String get unfinishedPaymentTitle => 'Kaffaltii hin xumuramne';
 
   @override
@@ -2142,4 +2067,88 @@ class AppLocalizationsOm extends AppLocalizations {
   String givingAllTime(String amount) {
     return 'Walumaagalatti: $amount';
   }
+
+  @override
+  String get payByQr => 'QR-n kaffali';
+
+  @override
+  String get payCertificateSection => 'Ragaa';
+
+  @override
+  String get payPayerNameLabel => 'Maqaa guutuu';
+
+  @override
+  String get payPayerNameHelper => 'Ragaa zakaa keessan irratti maxxanfama.';
+
+  @override
+  String get payPayerNameRequired => 'Ragaa kanaaf maqaa keessan galchaa.';
+
+  @override
+  String get payPayerPhoneLabel => 'Lakkoofsa bilbilaa (filannoo)';
+
+  @override
+  String get payPayerPhoneInvalid =>
+      'Lakkoofsa bilbilaa sirrii galchaa, fkn 0911223344.';
+
+  @override
+  String get payAnonymousLabel => 'Maqaa malee kenni';
+
+  @override
+  String get payAnonymousHelper =>
+      'Ragaan maqaa keessan bakka \"Kennaa maqaan hin beekamne\" jedha.';
+
+  @override
+  String get payQrTitle => 'Kaffaluuf iskaan godhaa';
+
+  @override
+  String get payQrBody =>
+      'Appii baankii Itoophiyaa kamiyyuu banaa, QR-n kaffaluu filadhaa, koodii kana iskaan godhaa. Hanga kaffaltii koodii keessa jira.';
+
+  @override
+  String get payQrMissing =>
+      'Koodiin QR agarsiifamuu hin dandeenye. Maaloo kaffaltii haaraa jalqabaa.';
+
+  @override
+  String get payQrConfirmNote =>
+      'Komishiniin kaffaltii QR hunda baankii waliin mirkaneessa. Kun daqiiqaa muraasaa hanga sa’aatii muraasaatti fudhachuu danda’a; ragaan keessan erga mirkanaa’ee booda mul’ata.';
+
+  @override
+  String get payQrIHavePaid => 'Kaffaleera';
+
+  @override
+  String get payQrShare => 'QR qoodaa ykn olkaa’aa';
+
+  @override
+  String get payQrShareHint =>
+      'Bilbila kanaan kaffaltu? QR olkaa’aatii appii baankii keessanii irraa banaa.';
+
+  @override
+  String payQrShareText(String amount) {
+    return 'QR kaffaltii zakaa: $amount';
+  }
+
+  @override
+  String get payQrCancelConfirmBody =>
+      'Yoo QR kana hin kaffalin qofa haqaa. Yoo duraan kaffaltan, dhiisaa: ni mirkanaa’a.';
+
+  @override
+  String get payQrConfirmingBody =>
+      'Galatoomaa. Komishiniin kaffaltii keessan baankii waliin mirkaneessaa jira; kun daqiiqaa muraasaa hanga sa’aatii muraasaatti fudhachuu danda’a. Fuulli kun ofumaan haaromfama, isin immoo ba’uu dandeessu: kaffaltiin fi ragaan isaa kaffaltii keessan keessatti argamu. Maaloo irra deebi’aa hin kaffalinaa.';
+
+  @override
+  String get payQrExpiredBody =>
+      'Koodiin QR kun kana booda hin hojjetu. Yoo duraan kaffaltan, kaffaltiin ni mirkanaa’a, kaffaltii keessan keessattis ni mul’ata. Yoo kana hin taane, maaloo irra deebi’aa jalqabaa.';
+
+  @override
+  String get payQrLeaveTitle => 'QR kana kaffaltanii?';
+
+  @override
+  String get payQrLeaveBody =>
+      'Yoo kaffaltan, mirkaneessuu itti fufna, kaffaltii keessan keessattis ni argattu. Yoo hin kaffalin, kaffaltiin ni haqama.';
+
+  @override
+  String get payQrLeaveNotPaid => 'Hin kaffalle';
+
+  @override
+  String get payFailedBody => 'Maaloo irra deebi’aa jalqabaa.';
 }

@@ -26,7 +26,8 @@ class InternationalDonationScreen extends StatefulWidget {
       _InternationalDonationScreenState();
 }
 
-class _InternationalDonationScreenState extends State<InternationalDonationScreen> {
+class _InternationalDonationScreenState
+    extends State<InternationalDonationScreen> {
   final _amount = TextEditingController();
   final _fullName = TextEditingController();
   final _phone = TextEditingController();
@@ -127,7 +128,8 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
 
   Future<void> _pickSubdivision() async {
     final countryCode = _selectedCountryCode;
-    if (countryCode == null || !countryUsesSearchableSubdivisions(countryCode)) {
+    if (countryCode == null ||
+        !countryUsesSearchableSubdivisions(countryCode)) {
       return;
     }
     final l10n = context.l10n;
@@ -157,20 +159,24 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
 
     final phoneError = _validatePhone();
     if (phoneError != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(phoneError)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(phoneError)));
       return;
     }
 
     final phone = PhoneE164.isValid(_phone.text.trim())
         ? _phone.text.trim()
         : PhoneE164.normalize(_phone.text.trim(), countryCode: '1') ??
-            _phone.text.trim();
+              _phone.text.trim();
 
     setState(() => _submitting = true);
 
     try {
       final request = DonationCreateRequest(
-        donorMode: _anonymous ? DonorMode.anonymous.apiValue : DonorMode.identified.apiValue,
+        donorMode: _anonymous
+            ? DonorMode.anonymous.apiValue
+            : DonorMode.identified.apiValue,
         paymentPurpose: 'SADAQAH',
         amountEtb: _amountEtb!,
         address: DonationAddress(
@@ -207,20 +213,20 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
       }
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.donationSuccess)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.donationSuccess)));
       context.go('/');
     } on DonationException catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.message)));
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       if (mounted) {
         setState(() => _submitting = false);
@@ -268,7 +274,9 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
                             decimal: true,
                           ),
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'[\d.,]'),
+                            ),
                           ],
                           onChanged: (_) => setState(() {}),
                           style: AppTypography.body(
@@ -313,7 +321,11 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            Icon(Icons.info_outline, size: 14, color: scheme.onSurfaceVariant),
+                            Icon(
+                              Icons.info_outline,
+                              size: 14,
+                              color: scheme.onSurfaceVariant,
+                            ),
                             const SizedBox(width: 6),
                             Expanded(
                               child: Text(
@@ -372,11 +384,14 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
                                   padding: const EdgeInsets.only(bottom: 10),
                                   child: TextField(
                                     controller: _fullName,
-                                    textCapitalization: TextCapitalization.words,
+                                    textCapitalization:
+                                        TextCapitalization.words,
                                     onChanged: (_) => setState(() {}),
                                     decoration: InputDecoration(
                                       labelText: l10n.donationFullNameLabel,
-                                      prefixIcon: const Icon(Icons.badge_outlined),
+                                      prefixIcon: const Icon(
+                                        Icons.badge_outlined,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -398,7 +413,9 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
                           onChanged: (_) => setState(() {}),
                           decoration: InputDecoration(
                             labelText: l10n.donationEmailLabel,
-                            prefixIcon: const Icon(Icons.alternate_email_rounded),
+                            prefixIcon: const Icon(
+                              Icons.alternate_email_rounded,
+                            ),
                           ),
                         ),
                       ],
@@ -426,13 +443,17 @@ class _InternationalDonationScreenState extends State<InternationalDonationScree
                         TextField(
                           controller: _address1,
                           onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(labelText: l10n.donationAddress1Label),
+                          decoration: InputDecoration(
+                            labelText: l10n.donationAddress1Label,
+                          ),
                         ),
                         fieldGap,
                         TextField(
                           controller: _address2,
                           onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(labelText: l10n.donationAddress2Label),
+                          decoration: InputDecoration(
+                            labelText: l10n.donationAddress2Label,
+                          ),
                         ),
                         fieldGap,
                         Row(

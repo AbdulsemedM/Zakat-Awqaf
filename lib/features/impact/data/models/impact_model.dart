@@ -81,8 +81,11 @@ class AsnafCount extends Equatable {
   final String asnaf;
   final int count;
 
-  /// The category's label, or the raw value for one the app does not know.
-  String get label => AsnafCategoryApi.fromApiValue(asnaf)?.label ?? asnaf;
+  /// The category's label; `other` and values the app does not know get a
+  /// plain label.
+  String get label =>
+      AsnafCategoryApi.fromApiValue(asnaf)?.label ??
+      (asnaf == 'other' ? 'Other' : asnaf);
 
   @override
   List<Object?> get props => [asnaf, count];

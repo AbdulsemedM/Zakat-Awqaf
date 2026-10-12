@@ -53,10 +53,7 @@ class AwqafPortfolioPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           ..._sampleEndowments.map(
-            (e) => _PortfolioCard(
-              data: e,
-              theme: theme,
-            ),
+            (e) => _PortfolioCard(data: e, theme: theme),
           ),
         ],
       ),
@@ -228,7 +225,9 @@ class _MiniFilterChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.55),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.55,
+        ),
       ),
       child: Text(
         label,
@@ -242,10 +241,7 @@ class _MiniFilterChip extends StatelessWidget {
 }
 
 class _PortfolioCard extends StatelessWidget {
-  const _PortfolioCard({
-    required this.data,
-    required this.theme,
-  });
+  const _PortfolioCard({required this.data, required this.theme});
 
   final _EndowmentCardData data;
   final ThemeData theme;
@@ -288,7 +284,11 @@ class _PortfolioCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.verified_rounded, size: 14, color: Colors.green.shade700),
+                    Icon(
+                      Icons.verified_rounded,
+                      size: 14,
+                      color: Colors.green.shade700,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       data.status,
@@ -350,12 +350,13 @@ class _PortfolioCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(Icons.event_note_outlined, size: 15, color: theme.colorScheme.onSurfaceVariant),
-                    const SizedBox(width: 4),
-                    Text(
-                      data.deedMeta,
-                      style: theme.textTheme.labelSmall,
+                    Icon(
+                      Icons.event_note_outlined,
+                      size: 15,
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
+                    const SizedBox(width: 4),
+                    Text(data.deedMeta, style: theme.textTheme.labelSmall),
                     const Spacer(),
                     Text(
                       'LIVE ASSET REPORT  ->',

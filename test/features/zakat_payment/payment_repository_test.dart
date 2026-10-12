@@ -7,13 +7,14 @@ import 'package:mejlis_digital_hub/features/zakat_payment/data/data_provider/dev
 import 'package:mejlis_digital_hub/features/zakat_payment/data/data_provider/guest_payment_token_store.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/data/data_provider/zakat_payment_remote_data_provider.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/data/models/zakat_payment_models.dart';
+import 'package:mejlis_digital_hub/features/zakat_payment/data/pending_payments_checker.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/data/repository/zakat_payment_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ZakatPayment _payment({
   String id = 'zp_1',
   String status = 'pending',
-  String? step = 'confirm_account',
+  String? step = 'scan_qr',
   String? guestToken,
   String? certificateId,
   String expiresAt = '2099-01-01T00:00:00Z',
@@ -68,17 +69,8 @@ class _FakeRemote implements ZakatPaymentRemoteDataProvider {
       _next('start', null);
 
   @override
-  Future<ZakatPayment> confirmAccount(
-    String paymentId, {
-    String? guestToken,
-  }) async => _next('confirm', guestToken);
-
-  @override
-  Future<ZakatPayment> verifyOtp(
-    String paymentId,
-    String otp, {
-    String? guestToken,
-  }) async => _next('verify', guestToken);
+  Future<ZakatPayment> cancel(String paymentId, {String? guestToken}) async =>
+      _next('cancel', guestToken);
 
   @override
   Future<ZakatPayment> fetchPayment(
@@ -94,14 +86,6 @@ class _FakeRemote implements ZakatPaymentRemoteDataProvider {
     tokens['certificate'] = guestToken;
     return ZakatCertificate(certificateId: certificateId, amountEtb: 500);
   }
-
-  @override
-  Future<ZakatPayment> resendOtp(String paymentId, {String? guestToken}) =>
-      throw UnimplementedError();
-
-  @override
-  Future<ZakatPayment> cancel(String paymentId, {String? guestToken}) =>
-      throw UnimplementedError();
 
   @override
   Future<List<PaymentMethod>> fetchMethods() => throw UnimplementedError();
@@ -125,9 +109,9 @@ class _FakeRemote implements ZakatPaymentRemoteDataProvider {
 const _request = ZakatPaymentRequest(
   zakatType: ZakatType.general,
   amountEtb: 500,
-  methodCode: 'coopbank',
+  methodCode: 'ethqr',
   causeId: 'general',
-  accountNumber: '1000123456789',
+  payer: PaymentPayer(fullName: 'Amina Hassen'),
   idempotencyKey: 'key-1',
 );
 
@@ -146,17 +130,16 @@ void main() {
 
       remote.responses.addAll([
         _payment(guestToken: 'token-1'),
-        _payment(step: 'enter_otp'),
+        _payment(),
         _payment(status: 'succeeded', step: null, certificateId: 'ZC-1'),
       ]);
       await repository.startPayment(_request);
-      await repository.confirmAccount('zp_1');
-      await repository.verifyOtp('zp_1', '123456');
+      await repository.fetchPayment('zp_1');
+      await repository.fetchPayment('zp_1');
       await repository.fetchCertificate('ZC-1');
 
       expect(tokens.payments['zp_1'], 'token-1');
-      expect(remote.tokens['confirm'], 'token-1');
-      expect(remote.tokens['verify'], 'token-1');
+      expect(remote.tokens['status'], 'token-1');
       expect(tokens.certificates['ZC-1'], 'zp_1');
       expect(remote.tokens['certificate'], 'token-1');
     });
@@ -173,12 +156,12 @@ void main() {
       remote.responses.addAll([
         _payment(guestToken: 'old'),
         _payment(guestToken: 'new'),
-        _payment(step: 'enter_otp'),
+        _payment(status: 'cancelled', step: null),
       ]);
       await repository.startPayment(_request);
       await repository.startPayment(_request);
-      await repository.confirmAccount('zp_1');
-      expect(remote.tokens['confirm'], 'new');
+      await repository.cancel('zp_1');
+      expect(remote.tokens['cancel'], 'new');
     });
 
     test('signed-in payments have no token', () async {
@@ -188,10 +171,10 @@ void main() {
         _MemoryTokenStore(),
         DevicePaymentsStore(),
       );
-      remote.responses.addAll([_payment(), _payment(step: 'enter_otp')]);
+      remote.responses.addAll([_payment(), _payment()]);
       await repository.startPayment(_request);
-      await repository.confirmAccount('zp_1');
-      expect(remote.tokens['confirm'], isNull);
+      await repository.fetchPayment('zp_1');
+      expect(remote.tokens['status'], isNull);
     });
 
     test('every response updates the device list', () async {
@@ -219,9 +202,9 @@ void main() {
       final store = DevicePaymentsStore();
       await store.record(_payment(id: 'a'));
       await store.record(_payment(id: 'b'));
-      await store.record(_payment(id: 'a', step: 'enter_otp'));
+      await store.record(_payment(id: 'a', step: 'processing'));
       expect(store.payments.map((p) => p.paymentId), ['b', 'a']);
-      expect(store.payments.last.step, PaymentStep.enterOtp);
+      expect(store.payments.last.step, PaymentStep.processing);
 
       final reloaded = DevicePaymentsStore();
       await reloaded.record(_payment(id: 'c'));
@@ -249,11 +232,7 @@ void main() {
       expect(store.unfinished(now), isNull);
 
       await store.record(
-        _payment(
-          id: 'open',
-          step: 'enter_otp',
-          expiresAt: '2026-10-03T08:10:00Z',
-        ),
+        _payment(id: 'open', expiresAt: '2026-10-03T08:10:00Z'),
       );
       expect(store.unfinished(now)?.paymentId, 'open');
 
@@ -268,6 +247,41 @@ void main() {
       expect(store.unfinished(now)?.paymentId, 'bank');
       expect(store.unfinished(now)?.isProcessing, isTrue);
     });
+
+    test('needs a check: pending, or expired in the last 3 days', () {
+      final now = DateTime.utc(2026, 10, 12, 8);
+      DevicePayment entry(String status, String expiresAt) =>
+          DevicePayment.from(
+            _payment(
+              status: status,
+              step: status == 'pending' ? 'scan_qr' : null,
+              expiresAt: expiresAt,
+            ),
+          );
+      expect(entry('pending', '2026-10-01T00:00:00Z').needsCheck(now), isTrue);
+      expect(entry('expired', '2026-10-11T00:00:00Z').needsCheck(now), isTrue);
+      expect(entry('expired', '2026-10-01T00:00:00Z').needsCheck(now), isFalse);
+      expect(
+        entry('succeeded', '2026-10-12T00:00:00Z').needsCheck(now),
+        isFalse,
+      );
+      expect(
+        entry('cancelled', '2026-10-12T00:00:00Z').needsCheck(now),
+        isFalse,
+      );
+    });
+  });
+
+  test('the checker re-reads only unsettled payments on this device', () async {
+    final store = DevicePaymentsStore();
+    await store.record(_payment(id: 'waiting'));
+    await store.record(_payment(id: 'paid', status: 'succeeded', step: null));
+    final checked = <String>[];
+    await PendingPaymentsChecker(
+      _RecordingRepository(checked),
+      store,
+    ).checkNow();
+    expect(checked, ['waiting']);
   });
 
   test('polling runs while processing and stops when final', () {
@@ -300,6 +314,39 @@ void main() {
     });
   });
 
+  test('polling runs quietly while the QR waits for confirmation', () {
+    fakeAsync((async) {
+      var calls = 0;
+      final repository = _PollingRepository(() {
+        calls++;
+        return calls < 2
+            ? _payment(step: 'scan_qr')
+            : _payment(status: 'succeeded', step: null);
+      });
+      final bloc = PaymentFlowBloc(repository, _payment(step: 'scan_qr'));
+      bloc.add(const PaymentQrPaidReported());
+      async.flushMicrotasks();
+      expect(bloc.state.qrPaidReported, isTrue);
+
+      async.elapse(PaymentFlowBloc.pollInterval);
+      async.flushMicrotasks();
+      expect(calls, 1);
+      expect(bloc.state.busy, isFalse);
+      expect(bloc.state.payment.step, PaymentStep.scanQr);
+
+      async.elapse(PaymentFlowBloc.pollInterval);
+      async.flushMicrotasks();
+      expect(bloc.state.payment.status, PaymentStatus.succeeded);
+
+      async.elapse(PaymentFlowBloc.pollInterval * 3);
+      async.flushMicrotasks();
+      expect(calls, 2);
+
+      bloc.close();
+      async.flushMicrotasks();
+    });
+  });
+
   test('closing the screen stops polling', () {
     fakeAsync((async) {
       var calls = 0;
@@ -317,6 +364,21 @@ void main() {
       expect(calls, 0);
     });
   });
+}
+
+class _RecordingRepository implements ZakatPaymentRepository {
+  _RecordingRepository(this.ids);
+
+  final List<String> ids;
+
+  @override
+  Future<ZakatPayment> fetchPayment(String paymentId) async {
+    ids.add(paymentId);
+    return _payment(id: paymentId);
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _PollingRepository implements ZakatPaymentRepository {

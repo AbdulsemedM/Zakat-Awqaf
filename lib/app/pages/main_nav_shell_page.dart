@@ -24,27 +24,16 @@ class MainNavShellPage extends StatelessWidget {
     final isAwqaf = appMode == AppMode.awqaf;
 
     return Scaffold(
-      body: isAwqaf
-          ? navigationShell
-          : ZakatThemed(child: navigationShell),
+      body: isAwqaf ? navigationShell : ZakatThemed(child: navigationShell),
       bottomNavigationBar: isAwqaf
-          ? _AwqafBottomNav(
-              navigationShell: navigationShell,
-              appMode: appMode,
-            )
-          : _ZakatBottomNav(
-              navigationShell: navigationShell,
-              appMode: appMode,
-            ),
+          ? _AwqafBottomNav(navigationShell: navigationShell, appMode: appMode)
+          : _ZakatBottomNav(navigationShell: navigationShell, appMode: appMode),
     );
   }
 }
 
 class _ZakatBottomNav extends StatelessWidget {
-  const _ZakatBottomNav({
-    required this.navigationShell,
-    required this.appMode,
-  });
+  const _ZakatBottomNav({required this.navigationShell, required this.appMode});
 
   final StatefulNavigationShell navigationShell;
   final AppMode appMode;
@@ -54,22 +43,10 @@ class _ZakatBottomNav extends StatelessWidget {
     final l10n = context.l10n;
     final selectedIndex = navigationShell.currentIndex % 4;
     final items = <_NavItem>[
-      _NavItem(
-        label: l10n.navHome,
-        icon: TablerIcons.home,
-      ),
-      _NavItem(
-        label: l10n.navCalculator,
-        icon: TablerIcons.calculator,
-      ),
-      _NavItem(
-        label: l10n.navImpact,
-        icon: TablerIcons.trending_up,
-      ),
-      _NavItem(
-        label: l10n.navProfile,
-        icon: TablerIcons.user,
-      ),
+      _NavItem(label: l10n.navHome, icon: TablerIcons.home),
+      _NavItem(label: l10n.navCalculator, icon: TablerIcons.calculator),
+      _NavItem(label: l10n.navImpact, icon: TablerIcons.trending_up),
+      _NavItem(label: l10n.navProfile, icon: TablerIcons.user),
     ];
 
     return DecoratedBox(
@@ -79,9 +56,7 @@ class _ZakatBottomNav extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [AppColors.forestGreen, AppColors.emeraldNight],
         ),
-        border: Border(
-          top: BorderSide(color: Color(0x66D4A23A), width: 0.8),
-        ),
+        border: Border(top: BorderSide(color: Color(0x66D4A23A), width: 0.8)),
       ),
       child: Stack(
         children: [
@@ -162,7 +137,9 @@ class _ZakatNavButton extends StatelessWidget {
               child: Icon(
                 item.icon,
                 size: 22,
-                color: selected ? AppColors.onSecondary : AppColors.mintGreenMuted,
+                color: selected
+                    ? AppColors.onSecondary
+                    : AppColors.mintGreenMuted,
               ),
             ),
             const SizedBox(height: 4),
@@ -170,7 +147,9 @@ class _ZakatNavButton extends StatelessWidget {
               duration: duration,
               style: AppTypography.label(
                 fontSize: 11,
-                color: selected ? AppColors.goldLight : AppColors.mintGreenMuted,
+                color: selected
+                    ? AppColors.goldLight
+                    : AppColors.mintGreenMuted,
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               ),
               child: Text(
@@ -187,10 +166,7 @@ class _ZakatNavButton extends StatelessWidget {
 }
 
 class _AwqafBottomNav extends StatelessWidget {
-  const _AwqafBottomNav({
-    required this.navigationShell,
-    required this.appMode,
-  });
+  const _AwqafBottomNav({required this.navigationShell, required this.appMode});
 
   final StatefulNavigationShell navigationShell;
   final AppMode appMode;
@@ -298,9 +274,9 @@ class _AwqafNavButton extends StatelessWidget {
               item.label,
               style: (textTheme.labelSmall ?? const TextStyle(fontSize: 11))
                   .copyWith(
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                color: selected ? selectedFgColor : unselectedFgColor,
-              ),
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    color: selected ? selectedFgColor : unselectedFgColor,
+                  ),
             ),
           ],
         ),
@@ -316,10 +292,7 @@ class _NavItem {
   final IconData icon;
 }
 
-String _destinationFor({
-  required int itemIndex,
-  required AppMode appMode,
-}) {
+String _destinationFor({required int itemIndex, required AppMode appMode}) {
   if (appMode == AppMode.awqaf) {
     return switch (itemIndex) {
       0 => '/awqaf',

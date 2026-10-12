@@ -78,7 +78,8 @@ abstract final class AppTypography {
           color: style?.color ?? scheme.onSurface,
         );
 
-    TextStyle withInter(TextStyle? style) => (style ?? const TextStyle()).copyWith(
+    TextStyle withInter(TextStyle? style) =>
+        (style ?? const TextStyle()).copyWith(
           fontFamily: AppTypography.inter,
           color: style?.color ?? scheme.onSurface,
         );

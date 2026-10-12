@@ -36,7 +36,10 @@ class _AwqafProfilePageState extends State<AwqafProfilePage> {
               const SizedBox(height: 8),
               _HeroCard(),
               const SizedBox(height: 10),
-              _SectionLabel(label: 'My Active Shares', trailingLabel: 'View All'),
+              _SectionLabel(
+                label: 'My Active Shares',
+                trailingLabel: 'View All',
+              ),
               const SizedBox(height: 6),
               _ActiveShareCard(onTap: () => context.push('/awqaf/portfolio')),
               const SizedBox(height: 12),
@@ -91,9 +94,9 @@ class _AwqafProfilePageState extends State<AwqafProfilePage> {
   }
 
   void _showComingSoon([String feature = 'This feature']) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$feature is coming soon.')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('$feature is coming soon.')));
   }
 
   Future<void> _pickLanguage(AppLanguage current) async {
@@ -114,7 +117,9 @@ class _AwqafProfilePageState extends State<AwqafProfilePage> {
               for (final lang in AppLanguage.values)
                 ListTile(
                   title: Text(lang.label),
-                  trailing: lang == current ? const Icon(Icons.check_rounded) : null,
+                  trailing: lang == current
+                      ? const Icon(Icons.check_rounded)
+                      : null,
                   onTap: () => Navigator.of(sheetContext).pop(lang),
                 ),
             ],
@@ -142,7 +147,10 @@ class _TopBar extends StatelessWidget {
       height: 48,
       child: Row(
         children: [
-          const AppLogo(height: 30, borderRadius: BorderRadius.all(Radius.circular(6))),
+          const AppLogo(
+            height: 30,
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+          ),
           const SizedBox(width: 8),
           const Expanded(
             child: Text(
@@ -273,10 +281,7 @@ class _StatCard extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 10.5,
-              color: Color(0xFF6B7280),
-            ),
+            style: const TextStyle(fontSize: 10.5, color: Color(0xFF6B7280)),
           ),
           const Spacer(),
           Text(
@@ -371,7 +376,10 @@ class _ActiveShareCard extends StatelessWidget {
                       left: 8,
                       top: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF39A267),
                           borderRadius: BorderRadius.circular(8),
@@ -383,7 +391,11 @@ class _ActiveShareCard extends StatelessWidget {
                       ),
                     ),
                     const Center(
-                      child: Icon(Icons.mosque_rounded, color: Colors.white70, size: 46),
+                      child: Icon(
+                        Icons.mosque_rounded,
+                        color: Colors.white70,
+                        size: 46,
+                      ),
                     ),
                   ],
                 ),
@@ -402,7 +414,11 @@ class _ActiveShareCard extends StatelessWidget {
                       style: TextStyle(fontSize: 12, color: Color(0xFF334155)),
                     ),
                   ),
-                  Icon(Icons.trending_up_rounded, size: 14, color: Color(0xFF16A34A)),
+                  Icon(
+                    Icons.trending_up_rounded,
+                    size: 14,
+                    color: Color(0xFF16A34A),
+                  ),
                 ],
               ),
             ],
@@ -515,7 +531,10 @@ class _PreferencesCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     color: const Color(0xFFEAECF1),
                     child: Row(
                       children: [

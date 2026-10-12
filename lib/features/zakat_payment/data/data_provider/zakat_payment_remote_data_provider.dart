@@ -14,17 +14,7 @@ abstract class ZakatPaymentRemoteDataProvider {
 
   Future<ZakatPayment> startPayment(ZakatPaymentRequest request);
 
-  Future<ZakatPayment> confirmAccount(String paymentId, {String? guestToken});
-
-  Future<ZakatPayment> resendOtp(String paymentId, {String? guestToken});
-
   Future<ZakatPayment> cancel(String paymentId, {String? guestToken});
-
-  Future<ZakatPayment> verifyOtp(
-    String paymentId,
-    String otp, {
-    String? guestToken,
-  });
 
   Future<ZakatPayment> fetchPayment(String paymentId, {String? guestToken});
 
@@ -84,43 +74,15 @@ class ZakatPaymentRemoteDataProviderImpl
         return ZakatPayment.fromJson(unwrapApiObject(response));
       });
 
-  Future<ZakatPayment> _action(
-    String paymentId,
-    String action, {
-    String? guestToken,
-    Object? body,
-  }) => guardApi(() async {
-    final response = await _dio.post<dynamic>(
-      '$_payments/${_id(paymentId)}/$action',
-      data: body,
-      options: _guest(guestToken),
-    );
-    return ZakatPayment.fromJson(unwrapApiObject(response));
-  });
-
-  @override
-  Future<ZakatPayment> confirmAccount(String paymentId, {String? guestToken}) =>
-      _action(paymentId, 'confirm', guestToken: guestToken);
-
-  @override
-  Future<ZakatPayment> resendOtp(String paymentId, {String? guestToken}) =>
-      _action(paymentId, 'resend-otp', guestToken: guestToken);
-
   @override
   Future<ZakatPayment> cancel(String paymentId, {String? guestToken}) =>
-      _action(paymentId, 'cancel', guestToken: guestToken);
-
-  @override
-  Future<ZakatPayment> verifyOtp(
-    String paymentId,
-    String otp, {
-    String? guestToken,
-  }) => _action(
-    paymentId,
-    'verify-otp',
-    guestToken: guestToken,
-    body: {'otp': otp},
-  );
+      guardApi(() async {
+        final response = await _dio.post<dynamic>(
+          '$_payments/${_id(paymentId)}/cancel',
+          options: _guest(guestToken),
+        );
+        return ZakatPayment.fromJson(unwrapApiObject(response));
+      });
 
   @override
   Future<ZakatPayment> fetchPayment(String paymentId, {String? guestToken}) =>

@@ -15,12 +15,12 @@ class DonationCreateRequest {
   final DonationDonor donor;
 
   Map<String, dynamic> toJson() => {
-        'donorMode': donorMode.trim(),
-        'paymentPurpose': paymentPurpose.trim(),
-        'amountEtb': amountEtb,
-        'address': address.toJson(),
-        'donor': donor.toJson(),
-      };
+    'donorMode': donorMode.trim(),
+    'paymentPurpose': paymentPurpose.trim(),
+    'amountEtb': amountEtb,
+    'address': address.toJson(),
+    'donor': donor.toJson(),
+  };
 }
 
 class DonationAddress {
@@ -41,13 +41,13 @@ class DonationAddress {
   final String postalCode;
 
   Map<String, dynamic> toJson() => {
-        'address1': address1.trim(),
-        'address2': address2.trim(),
-        'country': country.trim(),
-        'administrativeArea': administrativeArea.trim(),
-        'locality': locality.trim(),
-        'postalCode': postalCode.trim(),
-      };
+    'address1': address1.trim(),
+    'address2': address2.trim(),
+    'country': country.trim(),
+    'administrativeArea': administrativeArea.trim(),
+    'locality': locality.trim(),
+    'postalCode': postalCode.trim(),
+  };
 }
 
 class DonationDonor {
@@ -62,10 +62,10 @@ class DonationDonor {
   final String email;
 
   Map<String, dynamic> toJson() => {
-        'fullName': fullName.trim(),
-        'phone': phone.trim(),
-        'email': email.trim(),
-      };
+    'fullName': fullName.trim(),
+    'phone': phone.trim(),
+    'email': email.trim(),
+  };
 }
 
 enum DonorMode {

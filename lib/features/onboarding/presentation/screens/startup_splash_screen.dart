@@ -264,7 +264,9 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
                                     const SizedBox(height: 28),
                                     FadeTransition(
                                       opacity: _footerFade,
-                                      child: _GoldLoadingBar(animation: _shimmer),
+                                      child: _GoldLoadingBar(
+                                        animation: _shimmer,
+                                      ),
                                     ),
                                   ],
                                 ),

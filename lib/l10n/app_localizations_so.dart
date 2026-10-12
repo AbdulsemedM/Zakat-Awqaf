@@ -1785,16 +1785,6 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String get payAccountNumberLabel => 'Lambarka xisaabta Coop Bank';
-
-  @override
-  String get payAccountNumberHelper =>
-      'Xisaabta aad ka bixinayso. Waxaan ku tusi doonnaa magaca milkiilaha si aad u xaqiijiso.';
-
-  @override
-  String get payAccountNumberInvalid => 'Geli lambar xisaab sax ah (6–20 god).';
-
-  @override
   String get payNetworkError =>
       'Xiriir ma jiro. Hubi internetkaaga oo mar kale isku day.';
 
@@ -1815,10 +1805,6 @@ class AppLocalizationsSo extends AppLocalizations {
   String get payCancelConfirmTitle => 'Ma joojinaysaa lacag bixintan?';
 
   @override
-  String get payCancelConfirmBody =>
-      'Lacag lagama jarin. Waad dib u bilaabi kartaa wakhti kasta.';
-
-  @override
   String get payKeepPaying => 'Sii wad bixinta';
 
   @override
@@ -1827,54 +1813,6 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String payForCause(String cause) {
     return 'Loogu talagalay: $cause';
-  }
-
-  @override
-  String get payAccountHolder => 'Milkiilaha xisaabta';
-
-  @override
-  String get payAccountNumberShort => 'Xisaabta';
-
-  @override
-  String get payConfirmTitle => 'Xisaabtani ma taada baa?';
-
-  @override
-  String get payConfirmBody =>
-      'Haddii ay tahay, Coop Bank waxay kood xaqiijin ah u diri doontaa taleefanka ku diiwaangashan xisaabtan.';
-
-  @override
-  String get payYesSendCode => 'Haa, dir koodka';
-
-  @override
-  String get payNotMyAccount => 'Ma aha xisaabtayda';
-
-  @override
-  String get payOtpTitle => 'Geli koodka xaqiijinta';
-
-  @override
-  String get payOtpBody =>
-      'Waxaan kood 6 god ah u dirnay taleefanka ku diiwaangashan xisaabtaada Coop Bank.';
-
-  @override
-  String get payOtpLabel => 'Koodka xaqiijinta';
-
-  @override
-  String payOtpAttemptsLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count isku day ayaa haray',
-      one: '1 isku day ayaa haray',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get payResendCode => 'Dir kood cusub';
-
-  @override
-  String payPayAmount(String amount) {
-    return 'Bixi $amount';
   }
 
   @override
@@ -1911,10 +1849,6 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get payExpiredTitle => 'Waqtiga lacag bixintu wuu dhacay';
-
-  @override
-  String get payExpiredBody =>
-      'Laguma dhammayn 15 daqiiqo gudahood. Lacag lagama jarin; fadlan dib u bilow.';
 
   @override
   String get payFailedTitle => 'Lacag bixintu ma dhammaystirmin';
@@ -2065,15 +1999,6 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String payOtpExpiresIn(String time) {
-    return 'Koodku wuxuu dhacayaa $time kadib';
-  }
-
-  @override
-  String get payOtpExpiredLocal =>
-      'Koodka waqtigiisii wuu dhacay. Dir mid cusub.';
-
-  @override
   String get unfinishedPaymentTitle => 'Lacag bixin aan dhammaan';
 
   @override
@@ -2137,4 +2062,89 @@ class AppLocalizationsSo extends AppLocalizations {
   String givingAllTime(String amount) {
     return 'Wadarta guud: $amount';
   }
+
+  @override
+  String get payByQr => 'Ku bixi QR';
+
+  @override
+  String get payCertificateSection => 'Shahaado';
+
+  @override
+  String get payPayerNameLabel => 'Magaca oo buuxa';
+
+  @override
+  String get payPayerNameHelper =>
+      'Waxaa lagu daabacayaa shahaadada sakadaada.';
+
+  @override
+  String get payPayerNameRequired => 'Geli magacaaga shahaadada.';
+
+  @override
+  String get payPayerPhoneLabel => 'Lambarka taleefanka (ikhtiyaari)';
+
+  @override
+  String get payPayerPhoneInvalid =>
+      'Geli lambar taleefan oo sax ah, tusaale 0911223344.';
+
+  @override
+  String get payAnonymousLabel => 'Si qarsoodi ah u bixi';
+
+  @override
+  String get payAnonymousHelper =>
+      'Shahaadadu waxay qori doontaa \"Deeq-bixiye qarsoodi ah\" halkii magacaaga.';
+
+  @override
+  String get payQrTitle => 'Iskaan garee si aad u bixiso';
+
+  @override
+  String get payQrBody =>
+      'Fur app kasta oo bangi Itoobiyaan ah, dooro inaad ku bixiso QR oo iskaan garee koodkan. Lacagta waxay ku jirtaa koodka.';
+
+  @override
+  String get payQrMissing =>
+      'Koodka QR lama muujin karo. Fadlan bilow lacag-bixin cusub.';
+
+  @override
+  String get payQrConfirmNote =>
+      'Guddigu wuxuu bangiga la xaqiijiyaa lacag-bixin kasta oo QR ah. Tani waxay qaadan kartaa dhowr daqiiqo ilaa dhowr saacadood; shahaadadaadu waxay soo baxaysaa marka la xaqiijiyo.';
+
+  @override
+  String get payQrIHavePaid => 'Waan bixiyay';
+
+  @override
+  String get payQrShare => 'La wadaag ama kaydi QR-ka';
+
+  @override
+  String get payQrShareHint =>
+      'Ma taleefankan ayaad ka bixinaysaa? Kaydi QR-ka, kadibna ka fur app-ka bangigaaga.';
+
+  @override
+  String payQrShareText(String amount) {
+    return 'QR-ka lacag-bixinta sakada: $amount';
+  }
+
+  @override
+  String get payQrCancelConfirmBody =>
+      'Kaliya jooji haddii aadan bixin QR-kan. Haddii aad hore u bixisay, daa: waa la xaqiijin doonaa.';
+
+  @override
+  String get payQrConfirmingBody =>
+      'Mahadsanid. Guddigu wuxuu bangiga la xaqiijinayaa lacag-bixintaada, taas oo qaadan karta dhowr daqiiqo ilaa dhowr saacadood. Boggani wuu is-cusboonaysiinayaa, waadna ka bixi kartaa: lacag-bixinta iyo shahaadadeeda waxaad ka heli doontaa lacag-bixintaada. Fadlan mar kale ha bixin.';
+
+  @override
+  String get payQrExpiredBody =>
+      'Koodkan QR mar dambe ma shaqeynayo. Haddii aad hore u bixisay, lacag-bixinta waa la xaqiijin doonaa waxayna ka soo muuqan doontaa lacag-bixintaada. Haddii kale, fadlan dib u bilow.';
+
+  @override
+  String get payQrLeaveTitle => 'Ma bixisay QR-kan?';
+
+  @override
+  String get payQrLeaveBody =>
+      'Haddii aad bixisay, waan sii wadaynaa xaqiijinta waxaadna ka heli doontaa lacag-bixintaada. Haddii aadan bixin, lacag-bixinta waa la joojinayaa.';
+
+  @override
+  String get payQrLeaveNotPaid => 'Ma aan bixin';
+
+  @override
+  String get payFailedBody => 'Fadlan dib u bilow.';
 }

@@ -6,33 +6,33 @@ import 'package:mejlis_digital_hub/features/zakat_payment/bloc/payment_flow_bloc
 import 'package:mejlis_digital_hub/features/zakat_payment/data/models/zakat_payment_models.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/data/repository/zakat_payment_repository.dart';
 
-/// Step 1 response from the guide (section 7).
+/// Start response from the guide (section 7).
 Map<String, dynamic> _paymentJson({
   String status = 'pending',
-  String? step = 'confirm_account',
+  String? step = 'scan_qr',
   Map<String, dynamic>? extra,
 }) => {
   'paymentId': 'zp_k3m9x2q7w4b8n6t1',
   'status': status,
   'step': ?step,
   'zakatType': 'wealth',
-  'amountEtb': 12500.00,
+  'amountEtb': 2500.00,
   'causeId': 'general',
   'causeTitle': 'General Zakat fund',
-  'methodCode': 'coopbank',
-  'methodLabel': 'Coop Bank',
-  'account': {
-    'accountNumber': '*********6789',
-    'accountHolderName': 'Yitbarek W*******',
+  'methodCode': 'ethqr',
+  'methodLabel': 'QR payment',
+  'qr': {
+    'payload': '00020101021226…6304ABCD',
+    'expiresAt': '2026-10-12T10:30:00+03:00',
   },
-  'expiresAt': '2026-10-02T10:45:00+03:00',
-  'createdAt': '2026-10-02T10:30:00+03:00',
+  'expiresAt': '2026-10-12T10:30:00+03:00',
+  'createdAt': '2026-10-12T10:00:00+03:00',
   ...?extra,
 };
 
 ZakatPayment _payment({
   String status = 'pending',
-  String? step = 'confirm_account',
+  String? step = 'scan_qr',
   Map<String, dynamic>? extra,
 }) => ZakatPayment.fromJson(
   _paymentJson(status: status, step: step, extra: extra),
@@ -51,17 +51,7 @@ class _FakeRepository implements ZakatPaymentRepository {
   }
 
   @override
-  Future<ZakatPayment> confirmAccount(String paymentId) => _next('confirm');
-
-  @override
-  Future<ZakatPayment> resendOtp(String paymentId) => _next('resend');
-
-  @override
   Future<ZakatPayment> cancel(String paymentId) => _next('cancel');
-
-  @override
-  Future<ZakatPayment> verifyOtp(String paymentId, String otp) =>
-      _next('verify:$otp');
 
   @override
   Future<ZakatPayment> fetchPayment(String paymentId) => _next('status');
@@ -93,15 +83,34 @@ Future<void> _settle() => Future<void>.delayed(const Duration(milliseconds: 1));
 
 void main() {
   group('Payment models', () {
-    test('step 1 response', () {
+    test('start response with the QR', () {
       final payment = ZakatPayment.fromJson(
-        _paymentJson(extra: {'guestToken': 'Xb3'}),
+        _paymentJson(
+          extra: {
+            'guestToken': 'tok',
+            'qr': {
+              'payload': '00020101021226…6304ABCD',
+              'imageBase64': 'iVBORw0KGgo',
+              'imageContentType': 'image/png',
+              'expiresAt': '2026-10-12T10:30:00+03:00',
+            },
+          },
+        ),
       );
       expect(payment.status, PaymentStatus.pending);
-      expect(payment.step, PaymentStep.confirmAccount);
-      expect(payment.accountHolderName, 'Yitbarek W*******');
-      expect(payment.guestToken, 'Xb3');
+      expect(payment.step, PaymentStep.scanQr);
+      expect(payment.isQr, isTrue);
       expect(payment.isFinal, isFalse);
+      expect(payment.qrPayload, '00020101021226…6304ABCD');
+      expect(payment.qrImageBase64, 'iVBORw0KGgo');
+      expect(payment.qrExpiresAt, DateTime.parse('2026-10-12T07:30:00Z'));
+      expect(payment.guestToken, 'tok');
+    });
+
+    test('later reads have the payload only', () {
+      final payment = _payment();
+      expect(payment.qrPayload, isNotNull);
+      expect(payment.qrImageBase64, isNull);
     });
 
     test('final states have no step', () {
@@ -110,7 +119,7 @@ void main() {
         step: null,
         extra: {
           'providerReference': 'FT2627',
-          'paidAt': '2026-10-02T10:33:12+03:00',
+          'paidAt': '2026-10-12T10:33:12+03:00',
           'certificateId': 'ZC-2026-000451',
         },
       );
@@ -119,50 +128,52 @@ void main() {
       expect(paid.certificateId, 'ZC-2026-000451');
     });
 
-    test('OTP block', () {
-      final payment = _payment(
-        step: 'enter_otp',
-        extra: {
-          'otp': {
-            'expiresAt': '2026-10-02T10:35:00+03:00',
-            'attemptsLeft': 5,
-            'resendsLeft': 2,
-          },
-        },
-      );
-      expect(payment.step, PaymentStep.enterOtp);
-      expect(payment.otpAttemptsLeft, 5);
-      expect(payment.otpResendsLeft, 2);
-    });
-
-    test('request body leaves out missing calculation', () {
+    test('request: payer, no account number, no missing calculation', () {
       const request = ZakatPaymentRequest(
-        zakatType: ZakatType.general,
+        zakatType: ZakatType.wealth,
         amountEtb: 1234.567,
-        methodCode: 'coopbank',
+        methodCode: 'ethqr',
         causeId: 'general',
-        accountNumber: '1000123456789',
+        payer: PaymentPayer(fullName: 'Amina Hassen', phone: '+251911223344'),
         idempotencyKey: 'key',
       );
       final json = request.toJson();
-      expect(json['zakatType'], 'general');
       expect(json['amountEtb'], 1234.57);
+      expect(json['methodCode'], 'ethqr');
+      expect(json.containsKey('accountNumber'), isFalse);
       expect(json.containsKey('calculation'), isFalse);
-      expect(json.containsKey('payer'), isFalse);
+      expect(json['payer'], {
+        'fullName': 'Amina Hassen',
+        'phone': '+251911223344',
+        'anonymous': false,
+      });
+    });
+
+    test('a signed-in donor sends no payer', () {
+      const request = ZakatPaymentRequest(
+        zakatType: ZakatType.general,
+        amountEtb: 100,
+        methodCode: 'ethqr',
+        causeId: 'general',
+        idempotencyKey: 'key',
+      );
+      expect(request.toJson().containsKey('payer'), isFalse);
     });
 
     test('method and history', () {
       final method = PaymentMethod.fromJson({
-        'code': 'coopbank',
-        'label': 'Coop Bank',
+        'code': 'ethqr',
+        'label': 'QR payment',
+        'subtitle': 'Scan with any Ethiopian bank app',
+        'type': 'qr',
         'available': false,
-        'unavailableReason': 'Not available yet',
-        'minAmountEtb': 10.00,
-        'maxAmountEtb': 1000000.00,
-        'flow': 'account_otp',
+        'unavailableReason': 'Not set up yet',
+        'minAmountEtb': 10,
+        'maxAmountEtb': 1000000,
+        'flow': 'qr',
       });
       expect(method.available, isFalse);
-      expect(method.isAccountOtp, isTrue);
+      expect(method.isQr, isTrue);
       expect(method.maxAmountEtb, 1000000);
 
       final page = PaymentHistoryPage.fromJson({
@@ -171,10 +182,11 @@ void main() {
             'paymentId': 'zp_1',
             'type': 'zakat',
             'zakatType': 'wealth',
-            'amountEtb': 12500.00,
+            'amountEtb': 2500.00,
+            'methodLabel': 'QR payment',
             'status': 'succeeded',
             'certificateId': 'ZC-2026-000451',
-            'createdAt': '2026-10-02T10:30:00+03:00',
+            'createdAt': '2026-10-12T10:00:00+03:00',
           },
         ],
         'pagination': {
@@ -185,25 +197,39 @@ void main() {
         },
       });
       expect(page.items.single.status, PaymentStatus.succeeded);
+      expect(page.items.single.methodLabel, 'QR payment');
       expect(page.hasMore, isFalse);
     });
   });
 
   group('PaymentFlowBloc', () {
-    test('confirm, wrong code, then paid', () async {
+    test('"I have paid" shows the confirming state', () async {
+      final bloc = PaymentFlowBloc(_FakeRepository(), _payment());
+      addTearDown(bloc.close);
+      bloc.add(const PaymentQrPaidReported());
+      await _settle();
+      expect(bloc.state.qrPaidReported, isTrue);
+    });
+
+    test('cancel ends the payment', () async {
+      final repository = _FakeRepository()
+        ..responses.add(_payment(status: 'cancelled', step: null));
+      final bloc = PaymentFlowBloc(repository, _payment());
+      addTearDown(bloc.close);
+
+      bloc.add(const PaymentCancelRequested());
+      await _settle();
+      expect(bloc.state.payment.status, PaymentStatus.cancelled);
+      expect(repository.calls, ['cancel']);
+    });
+
+    test('cancel after it was confirmed shows the server state', () async {
       final repository = _FakeRepository()
         ..responses.addAll([
-          _payment(
-            step: 'enter_otp',
-            extra: {
-              'otp': {'attemptsLeft': 5},
-            },
-          ),
           const ApiException(
-            'Wrong code; 3 attempts left',
-            statusCode: 400,
-            code: 'OTP_WRONG',
-            data: {'attemptsLeft': 3, 'resendsLeft': 2},
+            'Payment is not pending',
+            statusCode: 409,
+            code: 'INVALID_STATE',
           ),
           _payment(
             status: 'succeeded',
@@ -214,112 +240,44 @@ void main() {
       final bloc = PaymentFlowBloc(repository, _payment());
       addTearDown(bloc.close);
 
-      bloc.add(const PaymentAccountConfirmed());
+      bloc.add(const PaymentCancelRequested());
       await _settle();
-      expect(bloc.state.payment.step, PaymentStep.enterOtp);
-
-      bloc.add(const PaymentOtpSubmitted('111111'));
-      await _settle();
-      expect(bloc.state.errorCode, 'OTP_WRONG');
-      expect(bloc.state.errorMessage, 'Wrong code; 3 attempts left');
-      expect(bloc.state.payment.otpAttemptsLeft, 3);
-
-      bloc.add(const PaymentOtpSubmitted('123456'));
-      await _settle();
+      expect(repository.calls, ['cancel', 'status']);
       expect(bloc.state.payment.status, PaymentStatus.succeeded);
       expect(bloc.state.errorMessage, isNull);
-      expect(repository.calls, ['confirm', 'verify:111111', 'verify:123456']);
     });
 
-    test(
-      'lost verify-otp response: checks status, never re-verifies',
-      () async {
-        final repository = _FakeRepository()
-          ..responses.addAll([
-            const ApiException('timeout', noResponse: true),
-            _payment(status: 'pending', step: 'processing'),
-          ]);
-        final bloc = PaymentFlowBloc(repository, _payment(step: 'enter_otp'));
-        addTearDown(bloc.close);
-
-        bloc.add(const PaymentOtpSubmitted('123456'));
-        await _settle();
-        expect(repository.calls, ['verify:123456', 'status']);
-        expect(bloc.state.payment.step, PaymentStep.processing);
-        expect(bloc.state.busy, isFalse);
-      },
-    );
-
-    test('expired code keeps the OTP step and offers resend', () async {
-      final repository = _FakeRepository()
-        ..responses.add(
-          const ApiException(
-            'Code expired',
-            statusCode: 400,
-            code: 'OTP_EXPIRED',
-            data: {'attemptsLeft': 4, 'resendsLeft': 2},
-          ),
-        );
-      final bloc = PaymentFlowBloc(repository, _payment(step: 'enter_otp'));
-      addTearDown(bloc.close);
-
-      bloc.add(const PaymentOtpSubmitted('123456'));
-      await _settle();
-      expect(bloc.state.otpExpired, isTrue);
-      expect(bloc.state.canResend, isTrue);
-      expect(bloc.state.payment.step, PaymentStep.enterOtp);
-    });
-
-    test('locked or expired payment shows the server state', () async {
+    test('no response: checks the status instead', () async {
       final repository = _FakeRepository()
         ..responses.addAll([
-          const ApiException(
-            'Too many wrong codes',
-            statusCode: 400,
-            code: 'OTP_LOCKED',
-          ),
-          _payment(
-            status: 'failed',
-            step: null,
-            extra: {'failureReason': 'Too many wrong codes'},
-          ),
+          const ApiException('timeout', noResponse: true),
+          _payment(status: 'expired', step: null),
         ]);
-      final bloc = PaymentFlowBloc(repository, _payment(step: 'enter_otp'));
-      addTearDown(bloc.close);
-
-      bloc.add(const PaymentOtpSubmitted('000000'));
-      await _settle();
-      expect(bloc.state.payment.status, PaymentStatus.failed);
-      expect(bloc.state.errorMessage, isNull);
-    });
-
-    test('resend limit disables resend', () async {
-      final repository = _FakeRepository()
-        ..responses.add(
-          const ApiException(
-            'No more codes',
-            statusCode: 429,
-            code: 'OTP_RESEND_LIMIT',
-            data: {'attemptsLeft': 5, 'resendsLeft': 0},
-          ),
-        );
-      final bloc = PaymentFlowBloc(repository, _payment(step: 'enter_otp'));
-      addTearDown(bloc.close);
-
-      bloc.add(const PaymentOtpResendRequested());
-      await _settle();
-      expect(bloc.state.canResend, isFalse);
-    });
-
-    test('not my account cancels', () async {
-      final repository = _FakeRepository()
-        ..responses.add(_payment(status: 'cancelled', step: null));
       final bloc = PaymentFlowBloc(repository, _payment());
       addTearDown(bloc.close);
 
       bloc.add(const PaymentCancelRequested());
       await _settle();
-      expect(bloc.state.payment.status, PaymentStatus.cancelled);
+      expect(bloc.state.payment.status, PaymentStatus.expired);
+      expect(bloc.state.busy, isFalse);
+    });
+
+    test('other errors keep the QR and show the message', () async {
+      final repository = _FakeRepository()
+        ..responses.add(
+          const ApiException(
+            'Payments are unavailable',
+            statusCode: 503,
+            code: 'PAYMENTS_UNAVAILABLE',
+          ),
+        );
+      final bloc = PaymentFlowBloc(repository, _payment());
+      addTearDown(bloc.close);
+
+      bloc.add(const PaymentStatusRefreshRequested());
+      await _settle();
+      expect(bloc.state.payment.step, PaymentStep.scanQr);
+      expect(bloc.state.errorMessage, 'Payments are unavailable');
     });
   });
 }

@@ -27,9 +27,9 @@ class AwqafHomePage extends StatelessWidget {
               final controller = context.read<AppSettingsController>();
               await controller.setAppMode(AppMode.zakat);
               if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.switchedToZakatMode)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(l10n.switchedToZakatMode)));
               context.go('/');
             },
             itemBuilder: (context) => [
@@ -84,10 +84,7 @@ class AwqafHomePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ..._featuredProjects.map(
-              (project) => _FeaturedProjectCard(
-                project: project,
-                theme: theme,
-              ),
+              (project) => _FeaturedProjectCard(project: project, theme: theme),
             ),
             _MapCtaCard(theme: theme),
             const SizedBox(height: 12),
@@ -111,10 +108,7 @@ class _PortfolioOverviewHero extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF0D2E6F),
-            Color(0xFF1D4C9C),
-          ],
+          colors: [Color(0xFF0D2E6F), Color(0xFF1D4C9C)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -240,10 +234,7 @@ class _SphereChip extends StatelessWidget {
 }
 
 class _FeaturedProjectCard extends StatelessWidget {
-  const _FeaturedProjectCard({
-    required this.project,
-    required this.theme,
-  });
+  const _FeaturedProjectCard({required this.project, required this.theme});
 
   final _FeaturedProject project;
   final ThemeData theme;
@@ -287,7 +278,10 @@ class _FeaturedProjectCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(999),
                     color: Colors.green.withValues(alpha: 0.15),
@@ -366,7 +360,11 @@ class _MapCtaCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.map_outlined, size: 18, color: AppColors.awqafPrimary),
+              const Icon(
+                Icons.map_outlined,
+                size: 18,
+                color: AppColors.awqafPrimary,
+              ),
               const SizedBox(width: 8),
               Text(
                 'View National Waqf Map',
@@ -449,10 +447,7 @@ class _MilestoneRow extends StatelessWidget {
               CircleAvatar(
                 radius: 7,
                 backgroundColor: item.dotColor.withValues(alpha: 0.16),
-                child: CircleAvatar(
-                  radius: 3,
-                  backgroundColor: item.dotColor,
-                ),
+                child: CircleAvatar(radius: 3, backgroundColor: item.dotColor),
               ),
               if (item != _milestones.last)
                 Container(
@@ -551,18 +546,9 @@ const _sphereChips = [
     icon: Icons.water_drop_outlined,
     highlighted: true,
   ),
-  _SphereChipData(
-    label: 'Education',
-    icon: Icons.school_outlined,
-  ),
-  _SphereChipData(
-    label: 'Health',
-    icon: Icons.favorite_outline,
-  ),
-  _SphereChipData(
-    label: 'Agriculture',
-    icon: Icons.eco_outlined,
-  ),
+  _SphereChipData(label: 'Education', icon: Icons.school_outlined),
+  _SphereChipData(label: 'Health', icon: Icons.favorite_outline),
+  _SphereChipData(label: 'Agriculture', icon: Icons.eco_outlined),
 ];
 
 const _featuredProjects = [

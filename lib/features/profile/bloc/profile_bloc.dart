@@ -9,7 +9,8 @@ import 'profile_state.dart';
 
 @injectable
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc(this._repository, this._authRepository) : super(const ProfileInitial()) {
+  ProfileBloc(this._repository, this._authRepository)
+    : super(const ProfileInitial()) {
     on<ProfileStarted>(_onStarted);
     on<ProfileNisabAlertsToggled>(_onNisabAlertsToggled);
     on<ProfileBiometricToggled>(_onBiometricToggled);
@@ -86,12 +87,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         bankName: event.bankName.trim(),
         accountNumber: event.accountNumber.trim(),
       );
-      emit(
-        ProfileLoaded(
-          updated,
-          feedbackMessage: 'Bank account updated',
-        ),
-      );
+      emit(ProfileLoaded(updated, feedbackMessage: 'Bank account updated'));
     } catch (error) {
       emit(
         ProfileLoaded(

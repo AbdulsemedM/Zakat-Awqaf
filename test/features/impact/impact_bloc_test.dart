@@ -93,7 +93,8 @@ void main() {
     test('regions without coordinates are skipped; unknown asnaf kept', () {
       expect(ImpactRegion.tryParse({'code': 'x', 'name': 'X'}), isNull);
       expect(_addisRegion.beneficiaries, 40210);
-      expect(const AsnafCount(asnaf: 'other', count: 1).label, 'other');
+      expect(const AsnafCount(asnaf: 'other', count: 1).label, 'Other');
+      expect(const AsnafCount(asnaf: 'gharimin', count: 1).label, 'gharimin');
     });
 
     test('story parses the sample', () {

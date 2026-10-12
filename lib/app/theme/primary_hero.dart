@@ -14,11 +14,11 @@ abstract final class PrimaryHero {
 
   /// [scheme] is unused; kept for call-site compatibility with existing widgets.
   static LinearGradient gradient(ColorScheme _) => const LinearGradient(
-        colors: [AppColors.forestLight, AppColors.forestMid, AppColors.forestGreen],
-        stops: [0.0, 0.55, 1.0],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
+    colors: [AppColors.forestLight, AppColors.forestMid, AppColors.forestGreen],
+    stops: [0.0, 0.55, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   /// Zakat home hero: deep emerald night into brand emerald.
   static const LinearGradient zakatHeroGradient = LinearGradient(
@@ -37,11 +37,7 @@ abstract final class PrimaryHero {
   static const LinearGradient sadaqahGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      AppColors.goldLight,
-      AppColors.warmGold,
-      AppColors.goldDeep,
-    ],
+    colors: [AppColors.goldLight, AppColors.warmGold, AppColors.goldDeep],
     stops: [0.0, 0.5, 1.0],
   );
 

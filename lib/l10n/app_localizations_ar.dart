@@ -1758,16 +1758,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get payAccountNumberLabel => 'رقم حساب بنك كوب';
-
-  @override
-  String get payAccountNumberHelper =>
-      'الحساب الذي تدفع منه. سنعرض اسم صاحب الحساب لتأكيده.';
-
-  @override
-  String get payAccountNumberInvalid => 'أدخل رقم حساب صالحًا (6–20 رقمًا).';
-
-  @override
   String get payNetworkError =>
       'لا يوجد اتصال. تحقق من الإنترنت وحاول مرة أخرى.';
 
@@ -1787,10 +1777,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payCancelConfirmTitle => 'إلغاء هذه الدفعة؟';
 
   @override
-  String get payCancelConfirmBody =>
-      'لم يُخصم أي مبلغ. يمكنك البدء من جديد في أي وقت.';
-
-  @override
   String get payKeepPaying => 'متابعة الدفع';
 
   @override
@@ -1799,54 +1785,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String payForCause(String cause) {
     return 'لـ: $cause';
-  }
-
-  @override
-  String get payAccountHolder => 'صاحب الحساب';
-
-  @override
-  String get payAccountNumberShort => 'الحساب';
-
-  @override
-  String get payConfirmTitle => 'هل هذا حسابك؟';
-
-  @override
-  String get payConfirmBody =>
-      'إذا كان كذلك، سيرسل بنك كوب رمز تأكيد إلى الهاتف المسجّل لهذا الحساب.';
-
-  @override
-  String get payYesSendCode => 'نعم، أرسل الرمز';
-
-  @override
-  String get payNotMyAccount => 'ليس حسابي';
-
-  @override
-  String get payOtpTitle => 'أدخل رمز التأكيد';
-
-  @override
-  String get payOtpBody =>
-      'أرسلنا رمزًا من 6 أرقام إلى الهاتف المسجّل لحسابك في بنك كوب.';
-
-  @override
-  String get payOtpLabel => 'رمز التأكيد';
-
-  @override
-  String payOtpAttemptsLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'تبقّى $count محاولات',
-      one: 'تبقّت محاولة واحدة',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get payResendCode => 'إرسال رمز جديد';
-
-  @override
-  String payPayAmount(String amount) {
-    return 'ادفع $amount';
   }
 
   @override
@@ -1883,10 +1821,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get payExpiredTitle => 'انتهت صلاحية الدفعة';
-
-  @override
-  String get payExpiredBody =>
-      'لم تكتمل خلال 15 دقيقة. لم يُخصم أي مبلغ؛ يُرجى البدء من جديد.';
 
   @override
   String get payFailedTitle => 'لم تكتمل الدفعة';
@@ -2037,14 +1971,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String payOtpExpiresIn(String time) {
-    return 'تنتهي صلاحية الرمز خلال $time';
-  }
-
-  @override
-  String get payOtpExpiredLocal => 'انتهت صلاحية الرمز. أرسل رمزًا جديدًا.';
-
-  @override
   String get unfinishedPaymentTitle => 'دفعة غير مكتملة';
 
   @override
@@ -2107,4 +2033,86 @@ class AppLocalizationsAr extends AppLocalizations {
   String givingAllTime(String amount) {
     return 'الإجمالي: $amount';
   }
+
+  @override
+  String get payByQr => 'الدفع عبر QR';
+
+  @override
+  String get payCertificateSection => 'الشهادة';
+
+  @override
+  String get payPayerNameLabel => 'الاسم الكامل';
+
+  @override
+  String get payPayerNameHelper => 'يُطبع على شهادة الزكاة الخاصة بك.';
+
+  @override
+  String get payPayerNameRequired => 'أدخل اسمك للشهادة.';
+
+  @override
+  String get payPayerPhoneLabel => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get payPayerPhoneInvalid => 'أدخل رقم هاتف صحيحًا، مثل 0911223344.';
+
+  @override
+  String get payAnonymousLabel => 'التبرع دون ذكر الاسم';
+
+  @override
+  String get payAnonymousHelper =>
+      'تظهر في الشهادة عبارة \"متبرع مجهول\" بدلًا من اسمك.';
+
+  @override
+  String get payQrTitle => 'امسح للدفع';
+
+  @override
+  String get payQrBody =>
+      'افتح أي تطبيق بنكي إثيوبي، واختر الدفع عبر QR وامسح هذا الرمز. المبلغ مضمَّن في الرمز.';
+
+  @override
+  String get payQrMissing => 'تعذّر عرض رمز QR. يرجى بدء دفعة جديدة.';
+
+  @override
+  String get payQrConfirmNote =>
+      'تتحقق الهيئة من كل دفعة QR مع البنك. قد يستغرق ذلك من بضع دقائق إلى بضع ساعات، وتظهر شهادتك بعد التأكيد.';
+
+  @override
+  String get payQrIHavePaid => 'لقد دفعت';
+
+  @override
+  String get payQrShare => 'مشاركة رمز QR أو حفظه';
+
+  @override
+  String get payQrShareHint =>
+      'تدفع من هذا الهاتف؟ احفظ رمز QR ثم افتحه من تطبيق البنك.';
+
+  @override
+  String payQrShareText(String amount) {
+    return 'رمز QR لدفع الزكاة: $amount';
+  }
+
+  @override
+  String get payQrCancelConfirmBody =>
+      'لا تُلغِ إلا إذا لم تدفع هذا الرمز. إذا كنت قد دفعت فاتركه: سيتم تأكيده.';
+
+  @override
+  String get payQrConfirmingBody =>
+      'شكرًا لك. تتحقق الهيئة من دفعتك مع البنك، وقد يستغرق ذلك من بضع دقائق إلى بضع ساعات. تتحدث هذه الصفحة تلقائيًا ويمكنك مغادرتها: ستجد الدفعة وشهادتها في مدفوعاتك. يرجى عدم الدفع مرة أخرى.';
+
+  @override
+  String get payQrExpiredBody =>
+      'لم يعد رمز QR هذا صالحًا. إذا كنت قد دفعته فسيتم تأكيد الدفعة وستظهر في مدفوعاتك. وإلا فيرجى البدء من جديد.';
+
+  @override
+  String get payQrLeaveTitle => 'هل دفعت رمز QR هذا؟';
+
+  @override
+  String get payQrLeaveBody =>
+      'إذا دفعت فسنواصل تأكيد الدفعة وستجدها في مدفوعاتك. وإن لم تدفع فسيتم إلغاء الدفعة.';
+
+  @override
+  String get payQrLeaveNotPaid => 'لم أدفع';
+
+  @override
+  String get payFailedBody => 'يرجى البدء من جديد.';
 }

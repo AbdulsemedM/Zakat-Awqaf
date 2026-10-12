@@ -15,9 +15,8 @@ class _SpiritualSettingsCard extends StatelessWidget {
         children: [
           SwitchListTile.adaptive(
             value: profile.nisabAlerts,
-            onChanged: (v) => context
-                .read<ProfileBloc>()
-                .add(ProfileNisabAlertsToggled(v)),
+            onChanged: (v) =>
+                context.read<ProfileBloc>().add(ProfileNisabAlertsToggled(v)),
             title: Text(
               context.l10n.profileNisabThresholdAlerts,
               style: theme.textTheme.titleSmall?.copyWith(
@@ -80,9 +79,8 @@ class _SettingsSecurityCard extends StatelessWidget {
             const Divider(height: 1, indent: 16, endIndent: 16),
             SwitchListTile.adaptive(
               value: profile.biometricEnabled,
-              onChanged: (v) => context
-                  .read<ProfileBloc>()
-                  .add(ProfileBiometricToggled(v)),
+              onChanged: (v) =>
+                  context.read<ProfileBloc>().add(ProfileBiometricToggled(v)),
               title: Text(
                 context.l10n.profileBiometricLogin,
                 style: theme.textTheme.titleSmall?.copyWith(
@@ -122,7 +120,9 @@ class _SettingsSecurityCard extends StatelessWidget {
               ),
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(context.l10n.profileChangePinComingSoon)),
+                  SnackBar(
+                    content: Text(context.l10n.profileChangePinComingSoon),
+                  ),
                 );
               },
             ),
@@ -215,9 +215,8 @@ class _SettingsSecurityCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                onTap: () => Navigator.of(sheetContext).pop(
-                  AppThemePreference.light,
-                ),
+                onTap: () =>
+                    Navigator.of(sheetContext).pop(AppThemePreference.light),
               ),
               ListTile(
                 title: Text(context.l10n.themeDark),
@@ -234,9 +233,8 @@ class _SettingsSecurityCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                onTap: () => Navigator.of(sheetContext).pop(
-                  AppThemePreference.dark,
-                ),
+                onTap: () =>
+                    Navigator.of(sheetContext).pop(AppThemePreference.dark),
               ),
             ],
           ),
@@ -247,9 +245,7 @@ class _SettingsSecurityCard extends StatelessWidget {
     if (!context.mounted) return;
     context.read<ProfileBloc>().add(ProfileThemeSelected(selection));
     context.read<AppSettingsController>().setThemeMode(
-      selection == AppThemePreference.light
-          ? ThemeMode.light
-          : ThemeMode.dark,
+      selection == AppThemePreference.light ? ThemeMode.light : ThemeMode.dark,
     );
   }
 }
@@ -284,7 +280,9 @@ class _SelectorTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+        style: theme.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
       ),
       subtitle: Text(
         value,

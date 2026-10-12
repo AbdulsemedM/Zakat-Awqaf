@@ -6,7 +6,8 @@ class _PayoutAccountSetupCard extends StatefulWidget {
   final ProfileModel profile;
 
   @override
-  State<_PayoutAccountSetupCard> createState() => _PayoutAccountSetupCardState();
+  State<_PayoutAccountSetupCard> createState() =>
+      _PayoutAccountSetupCardState();
 }
 
 class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
@@ -64,19 +65,17 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
     final accountNumber = _accountController.text.trim();
     if (accountNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.l10n.profileCoopAccountRequired),
-        ),
+        SnackBar(content: Text(context.l10n.profileCoopAccountRequired)),
       );
       return;
     }
     setState(() => _saving = true);
     context.read<ProfileBloc>().add(
-          ProfileBankAccountSaved(
-            bankName: _selected.label,
-            accountNumber: accountNumber,
-          ),
-        );
+      ProfileBankAccountSaved(
+        bankName: _selected.label,
+        accountNumber: accountNumber,
+      ),
+    );
   }
 
   @override
@@ -239,7 +238,9 @@ class _FinancialInstitutionTile extends StatelessWidget {
               ),
               if (enabled)
                 Icon(
-                  selected ? Icons.radio_button_checked : Icons.radio_button_off,
+                  selected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_off,
                   color: selected ? AppColors.primary : scheme.outline,
                 )
               else

@@ -11,11 +11,7 @@ abstract final class AppToast {
     Duration duration = const Duration(seconds: 4),
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: duration,
-        action: action,
-      ),
+      SnackBar(content: Text(message), duration: duration, action: action),
     );
   }
 
@@ -30,9 +26,9 @@ abstract final class AppToast {
       SnackBar(
         content: Text(
           message,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: scheme.onErrorContainer,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: scheme.onErrorContainer),
         ),
         duration: duration,
         action: action,

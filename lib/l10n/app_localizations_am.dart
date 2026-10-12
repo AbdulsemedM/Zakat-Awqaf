@@ -1743,16 +1743,6 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get payAccountNumberLabel => 'የኩፕ ባንክ ሂሳብ ቁጥር';
-
-  @override
-  String get payAccountNumberHelper =>
-      'የሚከፍሉበት ሂሳብ። እንዲያረጋግጡ የሂሳቡን ባለቤት ስም እናሳይዎታለን።';
-
-  @override
-  String get payAccountNumberInvalid => 'ትክክለኛ የሂሳብ ቁጥር ያስገቡ (6–20 አሃዞች)።';
-
-  @override
   String get payNetworkError => 'ግንኙነት የለም። ኢንተርኔትዎን ያረጋግጡ እና እንደገና ይሞክሩ።';
 
   @override
@@ -1771,10 +1761,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get payCancelConfirmTitle => 'ይህን ክፍያ ይሰርዙ?';
 
   @override
-  String get payCancelConfirmBody =>
-      'ምንም ገንዘብ አልተወሰደም። በማንኛውም ጊዜ እንደገና መጀመር ይችላሉ።';
-
-  @override
   String get payKeepPaying => 'መክፈሉን ቀጥል';
 
   @override
@@ -1783,53 +1769,6 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String payForCause(String cause) {
     return 'ለ፦ $cause';
-  }
-
-  @override
-  String get payAccountHolder => 'የሂሳብ ባለቤት';
-
-  @override
-  String get payAccountNumberShort => 'ሂሳብ';
-
-  @override
-  String get payConfirmTitle => 'ይህ የእርስዎ ሂሳብ ነው?';
-
-  @override
-  String get payConfirmBody =>
-      'ከሆነ፣ ኩፕ ባንክ በዚህ ሂሳብ ላይ ወደተመዘገበው ስልክ የማረጋገጫ ኮድ ይልካል።';
-
-  @override
-  String get payYesSendCode => 'አዎ፣ ኮድ ላክ';
-
-  @override
-  String get payNotMyAccount => 'የእኔ ሂሳብ አይደለም';
-
-  @override
-  String get payOtpTitle => 'የማረጋገጫ ኮዱን ያስገቡ';
-
-  @override
-  String get payOtpBody => 'በኩፕ ባንክ ሂሳብዎ ላይ ወደተመዘገበው ስልክ ባለ 6 አሃዝ ኮድ ልከናል።';
-
-  @override
-  String get payOtpLabel => 'የማረጋገጫ ኮድ';
-
-  @override
-  String payOtpAttemptsLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ሙከራዎች ቀርተዋል',
-      one: '1 ሙከራ ቀርቷል',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get payResendCode => 'አዲስ ኮድ ላክ';
-
-  @override
-  String payPayAmount(String amount) {
-    return '$amount ክፈል';
   }
 
   @override
@@ -1866,10 +1805,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get payExpiredTitle => 'የክፍያው ጊዜ አልፏል';
-
-  @override
-  String get payExpiredBody =>
-      'በ15 ደቂቃ ውስጥ አልተጠናቀቀም። ምንም ገንዘብ አልተወሰደም፤ እባክዎ እንደገና ይጀምሩ።';
 
   @override
   String get payFailedTitle => 'ክፍያው አልተጠናቀቀም';
@@ -2020,14 +1955,6 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String payOtpExpiresIn(String time) {
-    return 'ኮዱ በ$time ውስጥ ጊዜው ያልፋል';
-  }
-
-  @override
-  String get payOtpExpiredLocal => 'ኮዱ ጊዜው አልፏል። አዲስ ይላኩ።';
-
-  @override
   String get unfinishedPaymentTitle => 'ያልተጠናቀቀ ክፍያ';
 
   @override
@@ -2090,4 +2017,85 @@ class AppLocalizationsAm extends AppLocalizations {
   String givingAllTime(String amount) {
     return 'በአጠቃላይ፦ $amount';
   }
+
+  @override
+  String get payByQr => 'በQR ይክፈሉ';
+
+  @override
+  String get payCertificateSection => 'የምስክር ወረቀት';
+
+  @override
+  String get payPayerNameLabel => 'ሙሉ ስም';
+
+  @override
+  String get payPayerNameHelper => 'በዘካ የምስክር ወረቀትዎ ላይ ይታተማል።';
+
+  @override
+  String get payPayerNameRequired => 'ለምስክር ወረቀቱ ስምዎን ያስገቡ።';
+
+  @override
+  String get payPayerPhoneLabel => 'ስልክ ቁጥር (አማራጭ)';
+
+  @override
+  String get payPayerPhoneInvalid => 'ትክክለኛ ስልክ ቁጥር ያስገቡ፣ ለምሳሌ 0911223344።';
+
+  @override
+  String get payAnonymousLabel => 'በስም ሳይታወቅ ይስጡ';
+
+  @override
+  String get payAnonymousHelper => 'የምስክር ወረቀቱ በስምዎ ፈንታ \"ስሙ ያልተገለጸ ለጋሽ\" ይላል።';
+
+  @override
+  String get payQrTitle => 'ለመክፈል ይቃኙ';
+
+  @override
+  String get payQrBody =>
+      'ማንኛውንም የኢትዮጵያ ባንክ መተግበሪያ ይክፈቱ፣ በQR መክፈልን ይምረጡ እና ይህን ኮድ ይቃኙ። መጠኑ በኮዱ ውስጥ አለ።';
+
+  @override
+  String get payQrMissing => 'የQR ኮዱ ሊታይ አልቻለም። እባክዎ አዲስ ክፍያ ይጀምሩ።';
+
+  @override
+  String get payQrConfirmNote =>
+      'ኮሚሽኑ እያንዳንዱን የQR ክፍያ ከባንኩ ጋር ያረጋግጣል። ይህ ከጥቂት ደቂቃዎች እስከ ጥቂት ሰዓታት ሊወስድ ይችላል፤ የምስክር ወረቀትዎ ከተረጋገጠ በኋላ ይታያል።';
+
+  @override
+  String get payQrIHavePaid => 'ከፍያለሁ';
+
+  @override
+  String get payQrShare => 'QRውን ያጋሩ ወይም ያስቀምጡ';
+
+  @override
+  String get payQrShareHint =>
+      'ከዚህ ስልክ ነው የሚከፍሉት? QRውን ያስቀምጡ፣ ከዚያ ከባንክ መተግበሪያዎ ይክፈቱት።';
+
+  @override
+  String payQrShareText(String amount) {
+    return 'የዘካ ክፍያ QR፦ $amount';
+  }
+
+  @override
+  String get payQrCancelConfirmBody =>
+      'ይህን QR ካልከፈሉ ብቻ ይሰርዙ። አስቀድመው ከከፈሉ ይተዉት፤ ይረጋገጣል።';
+
+  @override
+  String get payQrConfirmingBody =>
+      'እናመሰግናለን። ኮሚሽኑ ክፍያዎን ከባንኩ ጋር እያረጋገጠ ነው፤ ይህ ከጥቂት ደቂቃዎች እስከ ጥቂት ሰዓታት ሊወስድ ይችላል። ይህ ገጽ በራሱ ይዘመናል፣ መውጣትም ይችላሉ፤ ክፍያውና የምስክር ወረቀቱ በክፍያዎችዎ ውስጥ ይገኛሉ። እባክዎ እንደገና አይክፈሉ።';
+
+  @override
+  String get payQrExpiredBody =>
+      'ይህ የQR ኮድ ከአሁን በኋላ አያገለግልም። አስቀድመው ከከፈሉ ክፍያው ይረጋገጣል እና በክፍያዎችዎ ውስጥ ይታያል። ካልሆነ እባክዎ እንደገና ይጀምሩ።';
+
+  @override
+  String get payQrLeaveTitle => 'ይህን QR ከፍለዋል?';
+
+  @override
+  String get payQrLeaveBody =>
+      'ከከፈሉ ማረጋገጣችንን እንቀጥላለን፤ በክፍያዎችዎ ውስጥ ያገኙታል። ካልከፈሉ ክፍያው ይሰረዛል።';
+
+  @override
+  String get payQrLeaveNotPaid => 'አልከፈልኩም';
+
+  @override
+  String get payFailedBody => 'እባክዎ እንደገና ይጀምሩ።';
 }

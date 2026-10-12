@@ -42,6 +42,18 @@ class DevicePayment {
   bool get isProcessing =>
       status == PaymentStatus.pending && step == PaymentStep.processing;
 
+  /// How long after expiry a payment is still checked: a QR paid late can
+  /// still be confirmed.
+  static const expiredRecheckWindow = Duration(days: 3);
+
+  /// Not settled yet: pending, or expired recently.
+  bool needsCheck(DateTime now) => switch (status) {
+    PaymentStatus.pending => true,
+    PaymentStatus.expired =>
+      now.difference(expiresAt ?? createdAt) < expiredRecheckWindow,
+    _ => false,
+  };
+
   factory DevicePayment.from(ZakatPayment payment, {DevicePayment? previous}) {
     return DevicePayment(
       paymentId: payment.paymentId,
@@ -137,6 +149,9 @@ class DevicePaymentsStore extends ChangeNotifier {
     _loaded = true;
     notifyListeners();
   }();
+
+  /// Completes once the saved list is loaded.
+  Future<void> ready() => _load();
 
   /// Tells listeners to look again, e.g. when an open payment's time has
   /// run out and it no longer counts as unfinished.

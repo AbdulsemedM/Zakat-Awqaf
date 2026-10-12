@@ -45,8 +45,16 @@ class BrandAtmosphereBackground extends StatelessWidget {
                   center: const Alignment(-0.85, -0.95),
                   radius: 1.35,
                   colors: [
-                    Color.lerp(AppColors.primary, Colors.white, 0.22)!.withValues(alpha: 0.55),
-                    Color.lerp(AppColors.primary, Colors.black, 0.42)!.withValues(alpha: 0.0),
+                    Color.lerp(
+                      AppColors.primary,
+                      Colors.white,
+                      0.22,
+                    )!.withValues(alpha: 0.55),
+                    Color.lerp(
+                      AppColors.primary,
+                      Colors.black,
+                      0.42,
+                    )!.withValues(alpha: 0.0),
                   ],
                   stops: const [0.0, 1.0],
                 ),
@@ -71,7 +79,11 @@ class BrandAtmosphereBackground extends StatelessWidget {
                   center: const Alignment(-0.2, 1.05),
                   radius: 1.0,
                   colors: [
-                    Color.lerp(AppColors.primary, Colors.black, 0.35)!.withValues(alpha: 0.35),
+                    Color.lerp(
+                      AppColors.primary,
+                      Colors.black,
+                      0.35,
+                    )!.withValues(alpha: 0.35),
                     Colors.transparent,
                   ],
                   stops: const [0.0, 1.0],
@@ -79,14 +91,10 @@ class BrandAtmosphereBackground extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-              child: CustomPaint(
-                painter: BrandFlowingArcsPainter(),
-              ),
+              child: CustomPaint(painter: BrandFlowingArcsPainter()),
             ),
             Positioned.fill(
-              child: CustomPaint(
-                painter: BrandGeometricPatternPainter(),
-              ),
+              child: CustomPaint(painter: BrandGeometricPatternPainter()),
             ),
             Positioned(
               top: -h * 0.12,
@@ -103,8 +111,11 @@ class BrandAtmosphereBackground extends StatelessWidget {
               child: BrandAuroraBlob(
                 width: w * 0.78,
                 height: w * 0.88,
-                color: Color.lerp(AppColors.primary, AppColors.secondary, 0.22)!
-                    .withValues(alpha: 0.28),
+                color: Color.lerp(
+                  AppColors.primary,
+                  AppColors.secondary,
+                  0.22,
+                )!.withValues(alpha: 0.28),
               ),
             ),
             Positioned(
@@ -113,7 +124,11 @@ class BrandAtmosphereBackground extends StatelessWidget {
               child: BrandAuroraBlob(
                 width: w * 0.75,
                 height: w * 0.7,
-                color: Color.lerp(AppColors.primary, Colors.black, 0.25)!.withValues(alpha: 0.2),
+                color: Color.lerp(
+                  AppColors.primary,
+                  Colors.black,
+                  0.25,
+                )!.withValues(alpha: 0.2),
               ),
             ),
             Positioned.fill(
@@ -166,7 +181,11 @@ class BrandFlowingArcsPainter extends CustomPainter {
     final arc3 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..color = Color.lerp(AppColors.primary, Colors.white, 0.35)!.withValues(alpha: 0.06);
+      ..color = Color.lerp(
+        AppColors.primary,
+        Colors.white,
+        0.35,
+      )!.withValues(alpha: 0.06);
 
     final path3 = Path();
     path3.moveTo(w * 0.15, h * 1.02);
@@ -207,7 +226,12 @@ class BrandGeometricPatternPainter extends CustomPainter {
     }
   }
 
-  void _drawEightPointStar(Canvas canvas, Offset center, double radius, Paint paint) {
+  void _drawEightPointStar(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
     final path = Path();
     for (int i = 0; i < 8; i++) {
       final angle = (math.pi / 4) * i;

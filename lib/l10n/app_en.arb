@@ -1134,48 +1134,18 @@
       }
     }
   },
-  "payAccountNumberLabel": "Coop Bank account number",
-  "payAccountNumberHelper": "The account you pay from. We'll show the account holder's name for you to confirm.",
-  "payAccountNumberInvalid": "Enter a valid account number (6–20 digits).",
   "payNetworkError": "No connection. Check your internet and try again.",
   "payMethodsLoading": "Loading payment methods…",
   "payMethodsError": "Couldn't load payment methods.",
   "payNoMethods": "No payment method is available right now.",
   "payMethodUnavailable": "Not available yet",
   "payCancelConfirmTitle": "Cancel this payment?",
-  "payCancelConfirmBody": "No money has been taken. You can start again at any time.",
   "payKeepPaying": "Keep paying",
   "payCancelPayment": "Cancel payment",
   "payForCause": "For: {cause}",
   "@payForCause": {
     "placeholders": {
       "cause": {
-        "type": "String"
-      }
-    }
-  },
-  "payAccountHolder": "Account holder",
-  "payAccountNumberShort": "Account",
-  "payConfirmTitle": "Is this your account?",
-  "payConfirmBody": "If it is, Coop Bank will send a confirmation code to the phone registered on this account.",
-  "payYesSendCode": "Yes, send code",
-  "payNotMyAccount": "Not my account",
-  "payOtpTitle": "Enter the confirmation code",
-  "payOtpBody": "We sent a 6-digit code to the phone registered on your Coop Bank account.",
-  "payOtpLabel": "Confirmation code",
-  "payOtpAttemptsLeft": "{count, plural, =1{1 attempt left} other{{count} attempts left}}",
-  "@payOtpAttemptsLeft": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "payResendCode": "Send a new code",
-  "payPayAmount": "Pay {amount}",
-  "@payPayAmount": {
-    "placeholders": {
-      "amount": {
         "type": "String"
       }
     }
@@ -1204,7 +1174,6 @@
   "payDone": "Done",
   "payCancelledTitle": "Payment cancelled",
   "payExpiredTitle": "Payment expired",
-  "payExpiredBody": "It wasn't finished within 15 minutes. No money was taken; please start again.",
   "payFailedTitle": "Payment not completed",
   "payNoMoneyTaken": "No money was taken.",
   "payStartAgain": "Start again",
@@ -1277,15 +1246,6 @@
       }
     }
   },
-  "payOtpExpiresIn": "Code expires in {time}",
-  "@payOtpExpiresIn": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "payOtpExpiredLocal": "The code has expired. Send a new one.",
   "unfinishedPaymentTitle": "Unfinished payment",
   "unfinishedPaymentContinue": "Continue",
   "payCheckStatus": "Check status",
@@ -1319,5 +1279,36 @@
         "type": "String"
       }
     }
-  }
+  },
+  "payByQr": "Pay by QR",
+  "payCertificateSection": "Certificate",
+  "payPayerNameLabel": "Full name",
+  "payPayerNameHelper": "Printed on your zakat certificate.",
+  "payPayerNameRequired": "Enter your name for the certificate.",
+  "payPayerPhoneLabel": "Phone number (optional)",
+  "payPayerPhoneInvalid": "Enter a valid phone number, e.g. 0911223344.",
+  "payAnonymousLabel": "Give anonymously",
+  "payAnonymousHelper": "The certificate says \"Anonymous donor\" instead of your name.",
+  "payQrTitle": "Scan to pay",
+  "payQrBody": "Open any Ethiopian bank app, choose to pay by QR and scan this code. The amount is already in the code.",
+  "payQrMissing": "The QR code can't be shown. Please start a new payment.",
+  "payQrConfirmNote": "The commission confirms each QR payment with the bank. This can take from a few minutes to a few hours; your certificate appears once it is confirmed.",
+  "payQrIHavePaid": "I have paid",
+  "payQrShare": "Share or save the QR",
+  "payQrShareHint": "Paying from this phone? Save the QR, then open it from your bank app.",
+  "payQrShareText": "Zakat payment QR: {amount}",
+  "@payQrShareText": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payQrCancelConfirmBody": "Only cancel if you have not paid this QR. If you already paid, keep it: it will be confirmed.",
+  "payQrConfirmingBody": "Thank you. The commission is confirming your payment with the bank, which can take from a few minutes to a few hours. This page updates by itself, and you can leave it: the payment and its certificate will be in your payments. Please don't pay again.",
+  "payQrExpiredBody": "This QR code is no longer valid. If you already paid it, the payment will still be confirmed and appear in your payments. Otherwise, please start again.",
+  "payQrLeaveTitle": "Did you pay this QR?",
+  "payQrLeaveBody": "If you paid, we'll keep confirming it and you'll find it in your payments. If you didn't, the payment is cancelled.",
+  "payQrLeaveNotPaid": "I didn't pay",
+  "payFailedBody": "Please start again."
 }

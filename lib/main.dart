@@ -6,6 +6,7 @@ import 'app/settings/app_settings_controller.dart';
 import 'core/auth/auth_session_controller.dart';
 import 'core/config/app_env.dart';
 import 'core/di/injection.dart';
+import 'features/zakat_payment/data/pending_payments_checker.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,7 @@ Future<void> main() async {
   configureDependencies();
   await getIt<AuthSessionController>().initialize();
   final appSettingsController = await AppSettingsController.create();
+  getIt<PendingPaymentsChecker>().start();
   runApp(
     MultiProvider(
       providers: [

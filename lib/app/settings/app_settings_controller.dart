@@ -11,9 +11,9 @@ class AppSettingsController extends ChangeNotifier {
     required AppLanguage language,
     required ThemeMode themeMode,
     required AppMode appMode,
-  })  : _language = language,
-        _themeMode = themeMode,
-        _appMode = appMode;
+  }) : _language = language,
+       _themeMode = themeMode,
+       _appMode = appMode;
 
   static const _languageKey = 'app_language';
   static const _themeModeKey = 'app_theme_mode';

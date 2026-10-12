@@ -85,7 +85,8 @@ class _DonationSearchPickerSheet extends StatefulWidget {
       _DonationSearchPickerSheetState();
 }
 
-class _DonationSearchPickerSheetState extends State<_DonationSearchPickerSheet> {
+class _DonationSearchPickerSheetState
+    extends State<_DonationSearchPickerSheet> {
   final _search = TextEditingController();
   String _query = '';
 
@@ -174,8 +175,9 @@ class _DonationSearchPickerSheetState extends State<_DonationSearchPickerSheet> 
                           itemCount: filtered.length,
                           separatorBuilder: (_, __) => Divider(
                             height: 1,
-                            color: theme.colorScheme.outlineVariant
-                                .withValues(alpha: 0.5),
+                            color: theme.colorScheme.outlineVariant.withValues(
+                              alpha: 0.5,
+                            ),
                           ),
                           itemBuilder: (context, index) {
                             final option = filtered[index];
@@ -198,8 +200,7 @@ class _DonationSearchPickerSheetState extends State<_DonationSearchPickerSheet> 
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              onTap: () =>
-                                  Navigator.of(context).pop(option),
+                              onTap: () => Navigator.of(context).pop(option),
                             );
                           },
                         ),

@@ -17,11 +17,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<ProfileModel> updateBankAccount({
     required String bankName,
     required String accountNumber,
-  }) =>
-      _dataProvider.updateBankAccount(
-        bankName: bankName,
-        accountNumber: accountNumber,
-      );
+  }) => _dataProvider.updateBankAccount(
+    bankName: bankName,
+    accountNumber: accountNumber,
+  );
 
   @override
   Future<void> updateProfile(ProfileModel profile) =>

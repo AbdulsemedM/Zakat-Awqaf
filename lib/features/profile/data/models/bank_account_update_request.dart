@@ -8,7 +8,7 @@ class BankAccountUpdateRequest {
   final String accountNumber;
 
   Map<String, dynamic> toJson() => {
-        'bankName': bankName,
-        'accountNumber': accountNumber,
-      };
+    'bankName': bankName,
+    'accountNumber': accountNumber,
+  };
 }

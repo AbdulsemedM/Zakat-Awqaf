@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
@@ -14,8 +19,8 @@ import '../../bloc/payment_flow_bloc.dart';
 import '../../data/models/zakat_payment_models.dart';
 import '../widgets/payment_countdown.dart';
 
-/// Steps 2–3 of a zakat payment and its result: confirm the account, enter
-/// the code, then paid / declined / still confirming.
+/// A started zakat payment and its result: the QR to scan with a bank app,
+/// "We are confirming your payment", then paid / expired / cancelled.
 class PaymentFlowScreen extends StatelessWidget {
   const PaymentFlowScreen({super.key, required this.payment});
 
@@ -30,40 +35,58 @@ class PaymentFlowScreen extends StatelessWidget {
   }
 }
 
+enum _LeaveChoice { paid, notPaid }
+
 class _PaymentFlowView extends StatelessWidget {
   const _PaymentFlowView();
 
-  /// Leaving before the transfer: ask, then cancel the payment. While the
-  /// bank is processing, leaving only stops watching (it can't be undone).
+  /// Leaving the QR before saying it was paid: ask. If the donor did not
+  /// pay, the payment is cancelled (the QR is not shown again); if they did,
+  /// it stays pending and is confirmed later. Leaving anything else only
+  /// stops watching.
   Future<void> _onBack(BuildContext context, PaymentFlowState state) async {
     final payment = state.payment;
-    final waitingForDonor =
+    final showingQr =
         payment.status == PaymentStatus.pending &&
-        payment.step != PaymentStep.processing;
-    if (!waitingForDonor) {
+        payment.step == PaymentStep.scanQr &&
+        !state.qrPaidReported;
+    if (!showingQr) {
       context.pop();
       return;
     }
     final l10n = context.l10n;
     final bloc = context.read<PaymentFlowBloc>();
-    final cancel = await showDialog<bool>(
+    final choice = await showDialog<_LeaveChoice>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.payCancelConfirmTitle),
-        content: Text(l10n.payCancelConfirmBody),
+        title: Text(l10n.payQrLeaveTitle),
+        content: Text(l10n.payQrLeaveBody),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.payKeepPaying),
+            onPressed: () =>
+                Navigator.of(dialogContext).pop(_LeaveChoice.notPaid),
+            child: Text(l10n.payQrLeaveNotPaid),
           ),
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.payCancelPayment),
+            onPressed: () => Navigator.of(dialogContext).pop(_LeaveChoice.paid),
+            child: Text(l10n.payQrIHavePaid),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(l10n.payKeepPaying),
           ),
         ],
       ),
     );
-    if (cancel == true) bloc.add(const PaymentCancelRequested());
+    if (!context.mounted) return;
+    switch (choice) {
+      case _LeaveChoice.notPaid:
+        bloc.add(const PaymentCancelRequested());
+      case _LeaveChoice.paid:
+        context.pop();
+      case null:
+        break;
+    }
   }
 
   @override
@@ -90,9 +113,10 @@ class _PaymentFlowView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                     child: switch ((payment.status, payment.step)) {
-                      (PaymentStatus.pending, PaymentStep.confirmAccount) =>
-                        _ConfirmAccountStep(state: state),
-                      (PaymentStatus.pending, PaymentStep.enterOtp) => _OtpStep(
+                      (PaymentStatus.pending, PaymentStep.scanQr)
+                          when state.qrPaidReported =>
+                        _ProcessingStep(state: state),
+                      (PaymentStatus.pending, PaymentStep.scanQr) => _QrStep(
                         state: state,
                       ),
                       (PaymentStatus.pending, _) => _ProcessingStep(
@@ -116,10 +140,9 @@ class _PaymentFlowView extends StatelessWidget {
 
 /// Amount, project and method of the payment being made.
 class _PaymentSummary extends StatelessWidget {
-  const _PaymentSummary({required this.payment, this.showAccount = false});
+  const _PaymentSummary({required this.payment});
 
   final ZakatPayment payment;
-  final bool showAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -147,74 +170,15 @@ class _PaymentSummary extends StatelessWidget {
               ),
             ),
           ],
-          if (showAccount) ...[
-            const Divider(height: 24),
-            _InfoRow(
-              label: l10n.payAccountHolder,
-              value: payment.accountHolderName ?? '—',
-              emphasize: true,
-            ),
-            const SizedBox(height: 8),
-            _InfoRow(
-              label: l10n.payAccountNumberShort,
-              value: payment.accountNumber ?? '—',
-            ),
-            if (payment.methodLabel != null) ...[
-              const SizedBox(height: 8),
-              _InfoRow(label: l10n.payMethod, value: payment.methodLabel!),
-            ],
-          ],
         ],
       ),
     );
   }
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    required this.label,
-    required this.value,
-    this.emphasize = false,
-  });
-
-  final String label;
-  final String value;
-  final bool emphasize;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 120,
-          child: Text(
-            label,
-            style: AppTypography.body(
-              fontSize: 13,
-              color: scheme.onSurfaceVariant,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: AppTypography.body(
-              fontSize: emphasize ? 16 : 14,
-              color: scheme.onSurface,
-              fontWeight: emphasize ? FontWeight.w800 : FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// "Finish within 12:34": the time left before the payment expires (15
-/// minutes from step 1). At zero, reloads it so the server's `expired`
-/// state is shown.
+/// "Finish within 12:34": the time left before the QR expires (30
+/// minutes). At zero, reloads the payment so the server's `expired` state
+/// is shown.
 class _PaymentDeadline extends StatelessWidget {
   const _PaymentDeadline({required this.payment});
 
@@ -281,158 +245,195 @@ class _ErrorText extends StatelessWidget {
   }
 }
 
-/// Step 2: "Is this your account?"
-class _ConfirmAccountStep extends StatelessWidget {
-  const _ConfirmAccountStep({required this.state});
+/// "Scan to pay": the QR for any Ethiopian bank app. The bloc polls until
+/// the commission confirms the payment.
+class _QrStep extends StatefulWidget {
+  const _QrStep({required this.state});
 
   final PaymentFlowState state;
 
   @override
-  Widget build(BuildContext context) {
+  State<_QrStep> createState() => _QrStepState();
+}
+
+class _QrStepState extends State<_QrStep> {
+  bool _sharing = false;
+
+  /// PNG of the QR on a white background, so it also scans from a gallery.
+  /// Uses the image from step 1 when there is one, else draws the payload.
+  Future<Uint8List?> _qrPng(ZakatPayment payment) async {
+    final image = payment.qrImageBase64;
+    if (image != null) return base64Decode(image);
+    final payload = payment.qrPayload;
+    if (payload == null) return null;
+    const size = 720.0;
+    const margin = 48.0;
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder)
+      ..drawRect(
+        const Rect.fromLTWH(0, 0, size, size),
+        Paint()..color = Colors.white,
+      )
+      ..translate(margin, margin);
+    QrPainter(
+      data: payload,
+      version: QrVersions.auto,
+      gapless: true,
+    ).paint(canvas, const Size.square(size - 2 * margin));
+    final rendered = await recorder.endRecording().toImage(
+      size.toInt(),
+      size.toInt(),
+    );
+    final bytes = await rendered.toByteData(format: ui.ImageByteFormat.png);
+    return bytes?.buffer.asUint8List();
+  }
+
+  Future<void> _share(ZakatPayment payment) async {
+    final l10n = context.l10n;
+    setState(() => _sharing = true);
+    try {
+      final png = await _qrPng(payment);
+      if (png == null) return;
+      await SharePlus.instance.share(
+        ShareParams(
+          text: l10n.payQrShareText(MoneyFormatter.etb(payment.amountEtb)),
+          files: [
+            XFile.fromData(
+              png,
+              mimeType: 'image/png',
+              name: 'zakat-qr-${payment.paymentId}.png',
+            ),
+          ],
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
+  }
+
+  Future<void> _confirmCancel() async {
     final l10n = context.l10n;
     final bloc = context.read<PaymentFlowBloc>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _StepTitle(title: l10n.payConfirmTitle, body: l10n.payConfirmBody),
-        const SizedBox(height: 16),
-        _PaymentSummary(payment: state.payment, showAccount: true),
-        _PaymentDeadline(payment: state.payment),
-        _ErrorText(state.errorMessage),
-        const SizedBox(height: 20),
-        if (state.busy)
-          const Center(child: CircularProgressIndicator())
-        else ...[
-          GoldActionButton(
-            label: l10n.payYesSendCode,
-            icon: Icons.sms_outlined,
-            onPressed: () => bloc.add(const PaymentAccountConfirmed()),
-          ),
-          const SizedBox(height: 8),
+    final cancel = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.payCancelConfirmTitle),
+        content: Text(l10n.payQrCancelConfirmBody),
+        actions: [
           TextButton(
-            onPressed: () => bloc.add(const PaymentCancelRequested()),
-            child: Text(l10n.payNotMyAccount),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.payKeepPaying),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.payCancelPayment),
           ),
         ],
-      ],
+      ),
     );
-  }
-}
-
-/// Step 3: enter the code and pay.
-class _OtpStep extends StatefulWidget {
-  const _OtpStep({required this.state});
-
-  final PaymentFlowState state;
-
-  @override
-  State<_OtpStep> createState() => _OtpStepState();
-}
-
-class _OtpStepState extends State<_OtpStep> {
-  final _otp = TextEditingController();
-
-  @override
-  void dispose() {
-    _otp.dispose();
-    super.dispose();
+    if (cancel == true) bloc.add(const PaymentCancelRequested());
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final bloc = context.read<PaymentFlowBloc>();
+    final scheme = Theme.of(context).colorScheme;
     final state = widget.state;
     final payment = state.payment;
-    final attemptsLeft = payment.otpAttemptsLeft;
-    final complete = _otp.text.length == 6;
+    final payload = payment.qrPayload;
+    final image = payment.qrImageBase64;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StepTitle(title: l10n.payOtpTitle, body: l10n.payOtpBody),
+        _StepTitle(title: l10n.payQrTitle, body: l10n.payQrBody),
+        const SizedBox(height: 16),
+        Center(
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              // Always white: bank apps read dark modules on a light
+              // background, whatever the app theme.
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.goldHairline),
+            ),
+            child: SizedBox.square(
+              dimension: 240,
+              child: payload != null
+                  ? QrImageView(
+                      data: payload,
+                      version: QrVersions.auto,
+                      gapless: true,
+                      backgroundColor: Colors.white,
+                      semanticsLabel: l10n.payQrTitle,
+                    )
+                  : image != null
+                  ? Image.memory(base64Decode(image), fit: BoxFit.contain)
+                  : Center(
+                      child: Text(
+                        l10n.payQrMissing,
+                        textAlign: TextAlign.center,
+                        style: AppTypography.body(
+                          fontSize: 13,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+            ),
+          ),
+        ),
         const SizedBox(height: 16),
         _PaymentSummary(payment: payment),
         _PaymentDeadline(payment: payment),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _otp,
-          autofocus: true,
-          enabled: !state.busy,
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(6),
-          ],
-          onChanged: (_) => setState(() {}),
-          style: AppTypography.body(
-            fontSize: 26,
-            color: Theme.of(context).colorScheme.onSurface,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 8,
-          ),
-          decoration: InputDecoration(
-            labelText: l10n.payOtpLabel,
-            helperText: attemptsLeft == null
-                ? null
-                : l10n.payOtpAttemptsLeft(attemptsLeft),
-            errorText: state.errorMessage,
-            errorMaxLines: 3,
-          ),
-        ),
-        if (payment.otpExpiresAt != null)
-          PaymentCountdown(
-            deadline: payment.otpExpiresAt!,
-            builder: (context, remaining) => Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: Text(
-                remaining == Duration.zero
-                    ? l10n.payOtpExpiredLocal
-                    : l10n.payOtpExpiresIn(formatCountdown(remaining)),
-                style: AppTypography.body(
-                  fontSize: 12,
-                  color: remaining == Duration.zero
-                      ? Theme.of(context).colorScheme.error
-                      : Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        const SizedBox(height: 8),
-        Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: TextButton.icon(
-            onPressed: state.busy || !state.canResend
-                ? null
-                : () {
-                    _otp.clear();
-                    bloc.add(const PaymentOtpResendRequested());
-                  },
-            icon: Icon(
-              Icons.refresh,
-              color: state.otpExpired ? AppColors.goldDeep : null,
-            ),
-            label: Text(l10n.payResendCode),
-          ),
-        ),
         const SizedBox(height: 12),
-        if (state.busy)
-          const Center(child: CircularProgressIndicator())
-        else
-          GoldActionButton(
-            label: l10n.payPayAmount(MoneyFormatter.etb(payment.amountEtb)),
-            icon: Icons.lock_outline_rounded,
-            onPressed: complete
-                ? () => bloc.add(PaymentOtpSubmitted(_otp.text))
-                : null,
+        Text(
+          l10n.payQrConfirmNote,
+          style: AppTypography.body(
+            fontSize: 12,
+            color: scheme.onSurfaceVariant,
+            height: 1.45,
           ),
+        ),
+        _ErrorText(state.errorMessage),
+        const SizedBox(height: 16),
+        GoldActionButton(
+          label: l10n.payQrIHavePaid,
+          icon: Icons.check_circle_outline_rounded,
+          onPressed: state.busy
+              ? null
+              : () => context.read<PaymentFlowBloc>().add(
+                  const PaymentQrPaidReported(),
+                ),
+        ),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          onPressed: _sharing || (payload == null && image == null)
+              ? null
+              : () => _share(payment),
+          icon: const Icon(Icons.ios_share_rounded),
+          label: Text(l10n.payQrShare),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          l10n.payQrShareHint,
+          textAlign: TextAlign.center,
+          style: AppTypography.body(
+            fontSize: 12,
+            color: scheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextButton(
+          onPressed: state.busy ? null : _confirmCancel,
+          child: Text(l10n.payCancelPayment),
+        ),
       ],
     );
   }
 }
 
-/// The bank has not answered yet; the bloc polls.
+/// "We are confirming your payment" (a paid QR, or an older Coop account
+/// payment the bank has not answered); the bloc polls.
 class _ProcessingStep extends StatelessWidget {
   const _ProcessingStep({required this.state});
 
@@ -449,7 +450,9 @@ class _ProcessingStep extends StatelessWidget {
         const SizedBox(height: 20),
         _StepTitle(
           title: l10n.payProcessingTitle,
-          body: l10n.payProcessingBody,
+          body: state.payment.isQr
+              ? l10n.payQrConfirmingBody
+              : l10n.payProcessingBody,
           center: true,
         ),
         const SizedBox(height: 16),
@@ -465,6 +468,13 @@ class _ProcessingStep extends StatelessWidget {
           icon: const Icon(Icons.refresh),
           label: Text(l10n.payCheckAgain),
         ),
+        if (state.payment.isQr) ...[
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => context.go('/'),
+            child: Text(l10n.payDone),
+          ),
+        ],
       ],
     );
   }
@@ -521,7 +531,7 @@ class _SucceededResult extends StatelessWidget {
   }
 }
 
-/// Failed, cancelled or expired: nothing was taken, start again.
+/// Failed, cancelled or expired: start again.
 class _EndedResult extends StatelessWidget {
   const _EndedResult({required this.state});
 
@@ -533,13 +543,12 @@ class _EndedResult extends StatelessWidget {
     final payment = state.payment;
     final (title, body) = switch (payment.status) {
       PaymentStatus.cancelled => (l10n.payCancelledTitle, l10n.payNoMoneyTaken),
-      PaymentStatus.expired => (l10n.payExpiredTitle, l10n.payExpiredBody),
+      // An expired QR may still have been paid: the commission can confirm
+      // it later.
+      PaymentStatus.expired => (l10n.payExpiredTitle, l10n.payQrExpiredBody),
       _ => (
         l10n.payFailedTitle,
-        [
-          payment.failureReason ?? state.errorMessage,
-          l10n.payNoMoneyTaken,
-        ].whereType<String>().join('\n'),
+        payment.failureReason ?? state.errorMessage ?? l10n.payFailedBody,
       ),
     };
     return Column(

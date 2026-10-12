@@ -18,9 +18,7 @@ class CoopWaqfSplashBadge extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: const Color(0xFF081510).withValues(alpha: 0.42),
-        border: Border.all(
-          color: AppColors.warmGold.withValues(alpha: 0.2),
-        ),
+        border: Border.all(color: AppColors.warmGold.withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.28),

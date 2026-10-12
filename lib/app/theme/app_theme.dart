@@ -16,13 +16,14 @@ class AppTheme {
   static ThemeData get dark => _theme(Brightness.dark);
 
   static ThemeData _theme(Brightness brightness) {
-    final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
-      brightness: brightness,
-    ).copyWith(
-      secondary: AppColors.secondary,
-      onSecondary: AppColors.onSecondary,
-    );
+    final scheme =
+        ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          brightness: brightness,
+        ).copyWith(
+          secondary: AppColors.secondary,
+          onSecondary: AppColors.onSecondary,
+        );
 
     final base = ThemeData(
       colorScheme: scheme,
@@ -110,7 +111,9 @@ class AppTheme {
           }),
           side: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return BorderSide(color: scheme.onSurface.withValues(alpha: 0.12));
+              return BorderSide(
+                color: scheme.onSurface.withValues(alpha: 0.12),
+              );
             }
             return BorderSide(color: scheme.primary);
           }),
@@ -139,9 +142,7 @@ class AppTheme {
         elevation: 3,
       ),
       iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(
-          foregroundColor: scheme.onSurfaceVariant,
-        ),
+        style: IconButton.styleFrom(foregroundColor: scheme.onSurfaceVariant),
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
@@ -174,9 +175,7 @@ class AppTheme {
         backgroundColor: scheme.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(_radiusLg),
-          ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(_radiusLg)),
         ),
         showDragHandle: true,
         elevation: 2,
@@ -206,9 +205,7 @@ class AppTheme {
         color: scheme.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         clipBehavior: Clip.antiAlias,
       ),
       dividerTheme: DividerThemeData(

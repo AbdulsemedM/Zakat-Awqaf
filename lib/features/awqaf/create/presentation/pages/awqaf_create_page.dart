@@ -81,8 +81,9 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
   int get _stepIndex => _instrument == _WaqfInstrument.money
       ? _moneySteps.indexOf(_moneyStep)
       : _assetSteps.indexOf(_assetStep);
-  int get _totalSteps =>
-      _instrument == _WaqfInstrument.money ? _moneySteps.length : _assetSteps.length;
+  int get _totalSteps => _instrument == _WaqfInstrument.money
+      ? _moneySteps.length
+      : _assetSteps.length;
   String get _stepTitle {
     if (_instrument == _WaqfInstrument.money) {
       return switch (_moneyStep) {
@@ -106,7 +107,8 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
     if (_instrument == _WaqfInstrument.money) {
       return switch (_moneyStep) {
         _MoneyStep.amountShares =>
-          _shares > 0 && (double.tryParse(_moneyAmountController.text) ?? 0) > 0,
+          _shares > 0 &&
+              (double.tryParse(_moneyAmountController.text) ?? 0) > 0,
         _MoneyStep.dedication =>
           _dedicationTarget != _DedicationTarget.deceasedRelative ||
               _honoreeController.text.trim().isNotEmpty,
@@ -121,7 +123,8 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
             _assetLocationController.text.trim().isNotEmpty &&
             (double.tryParse(_estimatedValueController.text) ?? 0) > 0,
       _AssetStep.valuationDocs => _valuationDocAttached,
-      _AssetStep.legalCompliance => _ownershipDocAttached && _acceptedLegalTerms,
+      _AssetStep.legalCompliance =>
+        _ownershipDocAttached && _acceptedLegalTerms,
       _AssetStep.beneficiaries => _beneficiaries.isNotEmpty,
       _AssetStep.review => true,
     };
@@ -185,7 +188,8 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
             messageController: _dedicationMessageController,
             isPrivate: _isDedicationPrivate,
             onTargetChanged: (v) => setState(() => _dedicationTarget = v),
-            onPrivateChanged: (v) => setState(() => _isDedicationPrivate = v ?? false),
+            onPrivateChanged: (v) =>
+                setState(() => _isDedicationPrivate = v ?? false),
             onChanged: () => setState(() {}),
           );
         case _MoneyStep.beneficiaries:
@@ -233,14 +237,17 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
       case _AssetStep.valuationDocs:
         return _ValuationDocStep(
           attached: _valuationDocAttached,
-          onToggle: () => setState(() => _valuationDocAttached = !_valuationDocAttached),
+          onToggle: () =>
+              setState(() => _valuationDocAttached = !_valuationDocAttached),
         );
       case _AssetStep.legalCompliance:
         return _LegalStep(
           ownershipDocAttached: _ownershipDocAttached,
           acceptedTerms: _acceptedLegalTerms,
-          onOwnershipToggle: () => setState(() => _ownershipDocAttached = !_ownershipDocAttached),
-          onTermsChanged: (v) => setState(() => _acceptedLegalTerms = v ?? false),
+          onOwnershipToggle: () =>
+              setState(() => _ownershipDocAttached = !_ownershipDocAttached),
+          onTermsChanged: (v) =>
+              setState(() => _acceptedLegalTerms = v ?? false),
         );
       case _AssetStep.beneficiaries:
         return _BeneficiariesStep(
@@ -323,8 +330,16 @@ class _AwqafCreatePageState extends State<AwqafCreatePage> {
                     foregroundColor: AppColors.textOnPrimary,
                   ),
                   onPressed: _canContinue ? _onContinue : null,
-                  icon: Icon(_stepIndex == _totalSteps - 1 ? Icons.verified : Icons.arrow_forward),
-                  label: Text(_stepIndex == _totalSteps - 1 ? 'Confirm Dedication' : 'Continue'),
+                  icon: Icon(
+                    _stepIndex == _totalSteps - 1
+                        ? Icons.verified
+                        : Icons.arrow_forward,
+                  ),
+                  label: Text(
+                    _stepIndex == _totalSteps - 1
+                        ? 'Confirm Dedication'
+                        : 'Continue',
+                  ),
                 ),
               ),
             ],
@@ -373,7 +388,9 @@ class _StepHeader extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           title,
-          style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ],
     );
@@ -432,11 +449,18 @@ class _MoneyAmountSharesStep extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Waqf Shares Allocation', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+            Text(
+              'Waqf Shares Allocation',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             const SizedBox(height: 8),
             TextField(
               controller: amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               onChanged: (_) => onChanged(),
               decoration: const InputDecoration(
                 labelText: 'Total Contribution (ETB)',
@@ -445,13 +469,17 @@ class _MoneyAmountSharesStep extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                IconButton.outlined(onPressed: onMinus, icon: const Icon(Icons.remove)),
+                IconButton.outlined(
+                  onPressed: onMinus,
+                  icon: const Icon(Icons.remove),
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
+                      color: theme.colorScheme.surfaceContainerHighest
+                          .withValues(alpha: 0.35),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
@@ -526,7 +554,11 @@ class _DedicationStep extends StatelessWidget {
     final opts = <(_DedicationTarget, String, String)>[
       (_DedicationTarget.myself, 'Myself', 'Personal legacy dedication'),
       (_DedicationTarget.parents, 'Parents', 'Honor your parents'),
-      (_DedicationTarget.deceasedRelative, 'Deceased Relative', 'Sadaqa Jariya for departed'),
+      (
+        _DedicationTarget.deceasedRelative,
+        'Deceased Relative',
+        'Sadaqa Jariya for departed',
+      ),
       (_DedicationTarget.anonymous, 'Anonymous', 'Without naming a recipient'),
     ];
     return Column(
@@ -539,7 +571,9 @@ class _DedicationStep extends StatelessWidget {
             child: ListTile(
               onTap: () => onTargetChanged(o.$1),
               leading: Icon(
-                selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                selected
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
                 color: AppColors.awqafPrimary,
               ),
               title: Text(o.$2),
@@ -560,9 +594,7 @@ class _DedicationStep extends StatelessWidget {
           controller: messageController,
           onChanged: (_) => onChanged(),
           maxLines: 3,
-          decoration: const InputDecoration(
-            labelText: 'Message (optional)',
-          ),
+          decoration: const InputDecoration(labelText: 'Message (optional)'),
         ),
         CheckboxListTile(
           value: isPrivate,
@@ -602,12 +634,16 @@ class _BeneficiariesStep extends StatelessWidget {
           spacing: 8,
           runSpacing: 8,
           children: items
-              .map((item) => FilterChip(
-                    selected: selected.contains(item),
-                    label: Text(item),
-                    selectedColor: AppColors.awqafSecondary.withValues(alpha: 0.22),
-                    onSelected: (_) => onToggle(item),
-                  ))
+              .map(
+                (item) => FilterChip(
+                  selected: selected.contains(item),
+                  label: Text(item),
+                  selectedColor: AppColors.awqafSecondary.withValues(
+                    alpha: 0.22,
+                  ),
+                  onSelected: (_) => onToggle(item),
+                ),
+              )
               .toList(),
         ),
         const SizedBox(height: 10),
@@ -624,10 +660,7 @@ class _BeneficiariesStep extends StatelessWidget {
 }
 
 class _PaymentMethodStep extends StatelessWidget {
-  const _PaymentMethodStep({
-    required this.selected,
-    required this.onChanged,
-  });
+  const _PaymentMethodStep({required this.selected, required this.onChanged});
 
   final _PaymentMethod selected;
   final ValueChanged<_PaymentMethod> onChanged;
@@ -654,7 +687,9 @@ class _PaymentMethodStep extends StatelessWidget {
         final m = methods[i];
         final active = selected == m.$1;
         return Card(
-          color: active ? AppColors.awqafSecondary.withValues(alpha: 0.25) : null,
+          color: active
+              ? AppColors.awqafSecondary.withValues(alpha: 0.25)
+              : null,
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () => onChanged(m.$1),
@@ -664,9 +699,9 @@ class _PaymentMethodStep extends StatelessWidget {
                 child: Text(
                   m.$2,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
             ),
@@ -711,7 +746,9 @@ class _AssetPropertyStep extends StatelessWidget {
           controller: estimatedValueController,
           onChanged: (_) => onChanged(),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(labelText: 'Estimated market value (ETB)'),
+          decoration: const InputDecoration(
+            labelText: 'Estimated market value (ETB)',
+          ),
         ),
       ],
     );
@@ -728,9 +765,15 @@ class _ValuationDocStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(attached ? Icons.check_circle : Icons.upload_file_outlined),
+        leading: Icon(
+          attached ? Icons.check_circle : Icons.upload_file_outlined,
+        ),
         title: const Text('Attach valuation report'),
-        subtitle: Text(attached ? 'Valuation document attached' : 'Tap to attach mock document'),
+        subtitle: Text(
+          attached
+              ? 'Valuation document attached'
+              : 'Tap to attach mock document',
+        ),
         onTap: onToggle,
       ),
     );
@@ -757,7 +800,9 @@ class _LegalStep extends StatelessWidget {
         Card(
           child: ListTile(
             leading: Icon(
-              ownershipDocAttached ? Icons.verified_rounded : Icons.description_outlined,
+              ownershipDocAttached
+                  ? Icons.verified_rounded
+                  : Icons.description_outlined,
             ),
             title: const Text('Attach ownership document'),
             subtitle: Text(
@@ -826,22 +871,44 @@ class _ReviewStep extends StatelessWidget {
           children: [
             Text(
               'Draft Deed Summary',
-              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
             ),
             const SizedBox(height: 10),
-            _reviewLine('Instrument', instrument == _WaqfInstrument.money ? 'Money Waqf' : 'Asset/Land Waqf'),
+            _reviewLine(
+              'Instrument',
+              instrument == _WaqfInstrument.money
+                  ? 'Money Waqf'
+                  : 'Asset/Land Waqf',
+            ),
             if (instrument == _WaqfInstrument.money) ...[
-              _reviewLine('Contribution', 'ETB ${moneyAmount.isEmpty ? '0.00' : moneyAmount}'),
+              _reviewLine(
+                'Contribution',
+                'ETB ${moneyAmount.isEmpty ? '0.00' : moneyAmount}',
+              ),
               _reviewLine('Shares', '$shares'),
               _reviewLine('Payment Method', paymentLabel),
               _reviewLine('Dedication', dedicationTarget.name),
-              _reviewLine('Honoree', honoree.isEmpty ? 'Not specified' : honoree),
-              _reviewLine('Message', message.isEmpty ? 'No custom message' : message),
-              _reviewLine('Privacy', isPrivate ? 'Private' : 'Public acknowledgment'),
+              _reviewLine(
+                'Honoree',
+                honoree.isEmpty ? 'Not specified' : honoree,
+              ),
+              _reviewLine(
+                'Message',
+                message.isEmpty ? 'No custom message' : message,
+              ),
+              _reviewLine(
+                'Privacy',
+                isPrivate ? 'Private' : 'Public acknowledgment',
+              ),
             ] else ...[
               _reviewLine('Asset Name', assetName),
               _reviewLine('Location', assetLocation),
-              _reviewLine('Estimated Value', 'ETB ${assetValue.isEmpty ? '0.00' : assetValue}'),
+              _reviewLine(
+                'Estimated Value',
+                'ETB ${assetValue.isEmpty ? '0.00' : assetValue}',
+              ),
             ],
             _reviewLine('Beneficiaries', beneficiaries.join(', ')),
           ],
@@ -856,7 +923,10 @@ class _ReviewStep extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label.toUpperCase(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+          Text(
+            label.toUpperCase(),
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 2),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
         ],

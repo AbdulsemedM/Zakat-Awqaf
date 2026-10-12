@@ -33,10 +33,15 @@ class ZakatPageHeader extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
       child: DecoratedBox(
-        decoration: const BoxDecoration(gradient: PrimaryHero.zakatHeroGradient),
+        decoration: const BoxDecoration(
+          gradient: PrimaryHero.zakatHeroGradient,
+        ),
         child: Stack(
           children: [
-            const IslamicPatternLayer(opacity: 0.12, fadeTo: Alignment.bottomLeft),
+            const IslamicPatternLayer(
+              opacity: 0.12,
+              fadeTo: Alignment.bottomLeft,
+            ),
             const Positioned(
               top: 84,
               right: -48,
@@ -52,10 +57,15 @@ class ZakatPageHeader extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-                          onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+                          tooltip: MaterialLocalizations.of(
+                            context,
+                          ).backButtonTooltip,
+                          onPressed:
+                              onBack ?? () => Navigator.of(context).maybePop(),
                           style: IconButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(alpha: 0.10),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.10,
+                            ),
                             side: BorderSide(
                               color: AppColors.goldLight.withValues(alpha: 0.4),
                             ),
@@ -83,10 +93,16 @@ class ZakatPageHeader extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: Colors.white.withValues(alpha: 0.10),
                                     border: Border.all(
-                                      color: AppColors.goldLight.withValues(alpha: 0.55),
+                                      color: AppColors.goldLight.withValues(
+                                        alpha: 0.55,
+                                      ),
                                     ),
                                   ),
-                                  child: Icon(leadingIcon, color: AppColors.goldLight, size: 20),
+                                  child: Icon(
+                                    leadingIcon,
+                                    color: AppColors.goldLight,
+                                    size: 20,
+                                  ),
                                 ),
                                 const SizedBox(width: 12),
                               ],
@@ -135,7 +151,11 @@ class ZakatPageHeader extends StatelessWidget {
 
 /// Section title inside a form card: gold-ringed icon plus a label.
 class ZakatFormSectionTitle extends StatelessWidget {
-  const ZakatFormSectionTitle({super.key, required this.icon, required this.label});
+  const ZakatFormSectionTitle({
+    super.key,
+    required this.icon,
+    required this.label,
+  });
 
   final IconData icon;
   final String label;
@@ -218,7 +238,9 @@ class GoldActionButton extends StatelessWidget {
             foregroundColor: AppColors.emeraldNight,
             disabledForegroundColor: AppColors.emeraldNight,
             minimumSize: const Size.fromHeight(56),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

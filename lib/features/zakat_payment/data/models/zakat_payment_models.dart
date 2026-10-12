@@ -25,11 +25,11 @@ class PaymentMethod extends Equatable {
   final double? minAmountEtb;
   final double? maxAmountEtb;
 
-  /// `account_otp`: account number, then confirm, then OTP. The only flow
-  /// the app supports today.
+  /// `qr`: the donor scans a QR code with any bank app. The only flow the
+  /// app runs (the Coop account flow was switched off).
   final String? flow;
 
-  bool get isAccountOtp => flow == 'account_otp';
+  bool get isQr => flow == 'qr';
 
   factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
     code: jsonString(json['code']) ?? '',
@@ -62,8 +62,10 @@ enum ZakatType { wealth, livestock, crops, general, fitr }
 
 enum PaymentStatus { pending, succeeded, failed, cancelled, expired }
 
-/// Which screen a `pending` payment is on. Absent once the payment is final.
-enum PaymentStep { confirmAccount, enterOtp, processing }
+/// Where a `pending` payment is. `scanQr`: waiting for the donor's bank app
+/// and the commission's confirmation. `processing`: an older Coop account
+/// payment the bank has not answered. Absent once the payment is final.
+enum PaymentStep { scanQr, processing }
 
 /// The response of every zakat payment call.
 class ZakatPayment extends Equatable {
@@ -75,12 +77,11 @@ class ZakatPayment extends Equatable {
     required this.amountEtb,
     this.causeId,
     this.causeTitle,
+    this.methodCode,
     this.methodLabel,
-    this.accountNumber,
-    this.accountHolderName,
-    this.otpExpiresAt,
-    this.otpAttemptsLeft,
-    this.otpResendsLeft,
+    this.qrPayload,
+    this.qrImageBase64,
+    this.qrExpiresAt,
     this.expiresAt,
     this.createdAt,
     this.guestToken,
@@ -97,18 +98,19 @@ class ZakatPayment extends Equatable {
   final double amountEtb;
   final String? causeId;
   final String? causeTitle;
+  final String? methodCode;
   final String? methodLabel;
 
-  /// Masked, e.g. `*********6789`.
-  final String? accountNumber;
+  /// The EthQR string to scan (QR payments). Render it when there is no
+  /// [qrImageBase64].
+  final String? qrPayload;
 
-  /// Partly masked, e.g. `Yitbarek W*******`.
-  final String? accountHolderName;
-  final DateTime? otpExpiresAt;
-  final int? otpAttemptsLeft;
-  final int? otpResendsLeft;
+  /// PNG of the QR, only in the step 1 response.
+  final String? qrImageBase64;
+  final DateTime? qrExpiresAt;
 
-  /// The payment must be finished before this (15 minutes).
+  /// The QR must be paid before this (30 minutes). An expired payment that
+  /// was paid anyway can still turn `succeeded`.
   final DateTime? expiresAt;
   final DateTime? createdAt;
 
@@ -121,38 +123,13 @@ class ZakatPayment extends Equatable {
 
   bool get isFinal => status != PaymentStatus.pending;
 
-  /// This payment with new OTP counts (from an `OTP_*` error's `data`).
-  ZakatPayment withOtpCounts({int? attemptsLeft, int? resendsLeft}) {
-    return ZakatPayment(
-      paymentId: paymentId,
-      status: status,
-      step: step,
-      zakatType: zakatType,
-      amountEtb: amountEtb,
-      causeId: causeId,
-      causeTitle: causeTitle,
-      methodLabel: methodLabel,
-      accountNumber: accountNumber,
-      accountHolderName: accountHolderName,
-      otpExpiresAt: otpExpiresAt,
-      otpAttemptsLeft: attemptsLeft ?? otpAttemptsLeft,
-      otpResendsLeft: resendsLeft ?? otpResendsLeft,
-      expiresAt: expiresAt,
-      createdAt: createdAt,
-      providerReference: providerReference,
-      paidAt: paidAt,
-      certificateId: certificateId,
-      failureReason: failureReason,
-    );
-  }
+  bool get isQr => step == PaymentStep.scanQr || methodCode == 'ethqr';
 
   factory ZakatPayment.fromJson(Map<String, dynamic> json) {
     final paymentId = jsonString(json['paymentId']);
     if (paymentId == null) throw const FormatException('Payment without id');
-    final account = json['account'];
-    final otp = json['otp'];
-    final accountMap = account is Map ? account : const {};
-    final otpMap = otp is Map ? otp : const {};
+    final qr = json['qr'];
+    final qrMap = qr is Map ? qr : const {};
     return ZakatPayment(
       paymentId: paymentId,
       status: switch (json['status']) {
@@ -163,8 +140,7 @@ class ZakatPayment extends Equatable {
         _ => PaymentStatus.pending,
       },
       step: switch (json['step']) {
-        'confirm_account' => PaymentStep.confirmAccount,
-        'enter_otp' => PaymentStep.enterOtp,
+        'scan_qr' => PaymentStep.scanQr,
         'processing' => PaymentStep.processing,
         _ => null,
       },
@@ -172,12 +148,11 @@ class ZakatPayment extends Equatable {
       amountEtb: jsonDouble(json['amountEtb']) ?? 0,
       causeId: jsonString(json['causeId']),
       causeTitle: jsonString(json['causeTitle']),
+      methodCode: jsonString(json['methodCode']),
       methodLabel: jsonString(json['methodLabel']),
-      accountNumber: jsonString(accountMap['accountNumber']),
-      accountHolderName: jsonString(accountMap['accountHolderName']),
-      otpExpiresAt: jsonDate(otpMap['expiresAt']),
-      otpAttemptsLeft: jsonInt(otpMap['attemptsLeft']),
-      otpResendsLeft: jsonInt(otpMap['resendsLeft']),
+      qrPayload: jsonString(qrMap['payload']),
+      qrImageBase64: jsonString(qrMap['imageBase64']),
+      qrExpiresAt: jsonDate(qrMap['expiresAt']),
       expiresAt: jsonDate(json['expiresAt']),
       createdAt: jsonDate(json['createdAt']),
       guestToken: jsonString(json['guestToken']),
@@ -197,12 +172,11 @@ class ZakatPayment extends Equatable {
     amountEtb,
     causeId,
     causeTitle,
+    methodCode,
     methodLabel,
-    accountNumber,
-    accountHolderName,
-    otpExpiresAt,
-    otpAttemptsLeft,
-    otpResendsLeft,
+    qrPayload,
+    qrImageBase64,
+    qrExpiresAt,
     expiresAt,
     createdAt,
     guestToken,
@@ -213,14 +187,14 @@ class ZakatPayment extends Equatable {
   ];
 }
 
-/// Body of `POST /api/payments/v1/zakat-payments` (step 1).
+/// Body of `POST /api/payments/v1/zakat-payments`: creates the QR.
 class ZakatPaymentRequest {
   const ZakatPaymentRequest({
     required this.zakatType,
     required this.amountEtb,
     required this.methodCode,
     required this.causeId,
-    required this.accountNumber,
+    this.payer,
     required this.idempotencyKey,
     this.calculation,
   });
@@ -229,7 +203,9 @@ class ZakatPaymentRequest {
   final double amountEtb;
   final String methodCode;
   final String causeId;
-  final String accountNumber;
+
+  /// Required for a guest paying by QR (the name goes on the certificate).
+  final PaymentPayer? payer;
   final String idempotencyKey;
 
   /// Sent when the amount came from the calculator or the Fitr card.
@@ -240,9 +216,27 @@ class ZakatPaymentRequest {
     'amountEtb': double.parse(amountEtb.toStringAsFixed(2)),
     'methodCode': methodCode,
     'causeId': causeId,
-    'accountNumber': accountNumber,
+    'payer': ?payer?.toJson(),
     'calculation': ?calculation,
     'idempotencyKey': idempotencyKey,
+  };
+}
+
+/// `payer` of a payment. A guest paying by QR must send [fullName]; a
+/// signed-in donor's name comes from the account.
+class PaymentPayer {
+  const PaymentPayer({this.fullName, this.phone, this.anonymous = false});
+
+  final String? fullName;
+  final String? phone;
+
+  /// Prints "Anonymous donor" on the certificate.
+  final bool anonymous;
+
+  Map<String, dynamic> toJson() => {
+    'fullName': ?fullName,
+    'phone': ?phone,
+    'anonymous': anonymous,
   };
 }
 

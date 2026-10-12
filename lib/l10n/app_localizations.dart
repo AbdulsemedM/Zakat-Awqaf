@@ -3111,24 +3111,6 @@ abstract class AppLocalizations {
   /// **'Enter an amount between {min} and {max}.'**
   String payAmountOutOfRange(String min, String max);
 
-  /// No description provided for @payAccountNumberLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Coop Bank account number'**
-  String get payAccountNumberLabel;
-
-  /// No description provided for @payAccountNumberHelper.
-  ///
-  /// In en, this message translates to:
-  /// **'The account you pay from. We\'ll show the account holder\'s name for you to confirm.'**
-  String get payAccountNumberHelper;
-
-  /// No description provided for @payAccountNumberInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a valid account number (6–20 digits).'**
-  String get payAccountNumberInvalid;
-
   /// No description provided for @payNetworkError.
   ///
   /// In en, this message translates to:
@@ -3165,12 +3147,6 @@ abstract class AppLocalizations {
   /// **'Cancel this payment?'**
   String get payCancelConfirmTitle;
 
-  /// No description provided for @payCancelConfirmBody.
-  ///
-  /// In en, this message translates to:
-  /// **'No money has been taken. You can start again at any time.'**
-  String get payCancelConfirmBody;
-
   /// No description provided for @payKeepPaying.
   ///
   /// In en, this message translates to:
@@ -3188,78 +3164,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'For: {cause}'**
   String payForCause(String cause);
-
-  /// No description provided for @payAccountHolder.
-  ///
-  /// In en, this message translates to:
-  /// **'Account holder'**
-  String get payAccountHolder;
-
-  /// No description provided for @payAccountNumberShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Account'**
-  String get payAccountNumberShort;
-
-  /// No description provided for @payConfirmTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Is this your account?'**
-  String get payConfirmTitle;
-
-  /// No description provided for @payConfirmBody.
-  ///
-  /// In en, this message translates to:
-  /// **'If it is, Coop Bank will send a confirmation code to the phone registered on this account.'**
-  String get payConfirmBody;
-
-  /// No description provided for @payYesSendCode.
-  ///
-  /// In en, this message translates to:
-  /// **'Yes, send code'**
-  String get payYesSendCode;
-
-  /// No description provided for @payNotMyAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Not my account'**
-  String get payNotMyAccount;
-
-  /// No description provided for @payOtpTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the confirmation code'**
-  String get payOtpTitle;
-
-  /// No description provided for @payOtpBody.
-  ///
-  /// In en, this message translates to:
-  /// **'We sent a 6-digit code to the phone registered on your Coop Bank account.'**
-  String get payOtpBody;
-
-  /// No description provided for @payOtpLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirmation code'**
-  String get payOtpLabel;
-
-  /// No description provided for @payOtpAttemptsLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 attempt left} other{{count} attempts left}}'**
-  String payOtpAttemptsLeft(int count);
-
-  /// No description provided for @payResendCode.
-  ///
-  /// In en, this message translates to:
-  /// **'Send a new code'**
-  String get payResendCode;
-
-  /// No description provided for @payPayAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Pay {amount}'**
-  String payPayAmount(String amount);
 
   /// No description provided for @payProcessingTitle.
   ///
@@ -3320,12 +3224,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment expired'**
   String get payExpiredTitle;
-
-  /// No description provided for @payExpiredBody.
-  ///
-  /// In en, this message translates to:
-  /// **'It wasn\'t finished within 15 minutes. No money was taken; please start again.'**
-  String get payExpiredBody;
 
   /// No description provided for @payFailedTitle.
   ///
@@ -3591,18 +3489,6 @@ abstract class AppLocalizations {
   /// **'Finish within {time}'**
   String payFinishWithin(String time);
 
-  /// No description provided for @payOtpExpiresIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Code expires in {time}'**
-  String payOtpExpiresIn(String time);
-
-  /// No description provided for @payOtpExpiredLocal.
-  ///
-  /// In en, this message translates to:
-  /// **'The code has expired. Send a new one.'**
-  String get payOtpExpiredLocal;
-
   /// No description provided for @unfinishedPaymentTitle.
   ///
   /// In en, this message translates to:
@@ -3722,6 +3608,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All time: {amount}'**
   String givingAllTime(String amount);
+
+  /// No description provided for @payByQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay by QR'**
+  String get payByQr;
+
+  /// No description provided for @payCertificateSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get payCertificateSection;
+
+  /// No description provided for @payPayerNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get payPayerNameLabel;
+
+  /// No description provided for @payPayerNameHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Printed on your zakat certificate.'**
+  String get payPayerNameHelper;
+
+  /// No description provided for @payPayerNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name for the certificate.'**
+  String get payPayerNameRequired;
+
+  /// No description provided for @payPayerPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number (optional)'**
+  String get payPayerPhoneLabel;
+
+  /// No description provided for @payPayerPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number, e.g. 0911223344.'**
+  String get payPayerPhoneInvalid;
+
+  /// No description provided for @payAnonymousLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Give anonymously'**
+  String get payAnonymousLabel;
+
+  /// No description provided for @payAnonymousHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'The certificate says \"Anonymous donor\" instead of your name.'**
+  String get payAnonymousHelper;
+
+  /// No description provided for @payQrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to pay'**
+  String get payQrTitle;
+
+  /// No description provided for @payQrBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open any Ethiopian bank app, choose to pay by QR and scan this code. The amount is already in the code.'**
+  String get payQrBody;
+
+  /// No description provided for @payQrMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'The QR code can\'t be shown. Please start a new payment.'**
+  String get payQrMissing;
+
+  /// No description provided for @payQrConfirmNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The commission confirms each QR payment with the bank. This can take from a few minutes to a few hours; your certificate appears once it is confirmed.'**
+  String get payQrConfirmNote;
+
+  /// No description provided for @payQrIHavePaid.
+  ///
+  /// In en, this message translates to:
+  /// **'I have paid'**
+  String get payQrIHavePaid;
+
+  /// No description provided for @payQrShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share or save the QR'**
+  String get payQrShare;
+
+  /// No description provided for @payQrShareHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paying from this phone? Save the QR, then open it from your bank app.'**
+  String get payQrShareHint;
+
+  /// No description provided for @payQrShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat payment QR: {amount}'**
+  String payQrShareText(String amount);
+
+  /// No description provided for @payQrCancelConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Only cancel if you have not paid this QR. If you already paid, keep it: it will be confirmed.'**
+  String get payQrCancelConfirmBody;
+
+  /// No description provided for @payQrConfirmingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you. The commission is confirming your payment with the bank, which can take from a few minutes to a few hours. This page updates by itself, and you can leave it: the payment and its certificate will be in your payments. Please don\'t pay again.'**
+  String get payQrConfirmingBody;
+
+  /// No description provided for @payQrExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code is no longer valid. If you already paid it, the payment will still be confirmed and appear in your payments. Otherwise, please start again.'**
+  String get payQrExpiredBody;
+
+  /// No description provided for @payQrLeaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Did you pay this QR?'**
+  String get payQrLeaveTitle;
+
+  /// No description provided for @payQrLeaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If you paid, we\'ll keep confirming it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.'**
+  String get payQrLeaveBody;
+
+  /// No description provided for @payQrLeaveNotPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'I didn\'t pay'**
+  String get payQrLeaveNotPaid;
+
+  /// No description provided for @payFailedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Please start again.'**
+  String get payFailedBody;
 }
 
 class _AppLocalizationsDelegate

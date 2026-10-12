@@ -16,13 +16,14 @@ import 'package:mejlis_digital_hub/features/zakat_payment/presentation/screens/z
 import 'package:mejlis_digital_hub/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _coopbank = PaymentMethod(
-  code: 'coopbank',
-  label: 'Coop Bank',
+const _ethqr = PaymentMethod(
+  code: 'ethqr',
+  label: 'QR payment',
+  subtitle: 'Scan with any Ethiopian bank app',
   available: true,
   minAmountEtb: 10,
   maxAmountEtb: 1000000,
-  flow: 'account_otp',
+  flow: 'qr',
 );
 
 class _FakePayments implements ZakatPaymentRepository {
@@ -65,7 +66,7 @@ class _FakeCauses implements CausesRepository {
 
 Future<_FakePayments> _pumpForm(
   WidgetTester tester, {
-  List<PaymentMethod> methods = const [_coopbank],
+  List<PaymentMethod> methods = const [_ethqr],
 }) async {
   final payments = _FakePayments(methods);
   await getIt.reset();
@@ -102,10 +103,10 @@ Future<_FakePayments> _pumpForm(
 Finder _field(String label) =>
     find.widgetWithText(TextField, label, skipOffstage: false);
 
-/// Whether the "Continue" button can be pressed.
-bool _continueEnabled(WidgetTester tester) {
+/// Whether the "Pay by QR" button can be pressed.
+bool _payEnabled(WidgetTester tester) {
   final button = find.ancestor(
-    of: find.text('Continue'),
+    of: find.text('Pay by QR'),
     matching: find.byWidgetPredicate(
       (w) => w is ButtonStyleButton || w is InkWell,
     ),
@@ -117,51 +118,83 @@ bool _continueEnabled(WidgetTester tester) {
   };
 }
 
+Future<void> _fillGuest(WidgetTester tester, {String name = 'Amina'}) async {
+  await tester.enterText(find.byType(TextField).first, '2500');
+  await tester.enterText(_field('Full name'), name);
+  await tester.pump();
+}
+
+Future<void> _pay(WidgetTester tester) async {
+  await tester.tap(find.text('Pay by QR'));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
   tearDown(() => getIt.reset());
 
-  testWidgets('Continue needs an amount and a valid account number', (
+  testWidgets('a guest needs an amount and a name; no account is asked', (
     tester,
   ) async {
     await _pumpForm(tester);
-    expect(find.text('Continue'), findsOneWidget);
+    expect(find.text('Pay by QR'), findsOneWidget);
+    expect(find.textContaining('account number'), findsNothing);
+    expect(_payEnabled(tester), isFalse);
 
-    Future<void> enter(String label, String text) async {
-      await tester.enterText(_field(label), text);
-      await tester.pump();
-    }
-
-    expect(_continueEnabled(tester), isFalse);
-    await enter('Coop Bank account number', '12345');
-    expect(_continueEnabled(tester), isFalse);
-    await enter('Coop Bank account number', '1000123456789');
-    expect(_continueEnabled(tester), isFalse, reason: 'no amount yet');
-    await tester.enterText(find.byType(TextField).first, '500');
+    await tester.enterText(find.byType(TextField).first, '2500');
     await tester.pump();
-    expect(_continueEnabled(tester), isTrue);
+    expect(_payEnabled(tester), isFalse, reason: 'no name yet');
+    await tester.enterText(_field('Full name'), 'Amina Hassen');
+    await tester.pump();
+    expect(_payEnabled(tester), isTrue);
   });
 
-  testWidgets('bank rejection shows under the account field', (tester) async {
+  testWidgets('the request has the payer and the QR method', (tester) async {
+    final payments = await _pumpForm(tester);
+    payments.errors.add(const ApiException('timeout', noResponse: true));
+    await _fillGuest(tester, name: 'Amina Hassen');
+    await tester.enterText(_field('Phone number (optional)'), '0911223344');
+    await tester.pump();
+    await _pay(tester);
+
+    final request = payments.requests.single;
+    expect(request.methodCode, 'ethqr');
+    expect(request.causeId, 'general');
+    expect(request.zakatType, ZakatType.general);
+    expect(request.amountEtb, 2500);
+    expect(request.payer?.fullName, 'Amina Hassen');
+    expect(request.payer?.phone, '+251911223344');
+    expect(request.payer?.anonymous, isFalse);
+  });
+
+  testWidgets('a bad phone number is shown under its field', (tester) async {
+    final payments = await _pumpForm(tester);
+    await _fillGuest(tester);
+    await tester.enterText(_field('Phone number (optional)'), '123');
+    await tester.pump();
+    await _pay(tester);
+    expect(
+      find.text('Enter a valid phone number, e.g. 0911223344.'),
+      findsOneWidget,
+    );
+    expect(payments.requests, isEmpty);
+  });
+
+  testWidgets('an amount out of range shows under the amount', (tester) async {
     final payments = await _pumpForm(tester);
     payments.errors.add(
       const ApiException(
-        'Account does not exist',
+        'Enter an amount between 10 and 1,000,000 ETB',
         statusCode: 400,
-        code: 'ACCOUNT_NOT_FOUND',
+        code: 'AMOUNT_OUT_OF_RANGE',
       ),
     );
-    await tester.enterText(find.byType(TextField).first, '500');
-    await tester.enterText(_field('Coop Bank account number'), '1000123450000');
-    await tester.pump();
-    await tester.tap(find.text('Continue'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Account does not exist'), findsOneWidget);
-    final request = payments.requests.single;
-    expect(request.causeId, 'general');
-    expect(request.zakatType, ZakatType.general);
-    expect(request.amountEtb, 500);
+    await _fillGuest(tester);
+    await _pay(tester);
+    expect(
+      find.text('Enter an amount between 10 and 1,000,000 ETB'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('no response keeps the idempotency key for the retry', (
@@ -172,13 +205,9 @@ void main() {
       const ApiException('timeout', noResponse: true),
       const ApiException('again', noResponse: true),
     ]);
-    await tester.enterText(find.byType(TextField).first, '500');
-    await tester.enterText(_field('Coop Bank account number'), '1000123456789');
-    await tester.pump();
-    await tester.tap(find.text('Continue'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Continue'));
-    await tester.pumpAndSettle();
+    await _fillGuest(tester);
+    await _pay(tester);
+    await _pay(tester);
 
     expect(payments.requests, hasLength(2));
     expect(
@@ -187,22 +216,44 @@ void main() {
     );
   });
 
-  testWidgets('an unavailable method shows its reason and blocks Continue', (
+  testWidgets('changing the name makes a new attempt (new key)', (
+    tester,
+  ) async {
+    final payments = await _pumpForm(tester);
+    payments.errors.addAll([
+      const ApiException('timeout', noResponse: true),
+      const ApiException('timeout', noResponse: true),
+    ]);
+    await _fillGuest(tester, name: 'Amina');
+    await _pay(tester);
+    await tester.enterText(_field('Full name'), 'Amina Hassen');
+    await tester.pump();
+    await _pay(tester);
+
+    expect(payments.requests, hasLength(2));
+    expect(
+      payments.requests[0].idempotencyKey,
+      isNot(payments.requests[1].idempotencyKey),
+    );
+  });
+
+  testWidgets('an unavailable method shows its reason and blocks paying', (
     tester,
   ) async {
     await _pumpForm(
       tester,
       methods: const [
         PaymentMethod(
-          code: 'coopbank',
-          label: 'Coop Bank',
+          code: 'ethqr',
+          label: 'QR payment',
           available: false,
-          unavailableReason: 'Not available yet',
-          flow: 'account_otp',
+          unavailableReason: 'QR payments are not set up yet',
+          flow: 'qr',
         ),
       ],
     );
-    expect(find.text('Not available yet'), findsOneWidget);
-    expect(_continueEnabled(tester), isFalse);
+    expect(find.text('QR payments are not set up yet'), findsOneWidget);
+    await _fillGuest(tester);
+    expect(_payEnabled(tester), isFalse);
   });
 }

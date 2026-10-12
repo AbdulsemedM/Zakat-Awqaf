@@ -1770,17 +1770,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get payAccountNumberLabel => 'Coop Bank account number';
-
-  @override
-  String get payAccountNumberHelper =>
-      'The account you pay from. We\'ll show the account holder\'s name for you to confirm.';
-
-  @override
-  String get payAccountNumberInvalid =>
-      'Enter a valid account number (6–20 digits).';
-
-  @override
   String get payNetworkError =>
       'No connection. Check your internet and try again.';
 
@@ -1800,10 +1789,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payCancelConfirmTitle => 'Cancel this payment?';
 
   @override
-  String get payCancelConfirmBody =>
-      'No money has been taken. You can start again at any time.';
-
-  @override
   String get payKeepPaying => 'Keep paying';
 
   @override
@@ -1812,54 +1797,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String payForCause(String cause) {
     return 'For: $cause';
-  }
-
-  @override
-  String get payAccountHolder => 'Account holder';
-
-  @override
-  String get payAccountNumberShort => 'Account';
-
-  @override
-  String get payConfirmTitle => 'Is this your account?';
-
-  @override
-  String get payConfirmBody =>
-      'If it is, Coop Bank will send a confirmation code to the phone registered on this account.';
-
-  @override
-  String get payYesSendCode => 'Yes, send code';
-
-  @override
-  String get payNotMyAccount => 'Not my account';
-
-  @override
-  String get payOtpTitle => 'Enter the confirmation code';
-
-  @override
-  String get payOtpBody =>
-      'We sent a 6-digit code to the phone registered on your Coop Bank account.';
-
-  @override
-  String get payOtpLabel => 'Confirmation code';
-
-  @override
-  String payOtpAttemptsLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count attempts left',
-      one: '1 attempt left',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get payResendCode => 'Send a new code';
-
-  @override
-  String payPayAmount(String amount) {
-    return 'Pay $amount';
   }
 
   @override
@@ -1896,10 +1833,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payExpiredTitle => 'Payment expired';
-
-  @override
-  String get payExpiredBody =>
-      'It wasn\'t finished within 15 minutes. No money was taken; please start again.';
 
   @override
   String get payFailedTitle => 'Payment not completed';
@@ -2050,14 +1983,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String payOtpExpiresIn(String time) {
-    return 'Code expires in $time';
-  }
-
-  @override
-  String get payOtpExpiredLocal => 'The code has expired. Send a new one.';
-
-  @override
   String get unfinishedPaymentTitle => 'Unfinished payment';
 
   @override
@@ -2121,4 +2046,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String givingAllTime(String amount) {
     return 'All time: $amount';
   }
+
+  @override
+  String get payByQr => 'Pay by QR';
+
+  @override
+  String get payCertificateSection => 'Certificate';
+
+  @override
+  String get payPayerNameLabel => 'Full name';
+
+  @override
+  String get payPayerNameHelper => 'Printed on your zakat certificate.';
+
+  @override
+  String get payPayerNameRequired => 'Enter your name for the certificate.';
+
+  @override
+  String get payPayerPhoneLabel => 'Phone number (optional)';
+
+  @override
+  String get payPayerPhoneInvalid =>
+      'Enter a valid phone number, e.g. 0911223344.';
+
+  @override
+  String get payAnonymousLabel => 'Give anonymously';
+
+  @override
+  String get payAnonymousHelper =>
+      'The certificate says \"Anonymous donor\" instead of your name.';
+
+  @override
+  String get payQrTitle => 'Scan to pay';
+
+  @override
+  String get payQrBody =>
+      'Open any Ethiopian bank app, choose to pay by QR and scan this code. The amount is already in the code.';
+
+  @override
+  String get payQrMissing =>
+      'The QR code can\'t be shown. Please start a new payment.';
+
+  @override
+  String get payQrConfirmNote =>
+      'The commission confirms each QR payment with the bank. This can take from a few minutes to a few hours; your certificate appears once it is confirmed.';
+
+  @override
+  String get payQrIHavePaid => 'I have paid';
+
+  @override
+  String get payQrShare => 'Share or save the QR';
+
+  @override
+  String get payQrShareHint =>
+      'Paying from this phone? Save the QR, then open it from your bank app.';
+
+  @override
+  String payQrShareText(String amount) {
+    return 'Zakat payment QR: $amount';
+  }
+
+  @override
+  String get payQrCancelConfirmBody =>
+      'Only cancel if you have not paid this QR. If you already paid, keep it: it will be confirmed.';
+
+  @override
+  String get payQrConfirmingBody =>
+      'Thank you. The commission is confirming your payment with the bank, which can take from a few minutes to a few hours. This page updates by itself, and you can leave it: the payment and its certificate will be in your payments. Please don\'t pay again.';
+
+  @override
+  String get payQrExpiredBody =>
+      'This QR code is no longer valid. If you already paid it, the payment will still be confirmed and appear in your payments. Otherwise, please start again.';
+
+  @override
+  String get payQrLeaveTitle => 'Did you pay this QR?';
+
+  @override
+  String get payQrLeaveBody =>
+      'If you paid, we\'ll keep confirming it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.';
+
+  @override
+  String get payQrLeaveNotPaid => 'I didn\'t pay';
+
+  @override
+  String get payFailedBody => 'Please start again.';
 }

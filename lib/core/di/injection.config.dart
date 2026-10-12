@@ -80,6 +80,8 @@ import '../../features/zakat_payment/data/data_provider/zakat_payment_remote_dat
     as _i425;
 import '../../features/zakat_payment/data/models/zakat_payment_models.dart'
     as _i978;
+import '../../features/zakat_payment/data/pending_payments_checker.dart'
+    as _i341;
 import '../../features/zakat_payment/data/repository/zakat_payment_repository.dart'
     as _i978;
 import '../auth/auth_interceptor.dart' as _i53;
@@ -258,6 +260,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i267.CauseDetailBloc>(
       () => _i267.CauseDetailBloc(gh<_i38.CausesRepository>()),
+    );
+    gh.lazySingleton<_i341.PendingPaymentsChecker>(
+      () => _i341.PendingPaymentsChecker(
+        gh<_i978.ZakatPaymentRepository>(),
+        gh<_i272.DevicePaymentsStore>(),
+      ),
     );
     gh.factoryParam<_i484.PaymentFlowBloc, _i978.ZakatPayment, dynamic>(
       (payment, _) =>

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
-import '../../../../app/widgets/payer_only.dart';
 import '../../../../app/widgets/zakat_page_header.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
@@ -249,18 +248,16 @@ class _CauseDetailView extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: canPay
-          ? PayerOnly(
-              child: SafeArea(
-                top: false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-                  child: GoldActionButton(
-                    label: l10n.payZakatCause,
-                    icon: Icons.volunteer_activism_outlined,
-                    onPressed: () => context.push(
-                      '/zakat/payment',
-                      extra: ZakatPaymentArgs.forCause(cause),
-                    ),
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: GoldActionButton(
+                  label: l10n.payZakatCause,
+                  icon: Icons.volunteer_activism_outlined,
+                  onPressed: () => context.push(
+                    '/zakat/payment',
+                    extra: ZakatPaymentArgs.forCause(cause),
                   ),
                 ),
               ),
