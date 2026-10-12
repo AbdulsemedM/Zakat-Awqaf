@@ -2106,7 +2106,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get payQrConfirmNote =>
-      'Guddigu wuxuu bangiga la xaqiijiyaa lacag-bixin kasta oo QR ah. Tani waxay qaadan kartaa dhowr daqiiqo ilaa dhowr saacadood; shahaadadaadu waxay soo baxaysaa marka la xaqiijiyo.';
+      'Kadib markaad ku bixiso app-ka bangigaaga, soo noqo oo taabo \"Waan bixiyay\". Lacag-bixintu badanaa waxay timaadaa ilbiriqsiyo gudahood.';
 
   @override
   String get payQrIHavePaid => 'Waan bixiyay';
@@ -2128,23 +2128,34 @@ class AppLocalizationsSo extends AppLocalizations {
       'Kaliya jooji haddii aadan bixin QR-kan. Haddii aad hore u bixisay, daa: waa la xaqiijin doonaa.';
 
   @override
-  String get payQrConfirmingBody =>
-      'Mahadsanid. Guddigu wuxuu bangiga la xaqiijinayaa lacag-bixintaada, taas oo qaadan karta dhowr daqiiqo ilaa dhowr saacadood. Boggani wuu is-cusboonaysiinayaa, waadna ka bixi kartaa: lacag-bixinta iyo shahaadadeeda waxaad ka heli doontaa lacag-bixintaada. Fadlan mar kale ha bixin.';
-
-  @override
   String get payQrExpiredBody =>
-      'Koodkan QR mar dambe ma shaqeynayo. Haddii aad hore u bixisay, lacag-bixinta waa la xaqiijin doonaa waxayna ka soo muuqan doontaa lacag-bixintaada. Haddii kale, fadlan dib u bilow.';
+      'QR-kan wuu dhacay. Haddii aad bixisay, mar kale hubi: lacag-bixin daahday waa la xaqiijiyaa 24 saacadood gudahood. Haddii kale, fadlan dib u bilow.';
 
   @override
   String get payQrLeaveTitle => 'Ma bixisay QR-kan?';
 
   @override
   String get payQrLeaveBody =>
-      'Haddii aad bixisay, waan sii wadaynaa xaqiijinta waxaadna ka heli doontaa lacag-bixintaada. Haddii aadan bixin, lacag-bixinta waa la joojinayaa.';
+      'Haddii aad bixisay, waan hubin doonnaa waxaadna ka heli doontaa lacag-bixintaada. Haddii aadan bixin, lacag-bixinta waa la joojinayaa.';
 
   @override
   String get payQrLeaveNotPaid => 'Ma aan bixin';
 
   @override
   String get payFailedBody => 'Fadlan dib u bilow.';
+
+  @override
+  String get payQrChecking => 'Waxaan hubinaynaa lacag-bixintaada…';
+
+  @override
+  String get payQrNotReceived =>
+      'Weli lama helin. Haddii aad bixisay, wax yar sug oo isku day mar kale.';
+
+  @override
+  String get payQrCheckPayment => 'Waan bixiyay, hubi mar kale';
+
+  @override
+  String payPaidDifferentAmount(String paid, String issued) {
+    return '$paid ayaa la helay (QR-ku wuxuu ahaa $issued). Shahaadadaadu waxay muujinaysaa lacagta la helay.';
+  }
 }

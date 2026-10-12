@@ -73,6 +73,12 @@ class _FakeRemote implements ZakatPaymentRemoteDataProvider {
       _next('cancel', guestToken);
 
   @override
+  Future<ZakatPayment> checkPayment(
+    String paymentId, {
+    String? guestToken,
+  }) async => _next('check', guestToken);
+
+  @override
   Future<ZakatPayment> fetchPayment(
     String paymentId, {
     String? guestToken,
@@ -135,11 +141,12 @@ void main() {
       ]);
       await repository.startPayment(_request);
       await repository.fetchPayment('zp_1');
-      await repository.fetchPayment('zp_1');
+      await repository.checkPayment('zp_1');
       await repository.fetchCertificate('ZC-1');
 
       expect(tokens.payments['zp_1'], 'token-1');
       expect(remote.tokens['status'], 'token-1');
+      expect(remote.tokens['check'], 'token-1');
       expect(tokens.certificates['ZC-1'], 'zp_1');
       expect(remote.tokens['certificate'], 'token-1');
     });
@@ -248,7 +255,7 @@ void main() {
       expect(store.unfinished(now)?.isProcessing, isTrue);
     });
 
-    test('needs a check: pending, or expired in the last 3 days', () {
+    test('needs a check: pending, or expired in the last 24 hours', () {
       final now = DateTime.utc(2026, 10, 12, 8);
       DevicePayment entry(String status, String expiresAt) =>
           DevicePayment.from(
@@ -259,7 +266,8 @@ void main() {
             ),
           );
       expect(entry('pending', '2026-10-01T00:00:00Z').needsCheck(now), isTrue);
-      expect(entry('expired', '2026-10-11T00:00:00Z').needsCheck(now), isTrue);
+      expect(entry('expired', '2026-10-11T12:00:00Z').needsCheck(now), isTrue);
+      expect(entry('expired', '2026-10-11T07:00:00Z').needsCheck(now), isFalse);
       expect(entry('expired', '2026-10-01T00:00:00Z').needsCheck(now), isFalse);
       expect(
         entry('succeeded', '2026-10-12T00:00:00Z').needsCheck(now),
@@ -324,9 +332,6 @@ void main() {
             : _payment(status: 'succeeded', step: null);
       });
       final bloc = PaymentFlowBloc(repository, _payment(step: 'scan_qr'));
-      bloc.add(const PaymentQrPaidReported());
-      async.flushMicrotasks();
-      expect(bloc.state.qrPaidReported, isTrue);
 
       async.elapse(PaymentFlowBloc.pollInterval);
       async.flushMicrotasks();
@@ -372,7 +377,7 @@ class _RecordingRepository implements ZakatPaymentRepository {
   final List<String> ids;
 
   @override
-  Future<ZakatPayment> fetchPayment(String paymentId) async {
+  Future<ZakatPayment> checkPayment(String paymentId) async {
     ids.add(paymentId);
     return _payment(id: paymentId);
   }

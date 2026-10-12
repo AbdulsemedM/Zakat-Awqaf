@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mejlis_digital_hub/core/network/api_envelope.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/bloc/payment_flow_bloc.dart';
@@ -52,6 +53,9 @@ class _FakeRepository implements ZakatPaymentRepository {
 
   @override
   Future<ZakatPayment> cancel(String paymentId) => _next('cancel');
+
+  @override
+  Future<ZakatPayment> checkPayment(String paymentId) => _next('check');
 
   @override
   Future<ZakatPayment> fetchPayment(String paymentId) => _next('status');
@@ -149,6 +153,49 @@ void main() {
       });
     });
 
+    test('paid a different amount', () {
+      final paid = _payment(
+        status: 'succeeded',
+        step: null,
+        extra: {'amountEtb': 2501.00, 'issuedAmountEtb': 2500.00},
+      );
+      expect(paid.paidDifferentAmount, isTrue);
+      expect(_payment().paidDifferentAmount, isFalse);
+    });
+
+    test('check-payment applies to pending and expired QRs', () {
+      expect(_payment().canCheckPayment, isTrue);
+      expect(_payment(status: 'expired', step: null).canCheckPayment, isTrue);
+      expect(
+        _payment(status: 'succeeded', step: null).canCheckPayment,
+        isFalse,
+      );
+      final now = DateTime.utc(2026, 10, 13, 8);
+      PaymentHistoryItem row(String status, String createdAt) =>
+          PaymentHistoryItem.fromJson({
+            'paymentId': 'zp_1',
+            'amountEtb': 100,
+            'status': status,
+            'createdAt': createdAt,
+          });
+      expect(
+        row('pending', '2026-10-01T00:00:00Z').canCheckPayment(now),
+        isTrue,
+      );
+      expect(
+        row('expired', '2026-10-12T12:00:00Z').canCheckPayment(now),
+        isTrue,
+      );
+      expect(
+        row('expired', '2026-10-11T00:00:00Z').canCheckPayment(now),
+        isFalse,
+      );
+      expect(
+        row('cancelled', '2026-10-13T07:00:00Z').canCheckPayment(now),
+        isFalse,
+      );
+    });
+
     test('a signed-in donor sends no payer', () {
       const request = ZakatPaymentRequest(
         zakatType: ZakatType.general,
@@ -203,12 +250,109 @@ void main() {
   });
 
   group('PaymentFlowBloc', () {
-    test('"I have paid" shows the confirming state', () async {
-      final bloc = PaymentFlowBloc(_FakeRepository(), _payment());
+    test('"I have paid": received at once', () async {
+      final repository = _FakeRepository()
+        ..responses.add(
+          _payment(
+            status: 'succeeded',
+            step: null,
+            extra: {'certificateId': 'ZC-2026-000451'},
+          ),
+        );
+      final bloc = PaymentFlowBloc(repository, _payment());
       addTearDown(bloc.close);
-      bloc.add(const PaymentQrPaidReported());
+      bloc.add(const PaymentCheckRequested());
       await _settle();
-      expect(bloc.state.qrPaidReported, isTrue);
+      expect(repository.calls, ['check']);
+      expect(bloc.state.payment.certificateId, 'ZC-2026-000451');
+      expect(bloc.state.notReceived, isFalse);
+      expect(bloc.state.checking, isFalse);
+    });
+
+    test('"I have paid": not there yet, one retry after 5 s', () {
+      fakeAsync((async) {
+        final repository = _FakeRepository()
+          ..responses.addAll([_payment(), _payment()]);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        bloc.add(const PaymentCheckRequested());
+        async.flushMicrotasks();
+        expect(bloc.state.checking, isTrue);
+        expect(repository.calls, ['check']);
+
+        async.elapse(PaymentFlowBloc.checkRetryDelay);
+        async.flushMicrotasks();
+        expect(repository.calls, ['check', 'check']);
+        expect(bloc.state.checking, isFalse);
+        expect(bloc.state.notReceived, isTrue);
+        expect(bloc.state.payment.step, PaymentStep.scanQr);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('the retry finds it', () {
+      fakeAsync((async) {
+        final repository = _FakeRepository()
+          ..responses.addAll([
+            _payment(),
+            _payment(status: 'succeeded', step: null),
+          ]);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        bloc.add(const PaymentCheckRequested());
+        async.elapse(PaymentFlowBloc.checkRetryDelay);
+        async.flushMicrotasks();
+        expect(bloc.state.payment.status, PaymentStatus.succeeded);
+        expect(bloc.state.notReceived, isFalse);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('a quiet check (back from the bank app) shows no message', () {
+      fakeAsync((async) {
+        final repository = _FakeRepository()
+          ..responses.addAll([_payment(), _payment()]);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        bloc.add(const PaymentCheckRequested(quiet: true));
+        async.elapse(PaymentFlowBloc.checkRetryDelay);
+        async.flushMicrotasks();
+        expect(bloc.state.notReceived, isFalse);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('an expired QR can still be confirmed', () async {
+      final repository = _FakeRepository()
+        ..responses.add(_payment(status: 'succeeded', step: null));
+      final bloc = PaymentFlowBloc(
+        repository,
+        _payment(status: 'expired', step: null),
+      );
+      addTearDown(bloc.close);
+      bloc.add(const PaymentCheckRequested());
+      await _settle();
+      expect(bloc.state.payment.status, PaymentStatus.succeeded);
+    });
+
+    test('409 on an older QR shows the server state', () async {
+      final repository = _FakeRepository()
+        ..responses.addAll([
+          const ApiException(
+            'Confirmed by the commission',
+            statusCode: 409,
+            code: 'INVALID_STATE',
+          ),
+          _payment(),
+        ]);
+      final bloc = PaymentFlowBloc(repository, _payment());
+      addTearDown(bloc.close);
+      bloc.add(const PaymentCheckRequested());
+      await _settle();
+      expect(repository.calls, ['check', 'status']);
+      expect(bloc.state.checking, isFalse);
+      expect(bloc.state.busy, isFalse);
+      expect(bloc.state.errorMessage, 'Confirmed by the commission');
     });
 
     test('cancel ends the payment', () async {

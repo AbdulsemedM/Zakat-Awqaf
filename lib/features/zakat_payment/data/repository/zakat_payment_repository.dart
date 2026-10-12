@@ -18,6 +18,10 @@ abstract class ZakatPaymentRepository {
 
   Future<ZakatPayment> cancel(String paymentId);
 
+  /// `check-payment`: the server asks the bank whether the QR was paid
+  /// (at most every 5 seconds per payment, so repeats are harmless).
+  Future<ZakatPayment> checkPayment(String paymentId);
+
   Future<ZakatPayment> fetchPayment(String paymentId);
 
   Future<ZakatCertificate> fetchCertificate(String certificateId);
@@ -70,6 +74,12 @@ class ZakatPaymentRepositoryImpl implements ZakatPaymentRepository {
   Future<ZakatPayment> cancel(String paymentId) => _withToken(
     paymentId,
     (token) => _remote.cancel(paymentId, guestToken: token),
+  );
+
+  @override
+  Future<ZakatPayment> checkPayment(String paymentId) => _withToken(
+    paymentId,
+    (token) => _remote.checkPayment(paymentId, guestToken: token),
   );
 
   @override

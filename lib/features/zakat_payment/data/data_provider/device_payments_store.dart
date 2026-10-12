@@ -42,15 +42,12 @@ class DevicePayment {
   bool get isProcessing =>
       status == PaymentStatus.pending && step == PaymentStep.processing;
 
-  /// How long after expiry a payment is still checked: a QR paid late can
-  /// still be confirmed.
-  static const expiredRecheckWindow = Duration(days: 3);
-
-  /// Not settled yet: pending, or expired recently.
+  /// Not settled yet: pending, or expired but still confirmable (a QR paid
+  /// late is confirmed for [ZakatPayment.lateConfirmWindow]).
   bool needsCheck(DateTime now) => switch (status) {
     PaymentStatus.pending => true,
     PaymentStatus.expired =>
-      now.difference(expiresAt ?? createdAt) < expiredRecheckWindow,
+      now.difference(expiresAt ?? createdAt) < ZakatPayment.lateConfirmWindow,
     _ => false,
   };
 

@@ -16,6 +16,9 @@ abstract class ZakatPaymentRemoteDataProvider {
 
   Future<ZakatPayment> cancel(String paymentId, {String? guestToken});
 
+  /// Asks the server to check with the bank whether a QR was paid.
+  Future<ZakatPayment> checkPayment(String paymentId, {String? guestToken});
+
   Future<ZakatPayment> fetchPayment(String paymentId, {String? guestToken});
 
   Future<ZakatCertificate> fetchCertificate(
@@ -74,15 +77,25 @@ class ZakatPaymentRemoteDataProviderImpl
         return ZakatPayment.fromJson(unwrapApiObject(response));
       });
 
+  Future<ZakatPayment> _action(
+    String paymentId,
+    String action, {
+    String? guestToken,
+  }) => guardApi(() async {
+    final response = await _dio.post<dynamic>(
+      '$_payments/${_id(paymentId)}/$action',
+      options: _guest(guestToken),
+    );
+    return ZakatPayment.fromJson(unwrapApiObject(response));
+  });
+
   @override
   Future<ZakatPayment> cancel(String paymentId, {String? guestToken}) =>
-      guardApi(() async {
-        final response = await _dio.post<dynamic>(
-          '$_payments/${_id(paymentId)}/cancel',
-          options: _guest(guestToken),
-        );
-        return ZakatPayment.fromJson(unwrapApiObject(response));
-      });
+      _action(paymentId, 'cancel', guestToken: guestToken);
+
+  @override
+  Future<ZakatPayment> checkPayment(String paymentId, {String? guestToken}) =>
+      _action(paymentId, 'check-payment', guestToken: guestToken);
 
   @override
   Future<ZakatPayment> fetchPayment(String paymentId, {String? guestToken}) =>

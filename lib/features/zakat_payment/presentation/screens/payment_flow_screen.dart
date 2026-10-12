@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
@@ -17,10 +18,12 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../bloc/payment_flow_bloc.dart';
 import '../../data/models/zakat_payment_models.dart';
+import '../../data/repository/zakat_payment_repository.dart';
 import '../widgets/payment_countdown.dart';
 
-/// A started zakat payment and its result: the QR to scan with a bank app,
-/// "We are confirming your payment", then paid / expired / cancelled.
+/// A started zakat payment and its result: the QR to scan with a bank app
+/// and "I have paid", then paid (with the certificate) / expired /
+/// cancelled.
 class PaymentFlowScreen extends StatelessWidget {
   const PaymentFlowScreen({super.key, required this.payment});
 
@@ -30,9 +33,48 @@ class PaymentFlowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<PaymentFlowBloc>(param1: payment),
-      child: const _PaymentFlowView(),
+      child: const _ResumeCheck(child: _PaymentFlowView()),
     );
   }
+}
+
+/// Checks the payment when the donor comes back to the app, usually from
+/// their bank app after paying the QR.
+class _ResumeCheck extends StatefulWidget {
+  const _ResumeCheck({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_ResumeCheck> createState() => _ResumeCheckState();
+}
+
+class _ResumeCheckState extends State<_ResumeCheck>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    final bloc = context.read<PaymentFlowBloc>();
+    if (bloc.state.payment.status == PaymentStatus.pending &&
+        bloc.state.payment.canCheckPayment) {
+      bloc.add(const PaymentCheckRequested(quiet: true));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 enum _LeaveChoice { paid, notPaid }
@@ -40,16 +82,15 @@ enum _LeaveChoice { paid, notPaid }
 class _PaymentFlowView extends StatelessWidget {
   const _PaymentFlowView();
 
-  /// Leaving the QR before saying it was paid: ask. If the donor did not
-  /// pay, the payment is cancelled (the QR is not shown again); if they did,
-  /// it stays pending and is confirmed later. Leaving anything else only
-  /// stops watching.
+  /// Leaving the QR: ask. If the donor did not pay, the payment is
+  /// cancelled (the QR is not shown again); if they did, it is checked once
+  /// more and stays pending (the server keeps checking for 24 hours).
+  /// Leaving anything else only stops watching.
   Future<void> _onBack(BuildContext context, PaymentFlowState state) async {
     final payment = state.payment;
     final showingQr =
         payment.status == PaymentStatus.pending &&
-        payment.step == PaymentStep.scanQr &&
-        !state.qrPaidReported;
+        payment.step == PaymentStep.scanQr;
     if (!showingQr) {
       context.pop();
       return;
@@ -83,6 +124,13 @@ class _PaymentFlowView extends StatelessWidget {
       case _LeaveChoice.notPaid:
         bloc.add(const PaymentCancelRequested());
       case _LeaveChoice.paid:
+        // The screen's bloc closes now: check through the repository, which
+        // records the answer for "Recent payments".
+        unawaited(
+          getIt<ZakatPaymentRepository>()
+              .checkPayment(payment.paymentId)
+              .then<void>((_) {}, onError: (Object _) {}),
+        );
         context.pop();
       case null:
         break;
@@ -113,9 +161,6 @@ class _PaymentFlowView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                     child: switch ((payment.status, payment.step)) {
-                      (PaymentStatus.pending, PaymentStep.scanQr)
-                          when state.qrPaidReported =>
-                        _ProcessingStep(state: state),
                       (PaymentStatus.pending, PaymentStep.scanQr) => _QrStep(
                         state: state,
                       ),
@@ -394,17 +439,10 @@ class _QrStepState extends State<_QrStep> {
             height: 1.45,
           ),
         ),
+        _ErrorText(state.notReceived ? l10n.payQrNotReceived : null),
         _ErrorText(state.errorMessage),
         const SizedBox(height: 16),
-        GoldActionButton(
-          label: l10n.payQrIHavePaid,
-          icon: Icons.check_circle_outline_rounded,
-          onPressed: state.busy
-              ? null
-              : () => context.read<PaymentFlowBloc>().add(
-                  const PaymentQrPaidReported(),
-                ),
-        ),
+        _CheckPaymentButton(state: state, label: l10n.payQrIHavePaid),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: _sharing || (payload == null && image == null)
@@ -432,8 +470,8 @@ class _QrStepState extends State<_QrStep> {
   }
 }
 
-/// "We are confirming your payment" (a paid QR, or an older Coop account
-/// payment the bank has not answered); the bloc polls.
+/// "We are confirming your payment": an older Coop account payment the
+/// bank has not answered. The bloc polls.
 class _ProcessingStep extends StatelessWidget {
   const _ProcessingStep({required this.state});
 
@@ -450,9 +488,7 @@ class _ProcessingStep extends StatelessWidget {
         const SizedBox(height: 20),
         _StepTitle(
           title: l10n.payProcessingTitle,
-          body: state.payment.isQr
-              ? l10n.payQrConfirmingBody
-              : l10n.payProcessingBody,
+          body: l10n.payProcessingBody,
           center: true,
         ),
         const SizedBox(height: 16),
@@ -468,13 +504,6 @@ class _ProcessingStep extends StatelessWidget {
           icon: const Icon(Icons.refresh),
           label: Text(l10n.payCheckAgain),
         ),
-        if (state.payment.isQr) ...[
-          const SizedBox(height: 8),
-          TextButton(
-            onPressed: () => context.go('/'),
-            child: Text(l10n.payDone),
-          ),
-        ],
       ],
     );
   }
@@ -504,6 +533,21 @@ class _SucceededResult extends StatelessWidget {
           body: l10n.paySucceededBody(MoneyFormatter.etb(payment.amountEtb)),
           center: true,
         ),
+        if (payment.paidDifferentAmount) ...[
+          const SizedBox(height: 8),
+          Text(
+            l10n.payPaidDifferentAmount(
+              MoneyFormatter.etb(payment.amountEtb),
+              MoneyFormatter.etb(payment.issuedAmountEtb!),
+            ),
+            textAlign: TextAlign.center,
+            style: AppTypography.body(
+              fontSize: 13,
+              color: AppColors.goldDeep,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
         if (reference != null) ...[
           const SizedBox(height: 8),
           Text(
@@ -543,8 +587,7 @@ class _EndedResult extends StatelessWidget {
     final payment = state.payment;
     final (title, body) = switch (payment.status) {
       PaymentStatus.cancelled => (l10n.payCancelledTitle, l10n.payNoMoneyTaken),
-      // An expired QR may still have been paid: the commission can confirm
-      // it later.
+      // An expired QR paid late is still confirmed for 24 hours.
       PaymentStatus.expired => (l10n.payExpiredTitle, l10n.payQrExpiredBody),
       _ => (
         l10n.payFailedTitle,
@@ -565,13 +608,67 @@ class _EndedResult extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         _StepTitle(title: title, body: body, center: true),
-        const SizedBox(height: 24),
-        GoldActionButton(
-          label: l10n.payStartAgain,
-          icon: Icons.replay_rounded,
-          onPressed: () => context.pop(),
-        ),
+        if (payment.status == PaymentStatus.expired &&
+            payment.canCheckPayment) ...[
+          _ErrorText(state.notReceived ? l10n.payQrNotReceived : null),
+          _ErrorText(state.errorMessage),
+          const SizedBox(height: 20),
+          _CheckPaymentButton(state: state, label: l10n.payQrCheckPayment),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: state.busy ? null : () => context.pop(),
+            icon: const Icon(Icons.replay_rounded),
+            label: Text(l10n.payStartAgain),
+          ),
+        ] else ...[
+          const SizedBox(height: 24),
+          GoldActionButton(
+            label: l10n.payStartAgain,
+            icon: Icons.replay_rounded,
+            onPressed: () => context.pop(),
+          ),
+        ],
       ],
+    );
+  }
+}
+
+/// Asks the server to check with the bank; "Checking your payment…" while
+/// it runs (up to two checks, 5 seconds apart).
+class _CheckPaymentButton extends StatelessWidget {
+  const _CheckPaymentButton({required this.state, required this.label});
+
+  final PaymentFlowState state;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.checking) {
+      return Column(
+        children: [
+          const SizedBox(
+            height: 56,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+          Text(
+            context.l10n.payQrChecking,
+            style: AppTypography.body(
+              fontSize: 13,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      );
+    }
+    return GoldActionButton(
+      label: label,
+      icon: Icons.check_circle_outline_rounded,
+      onPressed: state.busy
+          ? null
+          : () => context.read<PaymentFlowBloc>().add(
+              const PaymentCheckRequested(),
+            ),
     );
   }
 }

@@ -15,10 +15,17 @@ sealed class PaymentFlowEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// The donor says they paid the QR: show "We are confirming your payment"
-/// while the commission confirms it.
-final class PaymentQrPaidReported extends PaymentFlowEvent {
-  const PaymentQrPaidReported();
+/// "I have paid" (or the donor came back from the bank app): ask the server
+/// to check with the bank.
+final class PaymentCheckRequested extends PaymentFlowEvent {
+  const PaymentCheckRequested({this.quiet = false});
+
+  /// An automatic check (back from the bank app): no "not received yet"
+  /// message when the payment hasn't arrived.
+  final bool quiet;
+
+  @override
+  List<Object?> get props => [quiet];
 }
 
 /// The donor did not pay and leaves: the QR is not shown again.
@@ -41,7 +48,8 @@ class PaymentFlowState extends Equatable {
   const PaymentFlowState({
     required this.payment,
     this.busy = false,
-    this.qrPaidReported = false,
+    this.checking = false,
+    this.notReceived = false,
     this.errorMessage,
     this.errorCode,
   });
@@ -49,8 +57,11 @@ class PaymentFlowState extends Equatable {
   final ZakatPayment payment;
   final bool busy;
 
-  /// The donor tapped "I have paid" on the QR.
-  final bool qrPaidReported;
+  /// A `check-payment` is running.
+  final bool checking;
+
+  /// The last check the donor asked for found no payment yet.
+  final bool notReceived;
 
   /// The server's message for the last failed action (shown as is).
   final String? errorMessage;
@@ -61,14 +72,16 @@ class PaymentFlowState extends Equatable {
   PaymentFlowState copyWith({
     ZakatPayment? payment,
     bool? busy,
-    bool? qrPaidReported,
+    bool? checking,
+    bool? notReceived,
     String? Function()? errorMessage,
     String? Function()? errorCode,
   }) {
     return PaymentFlowState(
       payment: payment ?? this.payment,
       busy: busy ?? this.busy,
-      qrPaidReported: qrPaidReported ?? this.qrPaidReported,
+      checking: checking ?? this.checking,
+      notReceived: notReceived ?? this.notReceived,
       errorMessage: errorMessage != null ? errorMessage() : this.errorMessage,
       errorCode: errorCode != null ? errorCode() : this.errorCode,
     );
@@ -78,22 +91,21 @@ class PaymentFlowState extends Equatable {
   List<Object?> get props => [
     payment,
     busy,
-    qrPaidReported,
+    checking,
+    notReceived,
     errorMessage,
     errorCode,
   ];
 }
 
 /// Watches a started zakat payment until it is final: the QR waiting for
-/// the donor's bank app and the commission's confirmation. The payment is
-/// started on the payment form.
+/// the donor's bank app, and the checks with the bank once they say they
+/// paid. The payment is started on the payment form.
 @injectable
 class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
   PaymentFlowBloc(this._repository, @factoryParam ZakatPayment payment)
     : super(PaymentFlowState(payment: payment)) {
-    on<PaymentQrPaidReported>(
-      (event, emit) => emit(state.copyWith(qrPaidReported: true)),
-    );
+    on<PaymentCheckRequested>(_onCheck);
     on<PaymentCancelRequested>(
       (event, emit) =>
           _run(emit, () => _repository.cancel(state.payment.paymentId)),
@@ -109,8 +121,55 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
   /// How often to check a pending payment while its screen is open.
   static const pollInterval = Duration(seconds: 10);
 
+  /// A payment usually arrives within seconds: one more check after this
+  /// before saying it has not arrived.
+  static const checkRetryDelay = Duration(seconds: 5);
+
   final ZakatPaymentRepository _repository;
   Timer? _pollTimer;
+
+  static bool _notArrived(ZakatPayment payment) =>
+      payment.status == PaymentStatus.pending ||
+      payment.status == PaymentStatus.expired;
+
+  Future<void> _onCheck(
+    PaymentCheckRequested event,
+    Emitter<PaymentFlowState> emit,
+  ) async {
+    if (state.busy) return;
+    emit(
+      state.copyWith(
+        busy: true,
+        checking: true,
+        notReceived: false,
+        errorMessage: () => null,
+        errorCode: () => null,
+      ),
+    );
+    final id = state.payment.paymentId;
+    try {
+      var payment = await _repository.checkPayment(id);
+      if (_notArrived(payment)) {
+        await Future<void>.delayed(checkRetryDelay);
+        if (isClosed) return;
+        payment = await _repository.checkPayment(id);
+      }
+      emit(
+        state.copyWith(
+          payment: payment,
+          busy: false,
+          checking: false,
+          notReceived: !event.quiet && _notArrived(payment),
+        ),
+      );
+      _schedulePolling(payment);
+    } on ApiException catch (e) {
+      emit(state.copyWith(checking: false));
+      // 409 INVALID_STATE: a QR from before `check-payment`, confirmed by
+      // the commission. Show the server's state.
+      await _onError(emit, e);
+    }
+  }
 
   Future<void> _run(
     Emitter<PaymentFlowState> emit,

@@ -2089,7 +2089,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payQrConfirmNote =>
-      'The commission confirms each QR payment with the bank. This can take from a few minutes to a few hours; your certificate appears once it is confirmed.';
+      'After paying in your bank app, come back and tap \"I have paid\". The payment usually arrives within seconds.';
 
   @override
   String get payQrIHavePaid => 'I have paid';
@@ -2111,23 +2111,34 @@ class AppLocalizationsEn extends AppLocalizations {
       'Only cancel if you have not paid this QR. If you already paid, keep it: it will be confirmed.';
 
   @override
-  String get payQrConfirmingBody =>
-      'Thank you. The commission is confirming your payment with the bank, which can take from a few minutes to a few hours. This page updates by itself, and you can leave it: the payment and its certificate will be in your payments. Please don\'t pay again.';
-
-  @override
   String get payQrExpiredBody =>
-      'This QR code is no longer valid. If you already paid it, the payment will still be confirmed and appear in your payments. Otherwise, please start again.';
+      'This QR has expired. If you paid it, check again: a late payment is still confirmed for 24 hours. Otherwise, please start again.';
 
   @override
   String get payQrLeaveTitle => 'Did you pay this QR?';
 
   @override
   String get payQrLeaveBody =>
-      'If you paid, we\'ll keep confirming it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.';
+      'If you paid, we\'ll check it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.';
 
   @override
   String get payQrLeaveNotPaid => 'I didn\'t pay';
 
   @override
   String get payFailedBody => 'Please start again.';
+
+  @override
+  String get payQrChecking => 'Checking your payment…';
+
+  @override
+  String get payQrNotReceived =>
+      'Not received yet. If you have paid, wait a moment and try again.';
+
+  @override
+  String get payQrCheckPayment => 'I paid, check again';
+
+  @override
+  String payPaidDifferentAmount(String paid, String issued) {
+    return '$paid was received (the QR was for $issued). Your certificate shows the amount received.';
+  }
 }

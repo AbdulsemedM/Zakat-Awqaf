@@ -2110,7 +2110,7 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get payQrConfirmNote =>
-      'Komishiniin kaffaltii QR hunda baankii waliin mirkaneessa. Kun daqiiqaa muraasaa hanga sa’aatii muraasaatti fudhachuu danda’a; ragaan keessan erga mirkanaa’ee booda mul’ata.';
+      'Appii baankii keessaniin erga kaffaltanii booda deebi’aatii \"Kaffaleera\" tuqaa. Kaffaltiin yeroo baay’ee sekondii muraasa keessatti gaha.';
 
   @override
   String get payQrIHavePaid => 'Kaffaleera';
@@ -2132,23 +2132,34 @@ class AppLocalizationsOm extends AppLocalizations {
       'Yoo QR kana hin kaffalin qofa haqaa. Yoo duraan kaffaltan, dhiisaa: ni mirkanaa’a.';
 
   @override
-  String get payQrConfirmingBody =>
-      'Galatoomaa. Komishiniin kaffaltii keessan baankii waliin mirkaneessaa jira; kun daqiiqaa muraasaa hanga sa’aatii muraasaatti fudhachuu danda’a. Fuulli kun ofumaan haaromfama, isin immoo ba’uu dandeessu: kaffaltiin fi ragaan isaa kaffaltii keessan keessatti argamu. Maaloo irra deebi’aa hin kaffalinaa.';
-
-  @override
   String get payQrExpiredBody =>
-      'Koodiin QR kun kana booda hin hojjetu. Yoo duraan kaffaltan, kaffaltiin ni mirkanaa’a, kaffaltii keessan keessattis ni mul’ata. Yoo kana hin taane, maaloo irra deebi’aa jalqabaa.';
+      'Yeroon QR kanaa darbeera. Yoo kaffaltan, irra deebi’aa mirkaneessaa: kaffaltiin tureen sa’aatii 24f ni mirkanaa’a. Yoo kana hin taane, maaloo irra deebi’aa jalqabaa.';
 
   @override
   String get payQrLeaveTitle => 'QR kana kaffaltanii?';
 
   @override
   String get payQrLeaveBody =>
-      'Yoo kaffaltan, mirkaneessuu itti fufna, kaffaltii keessan keessattis ni argattu. Yoo hin kaffalin, kaffaltiin ni haqama.';
+      'Yoo kaffaltan, ni mirkaneessina, kaffaltii keessan keessattis ni argattu. Yoo hin kaffalin, kaffaltiin ni haqama.';
 
   @override
   String get payQrLeaveNotPaid => 'Hin kaffalle';
 
   @override
   String get payFailedBody => 'Maaloo irra deebi’aa jalqabaa.';
+
+  @override
+  String get payQrChecking => 'Kaffaltii keessan mirkaneessaa jirra…';
+
+  @override
+  String get payQrNotReceived =>
+      'Ammallee hin geenye. Yoo kaffaltan, xiqqoo eegaatii irra deebi’aa yaalaa.';
+
+  @override
+  String get payQrCheckPayment => 'Kaffaleera, irra deebi’ii mirkaneessi';
+
+  @override
+  String payPaidDifferentAmount(String paid, String issued) {
+    return '$paid gaheera (QR-n ${issued}f ture). Ragaan keessan hanga gahe agarsiisa.';
+  }
 }

@@ -2057,7 +2057,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get payQrConfirmNote =>
-      'ኮሚሽኑ እያንዳንዱን የQR ክፍያ ከባንኩ ጋር ያረጋግጣል። ይህ ከጥቂት ደቂቃዎች እስከ ጥቂት ሰዓታት ሊወስድ ይችላል፤ የምስክር ወረቀትዎ ከተረጋገጠ በኋላ ይታያል።';
+      'በባንክ መተግበሪያዎ ከከፈሉ በኋላ ተመልሰው \"ከፍያለሁ\" ይጫኑ። ክፍያው አብዛኛውን ጊዜ በሰከንዶች ውስጥ ይደርሳል።';
 
   @override
   String get payQrIHavePaid => 'ከፍያለሁ';
@@ -2079,23 +2079,33 @@ class AppLocalizationsAm extends AppLocalizations {
       'ይህን QR ካልከፈሉ ብቻ ይሰርዙ። አስቀድመው ከከፈሉ ይተዉት፤ ይረጋገጣል።';
 
   @override
-  String get payQrConfirmingBody =>
-      'እናመሰግናለን። ኮሚሽኑ ክፍያዎን ከባንኩ ጋር እያረጋገጠ ነው፤ ይህ ከጥቂት ደቂቃዎች እስከ ጥቂት ሰዓታት ሊወስድ ይችላል። ይህ ገጽ በራሱ ይዘመናል፣ መውጣትም ይችላሉ፤ ክፍያውና የምስክር ወረቀቱ በክፍያዎችዎ ውስጥ ይገኛሉ። እባክዎ እንደገና አይክፈሉ።';
-
-  @override
   String get payQrExpiredBody =>
-      'ይህ የQR ኮድ ከአሁን በኋላ አያገለግልም። አስቀድመው ከከፈሉ ክፍያው ይረጋገጣል እና በክፍያዎችዎ ውስጥ ይታያል። ካልሆነ እባክዎ እንደገና ይጀምሩ።';
+      'ይህ QR ጊዜው አልፎበታል። ከከፈሉት እንደገና ያረጋግጡ፤ የዘገየ ክፍያ እስከ 24 ሰዓት ድረስ ይረጋገጣል። ካልሆነ እባክዎ እንደገና ይጀምሩ።';
 
   @override
   String get payQrLeaveTitle => 'ይህን QR ከፍለዋል?';
 
   @override
   String get payQrLeaveBody =>
-      'ከከፈሉ ማረጋገጣችንን እንቀጥላለን፤ በክፍያዎችዎ ውስጥ ያገኙታል። ካልከፈሉ ክፍያው ይሰረዛል።';
+      'ከከፈሉ እናረጋግጠዋለን፤ በክፍያዎችዎ ውስጥ ያገኙታል። ካልከፈሉ ክፍያው ይሰረዛል።';
 
   @override
   String get payQrLeaveNotPaid => 'አልከፈልኩም';
 
   @override
   String get payFailedBody => 'እባክዎ እንደገና ይጀምሩ።';
+
+  @override
+  String get payQrChecking => 'ክፍያዎን በማረጋገጥ ላይ…';
+
+  @override
+  String get payQrNotReceived => 'እስካሁን አልደረሰም። ከከፈሉ ትንሽ ይጠብቁና እንደገና ይሞክሩ።';
+
+  @override
+  String get payQrCheckPayment => 'ከፍያለሁ፣ እንደገና አረጋግጥ';
+
+  @override
+  String payPaidDifferentAmount(String paid, String issued) {
+    return '$paid ደርሷል (QRው ለ$issued ነበር)። የምስክር ወረቀትዎ የደረሰውን መጠን ያሳያል።';
+  }
 }

@@ -2074,7 +2074,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get payQrConfirmNote =>
-      'تتحقق الهيئة من كل دفعة QR مع البنك. قد يستغرق ذلك من بضع دقائق إلى بضع ساعات، وتظهر شهادتك بعد التأكيد.';
+      'بعد الدفع في تطبيق البنك، عد واضغط \"لقد دفعت\". تصل الدفعة عادةً خلال ثوانٍ.';
 
   @override
   String get payQrIHavePaid => 'لقد دفعت';
@@ -2096,23 +2096,34 @@ class AppLocalizationsAr extends AppLocalizations {
       'لا تُلغِ إلا إذا لم تدفع هذا الرمز. إذا كنت قد دفعت فاتركه: سيتم تأكيده.';
 
   @override
-  String get payQrConfirmingBody =>
-      'شكرًا لك. تتحقق الهيئة من دفعتك مع البنك، وقد يستغرق ذلك من بضع دقائق إلى بضع ساعات. تتحدث هذه الصفحة تلقائيًا ويمكنك مغادرتها: ستجد الدفعة وشهادتها في مدفوعاتك. يرجى عدم الدفع مرة أخرى.';
-
-  @override
   String get payQrExpiredBody =>
-      'لم يعد رمز QR هذا صالحًا. إذا كنت قد دفعته فسيتم تأكيد الدفعة وستظهر في مدفوعاتك. وإلا فيرجى البدء من جديد.';
+      'انتهت صلاحية رمز QR هذا. إذا كنت قد دفعته فتحقّق مجددًا: تُؤكَّد الدفعة المتأخرة خلال 24 ساعة. وإلا فيرجى البدء من جديد.';
 
   @override
   String get payQrLeaveTitle => 'هل دفعت رمز QR هذا؟';
 
   @override
   String get payQrLeaveBody =>
-      'إذا دفعت فسنواصل تأكيد الدفعة وستجدها في مدفوعاتك. وإن لم تدفع فسيتم إلغاء الدفعة.';
+      'إذا دفعت فسنتحقق منها وستجدها في مدفوعاتك. وإن لم تدفع فسيتم إلغاء الدفعة.';
 
   @override
   String get payQrLeaveNotPaid => 'لم أدفع';
 
   @override
   String get payFailedBody => 'يرجى البدء من جديد.';
+
+  @override
+  String get payQrChecking => 'جارٍ التحقق من دفعتك…';
+
+  @override
+  String get payQrNotReceived =>
+      'لم تصل بعد. إذا كنت قد دفعت فانتظر قليلًا ثم حاول مرة أخرى.';
+
+  @override
+  String get payQrCheckPayment => 'لقد دفعت، تحقّق مجددًا';
+
+  @override
+  String payPaidDifferentAmount(String paid, String issued) {
+    return 'تم استلام $paid (كان رمز QR بمبلغ $issued). تُظهر شهادتك المبلغ المستلم.';
+  }
 }

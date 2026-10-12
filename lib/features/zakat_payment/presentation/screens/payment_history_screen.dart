@@ -19,7 +19,9 @@ import '../open_payment.dart';
 import 'zakat_certificate_screen.dart';
 
 /// A signed-in donor's zakat payments (`GET /me/payments?type=zakat`),
-/// newest first. A paid row opens its certificate.
+/// newest first. A paid row opens its certificate. Unsettled QR payments
+/// are checked with the bank in the background, which confirms late
+/// payments sooner.
 class PaymentHistoryScreen extends StatefulWidget {
   const PaymentHistoryScreen({super.key});
 
@@ -65,12 +67,33 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         _hasMore = page.hasMore;
         _loading = false;
       });
+      _checkUnsettled(page.items);
     } on ApiException catch (e) {
       if (!mounted) return;
       setState(() {
         _error = e;
         _loading = false;
       });
+    }
+  }
+
+  Future<void> _checkUnsettled(List<PaymentHistoryItem> items) async {
+    final now = DateTime.now();
+    for (final item in items.where((i) => i.canCheckPayment(now))) {
+      try {
+        final payment = await _repository.checkPayment(item.paymentId);
+        if (!mounted) return;
+        final index = _items.indexWhere((i) => i.paymentId == item.paymentId);
+        if (index == -1 || payment.status == item.status) continue;
+        setState(
+          () => _items[index] = PaymentHistoryItem.fromPayment(
+            payment,
+            createdAt: item.createdAt,
+          ),
+        );
+      } on ApiException {
+        // Not checkable (e.g. an older payment): keep the row as it is.
+      }
     }
   }
 
@@ -171,8 +194,9 @@ class _HistoryRow extends StatelessWidget {
     ].whereType<String>().join(' · ');
     final hasCertificate =
         item.status == PaymentStatus.succeeded && certificateId != null;
-    // An unfinished payment can be resumed (or its result checked).
-    final canResume = item.status == PaymentStatus.pending;
+    // An unfinished payment can be resumed, and a recently expired QR
+    // checked.
+    final canResume = item.canCheckPayment(DateTime.now());
     final canOpen = hasCertificate || canResume;
     return PremiumCard(
       padding: EdgeInsets.zero,

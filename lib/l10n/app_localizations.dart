@@ -3684,7 +3684,7 @@ abstract class AppLocalizations {
   /// No description provided for @payQrConfirmNote.
   ///
   /// In en, this message translates to:
-  /// **'The commission confirms each QR payment with the bank. This can take from a few minutes to a few hours; your certificate appears once it is confirmed.'**
+  /// **'After paying in your bank app, come back and tap \"I have paid\". The payment usually arrives within seconds.'**
   String get payQrConfirmNote;
 
   /// No description provided for @payQrIHavePaid.
@@ -3717,16 +3717,10 @@ abstract class AppLocalizations {
   /// **'Only cancel if you have not paid this QR. If you already paid, keep it: it will be confirmed.'**
   String get payQrCancelConfirmBody;
 
-  /// No description provided for @payQrConfirmingBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Thank you. The commission is confirming your payment with the bank, which can take from a few minutes to a few hours. This page updates by itself, and you can leave it: the payment and its certificate will be in your payments. Please don\'t pay again.'**
-  String get payQrConfirmingBody;
-
   /// No description provided for @payQrExpiredBody.
   ///
   /// In en, this message translates to:
-  /// **'This QR code is no longer valid. If you already paid it, the payment will still be confirmed and appear in your payments. Otherwise, please start again.'**
+  /// **'This QR has expired. If you paid it, check again: a late payment is still confirmed for 24 hours. Otherwise, please start again.'**
   String get payQrExpiredBody;
 
   /// No description provided for @payQrLeaveTitle.
@@ -3738,7 +3732,7 @@ abstract class AppLocalizations {
   /// No description provided for @payQrLeaveBody.
   ///
   /// In en, this message translates to:
-  /// **'If you paid, we\'ll keep confirming it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.'**
+  /// **'If you paid, we\'ll check it and you\'ll find it in your payments. If you didn\'t, the payment is cancelled.'**
   String get payQrLeaveBody;
 
   /// No description provided for @payQrLeaveNotPaid.
@@ -3752,6 +3746,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please start again.'**
   String get payFailedBody;
+
+  /// No description provided for @payQrChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking your payment…'**
+  String get payQrChecking;
+
+  /// No description provided for @payQrNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Not received yet. If you have paid, wait a moment and try again.'**
+  String get payQrNotReceived;
+
+  /// No description provided for @payQrCheckPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'I paid, check again'**
+  String get payQrCheckPayment;
+
+  /// No description provided for @payPaidDifferentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} was received (the QR was for {issued}). Your certificate shows the amount received.'**
+  String payPaidDifferentAmount(String paid, String issued);
 }
 
 class _AppLocalizationsDelegate

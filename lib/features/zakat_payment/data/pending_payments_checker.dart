@@ -7,11 +7,11 @@ import '../../../core/network/api_envelope.dart';
 import 'data_provider/device_payments_store.dart';
 import 'repository/zakat_payment_repository.dart';
 
-/// Re-checks the payments started on this device that are not settled yet:
-/// when the app opens or comes back to the foreground, and every few
-/// minutes while it is open. A QR payment is confirmed by the commission
-/// minutes to hours after it was paid, and an expired one can still turn
-/// `succeeded`. Each answer updates [DevicePaymentsStore].
+/// Checks the payments started on this device that are not settled yet
+/// (`check-payment`): when the app opens or comes back to the foreground
+/// (often from the bank app), and every few minutes while it is open. An
+/// expired QR paid late can still turn `succeeded`. Each answer updates
+/// [DevicePaymentsStore].
 @lazySingleton
 class PendingPaymentsChecker with WidgetsBindingObserver {
   PendingPaymentsChecker(this._repository, this._store);
@@ -57,9 +57,17 @@ class PendingPaymentsChecker with WidgetsBindingObserver {
       final due = _store.payments.where((p) => p.needsCheck(now)).toList();
       for (final payment in due) {
         try {
-          await _repository.fetchPayment(payment.paymentId);
-        } on ApiException {
-          // Offline, or no longer ours to read: try again next time.
+          await _repository.checkPayment(payment.paymentId);
+        } on ApiException catch (e) {
+          // 409: an older payment check-payment doesn't handle; read it.
+          // Otherwise offline, or no longer ours: try again next time.
+          if (e.statusCode == 409) {
+            try {
+              await _repository.fetchPayment(payment.paymentId);
+            } on ApiException {
+              // Next time.
+            }
+          }
         }
       }
     } finally {

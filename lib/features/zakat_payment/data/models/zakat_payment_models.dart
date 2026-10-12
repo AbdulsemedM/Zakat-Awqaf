@@ -75,6 +75,7 @@ class ZakatPayment extends Equatable {
     this.step,
     this.zakatType,
     required this.amountEtb,
+    this.issuedAmountEtb,
     this.causeId,
     this.causeTitle,
     this.methodCode,
@@ -95,7 +96,11 @@ class ZakatPayment extends Equatable {
   final PaymentStatus status;
   final PaymentStep? step;
   final String? zakatType;
+
+  /// The amount paid. When the donor paid a different amount than the QR's,
+  /// this is the amount received and [issuedAmountEtb] the QR's.
   final double amountEtb;
+  final double? issuedAmountEtb;
   final String? causeId;
   final String? causeTitle;
   final String? methodCode;
@@ -125,6 +130,19 @@ class ZakatPayment extends Equatable {
 
   bool get isQr => step == PaymentStep.scanQr || methodCode == 'ethqr';
 
+  /// The donor paid a different amount than the QR's.
+  bool get paidDifferentAmount =>
+      issuedAmountEtb != null && issuedAmountEtb != amountEtb;
+
+  /// How long a QR paid after it expired is still confirmed.
+  static const lateConfirmWindow = Duration(hours: 24);
+
+  /// A QR that `check-payment` can still confirm: pending, or expired (a
+  /// late payment is confirmed for [lateConfirmWindow]).
+  bool get canCheckPayment =>
+      isQr &&
+      (status == PaymentStatus.pending || status == PaymentStatus.expired);
+
   factory ZakatPayment.fromJson(Map<String, dynamic> json) {
     final paymentId = jsonString(json['paymentId']);
     if (paymentId == null) throw const FormatException('Payment without id');
@@ -146,6 +164,7 @@ class ZakatPayment extends Equatable {
       },
       zakatType: jsonString(json['zakatType']),
       amountEtb: jsonDouble(json['amountEtb']) ?? 0,
+      issuedAmountEtb: jsonDouble(json['issuedAmountEtb']),
       causeId: jsonString(json['causeId']),
       causeTitle: jsonString(json['causeTitle']),
       methodCode: jsonString(json['methodCode']),
@@ -170,6 +189,7 @@ class ZakatPayment extends Equatable {
     step,
     zakatType,
     amountEtb,
+    issuedAmountEtb,
     causeId,
     causeTitle,
     methodCode,
@@ -348,8 +368,17 @@ class PaymentHistoryItem extends Equatable {
   final String? certificateId;
   final DateTime? createdAt;
 
-  factory PaymentHistoryItem.fromJson(Map<String, dynamic> json) {
-    final payment = ZakatPayment.fromJson(json);
+  factory PaymentHistoryItem.fromJson(Map<String, dynamic> json) =>
+      PaymentHistoryItem.fromPayment(
+        ZakatPayment.fromJson(json),
+        createdAt: jsonDate(json['createdAt']),
+      );
+
+  /// The row for [payment], e.g. after `check-payment`.
+  factory PaymentHistoryItem.fromPayment(
+    ZakatPayment payment, {
+    DateTime? createdAt,
+  }) {
     return PaymentHistoryItem(
       paymentId: payment.paymentId,
       zakatType: payment.zakatType,
@@ -359,9 +388,20 @@ class PaymentHistoryItem extends Equatable {
       status: payment.status,
       paidAt: payment.paidAt,
       certificateId: payment.certificateId,
-      createdAt: jsonDate(json['createdAt']),
+      createdAt: createdAt ?? payment.createdAt,
     );
   }
+
+  /// Not settled and still confirmable: pending, or expired within
+  /// [ZakatPayment.lateConfirmWindow] of its start.
+  bool canCheckPayment(DateTime now) => switch (status) {
+    PaymentStatus.pending => true,
+    PaymentStatus.expired =>
+      createdAt != null &&
+          now.difference(createdAt!) <
+              ZakatPayment.lateConfirmWindow + const Duration(hours: 1),
+    _ => false,
+  };
 
   @override
   List<Object?> get props => [
