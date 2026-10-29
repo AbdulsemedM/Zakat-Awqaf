@@ -1773,6 +1773,54 @@ abstract class AppLocalizations {
   /// **'No matches found'**
   String get donationNoMatchesFound;
 
+  /// No description provided for @donationRegisteredNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This donation will be linked to your donor account.'**
+  String get donationRegisteredNote;
+
+  /// No description provided for @donationGuestNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You are giving anonymously. Sign in as a donor to link the donation to your account.'**
+  String get donationGuestNote;
+
+  /// No description provided for @donationSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get donationSignIn;
+
+  /// No description provided for @donationSignInRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in as a donor to make a registered donation, or give anonymously.'**
+  String get donationSignInRequired;
+
+  /// No description provided for @donationCheckingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking payment…'**
+  String get donationCheckingStatus;
+
+  /// No description provided for @donationProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment is still being processed. It can take a few minutes.'**
+  String get donationProcessing;
+
+  /// No description provided for @donationNotCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'The payment was not completed.'**
+  String get donationNotCompleted;
+
+  /// No description provided for @donationNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'We can\'t find this donation.'**
+  String get donationNotFound;
+
   /// No description provided for @changeAppModeTooltip.
   ///
   /// In en, this message translates to:

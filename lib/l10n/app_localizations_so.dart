@@ -1008,6 +1008,34 @@ class AppLocalizationsSo extends AppLocalizations {
   String get donationNoMatchesFound => 'Wax u dhigma lama helin';
 
   @override
+  String get donationRegisteredNote =>
+      'Deeqdan waxaa lagu xiri doonaa xisaabtaada deeq-bixiyaha.';
+
+  @override
+  String get donationGuestNote =>
+      'Waxaad bixinaysaa magac la\'aan. Gal adigoo deeq-bixiye ah si deeqda loogu xiro xisaabtaada.';
+
+  @override
+  String get donationSignIn => 'Gal';
+
+  @override
+  String get donationSignInRequired =>
+      'Gal adigoo deeq-bixiye ah si aad u sameyso deeq diiwaangashan, ama bixi magac la\'aan.';
+
+  @override
+  String get donationCheckingStatus => 'Lacag-bixinta waa la hubinayaa…';
+
+  @override
+  String get donationProcessing =>
+      'Lacag-bixintaadu weli waa la socodsiinayaa. Waxay qaadan kartaa dhowr daqiiqo.';
+
+  @override
+  String get donationNotCompleted => 'Lacag-bixinta lama dhammaystirin.';
+
+  @override
+  String get donationNotFound => 'Ma heli karno deeqdan.';
+
+  @override
   String get changeAppModeTooltip => 'Beddel qaabka';
 
   @override

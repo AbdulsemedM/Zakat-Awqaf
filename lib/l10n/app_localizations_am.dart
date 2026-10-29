@@ -985,6 +985,32 @@ class AppLocalizationsAm extends AppLocalizations {
   String get donationNoMatchesFound => 'ምንም ተዛማጅ አልተገኙም።';
 
   @override
+  String get donationRegisteredNote => 'ይህ ልገሳ ከለጋሽ መለያዎ ጋር ይያያዛል።';
+
+  @override
+  String get donationGuestNote =>
+      'ስምዎ ሳይገለጽ እየሰጡ ነው። ልገሳውን ከመለያዎ ጋር ለማያያዝ እንደ ለጋሽ ይግቡ።';
+
+  @override
+  String get donationSignIn => 'ይግቡ';
+
+  @override
+  String get donationSignInRequired =>
+      'የተመዘገበ ልገሳ ለማድረግ እንደ ለጋሽ ይግቡ፣ ወይም ስምዎ ሳይገለጽ ይስጡ።';
+
+  @override
+  String get donationCheckingStatus => 'ክፍያውን በማረጋገጥ ላይ…';
+
+  @override
+  String get donationProcessing => 'ክፍያዎ አሁንም በሂደት ላይ ነው። ጥቂት ደቂቃዎች ሊወስድ ይችላል።';
+
+  @override
+  String get donationNotCompleted => 'ክፍያው አልተጠናቀቀም።';
+
+  @override
+  String get donationNotFound => 'ይህን ልገሳ ማግኘት አልቻልንም።';
+
+  @override
   String get changeAppModeTooltip => 'ሁነታን ቀይር';
 
   @override

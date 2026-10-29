@@ -998,6 +998,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get donationNoMatchesFound => 'No matches found';
 
   @override
+  String get donationRegisteredNote =>
+      'This donation will be linked to your donor account.';
+
+  @override
+  String get donationGuestNote =>
+      'You are giving anonymously. Sign in as a donor to link the donation to your account.';
+
+  @override
+  String get donationSignIn => 'Sign in';
+
+  @override
+  String get donationSignInRequired =>
+      'Sign in as a donor to make a registered donation, or give anonymously.';
+
+  @override
+  String get donationCheckingStatus => 'Checking payment…';
+
+  @override
+  String get donationProcessing =>
+      'Your payment is still being processed. It can take a few minutes.';
+
+  @override
+  String get donationNotCompleted => 'The payment was not completed.';
+
+  @override
+  String get donationNotFound => 'We can\'t find this donation.';
+
+  @override
   String get changeAppModeTooltip => 'Change mode';
 
   @override

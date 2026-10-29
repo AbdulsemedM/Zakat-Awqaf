@@ -3,12 +3,23 @@ class DonationResponse {
   const DonationResponse({
     required this.success,
     this.message,
+    this.donationId,
+    this.donationToken,
+    this.merchantReference,
+    this.status,
     this.paymentUrl,
     this.rawData,
   });
 
   final bool success;
   final String? message;
+  final String? donationId;
+
+  /// Secret for `GET /donations/{id}` (`X-Donation-Token`). Returned only
+  /// once, here; the repository keeps it in secure storage.
+  final String? donationToken;
+  final String? merchantReference;
+  final String? status;
   final String? paymentUrl;
   final Map<String, dynamic>? rawData;
 
@@ -21,9 +32,21 @@ class DonationResponse {
     return DonationResponse(
       success: json['success'] == true,
       message: json['message']?.toString(),
+      donationId: _string(dataMap['donationId']),
+      donationToken: _string(dataMap['donationToken']),
+      merchantReference: _string(dataMap['merchantReference']),
+      status: _string(dataMap['status']),
       paymentUrl: _resolvePaymentUrl(json, dataMap),
-      rawData: dataMap.isEmpty ? null : dataMap,
+      // The token stays out of rawData so it can't leak through it.
+      rawData: dataMap.isEmpty
+          ? null
+          : (Map.of(dataMap)..remove('donationToken')),
     );
+  }
+
+  static String? _string(Object? value) {
+    final text = value?.toString().trim();
+    return text == null || text.isEmpty ? null : text;
   }
 
   static String? _resolvePaymentUrl(

@@ -41,6 +41,8 @@ import '../../features/donation/data/data_provider/donation_data_provider.dart'
     as _i495;
 import '../../features/donation/data/data_provider/donation_data_provider_impl.dart'
     as _i271;
+import '../../features/donation/data/data_provider/donation_token_store.dart'
+    as _i804;
 import '../../features/donation/data/repository/donation_repository.dart'
     as _i488;
 import '../../features/donation/data/repository/donation_repository_impl.dart'
@@ -111,6 +113,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.authDio(),
       instanceName: 'authDio',
     );
+    gh.lazySingleton<_i804.DonationTokenStore>(
+      () => _i804.SecureDonationTokenStore(),
+    );
     gh.lazySingleton<_i599.TokenRefresher>(
       () => _i599.TokenRefresher(
         gh<_i361.Dio>(instanceName: 'authDio'),
@@ -175,9 +180,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i868.HomeRemoteDataProvider>(
       () => _i868.HomeRemoteDataProviderImpl(gh<_i361.Dio>()),
     );
-    gh.lazySingleton<_i488.DonationRepository>(
-      () => _i477.DonationRepositoryImpl(gh<_i495.DonationDataProvider>()),
-    );
     gh.lazySingleton<_i365.ProfileDataProvider>(
       () => _i196.RemoteProfileDataProvider(
         gh<_i361.Dio>(),
@@ -206,6 +208,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i38.CausesRepository>(
       () => _i38.CausesRepositoryImpl(gh<_i486.CausesRemoteDataProvider>()),
+    );
+    gh.lazySingleton<_i488.DonationRepository>(
+      () => _i477.DonationRepositoryImpl(
+        gh<_i495.DonationDataProvider>(),
+        gh<_i804.DonationTokenStore>(),
+      ),
     );
     gh.lazySingleton<_i343.CalculatorConfigRepository>(
       () => _i343.CalculatorConfigRepositoryImpl(

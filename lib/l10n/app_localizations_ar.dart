@@ -989,6 +989,34 @@ class AppLocalizationsAr extends AppLocalizations {
   String get donationNoMatchesFound => 'لم يتم العثور على أي تطابقات';
 
   @override
+  String get donationRegisteredNote =>
+      'سيتم ربط هذا التبرع بحساب المتبرع الخاص بك.';
+
+  @override
+  String get donationGuestNote =>
+      'أنت تتبرع بشكل مجهول. سجّل الدخول كمتبرع لربط التبرع بحسابك.';
+
+  @override
+  String get donationSignIn => 'تسجيل الدخول';
+
+  @override
+  String get donationSignInRequired =>
+      'سجّل الدخول كمتبرع لإجراء تبرع مسجل، أو تبرع بشكل مجهول.';
+
+  @override
+  String get donationCheckingStatus => 'جارٍ التحقق من الدفع…';
+
+  @override
+  String get donationProcessing =>
+      'لا تزال عملية الدفع قيد المعالجة. قد يستغرق ذلك بضع دقائق.';
+
+  @override
+  String get donationNotCompleted => 'لم تكتمل عملية الدفع.';
+
+  @override
+  String get donationNotFound => 'لا يمكننا العثور على هذا التبرع.';
+
+  @override
   String get changeAppModeTooltip => 'تغيير الوضع';
 
   @override

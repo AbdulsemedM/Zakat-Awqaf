@@ -1010,6 +1010,34 @@ class AppLocalizationsOm extends AppLocalizations {
   String get donationNoMatchesFound => 'Walsimsiisaa hin argamne';
 
   @override
+  String get donationRegisteredNote =>
+      'Arjoomni kun herrega arjoomaa keessan waliin walqabata.';
+
+  @override
+  String get donationGuestNote =>
+      'Maqaa malee kennaa jirtu. Arjoomicha herrega keessan waliin walqabsiisuuf akka arjoomaatti seenaa.';
+
+  @override
+  String get donationSignIn => 'Seenaa';
+
+  @override
+  String get donationSignInRequired =>
+      'Arjoomii galmaa\'e gochuuf akka arjoomaatti seenaa, yookaan maqaa malee kennaa.';
+
+  @override
+  String get donationCheckingStatus => 'Kaffaltii mirkaneessaa jira…';
+
+  @override
+  String get donationProcessing =>
+      'Kaffaltiin keessan ammallee hojjetamaa jira. Daqiiqaa muraasa fudhachuu danda\'a.';
+
+  @override
+  String get donationNotCompleted => 'Kaffaltiin hin xumuramne.';
+
+  @override
+  String get donationNotFound => 'Arjoomii kana argachuu hin dandeenye.';
+
+  @override
   String get changeAppModeTooltip => 'Haalata jijjiiri';
 
   @override

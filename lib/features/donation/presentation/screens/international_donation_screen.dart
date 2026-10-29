@@ -7,6 +7,7 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/zakat_page_header.dart';
+import '../../../../core/auth/payer_access.dart';
 import '../../../../core/common/utils/phone_e164.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
@@ -14,6 +15,7 @@ import '../../data/donation_countries.dart';
 import '../../data/donation_exception.dart';
 import '../../data/donation_subdivisions.dart';
 import '../../data/models/donation_create_request.dart';
+import '../../data/models/donation_details.dart';
 import '../../data/repository/donation_repository.dart';
 import '../pages/donation_payment_webview_page.dart';
 import '../widgets/donation_search_picker.dart';
@@ -29,7 +31,6 @@ class InternationalDonationScreen extends StatefulWidget {
 class _InternationalDonationScreenState
     extends State<InternationalDonationScreen> {
   final _amount = TextEditingController();
-  final _fullName = TextEditingController();
   final _phone = TextEditingController();
   final _email = TextEditingController();
   final _address1 = TextEditingController();
@@ -38,15 +39,19 @@ class _InternationalDonationScreenState
   final _locality = TextEditingController();
   final _postalCode = TextEditingController();
 
+  final _payerAccess = getIt<PayerAccess>();
+  final _repository = getIt<DonationRepository>();
+
+  /// The donor's choice; guests always give anonymously ([_registered]).
   bool _anonymous = false;
   bool _submitting = false;
+  bool _checking = false;
   String? _selectedCountryCode;
   String? _selectedSubdivisionCode;
 
   @override
   void dispose() {
     _amount.dispose();
-    _fullName.dispose();
     _phone.dispose();
     _email.dispose();
     _address1.dispose();
@@ -91,12 +96,18 @@ class _InternationalDonationScreenState
 
   String get _resolvedCountry => _selectedCountryCode?.trim() ?? '';
 
+  /// `REGISTERED`: only a signed-in donor, and the server takes their
+  /// details from the account, so the app collects no contact details.
+  bool get _registered => _payerAccess.isSignedInDonor && !_anonymous;
+
   bool get _canSubmit {
     if (_submitting) return false;
     final amount = _amountEtb;
     if (amount == null || amount <= 0) return false;
-    if (_phone.text.trim().isEmpty || _email.text.trim().isEmpty) return false;
-    if (!_anonymous && _fullName.text.trim().isEmpty) return false;
+    if (!_registered &&
+        (_phone.text.trim().isEmpty || _email.text.trim().isEmpty)) {
+      return false;
+    }
     if (_selectedCountryCode == null || _selectedCountryCode!.trim().isEmpty) {
       return false;
     }
@@ -156,27 +167,28 @@ class _InternationalDonationScreenState
   Future<void> _onSubmit() async {
     final l10n = context.l10n;
     if (!_canSubmit) return;
+    final registered = _registered;
 
-    final phoneError = _validatePhone();
-    if (phoneError != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(phoneError)));
-      return;
+    String? phone;
+    if (!registered) {
+      final phoneError = _validatePhone();
+      if (phoneError != null) {
+        _showMessage(phoneError);
+        return;
+      }
+      phone = PhoneE164.isValid(_phone.text.trim())
+          ? _phone.text.trim()
+          : PhoneE164.normalize(_phone.text.trim(), countryCode: '1') ??
+                _phone.text.trim();
     }
-
-    final phone = PhoneE164.isValid(_phone.text.trim())
-        ? _phone.text.trim()
-        : PhoneE164.normalize(_phone.text.trim(), countryCode: '1') ??
-              _phone.text.trim();
 
     setState(() => _submitting = true);
 
     try {
       final request = DonationCreateRequest(
-        donorMode: _anonymous
-            ? DonorMode.anonymous.apiValue
-            : DonorMode.identified.apiValue,
+        donorMode: registered
+            ? DonorMode.registered.apiValue
+            : DonorMode.anonymous.apiValue,
         paymentPurpose: 'SADAQAH',
         amountEtb: _amountEtb!,
         address: DonationAddress(
@@ -187,14 +199,16 @@ class _InternationalDonationScreenState
           locality: _locality.text,
           postalCode: _postalCode.text,
         ),
-        donor: DonationDonor(
-          fullName: _anonymous ? 'Anonymous' : _fullName.text,
-          phone: phone,
-          email: _email.text,
-        ),
+        donor: registered
+            ? null
+            : DonationDonor(
+                fullName: 'Anonymous',
+                phone: phone!,
+                email: _email.text,
+              ),
       );
 
-      final result = await getIt<DonationRepository>().createDonation(request);
+      final result = await _repository.createDonation(request);
       if (!mounted) return;
 
       final paymentUrl = result.paymentUrl?.trim();
@@ -213,36 +227,96 @@ class _InternationalDonationScreenState
       }
 
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l10n.donationSuccess)));
-      context.go('/');
+      final donationId = result.donationId;
+      if (donationId == null) {
+        _showMessage(l10n.donationProcessing);
+        return;
+      }
+      setState(() => _checking = true);
+      final details = await _awaitResult(donationId);
+      if (!mounted) return;
+      if (details.succeeded) {
+        _showMessage(l10n.donationSuccess);
+        context.go('/');
+      } else {
+        _showMessage(
+          details.pending ? l10n.donationProcessing : l10n.donationNotCompleted,
+        );
+      }
     } on DonationException catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.message)));
+      _showError(e);
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      _showMessage(e.toString());
     } finally {
       if (mounted) {
-        setState(() => _submitting = false);
+        setState(() {
+          _submitting = false;
+          _checking = false;
+        });
       }
     }
   }
+
+  /// Reads the donation's status, waiting a little for the bank's callback
+  /// when it hasn't arrived yet.
+  Future<DonationDetails> _awaitResult(String donationId) async {
+    var details = await _repository.fetchDonation(donationId);
+    for (var retry = 0; retry < 3 && details.pending; retry++) {
+      await Future<void>.delayed(const Duration(seconds: 3));
+      if (!mounted) break;
+      details = await _repository.fetchDonation(donationId);
+    }
+    return details;
+  }
+
+  void _showError(DonationException e) {
+    final l10n = context.l10n;
+    switch (e.statusCode) {
+      case 401:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l10n.donationSignInRequired),
+            action: SnackBarAction(
+              label: l10n.donationSignIn,
+              onPressed: _openSignIn,
+            ),
+          ),
+        );
+      case 404:
+        _showMessage(l10n.donationNotFound);
+      default:
+        _showMessage(e.message);
+    }
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  /// Sign-in lives on the profile tab.
+  void _openSignIn() => context.go('/profile');
 
   static const _quickAmounts = [500, 1000, 2500, 5000];
 
   @override
   Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: _payerAccess,
+      builder: (context, _) => _buildScaffold(context),
+    );
+  }
+
+  Widget _buildScaffold(BuildContext context) {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final currentAmount = _amountEtb?.round();
     const gap = SizedBox(height: 16);
     const fieldGap = SizedBox(height: 10);
+    final isDonor = _payerAccess.isSignedInDonor;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -362,65 +436,59 @@ class _InternationalDonationScreenState
                           color: scheme.onSurfaceVariant,
                         ),
                       ),
-                      value: _anonymous,
-                      onChanged: (value) => setState(() => _anonymous = value),
+                      value: !_registered,
+                      onChanged: isDonor
+                          ? (value) => setState(() => _anonymous = value)
+                          : null,
                     ),
                   ),
-                  gap,
-                  PremiumCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ZakatFormSectionTitle(
-                          icon: TablerIcons.user,
-                          label: l10n.donationDonorSectionTitle,
-                        ),
-                        const SizedBox(height: 14),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 200),
-                          child: _anonymous
-                              ? const SizedBox(width: double.infinity)
-                              : Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: TextField(
-                                    controller: _fullName,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    onChanged: (_) => setState(() {}),
-                                    decoration: InputDecoration(
-                                      labelText: l10n.donationFullNameLabel,
-                                      prefixIcon: const Icon(
-                                        Icons.badge_outlined,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
-                        TextField(
-                          controller: _phone,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(
-                            labelText: l10n.donationPhoneLabel,
-                            hintText: '+1 555 123 4567',
-                            prefixIcon: const Icon(Icons.phone_outlined),
+                  const SizedBox(height: 8),
+                  _AccountNote(
+                    text: _registered
+                        ? l10n.donationRegisteredNote
+                        : isDonor
+                        ? null
+                        : l10n.donationGuestNote,
+                    actionLabel: isDonor ? null : l10n.donationSignIn,
+                    onAction: _openSignIn,
+                  ),
+                  if (!_registered) ...[
+                    gap,
+                    PremiumCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ZakatFormSectionTitle(
+                            icon: TablerIcons.user,
+                            label: l10n.donationDonorSectionTitle,
                           ),
-                        ),
-                        fieldGap,
-                        TextField(
-                          controller: _email,
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(
-                            labelText: l10n.donationEmailLabel,
-                            prefixIcon: const Icon(
-                              Icons.alternate_email_rounded,
+                          const SizedBox(height: 14),
+                          TextField(
+                            controller: _phone,
+                            keyboardType: TextInputType.phone,
+                            onChanged: (_) => setState(() {}),
+                            decoration: InputDecoration(
+                              labelText: l10n.donationPhoneLabel,
+                              hintText: '+1 555 123 4567',
+                              prefixIcon: const Icon(Icons.phone_outlined),
                             ),
                           ),
-                        ),
-                      ],
+                          fieldGap,
+                          TextField(
+                            controller: _email,
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (_) => setState(() {}),
+                            decoration: InputDecoration(
+                              labelText: l10n.donationEmailLabel,
+                              prefixIcon: const Icon(
+                                Icons.alternate_email_rounded,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                   gap,
                   PremiumCard(
                     child: Column(
@@ -515,10 +583,50 @@ class _InternationalDonationScreenState
             label: l10n.donationContinueToPayment,
             icon: Icons.lock_outline_rounded,
             busy: _submitting,
-            busyLabel: l10n.donationSubmitting,
+            busyLabel: _checking
+                ? l10n.donationCheckingStatus
+                : l10n.donationSubmitting,
             onPressed: _canSubmit ? _onSubmit : null,
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Under the anonymous switch: says whether the donation goes to the
+/// donor's account, or offers sign-in to a guest.
+class _AccountNote extends StatelessWidget {
+  const _AccountNote({required this.text, this.actionLabel, this.onAction});
+
+  final String? text;
+  final String? actionLabel;
+  final VoidCallback? onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = this.text;
+    if (text == null) return const SizedBox.shrink();
+    final scheme = Theme.of(context).colorScheme;
+    final actionLabel = this.actionLabel;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Row(
+        children: [
+          Icon(Icons.info_outline, size: 14, color: scheme.onSurfaceVariant),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTypography.body(
+                fontSize: 12,
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          if (actionLabel != null)
+            TextButton(onPressed: onAction, child: Text(actionLabel)),
+        ],
       ),
     );
   }

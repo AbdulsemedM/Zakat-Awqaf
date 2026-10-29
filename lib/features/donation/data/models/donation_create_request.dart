@@ -5,21 +5,24 @@ class DonationCreateRequest {
     required this.paymentPurpose,
     required this.amountEtb,
     required this.address,
-    required this.donor,
+    this.donor,
   });
 
   final String donorMode;
   final String paymentPurpose;
   final double amountEtb;
   final DonationAddress address;
-  final DonationDonor donor;
+
+  /// Contact details, sent only for `ANONYMOUS`. A `REGISTERED` donation
+  /// belongs to the signed-in donor and the server ignores this object.
+  final DonationDonor? donor;
 
   Map<String, dynamic> toJson() => {
     'donorMode': donorMode.trim(),
     'paymentPurpose': paymentPurpose.trim(),
     'amountEtb': amountEtb,
     'address': address.toJson(),
-    'donor': donor.toJson(),
+    'donor': ?donor?.toJson(),
   };
 }
 
@@ -70,7 +73,9 @@ class DonationDonor {
 
 enum DonorMode {
   anonymous('ANONYMOUS'),
-  identified('IDENTIFIED');
+
+  /// Needs a signed-in donor (bearer token); linked to their account.
+  registered('REGISTERED');
 
   const DonorMode(this.apiValue);
   final String apiValue;

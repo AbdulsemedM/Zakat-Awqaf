@@ -15,6 +15,10 @@ class AuthInterceptor extends Interceptor {
 
   static const _loginPath = 'api/auth/v1/login';
 
+  /// Set `options.extra[skipAuthKey] = true` on a request that must go out
+  /// without the user's token (e.g. an anonymous donation).
+  static const skipAuthKey = 'skipAuth';
+
   /// Public registration routes must not send Bearer tokens (stale JWT causes 401).
   static bool isPublicRegistrationRoute(RequestOptions options) {
     final path = options.path;
@@ -74,6 +78,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   bool _skipAuth(RequestOptions options) =>
+      options.extra[skipAuthKey] == true ||
       options.path.contains(_loginPath) ||
       isPublicRegistrationRoute(options) ||
       isPublicZakatRoute(options);
