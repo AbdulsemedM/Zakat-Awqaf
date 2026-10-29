@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_session_controller.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_token_storage.dart';
@@ -130,7 +131,10 @@ Future<void> _pay(WidgetTester tester) async {
 }
 
 void main() {
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    FlutterSecureStorage.setMockInitialValues({});
+  });
   tearDown(() => getIt.reset());
 
   testWidgets('a guest needs an amount and a name; no account is asked', (

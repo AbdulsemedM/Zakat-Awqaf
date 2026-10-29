@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Android 11 and below. flutter_secure_storage's values are encrypted with
-     a Keystore key that is not backed up, so a restored copy can't be
-     decrypted on a new device: leave them out of backups. -->
+<!-- Android 11 and below. Backups are off (allowBackup="false"); in case
+     that changes, keep app data out of them: SharedPreferences hold payment
+     records, and flutter_secure_storage's values are encrypted with a
+     Keystore key that can't leave the device. -->
 <full-backup-content>
-    <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
-    <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />
+    <exclude domain="sharedpref" path="." />
 </full-backup-content>

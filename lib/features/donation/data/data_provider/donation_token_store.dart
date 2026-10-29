@@ -14,7 +14,12 @@ abstract class DonationTokenStore {
 
 @LazySingleton(as: DonationTokenStore)
 class SecureDonationTokenStore implements DonationTokenStore {
-  SecureDonationTokenStore() : _storage = const FlutterSecureStorage();
+  SecureDonationTokenStore()
+    : _storage = const FlutterSecureStorage(
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock_this_device,
+        ),
+      );
 
   static const _key = 'donation_tokens_v1';
 

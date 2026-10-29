@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_interceptor.dart';
 import 'package:mejlis_digital_hub/core/auth/auth_session_controller.dart';
@@ -81,7 +82,10 @@ Dio _dio(_Server server) =>
     Dio(BaseOptions(baseUrl: 'https://test/'))..httpClientAdapter = server;
 
 void main() {
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    FlutterSecureStorage.setMockInitialValues({});
+  });
 
   group('TokenRefresher', () {
     test('a token that is not about to expire is used as is', () async {

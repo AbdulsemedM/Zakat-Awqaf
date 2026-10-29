@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,26 +32,124 @@ class StoredAuthUser {
   bool _has(String role) => roles.any((r) => r.toUpperCase() == role);
 }
 
+/// The signed-in session (tokens and the user's name, contacts and roles),
+/// kept in the Keychain/Keystore as one entry and cached in memory.
+/// Sessions saved by older versions in SharedPreferences are moved here on
+/// first read and the plain-text copy is deleted.
 @lazySingleton
 class AuthTokenStorage {
-  static const _accessTokenKey = 'auth_access_token';
-  static const _refreshTokenKey = 'auth_refresh_token';
-  static const _tokenTypeKey = 'auth_token_type';
-  static const _expiresAtKey = 'auth_expires_at_ms';
-  static const _userNameKey = 'auth_user_name';
-  static const _userEmailKey = 'auth_user_email';
-  static const _userPhoneKey = 'auth_user_phone';
-  static const _userRolesKey = 'auth_user_roles';
+  AuthTokenStorage()
+    : _secure = const FlutterSecureStorage(
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock_this_device,
+        ),
+      );
 
-  Future<String?> readAccessToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_accessTokenKey);
+  static const _sessionKey = 'auth_session_v1';
+
+  static const _accessToken = 'accessToken';
+  static const _refreshToken = 'refreshToken';
+  static const _tokenType = 'tokenType';
+  static const _expiresAtMs = 'expiresAtMs';
+  static const _userName = 'name';
+  static const _userEmail = 'email';
+  static const _userPhone = 'phone';
+  static const _userRoles = 'roles';
+
+  /// SharedPreferences keys used before the move to secure storage.
+  static const _legacyAccessTokenKey = 'auth_access_token';
+  static const _legacyRefreshTokenKey = 'auth_refresh_token';
+  static const _legacyTokenTypeKey = 'auth_token_type';
+  static const _legacyExpiresAtKey = 'auth_expires_at_ms';
+  static const _legacyUserNameKey = 'auth_user_name';
+  static const _legacyUserEmailKey = 'auth_user_email';
+  static const _legacyUserPhoneKey = 'auth_user_phone';
+  static const _legacyUserRolesKey = 'auth_user_roles';
+
+  final FlutterSecureStorage _secure;
+
+  /// Loaded once; every later read and write goes through it.
+  Future<Map<String, Object?>?>? _session;
+
+  Future<Map<String, Object?>?> _read() => _session ??= _loadOrRetryLater();
+
+  Future<Map<String, Object?>?> _loadOrRetryLater() async {
+    try {
+      return await _load();
+    } catch (_) {
+      _session = null;
+      rethrow;
+    }
   }
 
-  Future<String?> readRefreshToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_refreshTokenKey);
+  /// Waits for a first load (and its legacy move) to finish, so it can't
+  /// overwrite a newer write; a failed load doesn't matter here.
+  Future<void> _settle() async {
+    try {
+      await _read();
+    } catch (_) {}
   }
+
+  Future<Map<String, Object?>?> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final legacy = _legacySession(prefs);
+    if (legacy != null) {
+      await _secure.write(key: _sessionKey, value: jsonEncode(legacy));
+    }
+    // Only once the session is safe in secure storage.
+    await _removeLegacySession(prefs);
+    if (legacy != null) return legacy;
+    try {
+      final raw = await _secure.read(key: _sessionKey);
+      if (raw == null) return null;
+      final decoded = jsonDecode(raw);
+      return decoded is Map ? Map<String, Object?>.from(decoded) : null;
+    } on PlatformException {
+      // The Keystore key is gone (e.g. restored to another device).
+    } on FormatException {
+      // Corrupt entry.
+    }
+    await _secure.delete(key: _sessionKey);
+    return null;
+  }
+
+  /// A session saved in plain text by an older version, or `null`.
+  Map<String, Object?>? _legacySession(SharedPreferences prefs) {
+    final accessToken = prefs.getString(_legacyAccessTokenKey);
+    return accessToken == null
+        ? null
+        : <String, Object?>{
+            _accessToken: accessToken,
+            _refreshToken: prefs.getString(_legacyRefreshTokenKey),
+            _tokenType: prefs.getString(_legacyTokenTypeKey),
+            _expiresAtMs: prefs.getInt(_legacyExpiresAtKey),
+            _userName: prefs.getString(_legacyUserNameKey),
+            _userEmail: prefs.getString(_legacyUserEmailKey),
+            _userPhone: prefs.getString(_legacyUserPhoneKey),
+            _userRoles: prefs.getStringList(_legacyUserRolesKey),
+          };
+  }
+
+  Future<void> _removeLegacySession(SharedPreferences prefs) async {
+    for (final key in const [
+      _legacyAccessTokenKey,
+      _legacyRefreshTokenKey,
+      _legacyTokenTypeKey,
+      _legacyExpiresAtKey,
+      _legacyUserNameKey,
+      _legacyUserEmailKey,
+      _legacyUserPhoneKey,
+      _legacyUserRolesKey,
+    ]) {
+      if (prefs.containsKey(key)) await prefs.remove(key);
+    }
+  }
+
+  Future<String?> readAccessToken() async =>
+      (await _read())?[_accessToken] as String?;
+
+  Future<String?> readRefreshToken() async =>
+      (await _read())?[_refreshToken] as String?;
 
   /// Signed in: an access token that is still valid, or a refresh token to
   /// get a new one (the server decides whether the session is still alive;
@@ -67,27 +169,25 @@ class AuthTokenStorage {
 
   /// When the stored access token expires, if known.
   Future<DateTime?> readAccessTokenExpiry() async {
-    final prefs = await SharedPreferences.getInstance();
-    final expiresAt = prefs.getInt(_expiresAtKey);
+    final expiresAt = (await _read())?[_expiresAtMs] as num?;
     return expiresAt == null
         ? null
-        : DateTime.fromMillisecondsSinceEpoch(expiresAt);
+        : DateTime.fromMillisecondsSinceEpoch(expiresAt.toInt());
   }
 
   Future<StoredAuthUser?> readUser() async {
-    final prefs = await SharedPreferences.getInstance();
+    final session = await _read();
     // Signed in when a session was saved; the token may carry no name (e.g.
     // a donor, whose name comes from `GET /auth/v1/me`).
-    if (prefs.getString(_accessTokenKey) == null) {
+    if (session?[_accessToken] == null) {
       return null;
     }
-    final name = prefs.getString(_userNameKey) ?? '';
-    final rolesRaw = prefs.getStringList(_userRolesKey) ?? const [];
+    final roles = session![_userRoles];
     return StoredAuthUser(
-      name: name,
-      email: prefs.getString(_userEmailKey) ?? '',
-      phone: prefs.getString(_userPhoneKey) ?? '',
-      roles: rolesRaw,
+      name: session[_userName] as String? ?? '',
+      email: session[_userEmail] as String? ?? '',
+      phone: session[_userPhone] as String? ?? '',
+      roles: roles is List ? roles.map((r) => r.toString()).toList() : const [],
     );
   }
 
@@ -97,7 +197,6 @@ class AuthTokenStorage {
     required String tokenType,
     required int expiresInSeconds,
   }) async {
-    final prefs = await SharedPreferences.getInstance();
     final expiresAt = DateTime.now()
         .add(Duration(seconds: expiresInSeconds))
         .millisecondsSinceEpoch;
@@ -112,25 +211,24 @@ class AuthTokenStorage {
     final email = claims['email']?.toString().trim() ?? '';
     final phone = claims['preferred_username']?.toString().trim() ?? '';
 
-    await prefs.setString(_accessTokenKey, accessToken);
-    await prefs.setString(_refreshTokenKey, refreshToken);
-    await prefs.setString(_tokenTypeKey, tokenType);
-    await prefs.setInt(_expiresAtKey, expiresAt);
-    await prefs.setString(_userNameKey, name);
-    await prefs.setString(_userEmailKey, email);
-    await prefs.setString(_userPhoneKey, phone);
-    await prefs.setStringList(_userRolesKey, roles);
+    final session = <String, Object?>{
+      _accessToken: accessToken,
+      _refreshToken: refreshToken,
+      _tokenType: tokenType,
+      _expiresAtMs: expiresAt,
+      _userName: name,
+      _userEmail: email,
+      _userPhone: phone,
+      _userRoles: roles,
+    };
+    await _settle();
+    _session = Future.value(session);
+    await _secure.write(key: _sessionKey, value: jsonEncode(session));
   }
 
   Future<void> clear() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_accessTokenKey);
-    await prefs.remove(_refreshTokenKey);
-    await prefs.remove(_tokenTypeKey);
-    await prefs.remove(_expiresAtKey);
-    await prefs.remove(_userNameKey);
-    await prefs.remove(_userEmailKey);
-    await prefs.remove(_userPhoneKey);
-    await prefs.remove(_userRolesKey);
+    await _settle();
+    _session = Future.value(null);
+    await _secure.delete(key: _sessionKey);
   }
 }
