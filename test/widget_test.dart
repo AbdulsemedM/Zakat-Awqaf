@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mejlis_digital_hub/app/app.dart';
@@ -9,10 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('home renders app title', (WidgetTester tester) async {
-    FlutterConfig.loadValueForTesting({
-      'API_BASE_URL': 'https://example.com',
-      'API_KEY': 'test',
-    });
+    // Needs --dart-define=API_BASE_URL=https://… (see AppEnv).
     configureDependencies();
 
     await tester.pumpWidget(

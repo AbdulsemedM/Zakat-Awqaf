@@ -128,6 +128,8 @@
   "donationCurrencySheetSubtitle": "Dooro lacag bixinta ETB ee gudaha ama bixinta kaadhka caalamiga ah.",
   "donationInternationalPaymentTitle": "Lacag bixinta caalamiga ah",
   "donationInternationalPaymentSubtitle": "Meel kasta ku bixi kaarkaada iyo ciwaanka qaansheegtaada.",
+  "donationLocalPaymentTitle": "Lacag bixinta maxaliga ah (ETB)",
+  "donationLocalPaymentSubtitle": "Ku bixi birr barnaamij kasta oo bangi Itoobiyaan ah.",
   "donationInternationalTitle": "Sadaqah caalami ah",
   "donationInternationalSubtitle": "Taageer bulshooyinka meel kasta oo ay adduunka ka joogaan.",
   "donationAmountLabel": "Qadarka deeqda",
@@ -985,5 +987,8 @@
   "payQrChecking": "Waxaan hubinaynaa lacag-bixintaada…",
   "payQrNotReceived": "Weli lama helin. Haddii aad bixisay, wax yar sug oo isku day mar kale.",
   "payQrCheckPayment": "Waan bixiyay, hubi mar kale",
-  "payPaidDifferentAmount": "{paid} ayaa la helay (QR-ku wuxuu ahaa {issued}). Shahaadadaadu waxay muujinaysaa lacagta la helay."
+  "payPaidDifferentAmount": "{paid} ayaa la helay (QR-ku wuxuu ahaa {issued}). Shahaadadaadu waxay muujinaysaa lacagta la helay.",
+  "deviceIntegrityTitle": "Qalabkan ammaan ma ahaan karo",
+  "deviceIntegrityBody": "Taleefankan wuxuu u muuqdaa mid la root-gareeyay ama la jailbreak-gareeyay. Barnaamijyada kale ee ku jira waxay akhrin karaan xogtaada galitaanka iyo macluumaadka lacag-bixinta. Waxaan kugula talinaynaa inaad barnaamijkan ku isticmaasho taleefan aan wax laga beddelin oo keliya.",
+  "deviceIntegrityContinue": "Waan fahmay, sii wad"
 }

@@ -47,6 +47,8 @@ class RegistrationCodeField extends StatelessWidget {
         TextFormField(
           initialValue: state.registrationCode,
           textCapitalization: TextCapitalization.characters,
+          autocorrect: false,
+          enableSuggestions: false,
           textInputAction: TextInputAction.done,
           onChanged: (v) => bloc.add(RegistrationCodeUpdated(v)),
           onFieldSubmitted: (_) =>

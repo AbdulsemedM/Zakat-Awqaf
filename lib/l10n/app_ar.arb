@@ -128,6 +128,8 @@
   "donationCurrencySheetSubtitle": "اختر الدفع ETB المحلي أو الدفع بالبطاقة الدولية.",
   "donationInternationalPaymentTitle": "الدفع الدولي",
   "donationInternationalPaymentSubtitle": "ادفع من أي مكان باستخدام بطاقتك وعنوان إرسال الفواتير.",
+  "donationLocalPaymentTitle": "الدفع المحلي (ETB)",
+  "donationLocalPaymentSubtitle": "ادفع بالبر من أي تطبيق بنكي إثيوبي.",
   "donationInternationalTitle": "صدقة عالمية",
   "donationInternationalSubtitle": "دعم المجتمعات من أي مكان في العالم.",
   "donationAmountLabel": "مبلغ التبرع",
@@ -985,5 +987,8 @@
   "payQrChecking": "جارٍ التحقق من دفعتك…",
   "payQrNotReceived": "لم تصل بعد. إذا كنت قد دفعت فانتظر قليلًا ثم حاول مرة أخرى.",
   "payQrCheckPayment": "لقد دفعت، تحقّق مجددًا",
-  "payPaidDifferentAmount": "تم استلام {paid} (كان رمز QR بمبلغ {issued}). تُظهر شهادتك المبلغ المستلم."
+  "payPaidDifferentAmount": "تم استلام {paid} (كان رمز QR بمبلغ {issued}). تُظهر شهادتك المبلغ المستلم.",
+  "deviceIntegrityTitle": "قد لا يكون هذا الجهاز آمنًا",
+  "deviceIntegrityBody": "يبدو أن هذا الهاتف مُخترَق (روت أو جيلبريك). قد تتمكن تطبيقات أخرى عليه من قراءة بيانات تسجيل الدخول ومعلومات الدفع الخاصة بك. ننصح باستخدام هذا التطبيق على هاتف غير معدّل فقط.",
+  "deviceIntegrityContinue": "فهمت، متابعة"
 }

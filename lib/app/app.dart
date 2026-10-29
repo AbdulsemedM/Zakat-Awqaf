@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/constants/app_constants.dart';
 import '../core/di/injection.dart';
+import '../core/security/device_integrity_gate.dart';
 import 'l10n/app_content_locale.dart';
 import 'settings/app_settings_controller.dart';
 import 'theme/app_theme.dart';
@@ -46,7 +47,7 @@ class MejlisApp extends StatelessWidget {
         builder: (context, child) {
           return AppContentLocale(
             locale: appSettings.locale,
-            child: child ?? const SizedBox.shrink(),
+            child: DeviceIntegrityGate(child: child ?? const SizedBox.shrink()),
           );
         },
         routerConfig: router,

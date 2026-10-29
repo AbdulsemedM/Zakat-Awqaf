@@ -137,15 +137,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i723.AuthDataProvider>(
       () => _i379.AuthDataProviderImpl(gh<_i361.Dio>(instanceName: 'authDio')),
     );
-    gh.lazySingleton<_i104.AuthRepository>(
-      () => _i409.AuthRepositoryImpl(
-        gh<_i723.AuthDataProvider>(),
-        gh<_i149.AuthTokenStorage>(),
-        gh<_i543.AuthSessionController>(),
-        gh<_i599.TokenRefresher>(),
-      ),
-    );
-    gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(gh<_i104.AuthRepository>()));
     gh.lazySingleton<_i583.GoRouter>(
       () => appRouterModule.router(gh<_i543.AuthSessionController>()),
     );
@@ -165,10 +156,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dio(gh<_i53.AuthInterceptor>()),
     );
+    gh.lazySingleton<_i104.AuthRepository>(
+      () => _i409.AuthRepositoryImpl(
+        gh<_i723.AuthDataProvider>(),
+        gh<_i149.AuthTokenStorage>(),
+        gh<_i543.AuthSessionController>(),
+        gh<_i599.TokenRefresher>(),
+        gh<_i760.GuestPaymentTokenStore>(),
+        gh<_i804.DonationTokenStore>(),
+        gh<_i272.DevicePaymentsStore>(),
+      ),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.paymentsDio(gh<_i53.AuthInterceptor>()),
       instanceName: 'paymentsDio',
     );
+    gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(gh<_i104.AuthRepository>()));
     gh.lazySingleton<_i921.ImpactRemoteDataProvider>(
       () => _i921.ImpactRemoteDataProviderImpl(gh<_i361.Dio>()),
     );

@@ -206,6 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              keyboardType: TextInputType.visiblePassword,
                               textInputAction: TextInputAction.done,
                               enabled: !isLoading,
                               autofillHints: const [AutofillHints.password],

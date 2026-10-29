@@ -128,6 +128,8 @@
   "donationCurrencySheetSubtitle": "የሀገር ውስጥ የኢቲቢ ክፍያ ወይም የአለምአቀፍ ካርድ ክፍያ ይምረጡ።",
   "donationInternationalPaymentTitle": "ዓለም አቀፍ ክፍያ",
   "donationInternationalPaymentSubtitle": "ከየትኛውም ቦታ ሆነው በካርድዎ እና በክፍያ አድራሻዎ ይክፈሉ።",
+  "donationLocalPaymentTitle": "የአካባቢ ክፍያ (ኢ.ቲ.ቢ.)",
+  "donationLocalPaymentSubtitle": "በማንኛውም የኢትዮጵያ ባንክ መተግበሪያ በብር ይክፈሉ።",
   "donationInternationalTitle": "ዓለም አቀፍ ሰዳቃ",
   "donationInternationalSubtitle": "በዓለም ላይ ከየትኛውም ቦታ ሆነው ማህበረሰቦችን ይደግፉ።",
   "donationAmountLabel": "የመዋጮ መጠን",
@@ -985,5 +987,8 @@
   "payQrChecking": "ክፍያዎን በማረጋገጥ ላይ…",
   "payQrNotReceived": "እስካሁን አልደረሰም። ከከፈሉ ትንሽ ይጠብቁና እንደገና ይሞክሩ።",
   "payQrCheckPayment": "ከፍያለሁ፣ እንደገና አረጋግጥ",
-  "payPaidDifferentAmount": "{paid} ደርሷል (QRው ለ{issued} ነበር)። የምስክር ወረቀትዎ የደረሰውን መጠን ያሳያል።"
+  "payPaidDifferentAmount": "{paid} ደርሷል (QRው ለ{issued} ነበር)። የምስክር ወረቀትዎ የደረሰውን መጠን ያሳያል።",
+  "deviceIntegrityTitle": "ይህ መሣሪያ ደህንነቱ የተጠበቀ ላይሆን ይችላል",
+  "deviceIntegrityBody": "ይህ ስልክ root ወይም jailbreak የተደረገ ይመስላል። በእሱ ላይ ያሉ ሌሎች መተግበሪያዎች የመግቢያ መረጃዎን እና የክፍያ መረጃዎን ሊያነቡ ይችላሉ። ይህን መተግበሪያ ያልተሻሻለ ስልክ ላይ ብቻ እንዲጠቀሙ እንመክራለን።",
+  "deviceIntegrityContinue": "ተረድቻለሁ፣ ቀጥል"
 }

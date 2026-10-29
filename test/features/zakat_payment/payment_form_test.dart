@@ -15,6 +15,7 @@ import 'package:mejlis_digital_hub/features/zakat_payment/data/repository/zakat_
 import 'package:mejlis_digital_hub/features/zakat_payment/presentation/models/zakat_payment_args.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/presentation/screens/zakat_payment_screen.dart';
 import 'package:mejlis_digital_hub/l10n/app_localizations.dart';
+import 'package:mejlis_digital_hub/l10n/app_localizations_en.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _ethqr = PaymentMethod(
@@ -68,6 +69,7 @@ class _FakeCauses implements CausesRepository {
 Future<_FakePayments> _pumpForm(
   WidgetTester tester, {
   List<PaymentMethod> methods = const [_ethqr],
+  ZakatPaymentArgs? args,
 }) async {
   final payments = _FakePayments(methods);
   await getIt.reset();
@@ -86,14 +88,16 @@ Future<_FakePayments> _pumpForm(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: ZakatPaymentScreen(
-        args: ZakatPaymentArgs.forCause(
-          const Cause(
-            id: 'general',
-            title: 'General Zakat fund',
-            category: CauseCategory.general,
-            acceptsZakat: true,
-          ),
-        ),
+        args:
+            args ??
+            ZakatPaymentArgs.forCause(
+              const Cause(
+                id: 'general',
+                title: 'General Zakat fund',
+                category: CauseCategory.general,
+                acceptsZakat: true,
+              ),
+            ),
       ),
     ),
   );
@@ -169,6 +173,64 @@ void main() {
     expect(request.payer?.fullName, 'Amina Hassen');
     expect(request.payer?.phone, '+251911223344');
     expect(request.payer?.anonymous, isFalse);
+  });
+
+  testWidgets('there is no project choice; zakat goes to the general fund', (
+    tester,
+  ) async {
+    final payments = await _pumpForm(tester);
+    expect(find.byType(DropdownButtonFormField<String>), findsNothing);
+    expect(find.text('General Zakat fund'), findsNothing);
+
+    payments.errors.add(const ApiException('timeout', noResponse: true));
+    await _fillGuest(tester);
+    await _pay(tester);
+    expect(payments.requests.single.causeId, 'general');
+  });
+
+  testWidgets('started from a cause: pays that cause, shown as fixed', (
+    tester,
+  ) async {
+    final payments = await _pumpForm(
+      tester,
+      args: ZakatPaymentArgs.forCause(
+        const Cause(
+          id: 'c-42',
+          title: 'Clean water for Afar',
+          category: CauseCategory.general,
+          acceptsZakat: true,
+        ),
+      ),
+    );
+    expect(find.byType(DropdownButtonFormField<String>), findsNothing);
+    expect(
+      find.text('Clean water for Afar', skipOffstage: false),
+      findsOneWidget,
+    );
+
+    payments.errors.add(const ApiException('timeout', noResponse: true));
+    await _fillGuest(tester);
+    await _pay(tester);
+    expect(payments.requests.single.causeId, 'c-42');
+  });
+
+  testWidgets('local Sadaqah uses the QR steps as general zakat', (
+    tester,
+  ) async {
+    final l10n = AppLocalizationsEn();
+    final payments = await _pumpForm(
+      tester,
+      args: ZakatPaymentArgs.forSadaqah(l10n),
+    );
+    expect(find.text(l10n.donateSadaqah), findsOneWidget);
+
+    payments.errors.add(const ApiException('timeout', noResponse: true));
+    await _fillGuest(tester);
+    await _pay(tester);
+    final request = payments.requests.single;
+    expect(request.zakatType, ZakatType.general);
+    expect(request.causeId, 'general');
+    expect(request.methodCode, 'ethqr');
   });
 
   testWidgets('a bad phone number is shown under its field', (tester) async {

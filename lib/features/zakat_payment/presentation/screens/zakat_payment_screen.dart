@@ -16,7 +16,6 @@ import '../../../../core/network/api_envelope.dart';
 import '../../../../core/utils/uuid.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../causes/data/models/cause.dart';
-import '../../../causes/data/repository/causes_repository.dart';
 import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
 import '../../data/models/zakat_payment_models.dart';
 import '../../data/repository/zakat_payment_repository.dart';
@@ -42,11 +41,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   final _repository = getIt<ZakatPaymentRepository>();
   final _payerAccess = getIt<PayerAccess>();
 
-  /// Selected project, sent as `causeId` ([Cause.generalFundId] by default).
+  /// Sent as `causeId`: the cause the payment was started from, else the
+  /// general fund. Not a choice on this screen.
   late String _causeId;
-  List<Cause> _causes = const [];
-  bool _causesLoading = true;
-  String? _causesLang;
 
   List<PaymentMethod> _methods = const [];
   bool _methodsLoading = true;
@@ -77,42 +74,11 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final lang = apiLang(context.contentLocale);
-    if (lang != _causesLang) {
-      _causesLang = lang;
-      _loadCauses(lang);
-    }
-  }
-
-  @override
   void dispose() {
     _amount.dispose();
     _fullName.dispose();
     _phone.dispose();
     super.dispose();
-  }
-
-  /// Causes that accept zakat, general fund first.
-  Future<void> _loadCauses(String lang) async {
-    setState(() => _causesLoading = true);
-    List<Cause> causes;
-    try {
-      final page = await getIt<CausesRepository>().fetchCauses(
-        acceptsZakatOnly: true,
-        limit: 50,
-        lang: lang,
-      );
-      causes = page.items;
-    } on ApiException {
-      causes = const [];
-    }
-    if (!mounted || lang != _causesLang) return;
-    setState(() {
-      _causes = causes;
-      _causesLoading = false;
-    });
   }
 
   Future<void> _loadMethods() async {
@@ -136,20 +102,6 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
         _methodsFailed = true;
       });
     }
-  }
-
-  /// Dropdown options as `(id, title)`, always including the selection.
-  List<(String, String)> _projectOptions(AppLocalizations l10n) {
-    final options = <(String, String)>[
-      for (final cause in _causes) (cause.id, cause.title),
-    ];
-    if (!options.any((o) => o.$1 == Cause.generalFundId)) {
-      options.insert(0, (Cause.generalFundId, l10n.payGeneralFundZakat));
-    }
-    if (!options.any((o) => o.$1 == _causeId)) {
-      options.add((_causeId, widget.args.initialCauseTitle ?? _causeId));
-    }
-    return options;
   }
 
   PaymentMethod? get _method {
@@ -270,12 +222,10 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
       case 'DUPLICATE_REQUEST':
         _idempotencyKey = uuidV4();
       case 'CAUSE_INVALID':
-        // The cause ended or stopped accepting zakat: fall back to the
-        // general fund and reload the list.
+        // The cause ended or stopped accepting zakat: the next attempt goes
+        // to the general fund.
         _causeId = Cause.generalFundId;
         _inputsChanged();
-        final lang = _causesLang;
-        if (lang != null) _loadCauses(lang);
     }
     final message = e.noResponse ? l10n.payNetworkError : e.message;
     ScaffoldMessenger.of(
@@ -299,8 +249,8 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ZakatPageHeader(
-                  title: l10n.payTitleZakat,
-                  subtitle: l10n.paySubtitleZakat,
+                  title: a.title ?? l10n.payTitleZakat,
+                  subtitle: a.subtitle ?? l10n.paySubtitleZakat,
                   leadingIcon: Icons.verified_user_outlined,
                 ),
                 Padding(
@@ -328,47 +278,27 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
                         ),
                       ),
                       gap,
-                      PremiumCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ZakatFormSectionTitle(
-                              icon: Icons.volunteer_activism_outlined,
-                              label: l10n.payBeneficiary,
-                            ),
-                            const SizedBox(height: 14),
-                            DropdownButtonFormField<String>(
-                              initialValue: _causeId,
-                              isExpanded: true,
-                              decoration: InputDecoration(
-                                labelText: l10n.payProjectLabel,
-                                helperText: _causesLoading
-                                    ? l10n.payProjectsLoading
-                                    : null,
+                      // No project choice: zakat goes to the general fund,
+                      // or to the cause it was started from (fixed).
+                      if (_causeId != Cause.generalFundId) ...[
+                        PremiumCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              ZakatFormSectionTitle(
+                                icon: Icons.volunteer_activism_outlined,
+                                label: l10n.payBeneficiary,
                               ),
-                              items: [
-                                for (final (id, title) in _projectOptions(l10n))
-                                  DropdownMenuItem<String>(
-                                    value: id,
-                                    child: Text(
-                                      title,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                              ],
-                              onChanged: (v) {
-                                if (v != null) {
-                                  setState(() {
-                                    _causeId = v;
-                                    _inputsChanged();
-                                  });
-                                }
-                              },
-                            ),
-                          ],
+                              const SizedBox(height: 10),
+                              Text(
+                                a.initialCauseTitle ?? _causeId,
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      gap,
+                        gap,
+                      ],
                       PremiumCard(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,

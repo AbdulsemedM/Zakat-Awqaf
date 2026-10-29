@@ -128,6 +128,8 @@
   "donationCurrencySheetSubtitle": "Kaffaltii ETB biyya keessaa ykn kaffaltii kaardii idil-addunyaa filadhu.",
   "donationInternationalPaymentTitle": "Kaffaltii idil-addunyaa",
   "donationInternationalPaymentSubtitle": "Kaardii fi teessoo kaffaltii keessaniin bakka kamirraayyuu kaffalaa.",
+  "donationLocalPaymentTitle": "Kaffaltii biyya keessaa (ETB)",
+  "donationLocalPaymentSubtitle": "Appiliikeeshinii baankii Itoophiyaa kamiin iyyuu qarshiidhaan kaffalaa.",
   "donationInternationalTitle": "Sadaqaan Idil Addunyaa",
   "donationInternationalSubtitle": "Hawaasa addunyaa bakka kamirraayyuu deeggaru.",
   "donationAmountLabel": "Maallaqa arjooma",
@@ -985,5 +987,8 @@
   "payQrChecking": "Kaffaltii keessan mirkaneessaa jirra…",
   "payQrNotReceived": "Ammallee hin geenye. Yoo kaffaltan, xiqqoo eegaatii irra deebi’aa yaalaa.",
   "payQrCheckPayment": "Kaffaleera, irra deebi’ii mirkaneessi",
-  "payPaidDifferentAmount": "{paid} gaheera (QR-n {issued}f ture). Ragaan keessan hanga gahe agarsiisa."
+  "payPaidDifferentAmount": "{paid} gaheera (QR-n {issued}f ture). Ragaan keessan hanga gahe agarsiisa.",
+  "deviceIntegrityTitle": "Meeshaan kun nageenya qabaachuu dhiisuu danda'a",
+  "deviceIntegrityBody": "Bilbilli kun root ykn jailbreak kan godhame fakkaata. Appiliikeeshiniin biroo isa irra jiran odeeffannoo seensaa fi kaffaltii keessanii dubbisuu danda'u. Appiliikeeshinii kana bilbila hin jijjiiramne irratti qofa akka fayyadamtan isin gorsina.",
+  "deviceIntegrityContinue": "Hubadheera, itti fufi"
 }

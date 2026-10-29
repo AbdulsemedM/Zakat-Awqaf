@@ -15,6 +15,10 @@ abstract class GuestPaymentTokenStore {
 
   /// Links [certificateId] to the token of the payment that produced it.
   Future<void> linkCertificate(String certificateId, String paymentId);
+
+  /// Forgets every token (sign-out), so the next person on this device
+  /// can't open these payments or certificates.
+  Future<void> clear();
 }
 
 @LazySingleton(as: GuestPaymentTokenStore)
@@ -65,5 +69,11 @@ class SecureGuestPaymentTokenStore implements GuestPaymentTokenStore {
     if (links[certificateId] == paymentId) return;
     links[certificateId] = paymentId;
     await _write(_certificatesKey, links);
+  }
+
+  @override
+  Future<void> clear() async {
+    await _storage.delete(key: _paymentsKey);
+    await _storage.delete(key: _certificatesKey);
   }
 }

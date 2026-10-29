@@ -24,8 +24,44 @@ class DioLoggingInterceptor extends Interceptor {
       'cookie',
       'set-cookie',
       'x-api-key',
+      'x-payment-token',
+      'x-donation-token',
     },
   });
+
+  /// Body fields (JSON and multipart) whose values are never logged.
+  static const _sensitiveBodyKeys = {
+    'password',
+    'newpassword',
+    'currentpassword',
+    'confirmpassword',
+    'accesstoken',
+    'refreshtoken',
+    'idtoken',
+    'token',
+    'guesttoken',
+    'donationtoken',
+    'otp',
+    'code',
+    'verificationcode',
+    'registrationcode',
+  };
+
+  static bool _isSensitiveBodyKey(Object? key) =>
+      _sensitiveBodyKeys.contains(key.toString().toLowerCase());
+
+  static Object? _redactBody(Object? data) {
+    if (data is Map) {
+      return {
+        for (final entry in data.entries)
+          entry.key.toString(): _isSensitiveBodyKey(entry.key)
+              ? '***'
+              : _redactBody(entry.value),
+      };
+    }
+    if (data is List) return [for (final item in data) _redactBody(item)];
+    return data;
+  }
 
   final bool logRequestHeaders;
   final bool logRequestBody;
@@ -280,7 +316,10 @@ class DioLoggingInterceptor extends Interceptor {
 
     if (data is FormData) {
       final fields = data.fields
-          .map((e) => '  ${e.key}: ${e.value}')
+          .map(
+            (e) =>
+                '  ${e.key}: ${_isSensitiveBodyKey(e.key) ? '***' : e.value}',
+          )
           .join('\n');
       final files = data.files
           .map((e) => '  ${e.key}: ${e.value.filename ?? 'file'}')
@@ -321,7 +360,7 @@ class DioLoggingInterceptor extends Interceptor {
   String _prettyJson(dynamic data) {
     try {
       const encoder = JsonEncoder.withIndent('  ');
-      return _truncate(encoder.convert(data));
+      return _truncate(encoder.convert(_redactBody(data)));
     } catch (_) {
       return _truncate(data.toString());
     }

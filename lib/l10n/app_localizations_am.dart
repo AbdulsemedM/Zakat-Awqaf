@@ -896,6 +896,13 @@ class AppLocalizationsAm extends AppLocalizations {
       'ከየትኛውም ቦታ ሆነው በካርድዎ እና በክፍያ አድራሻዎ ይክፈሉ።';
 
   @override
+  String get donationLocalPaymentTitle => 'የአካባቢ ክፍያ (ኢ.ቲ.ቢ.)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'በማንኛውም የኢትዮጵያ ባንክ መተግበሪያ በብር ይክፈሉ።';
+
+  @override
   String get donationInternationalTitle => 'ዓለም አቀፍ ሰዳቃ';
 
   @override
@@ -2134,4 +2141,14 @@ class AppLocalizationsAm extends AppLocalizations {
   String payPaidDifferentAmount(String paid, String issued) {
     return '$paid ደርሷል (QRው ለ$issued ነበር)። የምስክር ወረቀትዎ የደረሰውን መጠን ያሳያል።';
   }
+
+  @override
+  String get deviceIntegrityTitle => 'ይህ መሣሪያ ደህንነቱ የተጠበቀ ላይሆን ይችላል';
+
+  @override
+  String get deviceIntegrityBody =>
+      'ይህ ስልክ root ወይም jailbreak የተደረገ ይመስላል። በእሱ ላይ ያሉ ሌሎች መተግበሪያዎች የመግቢያ መረጃዎን እና የክፍያ መረጃዎን ሊያነቡ ይችላሉ። ይህን መተግበሪያ ያልተሻሻለ ስልክ ላይ ብቻ እንዲጠቀሙ እንመክራለን።';
+
+  @override
+  String get deviceIntegrityContinue => 'ተረድቻለሁ፣ ቀጥል';
 }

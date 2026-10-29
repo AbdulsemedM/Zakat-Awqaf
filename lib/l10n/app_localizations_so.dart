@@ -917,6 +917,13 @@ class AppLocalizationsSo extends AppLocalizations {
       'Meel kasta ku bixi kaarkaada iyo ciwaanka qaansheegtaada.';
 
   @override
+  String get donationLocalPaymentTitle => 'Lacag bixinta maxaliga ah (ETB)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'Ku bixi birr barnaamij kasta oo bangi Itoobiyaan ah.';
+
+  @override
   String get donationInternationalTitle => 'Sadaqah caalami ah';
 
   @override
@@ -2186,4 +2193,14 @@ class AppLocalizationsSo extends AppLocalizations {
   String payPaidDifferentAmount(String paid, String issued) {
     return '$paid ayaa la helay (QR-ku wuxuu ahaa $issued). Shahaadadaadu waxay muujinaysaa lacagta la helay.';
   }
+
+  @override
+  String get deviceIntegrityTitle => 'Qalabkan ammaan ma ahaan karo';
+
+  @override
+  String get deviceIntegrityBody =>
+      'Taleefankan wuxuu u muuqdaa mid la root-gareeyay ama la jailbreak-gareeyay. Barnaamijyada kale ee ku jira waxay akhrin karaan xogtaada galitaanka iyo macluumaadka lacag-bixinta. Waxaan kugula talinaynaa inaad barnaamijkan ku isticmaasho taleefan aan wax laga beddelin oo keliya.';
+
+  @override
+  String get deviceIntegrityContinue => 'Waan fahmay, sii wad';
 }

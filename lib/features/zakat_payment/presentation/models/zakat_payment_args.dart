@@ -26,6 +26,8 @@ class ZakatPaymentArgs {
     this.calculation,
     this.initialCauseId,
     this.initialCauseTitle,
+    this.title,
+    this.subtitle,
   });
 
   /// Sent as `zakatType`.
@@ -53,9 +55,14 @@ class ZakatPaymentArgs {
   /// render Ethiopic or Arabic yet).
   final Map<String, dynamic>? calculation;
 
-  /// Cause preselected in the project dropdown (e.g. from a cause card).
+  /// The cause the payment goes to when started from a cause card or page;
+  /// otherwise the general fund. Not changeable on the payment screen.
   final String? initialCauseId;
   final String? initialCauseTitle;
+
+  /// Page header; "Pay Zakat" when `null`.
+  final String? title;
+  final String? subtitle;
 
   /// Zakat for a cause picked on the home screen or the causes list:
   /// `zakatType: general`, no calculation.
@@ -66,6 +73,18 @@ class ZakatPaymentArgs {
       amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
       initialCauseId: cause.id,
       initialCauseTitle: cause.title,
+    );
+  }
+
+  /// Local (ETB) Sadaqah by QR. The payments API has no Sadaqah type yet
+  /// (B3.6), so it is sent as general zakat to the general fund.
+  static ZakatPaymentArgs forSadaqah(AppLocalizations l) {
+    return ZakatPaymentArgs(
+      zakatType: ZakatType.general,
+      activeTab: ZakatCategoryTab.wealth,
+      amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,
+      title: l.donateSadaqah,
+      subtitle: l.supportCommunityNeeds,
     );
   }
 

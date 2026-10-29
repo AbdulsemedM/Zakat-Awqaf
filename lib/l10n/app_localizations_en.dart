@@ -907,6 +907,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pay from anywhere with your card and billing address.';
 
   @override
+  String get donationLocalPaymentTitle => 'Local payment (ETB)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'Pay in birr from any Ethiopian bank app.';
+
+  @override
   String get donationInternationalTitle => 'International Sadaqah';
 
   @override
@@ -2169,4 +2176,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String payPaidDifferentAmount(String paid, String issued) {
     return '$paid was received (the QR was for $issued). Your certificate shows the amount received.';
   }
+
+  @override
+  String get deviceIntegrityTitle => 'This device may not be safe';
+
+  @override
+  String get deviceIntegrityBody =>
+      'This phone appears to be rooted or jailbroken. Other apps on it may be able to read your sign-in details and payment information. We recommend using this app only on an unmodified phone.';
+
+  @override
+  String get deviceIntegrityContinue => 'I understand, continue';
 }

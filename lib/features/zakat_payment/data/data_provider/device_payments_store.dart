@@ -174,4 +174,13 @@ class DevicePaymentsStore extends ChangeNotifier {
       jsonEncode([for (final p in _payments) p.toJson()]),
     );
   }
+
+  /// Forgets every payment (sign-out).
+  Future<void> clear() async {
+    await _load();
+    _payments = const [];
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_key);
+  }
 }

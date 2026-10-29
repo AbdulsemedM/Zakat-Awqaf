@@ -46,16 +46,11 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>NSCameraUsageDescription</key>
-		<string>This app needs camera access to capture your profile photo.</string>
+		<string>The camera is used to take a photo of your profile picture or registration documents.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>This app needs photo library access to choose your profile photo.</string>
+		<string>Your photo library is used to choose your profile picture or registration documents.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
-		<string>This app needs permission to save captured profile photos.</string>
-		<key>NSAppTransportSecurity</key>
-		<dict>
-			<key>NSAllowsLocalNetworking</key>
-			<true/>
-		</dict>
+		<string>Lets you save a payment QR code to your photos from the share sheet.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>

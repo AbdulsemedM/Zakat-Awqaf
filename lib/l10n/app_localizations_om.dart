@@ -920,6 +920,13 @@ class AppLocalizationsOm extends AppLocalizations {
       'Kaardii fi teessoo kaffaltii keessaniin bakka kamirraayyuu kaffalaa.';
 
   @override
+  String get donationLocalPaymentTitle => 'Kaffaltii biyya keessaa (ETB)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'Appiliikeeshinii baankii Itoophiyaa kamiin iyyuu qarshiidhaan kaffalaa.';
+
+  @override
   String get donationInternationalTitle => 'Sadaqaan Idil Addunyaa';
 
   @override
@@ -2190,4 +2197,15 @@ class AppLocalizationsOm extends AppLocalizations {
   String payPaidDifferentAmount(String paid, String issued) {
     return '$paid gaheera (QR-n ${issued}f ture). Ragaan keessan hanga gahe agarsiisa.';
   }
+
+  @override
+  String get deviceIntegrityTitle =>
+      'Meeshaan kun nageenya qabaachuu dhiisuu danda\'a';
+
+  @override
+  String get deviceIntegrityBody =>
+      'Bilbilli kun root ykn jailbreak kan godhame fakkaata. Appiliikeeshiniin biroo isa irra jiran odeeffannoo seensaa fi kaffaltii keessanii dubbisuu danda\'u. Appiliikeeshinii kana bilbila hin jijjiiramne irratti qofa akka fayyadamtan isin gorsina.';
+
+  @override
+  String get deviceIntegrityContinue => 'Hubadheera, itti fufi';
 }

@@ -58,6 +58,7 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
   Future<void> _sharePdf() async {
     final l10n = context.l10n;
     setState(() => _sharing = true);
+    File? file;
     try {
       final bytes = await _repository.downloadCertificatePdf(
         widget.certificateId,
@@ -67,12 +68,14 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
         RegExp(r'[^A-Za-z0-9_-]'),
         '_',
       );
-      final file = File(p.join(dir.path, 'zakat-certificate-$safeName.pdf'));
-      await file.writeAsBytes(bytes, flush: true);
+      final pdf = file = File(
+        p.join(dir.path, 'zakat-certificate-$safeName.pdf'),
+      );
+      await pdf.writeAsBytes(bytes, flush: true);
       await SharePlus.instance.share(
         ShareParams(
           text: l10n.certTitle,
-          files: [XFile(file.path, mimeType: 'application/pdf')],
+          files: [XFile(pdf.path, mimeType: 'application/pdf')],
         ),
       );
     } on ApiException {
@@ -80,6 +83,12 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
     } on FileSystemException {
       _showSnack(l10n.certPdfError);
     } finally {
+      // The share sheet has closed: don't leave the certificate on disk.
+      try {
+        await file?.delete();
+      } on FileSystemException {
+        // Already gone.
+      }
       if (mounted) setState(() => _sharing = false);
     }
   }

@@ -643,6 +643,8 @@
   "donationCurrencySheetSubtitle": "Choose local ETB payment or international card payment.",
   "donationInternationalPaymentTitle": "International payment",
   "donationInternationalPaymentSubtitle": "Pay from anywhere with your card and billing address.",
+  "donationLocalPaymentTitle": "Local payment (ETB)",
+  "donationLocalPaymentSubtitle": "Pay in birr from any Ethiopian bank app.",
   "donationInternationalTitle": "International Sadaqah",
   "donationInternationalSubtitle": "Support communities from anywhere in the world.",
   "donationAmountLabel": "Donation amount",
@@ -1331,5 +1333,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deviceIntegrityTitle": "This device may not be safe",
+  "deviceIntegrityBody": "This phone appears to be rooted or jailbroken. Other apps on it may be able to read your sign-in details and payment information. We recommend using this app only on an unmodified phone.",
+  "deviceIntegrityContinue": "I understand, continue"
 }

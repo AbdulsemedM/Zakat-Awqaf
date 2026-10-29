@@ -1153,6 +1153,9 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
               const SizedBox(height: 16),
               TextField(
                 obscureText: _obscurePassword,
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.visiblePassword,
                 onChanged: (v) => bloc.add(PasswordUpdated(v)),
                 decoration: InputDecoration(
                   labelText: l10n.regPassword,
@@ -1170,6 +1173,9 @@ class _SetPasswordStepState extends State<_SetPasswordStep> {
               const SizedBox(height: 12),
               TextField(
                 obscureText: _obscureConfirm,
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.visiblePassword,
                 onChanged: (v) => bloc.add(ConfirmPasswordUpdated(v)),
                 decoration: InputDecoration(
                   labelText: l10n.regConfirmPassword,

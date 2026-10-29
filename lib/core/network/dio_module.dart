@@ -11,10 +11,19 @@ import '../config/app_env.dart';
 import 'dio_logging_interceptor.dart';
 import 'pinned_certificates.dart';
 
-/// Trusts only [PinnedCertificates] when there are any. Otherwise, in
-/// debug builds only, accepts the self-signed certificate of the configured
-/// API host; release builds then keep normal certificate validation.
+/// Refuses a base URL that isn't `https` (the platforms' cleartext rules
+/// don't cover Dart's HttpClient). Trusts only [PinnedCertificates] when
+/// there are any. Otherwise, in debug builds only, accepts the self-signed
+/// certificate of the configured API host; release builds then keep normal
+/// certificate validation.
 void _configureTls(Dio dio) {
+  final scheme = Uri.tryParse(dio.options.baseUrl)?.scheme;
+  if (scheme != 'https') {
+    throw StateError(
+      'API base URL must use https, got "${dio.options.baseUrl}". '
+      'Check API_BASE_URL in .env.',
+    );
+  }
   if (PinnedCertificates.pem.isNotEmpty) {
     final context = SecurityContext(withTrustedRoots: false);
     for (final pem in PinnedCertificates.pem) {

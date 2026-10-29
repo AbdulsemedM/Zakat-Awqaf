@@ -900,6 +900,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'ادفع من أي مكان باستخدام بطاقتك وعنوان إرسال الفواتير.';
 
   @override
+  String get donationLocalPaymentTitle => 'الدفع المحلي (ETB)';
+
+  @override
+  String get donationLocalPaymentSubtitle =>
+      'ادفع بالبر من أي تطبيق بنكي إثيوبي.';
+
+  @override
   String get donationInternationalTitle => 'صدقة عالمية';
 
   @override
@@ -2154,4 +2161,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String payPaidDifferentAmount(String paid, String issued) {
     return 'تم استلام $paid (كان رمز QR بمبلغ $issued). تُظهر شهادتك المبلغ المستلم.';
   }
+
+  @override
+  String get deviceIntegrityTitle => 'قد لا يكون هذا الجهاز آمنًا';
+
+  @override
+  String get deviceIntegrityBody =>
+      'يبدو أن هذا الهاتف مُخترَق (روت أو جيلبريك). قد تتمكن تطبيقات أخرى عليه من قراءة بيانات تسجيل الدخول ومعلومات الدفع الخاصة بك. ننصح باستخدام هذا التطبيق على هاتف غير معدّل فقط.';
+
+  @override
+  String get deviceIntegrityContinue => 'فهمت، متابعة';
 }

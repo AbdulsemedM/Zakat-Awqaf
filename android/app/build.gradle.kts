@@ -1,4 +1,5 @@
 import java.io.FileInputStream
+import java.util.Base64
 import java.util.Properties
 
 plugins {
@@ -7,8 +8,6 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
-
-apply(from = project(":flutter_config").projectDir.resolve("dotenv.gradle"))
 
 // Release signing key, from android/key.properties (never committed; see
 // README "Release signing"). Release builds stop without it instead of
@@ -43,12 +42,12 @@ android {
     }
 
     defaultConfig {
-        // Permanent once published; keep equal to `namespace` (flutter_config
-        // reads <applicationId>.BuildConfig).
+        // Permanent once published.
         applicationId = "com.ezac.user"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // Android 10+: older versions no longer get security updates.
+        minSdk = 29
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -83,10 +82,22 @@ flutter {
     source = "../.."
 }
 
-// Fail fast, before compiling, when a release build has no signing key.
+// Fail fast, before compiling, when a release build has no signing key or
+// no API URL (`--dart-define-from-file=.env`; the app has no other source).
 gradle.taskGraph.whenReady {
     val buildsRelease = allTasks.any {
         it.project == project && it.name.contains("Release")
+    }
+    val dartDefines = (project.findProperty("dart-defines") as String?)
+        ?.split(",")
+        ?.filter { it.isNotBlank() }
+        ?.map { String(Base64.getDecoder().decode(it)) }
+        .orEmpty()
+    if (buildsRelease && dartDefines.none { it.startsWith("API_BASE_URL=https://") }) {
+        throw GradleException(
+            "Release builds need the API URL: build with --dart-define-from-file=.env " +
+                "(API_BASE_URL must be https).",
+        )
     }
     if (buildsRelease && !keystorePropertiesFile.exists()) {
         throw GradleException(

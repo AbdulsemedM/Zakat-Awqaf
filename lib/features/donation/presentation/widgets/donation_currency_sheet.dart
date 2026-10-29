@@ -7,11 +7,13 @@ import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
+import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 
 enum DonationCurrencyChoice { local, international }
 
-/// Opens the payment picker for Sadaqah donations (international only until
-/// local Sadaqah is available).
+/// Opens the payment picker for Sadaqah donations: local (ETB, QR payment
+/// steps; sent as general zakat until the API has a Sadaqah type, B3.6) or
+/// international (card).
 Future<void> showDonationCurrencySheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
@@ -23,6 +25,12 @@ Future<void> showDonationCurrencySheet(BuildContext context) {
 
 class _DonationCurrencySheet extends StatelessWidget {
   const _DonationCurrencySheet();
+
+  void _onLocalTap(BuildContext context) {
+    final args = ZakatPaymentArgs.forSadaqah(context.l10n);
+    Navigator.of(context).pop();
+    context.push('/zakat/payment', extra: args);
+  }
 
   void _onInternationalTap(BuildContext context) {
     Navigator.of(context).pop();
@@ -85,8 +93,15 @@ class _DonationCurrencySheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              // Local (ETB) Sadaqah is not in the payments API yet (B3.6):
-              // only international donations are offered.
+              _CurrencyOptionTile(
+                title: l10n.donationLocalPaymentTitle,
+                subtitle: l10n.donationLocalPaymentSubtitle,
+                icon: TablerIcons.building_bank,
+                gradient: PrimaryHero.sadaqahGradient,
+                dark: false,
+                onTap: () => _onLocalTap(context),
+              ),
+              const SizedBox(height: 12),
               _CurrencyOptionTile(
                 title: l10n.donationInternationalPaymentTitle,
                 subtitle: l10n.donationInternationalPaymentSubtitle,

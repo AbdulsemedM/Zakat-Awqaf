@@ -10,6 +10,9 @@ abstract class DonationTokenStore {
   Future<String?> tokenForDonation(String donationId);
 
   Future<void> saveToken(String donationId, String token);
+
+  /// Forgets every token (sign-out).
+  Future<void> clear();
 }
 
 @LazySingleton(as: DonationTokenStore)
@@ -48,4 +51,7 @@ class SecureDonationTokenStore implements DonationTokenStore {
     tokens[donationId] = token;
     await _storage.write(key: _key, value: jsonEncode(tokens));
   }
+
+  @override
+  Future<void> clear() => _storage.delete(key: _key);
 }

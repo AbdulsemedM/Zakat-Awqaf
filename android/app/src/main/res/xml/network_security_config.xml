@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HTTPS only. Everything else (the card gateway in the payment webview)
+     trusts the system's CAs, never user-installed ones. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <!-- API server (UAT, self-signed): trusted only as this certificate and
+         pinned to its key. The Dart API clients pin it separately
+         (lib/core/network/pinned_certificates.dart); keep both in step when
+         the certificate changes. -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="false">196.188.249.232</domain>
+        <trust-anchors>
+            <certificates src="@raw/api_server_cert" />
+        </trust-anchors>
+        <pin-set expiration="2028-11-12">
+            <pin digest="SHA-256">u2lrk+xtYqQQyjvDcfOALZDnDpVGdDqTnco8BI9+h4g=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

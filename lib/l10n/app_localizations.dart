@@ -1599,6 +1599,18 @@ abstract class AppLocalizations {
   /// **'Pay from anywhere with your card and billing address.'**
   String get donationInternationalPaymentSubtitle;
 
+  /// No description provided for @donationLocalPaymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local payment (ETB)'**
+  String get donationLocalPaymentTitle;
+
+  /// No description provided for @donationLocalPaymentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in birr from any Ethiopian bank app.'**
+  String get donationLocalPaymentSubtitle;
+
   /// No description provided for @donationInternationalTitle.
   ///
   /// In en, this message translates to:
@@ -3818,6 +3830,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{paid} was received (the QR was for {issued}). Your certificate shows the amount received.'**
   String payPaidDifferentAmount(String paid, String issued);
+
+  /// No description provided for @deviceIntegrityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This device may not be safe'**
+  String get deviceIntegrityTitle;
+
+  /// No description provided for @deviceIntegrityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone appears to be rooted or jailbroken. Other apps on it may be able to read your sign-in details and payment information. We recommend using this app only on an unmodified phone.'**
+  String get deviceIntegrityBody;
+
+  /// No description provided for @deviceIntegrityContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand, continue'**
+  String get deviceIntegrityContinue;
 }
 
 class _AppLocalizationsDelegate

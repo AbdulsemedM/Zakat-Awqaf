@@ -214,7 +214,8 @@ class _InternationalDonationScreenState
       final paymentUrl = result.paymentUrl?.trim();
       if (paymentUrl != null && paymentUrl.isNotEmpty) {
         final uri = Uri.tryParse(paymentUrl);
-        if (uri != null) {
+        // Card details go only to an https page.
+        if (uri != null && uri.scheme == 'https') {
           await Navigator.of(context).push<void>(
             MaterialPageRoute<void>(
               builder: (_) => DonationPaymentWebViewPage(

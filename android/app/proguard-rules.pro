@@ -1,2 +1,12 @@
-# Keep flutter_config BuildConfig fields when R8/minify is enabled.
--keep class com.ezac.user.BuildConfig { *; }
+# Release builds: drop android.util.Log calls (plugin and library logging), so
+# nothing is written to logcat.
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+    public static int wtf(...);
+    public static int println(...);
+}

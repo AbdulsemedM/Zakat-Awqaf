@@ -52,6 +52,12 @@ class _MemoryTokenStore implements GuestPaymentTokenStore {
   @override
   Future<void> linkCertificate(String certificateId, String paymentId) async =>
       certificates[certificateId] = paymentId;
+
+  @override
+  Future<void> clear() async {
+    payments.clear();
+    certificates.clear();
+  }
 }
 
 /// Records the guest token each call was given; returns queued payments.
