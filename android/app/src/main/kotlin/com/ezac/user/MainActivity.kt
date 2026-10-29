@@ -1,4 +1,4 @@
-package com.mejlis.mejlis_digital_hub
+package com.ezac.user
 
 import io.flutter.embedding.android.FlutterActivity
 

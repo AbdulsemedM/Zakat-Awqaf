@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -8,11 +9,22 @@ import 'package:injectable/injectable.dart';
 import '../auth/auth_interceptor.dart';
 import '../config/app_env.dart';
 import 'dio_logging_interceptor.dart';
+import 'pinned_certificates.dart';
 
-/// Debug builds only: the UAT server uses a self-signed certificate, which
-/// the platform rejects. Trust it for the configured API host and nothing
-/// else. Release builds keep normal certificate validation.
-void _trustSelfSignedApiHost(Dio dio) {
+/// Trusts only [PinnedCertificates] when there are any. Otherwise, in
+/// debug builds only, accepts the self-signed certificate of the configured
+/// API host; release builds then keep normal certificate validation.
+void _configureTls(Dio dio) {
+  if (PinnedCertificates.pem.isNotEmpty) {
+    final context = SecurityContext(withTrustedRoots: false);
+    for (final pem in PinnedCertificates.pem) {
+      context.setTrustedCertificatesBytes(utf8.encode(pem));
+    }
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () => HttpClient(context: context),
+    );
+    return;
+  }
   if (!kDebugMode) return;
   final host = Uri.tryParse(dio.options.baseUrl)?.host;
   if (host == null || host.isEmpty) return;
@@ -49,7 +61,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
-    _trustSelfSignedApiHost(dio);
+    _configureTls(dio);
 
     return dio;
   }
@@ -69,7 +81,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
-    _trustSelfSignedApiHost(dio);
+    _configureTls(dio);
 
     return dio;
   }
@@ -90,7 +102,7 @@ abstract class DioModule {
     if (kDebugMode) {
       dio.interceptors.add(DioLoggingInterceptor());
     }
-    _trustSelfSignedApiHost(dio);
+    _configureTls(dio);
 
     return dio;
   }
