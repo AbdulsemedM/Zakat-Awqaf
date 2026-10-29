@@ -211,10 +211,6 @@ class _StepContent extends StatelessWidget {
           return _IdentityStep(state: state);
         }
         return const SizedBox.shrink();
-      case BeneficiaryRegistrationStep.needs:
-        return _NeedsStep(state: state);
-      case BeneficiaryRegistrationStep.disbursement:
-        return _DisbursementStep(state: state);
       case BeneficiaryRegistrationStep.institutionDetails:
         return _InstitutionDetailsStep(state: state);
       case BeneficiaryRegistrationStep.setPassword:
@@ -610,133 +606,6 @@ class _IdentityStep extends StatelessWidget {
                   ),
                 ),
               ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _NeedsStep extends StatelessWidget {
-  const _NeedsStep({required this.state});
-  final BeneficiaryRegistrationState state;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final bloc = context.read<BeneficiaryRegistrationBloc>();
-    return Column(
-      children: [
-        SectionCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.regNeedsAssessment,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                maxLines: 4,
-                onChanged: (v) => bloc.add(SituationDescriptionUpdated(v)),
-                decoration: InputDecoration(
-                  labelText: l10n.regSituationLabel,
-                  hintText: l10n.regSituationHint,
-                ),
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: () => bloc.add(
-                  const SupportingProofPicked('hospital_bill_june.pdf'),
-                ),
-                icon: const Icon(Icons.upload_file_outlined),
-                label: Text(l10n.regUploadProof),
-              ),
-              if (state.uploadedProofName != null) ...[
-                const SizedBox(height: 8),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.description_outlined),
-                  title: Text(state.uploadedProofName!),
-                  trailing: IconButton(
-                    onPressed: () => bloc.add(const SupportingProofRemoved()),
-                    icon: const Icon(Icons.close),
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DisbursementStep extends StatelessWidget {
-  const _DisbursementStep({required this.state});
-  final BeneficiaryRegistrationState state;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final bloc = context.read<BeneficiaryRegistrationBloc>();
-    return Column(
-      children: [
-        SectionCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.regDisbursementSetup,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 12),
-              PayoutMethodTile(
-                title: l10n.regTelebirrTitle,
-                subtitle: l10n.regTelebirrSubtitle,
-                icon: Icons.account_balance_wallet_outlined,
-                selected: state.payoutMethod == PayoutMethod.telebirrWallet,
-                onTap: () => bloc.add(
-                  const PayoutMethodSelected(PayoutMethod.telebirrWallet),
-                ),
-              ),
-              const SizedBox(height: 10),
-              PayoutMethodTile(
-                title: l10n.regMpesaTitle,
-                subtitle: l10n.regMpesaSubtitle,
-                icon: Icons.phone_iphone_outlined,
-                selected: state.payoutMethod == PayoutMethod.mPesa,
-                onTap: () =>
-                    bloc.add(const PayoutMethodSelected(PayoutMethod.mPesa)),
-              ),
-              const SizedBox(height: 10),
-              PayoutMethodTile(
-                title: l10n.regCoopbankTitle,
-                subtitle: l10n.regCoopbankSubtitle,
-                icon: Icons.account_balance_outlined,
-                selected: state.payoutMethod == PayoutMethod.coopbank,
-                onTap: () =>
-                    bloc.add(const PayoutMethodSelected(PayoutMethod.coopbank)),
-              ),
-              const SizedBox(height: 14),
-              TextField(
-                onChanged: (v) => bloc.add(AccountOrMobileUpdated(v)),
-                decoration: InputDecoration(labelText: l10n.regAccountOrMobile),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                onChanged: (v) => bloc.add(LegalNameUpdated(v)),
-                decoration: InputDecoration(labelText: l10n.regFullLegalName),
-              ),
-              const SizedBox(height: 12),
-              CheckboxListTile(
-                value: state.hasAcceptedCompliance,
-                contentPadding: EdgeInsets.zero,
-                onChanged: (v) => bloc.add(ComplianceToggled(v ?? false)),
-                title: Text(l10n.regAgreementTitle),
-                subtitle: Text(l10n.regAgreementBody),
-              ),
             ],
           ),
         ),
@@ -1219,7 +1088,6 @@ class _FooterActions extends StatelessWidget {
     final isInstitutionDetailsSubmit =
         state.method == RegistrationMethod.institution &&
         state.step == BeneficiaryRegistrationStep.institutionDetails;
-    final isFinalStep = state.step == BeneficiaryRegistrationStep.disbursement;
     final isInstitutionFinish =
         state.method == RegistrationMethod.institution &&
         state.step == BeneficiaryRegistrationStep.institutionDocuments;
@@ -1237,12 +1105,6 @@ class _FooterActions extends StatelessWidget {
       BeneficiaryRegistrationStep.institutionDocuments =>
         state.institutionRequiredKycComplete &&
             state.uploadingDocumentCode == null,
-      BeneficiaryRegistrationStep.needs =>
-        state.situationDescription.trim().isNotEmpty,
-      BeneficiaryRegistrationStep.disbursement =>
-        state.hasAcceptedCompliance &&
-            state.accountOrMobileNumber.trim().isNotEmpty &&
-            state.legalName.trim().isNotEmpty,
     };
 
     final continueLabel = switch (state.step) {
@@ -1256,7 +1118,6 @@ class _FooterActions extends StatelessWidget {
         l10n.regSetPasswordContinue,
       BeneficiaryRegistrationStep.setPassword => l10n.regSetPasswordFinish,
       BeneficiaryRegistrationStep.institutionDocuments => l10n.commonFinish,
-      BeneficiaryRegistrationStep.disbursement => l10n.commonFinish,
       _ => l10n.commonContinue,
     };
 
@@ -1306,10 +1167,6 @@ class _FooterActions extends StatelessWidget {
                         }
                         if (isInstitutionFinish) {
                           bloc.add(const InstitutionRegistrationFinished());
-                          return;
-                        }
-                        if (isFinalStep) {
-                          bloc.add(const DisbursementRegistrationFinished());
                           return;
                         }
                         if (isManualIdentitySubmit) {

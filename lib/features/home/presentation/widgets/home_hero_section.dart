@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
@@ -91,7 +92,7 @@ class HomeHeroSection extends StatelessWidget {
                             ),
                           ),
                         ),
-                        _ModeSwitchButton(),
+                        if (AppFeatures.awqaf) _ModeSwitchButton(),
                       ],
                     ),
                     const SizedBox(height: 14),

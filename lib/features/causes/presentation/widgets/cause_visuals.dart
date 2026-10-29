@@ -7,6 +7,7 @@ import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../home/presentation/widgets/home_shared.dart';
 import '../../data/models/cause.dart';
+import '../../../../core/network/https_url.dart';
 
 extension CauseCategoryVisuals on CauseCategory {
   String label(AppLocalizations l) => switch (this) {
@@ -90,7 +91,7 @@ class CauseBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url = imageUrl ?? cause.imageUrl;
+    final url = httpsUrl(imageUrl ?? cause.imageUrl);
     final badge = cause.badge;
     return Stack(
       fit: StackFit.expand,

@@ -8,24 +8,6 @@ enum AppThemePreference { light, dark }
 
 enum BeneficiaryStatus { approved, pending, rejected }
 
-enum FinancialInstitution {
-  hijraBank,
-  zamzamBank,
-  coopBank,
-  cbe,
-  teleBirr;
-
-  String get label => switch (this) {
-    FinancialInstitution.hijraBank => 'Hijra Bank',
-    FinancialInstitution.zamzamBank => 'Zamzam Bank',
-    FinancialInstitution.coopBank => 'Coop Bank',
-    FinancialInstitution.cbe => 'CBE',
-    FinancialInstitution.teleBirr => 'TeleBirr',
-  };
-
-  bool get isAvailable => this == FinancialInstitution.coopBank;
-}
-
 extension MadhhabX on Madhhab {
   String get label {
     switch (this) {
@@ -77,15 +59,11 @@ class ProfileModel extends Equatable {
     required this.avatarAsset,
     required this.roleLabel,
     required this.madhhab,
-    required this.nisabAlerts,
-    required this.biometricEnabled,
     required this.language,
     required this.themePreference,
     required this.isBeneficiary,
     this.isDonor = false,
     required this.beneficiaryStatus,
-    required this.lastDisbursement,
-    required this.totalAidReceived,
     this.coopBankAccountNumber,
     this.bankName,
     this.nationalId,
@@ -105,8 +83,6 @@ class ProfileModel extends Equatable {
   final String roleLabel;
 
   final Madhhab madhhab;
-  final bool nisabAlerts;
-  final bool biometricEnabled;
   final AppLanguage language;
   final AppThemePreference themePreference;
 
@@ -116,8 +92,6 @@ class ProfileModel extends Equatable {
   /// has payment history and giving figures.
   final bool isDonor;
   final BeneficiaryStatus beneficiaryStatus;
-  final DateTime? lastDisbursement;
-  final double totalAidReceived;
 
   final String? coopBankAccountNumber;
   final String? bankName;
@@ -139,15 +113,11 @@ class ProfileModel extends Equatable {
     String? avatarAsset,
     String? roleLabel,
     Madhhab? madhhab,
-    bool? nisabAlerts,
-    bool? biometricEnabled,
     AppLanguage? language,
     AppThemePreference? themePreference,
     bool? isBeneficiary,
     bool? isDonor,
     BeneficiaryStatus? beneficiaryStatus,
-    DateTime? lastDisbursement,
-    double? totalAidReceived,
     String? coopBankAccountNumber,
     bool clearCoopBankAccountNumber = false,
     String? bankName,
@@ -164,15 +134,11 @@ class ProfileModel extends Equatable {
       avatarAsset: avatarAsset ?? this.avatarAsset,
       roleLabel: roleLabel ?? this.roleLabel,
       madhhab: madhhab ?? this.madhhab,
-      nisabAlerts: nisabAlerts ?? this.nisabAlerts,
-      biometricEnabled: biometricEnabled ?? this.biometricEnabled,
       language: language ?? this.language,
       themePreference: themePreference ?? this.themePreference,
       isBeneficiary: isBeneficiary ?? this.isBeneficiary,
       isDonor: isDonor ?? this.isDonor,
       beneficiaryStatus: beneficiaryStatus ?? this.beneficiaryStatus,
-      lastDisbursement: lastDisbursement ?? this.lastDisbursement,
-      totalAidReceived: totalAidReceived ?? this.totalAidReceived,
       coopBankAccountNumber: clearCoopBankAccountNumber
           ? null
           : (coopBankAccountNumber ?? this.coopBankAccountNumber),
@@ -194,15 +160,11 @@ class ProfileModel extends Equatable {
     avatarAsset,
     roleLabel,
     madhhab,
-    nisabAlerts,
-    biometricEnabled,
     language,
     themePreference,
     isBeneficiary,
     isDonor,
     beneficiaryStatus,
-    lastDisbursement,
-    totalAidReceived,
     coopBankAccountNumber,
     bankName,
     nationalId,

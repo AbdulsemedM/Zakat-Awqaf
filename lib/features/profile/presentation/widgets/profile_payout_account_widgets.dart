@@ -12,25 +12,11 @@ class _PayoutAccountSetupCard extends StatefulWidget {
 
 class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
   late final TextEditingController _accountController;
-  late FinancialInstitution _selected;
   bool _saving = false;
-
-  FinancialInstitution _institutionFromBankName(String? bankName) {
-    if (bankName == null || bankName.trim().isEmpty) {
-      return FinancialInstitution.coopBank;
-    }
-    for (final institution in FinancialInstitution.values) {
-      if (institution.label.toLowerCase() == bankName.trim().toLowerCase()) {
-        return institution;
-      }
-    }
-    return FinancialInstitution.coopBank;
-  }
 
   @override
   void initState() {
     super.initState();
-    _selected = _institutionFromBankName(widget.profile.bankName);
     _accountController = TextEditingController(
       text: widget.profile.coopBankAccountNumber ?? '',
     );
@@ -43,22 +29,13 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
     if (saved != _accountController.text) {
       _accountController.text = saved;
     }
-    if (widget.profile.bankName != oldWidget.profile.bankName) {
-      _selected = _institutionFromBankName(widget.profile.bankName);
-    }
+    if (widget.profile.bankName != oldWidget.profile.bankName) {}
   }
 
   @override
   void dispose() {
     _accountController.dispose();
     super.dispose();
-  }
-
-  IconData _iconFor(FinancialInstitution institution) {
-    return switch (institution) {
-      FinancialInstitution.teleBirr => Icons.phone_android_rounded,
-      _ => Icons.account_balance_rounded,
-    };
   }
 
   void _saveAccountNumber() {
@@ -72,7 +49,7 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
     setState(() => _saving = true);
     context.read<ProfileBloc>().add(
       ProfileBankAccountSaved(
-        bankName: _selected.label,
+        bankName: _payoutBankName,
         accountNumber: accountNumber,
       ),
     );
@@ -106,53 +83,36 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
                 ),
               ),
               const SizedBox(height: 14),
-              ...FinancialInstitution.values.map((institution) {
-                final isSelected = _selected == institution;
-                final isAvailable = institution.isAvailable;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: _FinancialInstitutionTile(
-                    title: institution.label,
-                    icon: _iconFor(institution),
-                    selected: isSelected,
-                    enabled: isAvailable,
-                    onTap: isAvailable
-                        ? () => setState(() => _selected = institution)
-                        : null,
-                  ),
-                );
-              }),
-              if (_selected == FinancialInstitution.coopBank) ...[
-                const SizedBox(height: 6),
-                TextField(
-                  controller: _accountController,
-                  keyboardType: TextInputType.number,
-                  enabled: !_saving,
-                  decoration: InputDecoration(
-                    labelText: l10n.profileCoopAccountLabel,
-                    hintText: l10n.profileCoopAccountHint,
-                    prefixIcon: Icon(Icons.numbers_rounded),
-                  ),
+              const _PayoutBankTile(title: _payoutBankName),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _accountController,
+                keyboardType: TextInputType.number,
+                enabled: !_saving,
+                decoration: InputDecoration(
+                  labelText: l10n.profileCoopAccountLabel,
+                  hintText: l10n.profileCoopAccountHint,
+                  prefixIcon: Icon(Icons.numbers_rounded),
                 ),
-                const SizedBox(height: 12),
-                FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.textOnPrimary,
-                  ),
-                  onPressed: _saving ? null : _saveAccountNumber,
-                  child: _saving
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppColors.textOnPrimary,
-                          ),
-                        )
-                      : Text(l10n.profileSaveAccount),
+              ),
+              const SizedBox(height: 12),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textOnPrimary,
                 ),
-              ],
+                onPressed: _saving ? null : _saveAccountNumber,
+                child: _saving
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.textOnPrimary,
+                        ),
+                      )
+                    : Text(l10n.profileSaveAccount),
+              ),
             ],
           ),
         ),
@@ -161,109 +121,48 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
   }
 }
 
-class _FinancialInstitutionTile extends StatelessWidget {
-  const _FinancialInstitutionTile({
-    required this.title,
-    required this.icon,
-    required this.selected,
-    required this.enabled,
-    this.onTap,
-  });
+/// The only payout bank. Sent as `bankName` when the account is saved.
+const _payoutBankName = 'Coop Bank';
+
+class _PayoutBankTile extends StatelessWidget {
+  const _PayoutBankTile({required this.title});
 
   final String title;
-  final IconData icon;
-  final bool selected;
-  final bool enabled;
-  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
 
-    return Opacity(
-      opacity: enabled ? 1 : 0.55,
-      child: InkWell(
-        onTap: onTap,
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        child: Ink(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: selected && enabled
-                ? AppColors.secondary.withValues(alpha: 0.22)
-                : scheme.surface,
-            border: Border.all(
-              color: selected && enabled
-                  ? AppColors.primary
-                  : scheme.outlineVariant,
+        color: AppColors.secondary.withValues(alpha: 0.22),
+        border: Border.all(color: AppColors.primary),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: scheme.surfaceContainerHighest,
+            child: const Icon(
+              Icons.account_balance_rounded,
+              size: 18,
+              color: AppColors.primary,
             ),
           ),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 18,
-                backgroundColor: scheme.surfaceContainerHighest,
-                child: Icon(
-                  icon,
-                  size: 18,
-                  color: enabled ? AppColors.primary : scheme.onSurfaceVariant,
-                ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: scheme.onSurface,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: enabled
-                            ? scheme.onSurface
-                            : scheme.onSurfaceVariant,
-                      ),
-                    ),
-                    if (!enabled) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        'Coming soon',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              if (enabled)
-                Icon(
-                  selected
-                      ? Icons.radio_button_checked
-                      : Icons.radio_button_off,
-                  color: selected ? AppColors.primary : scheme.outline,
-                )
-              else
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: scheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    'Soon',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-            ],
+            ),
           ),
-        ),
+          const Icon(Icons.check_circle_rounded, color: AppColors.primary),
+        ],
       ),
     );
   }

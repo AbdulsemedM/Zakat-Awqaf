@@ -48,7 +48,7 @@ it**; the debug key is never used for a release.
 2. Copy `android/key.properties.example` to `android/key.properties`
    (git-ignored) and fill in the path, alias and passwords.
 
-3. Build: `flutter build appbundle --release` (or `apk`).
+3. Build: `flutter build appbundle --release --dart-define-from-file=.env --obfuscate --split-debug-info=build/symbols/<version>` (or `apk`).
 
 Check the signature with Android build-tools' `apksigner` (`keytool` can't
 read v2 signatures):

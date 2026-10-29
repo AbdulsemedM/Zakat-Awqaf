@@ -149,56 +149,12 @@ final class AsnafCategorySelected extends BeneficiaryRegistrationEvent {
   List<Object?> get props => [category];
 }
 
-final class SituationDescriptionUpdated extends BeneficiaryRegistrationEvent {
-  const SituationDescriptionUpdated(this.description);
-  final String description;
-
-  @override
-  List<Object?> get props => [description];
-}
-
-final class SupportingProofPicked extends BeneficiaryRegistrationEvent {
-  const SupportingProofPicked(this.fileName);
-  final String fileName;
-
-  @override
-  List<Object?> get props => [fileName];
-}
-
-final class SupportingProofRemoved extends BeneficiaryRegistrationEvent {
-  const SupportingProofRemoved();
-}
-
-final class PayoutMethodSelected extends BeneficiaryRegistrationEvent {
-  const PayoutMethodSelected(this.method);
-  final PayoutMethod method;
-
-  @override
-  List<Object?> get props => [method];
-}
-
-final class AccountOrMobileUpdated extends BeneficiaryRegistrationEvent {
-  const AccountOrMobileUpdated(this.value);
-  final String value;
-
-  @override
-  List<Object?> get props => [value];
-}
-
 final class LegalNameUpdated extends BeneficiaryRegistrationEvent {
   const LegalNameUpdated(this.value);
   final String value;
 
   @override
   List<Object?> get props => [value];
-}
-
-final class ComplianceToggled extends BeneficiaryRegistrationEvent {
-  const ComplianceToggled(this.accepted);
-  final bool accepted;
-
-  @override
-  List<Object?> get props => [accepted];
 }
 
 final class BeneficiarySubmissionRequested
@@ -286,11 +242,6 @@ final class InstitutionDocumentUploadRequested
 final class InstitutionRegistrationFinished
     extends BeneficiaryRegistrationEvent {
   const InstitutionRegistrationFinished();
-}
-
-final class DisbursementRegistrationFinished
-    extends BeneficiaryRegistrationEvent {
-  const DisbursementRegistrationFinished();
 }
 
 final class PasswordUpdated extends BeneficiaryRegistrationEvent {

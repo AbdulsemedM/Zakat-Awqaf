@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/widgets/app_logo.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../app/widgets/coop_waqf_splash_badge.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../app/widgets/splash_atmosphere_background.dart';
@@ -93,7 +94,7 @@ class _StartupSplashScreenState extends State<StartupSplashScreen>
       context.go('/onboarding');
       return;
     }
-    context.go(appMode == 'awqaf' ? '/awqaf' : '/');
+    context.go(AppFeatures.awqaf && appMode == 'awqaf' ? '/awqaf' : '/');
   }
 
   (String, String) _splitTitle(String title) {

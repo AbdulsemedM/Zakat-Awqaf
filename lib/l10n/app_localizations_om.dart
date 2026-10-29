@@ -1067,7 +1067,7 @@ class AppLocalizationsOm extends AppLocalizations {
       'Password dagadhee yeroo dhiyootti dhufa';
 
   @override
-  String get loginNewToBaraka => 'New to Baraka? ';
+  String get loginNewToBaraka => 'Haaraa dhaa? ';
 
   @override
   String get loginCreateAccount => 'Akkaawuntii uumuu';
@@ -1382,11 +1382,11 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'Jechi icciitii yoo xiqqaate arfiilee 8 ta\'uu fi qubee guddaa, qubee xiqqaa, lakkoofsa, fi arfii addaa of keessaa qabaachuu qaba.';
+      'Jechi icciitii yoo xiqqaate arfiilee 10 ta\'uu fi qubee guddaa, qubee xiqqaa, lakkoofsa, fi arfii addaa of keessaa qabaachuu qaba.';
 
   @override
   String get regPasswordSuccess =>
-      'Password milkaa\'inaan saaguu. Baga gara Mejlis Digital Hub dhuftan.';
+      'Jechi icciitii milkaa\'inaan qindaa\'eera. Baga gara appii Komishinii Zakaa fi Awqaafii dhuftan.';
 
   @override
   String regInstitutionComplete(Object id) {

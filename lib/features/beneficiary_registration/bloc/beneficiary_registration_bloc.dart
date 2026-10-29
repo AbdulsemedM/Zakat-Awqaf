@@ -36,13 +36,7 @@ class BeneficiaryRegistrationBloc
     on<CityUpdated>(_onCityUpdated);
     on<NotesUpdated>(_onNotesUpdated);
     on<AsnafCategorySelected>(_onAsnafCategorySelected);
-    on<SituationDescriptionUpdated>(_onSituationUpdated);
-    on<SupportingProofPicked>(_onProofPicked);
-    on<SupportingProofRemoved>(_onProofRemoved);
-    on<PayoutMethodSelected>(_onPayoutSelected);
-    on<AccountOrMobileUpdated>(_onAccountUpdated);
     on<LegalNameUpdated>(_onLegalNameUpdated);
-    on<ComplianceToggled>(_onComplianceToggled);
     on<RegistrationStepAdvanced>(_onAdvanceStep);
     on<RegistrationStepWentBack>(_onBackStep);
     on<BeneficiarySubmissionRequested>(_onSubmit);
@@ -58,7 +52,6 @@ class BeneficiaryRegistrationBloc
       _onInstitutionDocumentUploadRequested,
     );
     on<InstitutionRegistrationFinished>(_onInstitutionRegistrationFinished);
-    on<DisbursementRegistrationFinished>(_onDisbursementRegistrationFinished);
     on<PasswordUpdated>(_onPasswordUpdated);
     on<ConfirmPasswordUpdated>(_onConfirmPasswordUpdated);
     on<SetPasswordRequested>(_onSetPasswordRequested);
@@ -286,67 +279,11 @@ class BeneficiaryRegistrationBloc
     emit(_current.copyWith(selectedCategory: event.category, clearError: true));
   }
 
-  void _onSituationUpdated(
-    SituationDescriptionUpdated event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(
-      _current.copyWith(
-        situationDescription: event.description,
-        clearError: true,
-      ),
-    );
-  }
-
-  void _onProofPicked(
-    SupportingProofPicked event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(
-      _current.copyWith(uploadedProofName: event.fileName, clearError: true),
-    );
-  }
-
-  void _onProofRemoved(
-    SupportingProofRemoved event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(_current.copyWith(clearUploadedProof: true, clearError: true));
-  }
-
-  void _onPayoutSelected(
-    PayoutMethodSelected event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(_current.copyWith(payoutMethod: event.method, clearError: true));
-  }
-
-  void _onAccountUpdated(
-    AccountOrMobileUpdated event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(
-      _current.copyWith(accountOrMobileNumber: event.value, clearError: true),
-    );
-  }
-
   void _onLegalNameUpdated(
     LegalNameUpdated event,
     Emitter<BeneficiaryRegistrationState> emit,
   ) {
     emit(_current.copyWith(legalName: event.value, clearError: true));
-  }
-
-  void _onComplianceToggled(
-    ComplianceToggled event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    emit(
-      _current.copyWith(
-        hasAcceptedCompliance: event.accepted,
-        clearError: true,
-      ),
-    );
   }
 
   void _onTradingNameUpdated(
@@ -428,8 +365,6 @@ class BeneficiaryRegistrationBloc
           BeneficiaryRegistrationStep.institutionDocuments,
         BeneficiaryRegistrationStep.institutionDocuments => null,
         BeneficiaryRegistrationStep.identity => null,
-        BeneficiaryRegistrationStep.needs => null,
-        BeneficiaryRegistrationStep.disbursement => null,
       };
     }
     return switch (c.step) {
@@ -438,10 +373,7 @@ class BeneficiaryRegistrationBloc
       BeneficiaryRegistrationStep.identity =>
         c.manualIdentitySubmitted && !c.passwordSetupComplete
             ? BeneficiaryRegistrationStep.setPassword
-            : BeneficiaryRegistrationStep.needs,
-      BeneficiaryRegistrationStep.needs =>
-        BeneficiaryRegistrationStep.disbursement,
-      BeneficiaryRegistrationStep.disbursement => null,
+            : null,
       BeneficiaryRegistrationStep.institutionDetails => null,
       BeneficiaryRegistrationStep.setPassword => null,
       BeneficiaryRegistrationStep.institutionDocuments => null,
@@ -461,8 +393,6 @@ class BeneficiaryRegistrationBloc
           BeneficiaryRegistrationStep.setPassword,
         BeneficiaryRegistrationStep.welcome => null,
         BeneficiaryRegistrationStep.identity => null,
-        BeneficiaryRegistrationStep.needs => null,
-        BeneficiaryRegistrationStep.disbursement => null,
       };
     }
     return switch (c.step) {
@@ -470,9 +400,6 @@ class BeneficiaryRegistrationBloc
         BeneficiaryRegistrationStep.identity,
       BeneficiaryRegistrationStep.identity =>
         BeneficiaryRegistrationStep.welcome,
-      BeneficiaryRegistrationStep.needs => BeneficiaryRegistrationStep.identity,
-      BeneficiaryRegistrationStep.disbursement =>
-        BeneficiaryRegistrationStep.needs,
       BeneficiaryRegistrationStep.welcome => null,
       BeneficiaryRegistrationStep.institutionDetails => null,
       BeneficiaryRegistrationStep.institutionDocuments => null,
@@ -969,16 +896,6 @@ class BeneficiaryRegistrationBloc
     emit(_current.copyWith(submissionSuccess: true, clearError: true));
   }
 
-  void _onDisbursementRegistrationFinished(
-    DisbursementRegistrationFinished event,
-    Emitter<BeneficiaryRegistrationState> emit,
-  ) {
-    if (_current.step != BeneficiaryRegistrationStep.disbursement) {
-      return;
-    }
-    emit(_current.copyWith(submissionSuccess: true, clearError: true));
-  }
-
   String? _validateInstitutionDetails(BeneficiaryRegistrationInitial s) {
     if (!s.isInstitutionDetailsComplete) {
       return 'Please complete all required institution fields.';
@@ -1030,12 +947,6 @@ class BeneficiaryRegistrationBloc
       case BeneficiaryRegistrationStep.institutionDocuments:
         return current.institutionRequiredKycComplete &&
             current.uploadingDocumentCode == null;
-      case BeneficiaryRegistrationStep.needs:
-        return current.situationDescription.trim().isNotEmpty;
-      case BeneficiaryRegistrationStep.disbursement:
-        return current.hasAcceptedCompliance &&
-            current.accountOrMobileNumber.trim().isNotEmpty &&
-            current.legalName.trim().isNotEmpty;
     }
   }
 }

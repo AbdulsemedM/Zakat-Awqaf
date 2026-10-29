@@ -31,17 +31,13 @@ class StepProgressHeader extends StatelessWidget {
         BeneficiaryRegistrationStep.institutionDocuments => 2,
         BeneficiaryRegistrationStep.welcome => -1,
         BeneficiaryRegistrationStep.identity => -1,
-        BeneficiaryRegistrationStep.needs => -1,
-        BeneficiaryRegistrationStep.disbursement => -1,
       };
     }
     return switch (step) {
       BeneficiaryRegistrationStep.identity => 0,
-      BeneficiaryRegistrationStep.needs => 1,
-      BeneficiaryRegistrationStep.disbursement => 2,
+      BeneficiaryRegistrationStep.setPassword => 1,
       BeneficiaryRegistrationStep.welcome => -1,
       BeneficiaryRegistrationStep.institutionDetails => -1,
-      BeneficiaryRegistrationStep.setPassword => -1,
       BeneficiaryRegistrationStep.institutionDocuments => -1,
     };
   }
@@ -51,9 +47,7 @@ class StepProgressHeader extends StatelessWidget {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
 
-    if (step == BeneficiaryRegistrationStep.welcome ||
-        (method != RegistrationMethod.institution &&
-            step == BeneficiaryRegistrationStep.setPassword)) {
+    if (step == BeneficiaryRegistrationStep.welcome) {
       return const SizedBox(height: 8);
     }
 
@@ -63,11 +57,7 @@ class StepProgressHeader extends StatelessWidget {
         l10n.regStepPassword,
         l10n.regStepDocuments,
       ],
-      RegistrationMethod.manual => [
-        l10n.regStepIdentity,
-        l10n.regStepNeeds,
-        l10n.regStepPayout,
-      ],
+      RegistrationMethod.manual => [l10n.regStepIdentity, l10n.regStepPassword],
     };
     final activeIndex = _activeIndex(step, method);
 

@@ -13,24 +13,6 @@ final class ProfileStarted extends ProfileEvent {
   const ProfileStarted();
 }
 
-final class ProfileNisabAlertsToggled extends ProfileEvent {
-  const ProfileNisabAlertsToggled(this.enabled);
-
-  final bool enabled;
-
-  @override
-  List<Object?> get props => [enabled];
-}
-
-final class ProfileBiometricToggled extends ProfileEvent {
-  const ProfileBiometricToggled(this.enabled);
-
-  final bool enabled;
-
-  @override
-  List<Object?> get props => [enabled];
-}
-
 final class ProfileMadhhabSelected extends ProfileEvent {
   const ProfileMadhhabSelected(this.madhhab);
 

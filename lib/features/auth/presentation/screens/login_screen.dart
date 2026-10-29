@@ -239,35 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return null;
                               },
                             ),
-                            Align(
-                              alignment: AlignmentDirectional.centerEnd,
-                              child: TextButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        l10n.loginForgotPasswordComingSoon,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                style: TextButton.styleFrom(
-                                  minimumSize: const Size(0, 40),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                  ),
-                                ),
-                                child: Text(
-                                  l10n.loginForgotPassword,
-                                  style: AppTypography.body(
-                                    fontSize: 13,
-                                    color: scheme.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 24),
                             FilledButton(
                               onPressed: isLoading ? null : _submit,
                               style: FilledButton.styleFrom(
@@ -296,46 +268,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Expanded(
                                   child: Divider(color: scheme.outlineVariant),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 18),
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text(
-                                  l10n.loginNewToBaraka,
-                                  style: AppTypography.body(
-                                    fontSize: 13,
-                                    color: scheme.onSurfaceVariant,
-                                  ),
-                                ),
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(8),
-                                  onTap: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          l10n.loginCreateAccountComingSoon,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 5,
-                                      vertical: 6,
-                                    ),
-                                    child: Text(
-                                      l10n.loginCreateAccount,
-                                      style: AppTypography.body(
-                                        fontSize: 13,
-                                        color: scheme.primary,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),

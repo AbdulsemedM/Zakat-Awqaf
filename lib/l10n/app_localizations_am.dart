@@ -1039,7 +1039,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get loginForgotPasswordComingSoon => 'የይለፍ ቃል ረሳው በቅርቡ ይመጣል';
 
   @override
-  String get loginNewToBaraka => 'New to Baraka? ';
+  String get loginNewToBaraka => 'አዲስ ነዎት? ';
 
   @override
   String get loginCreateAccount => 'መለያ ፍጠር';
@@ -1339,11 +1339,11 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'የይለፍ ቃል ቢያንስ 8 ቁምፊዎች መሆን አለበት እና አቢይ ሆሄያት፣ ንዑስ ሆሄያት፣ ቁጥር እና ልዩ ቁምፊ ማካተት አለበት።';
+      'የይለፍ ቃል ቢያንስ 10 ቁምፊዎች መሆን አለበት እና አቢይ ሆሄያት፣ ንዑስ ሆሄያት፣ ቁጥር እና ልዩ ቁምፊ ማካተት አለበት።';
 
   @override
   String get regPasswordSuccess =>
-      'የይለፍ ቃል በተሳካ ሁኔታ ተቀናብሯል። እንኳን ወደ መጅሊስ ዲጂታል መገናኛ በደህና መጡ።';
+      'የይለፍ ቃል በተሳካ ሁኔታ ተቀናብሯል። እንኳን ወደ የዘካ እና አውቃፍ ኮሚሽን መተግበሪያ በደህና መጡ።';
 
   @override
   String regInstitutionComplete(Object id) {

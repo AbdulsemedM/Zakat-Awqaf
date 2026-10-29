@@ -23,6 +23,7 @@ import '../../bloc/impact_bloc.dart';
 import '../../bloc/impact_event.dart';
 import '../../bloc/impact_state.dart';
 import '../../data/models/impact_model.dart';
+import '../../../../core/network/https_url.dart';
 
 part '../widgets/impact_content_widgets.dart';
 

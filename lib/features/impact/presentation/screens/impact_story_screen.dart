@@ -11,6 +11,7 @@ import '../../../causes/presentation/widgets/cause_visuals.dart';
 import '../../../home/presentation/widgets/home_shared.dart';
 import '../../bloc/impact_story_bloc.dart';
 import '../../data/models/impact_model.dart';
+import '../../../../core/network/https_url.dart';
 
 /// One Baraka story (`GET /api/zakat/v1/impact/stories/{id}`).
 class ImpactStoryScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _StoryBody extends StatelessWidget {
     final l10n = context.l10n;
     final locale = context.contentLocale;
     final scheme = Theme.of(context).colorScheme;
-    final imageUrl = story.imageUrl;
+    final imageUrl = httpsUrl(story.imageUrl);
     final publishedAt = story.publishedAt;
     final text = (story.body ?? story.summary ?? '').trim();
     return CustomScrollView(

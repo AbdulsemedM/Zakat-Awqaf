@@ -16,6 +16,7 @@ import '../../data/models/cause.dart';
 import '../widgets/cause_card.dart';
 import '../widgets/cause_visuals.dart';
 import 'causes_screen.dart';
+import '../../../../core/network/https_url.dart';
 
 class CauseDetailScreen extends StatefulWidget {
   const CauseDetailScreen({super.key, required this.causeId});
@@ -117,6 +118,7 @@ class _CauseDetailView extends StatelessWidget {
     final today = DateUtils.dateOnly(DateTime.now());
     final ended = endsOn != null && endsOn.isBefore(today);
     final body = (detail.body ?? cause.description ?? '').trim();
+    final images = detail.images.map(httpsUrl).nonNulls.toList();
     final canPay = cause.acceptsZakat && !ended;
 
     return Scaffold(
@@ -219,20 +221,20 @@ class _CauseDetailView extends StatelessWidget {
                     ),
                   ),
                 ],
-                if (detail.images.isNotEmpty) ...[
+                if (images.isNotEmpty) ...[
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 120,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: detail.images.length,
+                      itemCount: images.length,
                       separatorBuilder: (_, _) => const SizedBox(width: 10),
                       itemBuilder: (context, index) => ClipRRect(
                         borderRadius: BorderRadius.circular(14),
                         child: AspectRatio(
                           aspectRatio: 4 / 3,
                           child: Image.network(
-                            detail.images[index],
+                            images[index],
                             fit: BoxFit.cover,
                             errorBuilder: (_, _, _) =>
                                 CauseCategoryBackdrop(category: cause.category),

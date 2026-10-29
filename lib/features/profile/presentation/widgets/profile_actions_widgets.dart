@@ -41,25 +41,6 @@ class _CoreActionsCard extends StatelessWidget {
                 : context.l10n.profileApplyAsBeneficiarySubtitle,
             onTap: () => context.go('/beneficiary-registration'),
           ),
-          // Sadaqah donations are made by donors, not beneficiaries.
-          if (profile.isDonor) ...[
-            const Divider(height: 1, indent: 56, endIndent: 16),
-            _ActionTile(
-              icon: Icons.receipt_long_outlined,
-              iconColor: Theme.of(context).colorScheme.primary,
-              title: context.l10n.profileDonationHistory,
-              subtitle: context.l10n.profileDonationHistorySubtitle,
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      context.l10n.profileDonationHistoryComingSoon,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
         ],
       ),
     );
@@ -121,8 +102,8 @@ class _ActionTile extends StatelessWidget {
   }
 }
 
-class _SupportCard extends StatelessWidget {
-  const _SupportCard();
+class _LogOutCard extends StatelessWidget {
+  const _LogOutCard();
 
   @override
   Widget build(BuildContext context) {
@@ -132,34 +113,6 @@ class _SupportCard extends StatelessWidget {
       elevation: 0,
       child: Column(
         children: [
-          _ActionTile(
-            icon: Icons.help_outline_rounded,
-            iconColor: AppColors.primary,
-            title: context.l10n.profileHelpCenter,
-            subtitle: context.l10n.profileHelpCenterSubtitle,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.profileHelpCenterComingSoon),
-                ),
-              );
-            },
-          ),
-          const Divider(height: 1, indent: 56, endIndent: 16),
-          _ActionTile(
-            icon: Icons.support_agent_rounded,
-            iconColor: AppColors.primary,
-            title: context.l10n.profileSupportAndGrievances,
-            subtitle: context.l10n.profileSupportAndGrievancesSubtitle,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.profileSupportCenterComingSoon),
-                ),
-              );
-            },
-          ),
-          const Divider(height: 1, indent: 56, endIndent: 16),
           _ActionTile(
             icon: Icons.logout_rounded,
             iconColor: scheme.error,
@@ -269,8 +222,4 @@ class _HadithOfTheDayCard extends StatelessWidget {
       ),
     );
   }
-}
-
-String _formatDate(DateTime date) {
-  return DateFormat('d MMM yyyy').format(date);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/profile/data/models/profile_model.dart';
+import '../../core/constants/app_constants.dart';
 
 enum AppMode { zakat, awqaf }
 
@@ -44,10 +45,12 @@ class AppSettingsController extends ChangeNotifier {
       (value) => value.name == themeName,
       orElse: () => ThemeMode.light,
     );
-    final appMode = AppMode.values.firstWhere(
-      (value) => value.name == modeName,
-      orElse: () => AppMode.zakat,
-    );
+    final appMode = AppFeatures.awqaf
+        ? AppMode.values.firstWhere(
+            (value) => value.name == modeName,
+            orElse: () => AppMode.zakat,
+          )
+        : AppMode.zakat;
     return AppSettingsController._(
       prefs,
       language: language,

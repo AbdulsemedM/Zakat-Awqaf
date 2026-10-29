@@ -1065,7 +1065,7 @@ class AppLocalizationsSo extends AppLocalizations {
       'Illowday erayga sirta ah ee soo socda dhawaan';
 
   @override
-  String get loginNewToBaraka => 'New to Baraka? ';
+  String get loginNewToBaraka => 'Ma cusub tahay? ';
 
   @override
   String get loginCreateAccount => 'Samee xisaab';
@@ -1377,11 +1377,11 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'Furaha sirta ah waa in uu ahaadaa ugu yaraan 8 xaraf oo ay ku jiraan far waaweyn, far yar, lambar, iyo xarfo gaar ah.';
+      'Furaha sirta ah waa in uu ahaadaa ugu yaraan 10 xaraf oo ay ku jiraan far waaweyn, far yar, lambar, iyo xarfo gaar ah.';
 
   @override
   String get regPasswordSuccess =>
-      'Si guul leh ayaa loo dejiyay erayga sirta ah Ku Soo Dhawoow Mejlis Digital Hub.';
+      'Erayga sirta ah si guul leh ayaa loo dejiyay. Ku soo dhawoow barnaamijka Guddiga Sakada iyo Awqaafta.';
 
   @override
   String regInstitutionComplete(Object id) {

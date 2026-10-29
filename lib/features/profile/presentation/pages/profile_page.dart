@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -9,7 +8,6 @@ import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
 import '../../../../core/l10n/l10n.dart';
-import '../../../../core/utils/number_format.dart';
 import '../../bloc/profile_bloc.dart';
 import '../../bloc/profile_event.dart';
 import '../../bloc/profile_state.dart';
@@ -166,22 +164,6 @@ class _ProfileContent extends StatelessWidget {
                 child: _PayoutAccountSetupCard(profile: profile),
               ),
             ],
-            // Nisab alerts and giving figures are for people who pay zakat:
-            // donors only.
-            if (profile.isDonor) ...[
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _SectionHeader(
-                  context.l10n.profileSectionSpiritualSettings,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _SpiritualSettingsCard(profile: profile),
-              ),
-            ],
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -205,14 +187,9 @@ class _ProfileContent extends StatelessWidget {
               child: _SettingsSecurityCard(profile: profile),
             ),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SectionHeader(context.l10n.profileSectionSupport),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _SupportCard(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: _LogOutCard(),
             ),
             const SizedBox(height: 16),
             const Padding(

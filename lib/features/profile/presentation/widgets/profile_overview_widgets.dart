@@ -56,31 +56,6 @@ class _ProfileHeroHeader extends StatelessWidget {
                             ),
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  context.l10n.profileNoNewNotifications,
-                                ),
-                              ),
-                            );
-                          },
-                          style: IconButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(
-                              alpha: 0.10,
-                            ),
-                            side: BorderSide(
-                              color: AppColors.goldLight.withValues(
-                                alpha: 0.45,
-                              ),
-                            ),
-                          ),
-                          icon: const Icon(
-                            Icons.notifications_none_rounded,
-                            color: AppColors.goldLight,
-                          ),
-                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -381,8 +356,8 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
                 ),
               ),
             ],
-            const Divider(height: 24),
             if (profile.applicationCaseStatus != null) ...[
+              const Divider(height: 24),
               _InsightRow(
                 icon: Icons.assignment_turned_in_outlined,
                 label: context.l10n.profileCaseStatus,
@@ -391,59 +366,7 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
                   profile.applicationCaseStatus!,
                 ),
               ),
-              const SizedBox(height: 12),
             ],
-            Row(
-              children: [
-                Icon(
-                  Icons.event_available_rounded,
-                  size: 18,
-                  color: scheme.onSurfaceVariant,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    context.l10n.profileLastDisbursement,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-                Text(
-                  profile.lastDisbursement != null
-                      ? _formatDate(profile.lastDisbursement!)
-                      : '—',
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Icon(
-                  Icons.payments_rounded,
-                  size: 18,
-                  color: scheme.onSurfaceVariant,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    context.l10n.profileTotalAidReceived,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-                Text(
-                  'ETB ${formatThousands(profile.totalAidReceived)}',
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -503,13 +426,13 @@ class _PersonalInfoCard extends StatelessWidget {
       elevation: 0,
       child: Column(
         children: [
-          _EditableInfoRow(
+          _InfoRow(
             label: context.l10n.profileEmailAddress,
             value: profile.email,
             icon: Icons.email_outlined,
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
-          _EditableInfoRow(
+          _InfoRow(
             label: context.l10n.profilePhoneNumber,
             value: profile.phone,
             icon: Icons.phone_outlined,
@@ -520,8 +443,8 @@ class _PersonalInfoCard extends StatelessWidget {
   }
 }
 
-class _EditableInfoRow extends StatelessWidget {
-  const _EditableInfoRow({
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({
     required this.label,
     required this.value,
     required this.icon,
@@ -536,7 +459,7 @@ class _EditableInfoRow extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           Icon(icon, size: 20, color: scheme.onSurfaceVariant),
@@ -560,16 +483,6 @@ class _EditableInfoRow extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.profileEditFieldComingSoon(label)),
-                ),
-              );
-            },
-            icon: Icon(Icons.edit_outlined, color: AppColors.primary, size: 20),
           ),
         ],
       ),

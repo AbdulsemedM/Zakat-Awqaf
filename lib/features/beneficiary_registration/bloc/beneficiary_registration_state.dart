@@ -10,8 +10,6 @@ import '../data/models/registration_code_validation.dart';
 enum BeneficiaryRegistrationStep {
   welcome,
   identity,
-  needs,
-  disbursement,
   institutionDetails,
   setPassword,
   institutionDocuments,
@@ -21,14 +19,11 @@ enum RegistrationMethod { manual, institution }
 
 enum Gender { male, female }
 
-enum PayoutMethod { telebirrWallet, mPesa, coopbank }
-
 sealed class BeneficiaryRegistrationState extends Equatable {
   const BeneficiaryRegistrationState({
     required this.step,
     required this.method,
     this.selectedCategory,
-    required this.payoutMethod,
     this.registrationCode = '',
     this.firstName = '',
     this.fatherName = '',
@@ -42,11 +37,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     this.region = '',
     this.city = '',
     this.notes = '',
-    this.situationDescription = '',
-    this.uploadedProofName,
-    this.accountOrMobileNumber = '',
     this.legalName = '',
-    this.hasAcceptedCompliance = false,
     this.tradingName = '',
     this.tradeRegistrationNumber = '',
     this.taxIdentificationNumber = '',
@@ -80,7 +71,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final BeneficiaryRegistrationStep step;
   final RegistrationMethod method;
   final AsnafCategory? selectedCategory;
-  final PayoutMethod payoutMethod;
   final String registrationCode;
   final String firstName;
   final String fatherName;
@@ -94,11 +84,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
   final String region;
   final String city;
   final String notes;
-  final String situationDescription;
-  final String? uploadedProofName;
-  final String accountOrMobileNumber;
   final String legalName;
-  final bool hasAcceptedCompliance;
   final String tradingName;
   final String tradeRegistrationNumber;
   final String taxIdentificationNumber;
@@ -142,23 +128,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     return registeredBeneficiary?.passwordSetupToken?.trim();
   }
 
-  double get progressValue {
-    switch (step) {
-      case BeneficiaryRegistrationStep.welcome:
-        return 0.25;
-      case BeneficiaryRegistrationStep.identity:
-      case BeneficiaryRegistrationStep.institutionDetails:
-        return 0.5;
-      case BeneficiaryRegistrationStep.setPassword:
-        return 0.65;
-      case BeneficiaryRegistrationStep.needs:
-      case BeneficiaryRegistrationStep.institutionDocuments:
-        return 0.75;
-      case BeneficiaryRegistrationStep.disbursement:
-        return 1.0;
-    }
-  }
-
   bool get isSetPasswordStepComplete {
     return password.trim().isNotEmpty &&
         confirmPassword.trim().isNotEmpty &&
@@ -197,7 +166,6 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     step,
     method,
     selectedCategory,
-    payoutMethod,
     registrationCode,
     firstName,
     fatherName,
@@ -211,11 +179,7 @@ sealed class BeneficiaryRegistrationState extends Equatable {
     region,
     city,
     notes,
-    situationDescription,
-    uploadedProofName,
-    accountOrMobileNumber,
     legalName,
-    hasAcceptedCompliance,
     tradingName,
     tradeRegistrationNumber,
     taxIdentificationNumber,
@@ -253,7 +217,6 @@ final class BeneficiaryRegistrationInitial
     super.step = BeneficiaryRegistrationStep.welcome,
     super.method = RegistrationMethod.manual,
     super.selectedCategory,
-    super.payoutMethod = PayoutMethod.telebirrWallet,
     super.registrationCode,
     super.firstName,
     super.fatherName,
@@ -267,11 +230,7 @@ final class BeneficiaryRegistrationInitial
     super.region,
     super.city,
     super.notes,
-    super.situationDescription,
-    super.uploadedProofName,
-    super.accountOrMobileNumber,
     super.legalName,
-    super.hasAcceptedCompliance,
     super.tradingName,
     super.tradeRegistrationNumber,
     super.taxIdentificationNumber,
@@ -307,7 +266,6 @@ final class BeneficiaryRegistrationInitial
     RegistrationMethod? method,
     AsnafCategory? selectedCategory,
     bool clearSelectedCategory = false,
-    PayoutMethod? payoutMethod,
     String? registrationCode,
     String? firstName,
     String? fatherName,
@@ -323,12 +281,7 @@ final class BeneficiaryRegistrationInitial
     String? region,
     String? city,
     String? notes,
-    String? situationDescription,
-    String? uploadedProofName,
-    bool clearUploadedProof = false,
-    String? accountOrMobileNumber,
     String? legalName,
-    bool? hasAcceptedCompliance,
     String? tradingName,
     String? tradeRegistrationNumber,
     String? taxIdentificationNumber,
@@ -372,7 +325,6 @@ final class BeneficiaryRegistrationInitial
       selectedCategory: clearSelectedCategory
           ? null
           : (selectedCategory ?? this.selectedCategory),
-      payoutMethod: payoutMethod ?? this.payoutMethod,
       registrationCode: registrationCode ?? this.registrationCode,
       firstName: firstName ?? this.firstName,
       fatherName: fatherName ?? this.fatherName,
@@ -388,15 +340,7 @@ final class BeneficiaryRegistrationInitial
       region: region ?? this.region,
       city: city ?? this.city,
       notes: notes ?? this.notes,
-      situationDescription: situationDescription ?? this.situationDescription,
-      uploadedProofName: clearUploadedProof
-          ? null
-          : (uploadedProofName ?? this.uploadedProofName),
-      accountOrMobileNumber:
-          accountOrMobileNumber ?? this.accountOrMobileNumber,
       legalName: legalName ?? this.legalName,
-      hasAcceptedCompliance:
-          hasAcceptedCompliance ?? this.hasAcceptedCompliance,
       tradingName: tradingName ?? this.tradingName,
       tradeRegistrationNumber:
           tradeRegistrationNumber ?? this.tradeRegistrationNumber,

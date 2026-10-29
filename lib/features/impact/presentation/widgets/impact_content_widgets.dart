@@ -50,30 +50,6 @@ class _ImpactHeader extends StatelessWidget {
                             ),
                           ),
                         ),
-                        IconButton(
-                          tooltip: l10n.impactNotifications,
-                          style: IconButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(
-                              alpha: 0.10,
-                            ),
-                            side: BorderSide(
-                              color: AppColors.goldLight.withValues(
-                                alpha: 0.45,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(l10n.profileNoNewNotifications),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.notifications_none_rounded,
-                            color: AppColors.goldLight,
-                          ),
-                        ),
                       ],
                     ),
                     const Padding(
@@ -630,7 +606,7 @@ class _StoryAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final imageUrl = story.imageUrl;
+    final imageUrl = httpsUrl(story.imageUrl);
     return InkWell(
       onTap: () =>
           context.push('/impact/stories/${Uri.encodeComponent(story.id)}'),

@@ -12,8 +12,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this._repository, this._authRepository)
     : super(const ProfileInitial()) {
     on<ProfileStarted>(_onStarted);
-    on<ProfileNisabAlertsToggled>(_onNisabAlertsToggled);
-    on<ProfileBiometricToggled>(_onBiometricToggled);
     on<ProfileMadhhabSelected>(_onMadhhabSelected);
     on<ProfileLanguageSelected>(_onLanguageSelected);
     on<ProfileThemeSelected>(_onThemeSelected);
@@ -35,20 +33,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (error) {
       emit(ProfileError(error.toString()));
     }
-  }
-
-  Future<void> _onNisabAlertsToggled(
-    ProfileNisabAlertsToggled event,
-    Emitter<ProfileState> emit,
-  ) async {
-    await _mutate(emit, (p) => p.copyWith(nisabAlerts: event.enabled));
-  }
-
-  Future<void> _onBiometricToggled(
-    ProfileBiometricToggled event,
-    Emitter<ProfileState> emit,
-  ) async {
-    await _mutate(emit, (p) => p.copyWith(biometricEnabled: event.enabled));
   }
 
   Future<void> _onMadhhabSelected(

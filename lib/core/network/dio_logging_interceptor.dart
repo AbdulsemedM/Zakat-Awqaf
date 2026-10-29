@@ -26,6 +26,8 @@ class DioLoggingInterceptor extends Interceptor {
       'x-api-key',
       'x-payment-token',
       'x-donation-token',
+      'x-password-setup-token',
+      'x-company-upload-token',
     },
   });
 
@@ -45,6 +47,8 @@ class DioLoggingInterceptor extends Interceptor {
     'code',
     'verificationcode',
     'registrationcode',
+    'passwordsetuptoken',
+    'companydocumentuploadtoken',
   };
 
   static bool _isSensitiveBodyKey(Object? key) =>

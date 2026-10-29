@@ -20,6 +20,7 @@ import '../../../zakat_calculator/bloc/zakat_calculator_state.dart';
 import '../../data/models/zakat_payment_models.dart';
 import '../../data/repository/zakat_payment_repository.dart';
 import '../models/zakat_payment_args.dart';
+import '../../../../core/network/https_url.dart';
 
 /// Start of a zakat payment: amount, project and method; a guest also gives
 /// the name for the certificate (a signed-in donor's comes from the
@@ -765,10 +766,10 @@ class _MethodTile extends StatelessWidget {
                       border: Border.all(color: AppColors.goldHairline),
                     ),
                     clipBehavior: Clip.antiAlias,
-                    child: method.logoUrl == null
+                    child: httpsUrl(method.logoUrl) == null
                         ? _methodIcon(selected)
                         : Image.network(
-                            method.logoUrl!,
+                            httpsUrl(method.logoUrl)!,
                             fit: BoxFit.cover,
                             errorBuilder: (_, _, _) => _methodIcon(selected),
                           ),

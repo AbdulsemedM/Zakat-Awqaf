@@ -1045,7 +1045,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loginForgotPasswordComingSoon => 'نسيت كلمة المرور قريبا';
 
   @override
-  String get loginNewToBaraka => 'New to Baraka? ';
+  String get loginNewToBaraka => 'جديد هنا؟ ';
 
   @override
   String get loginCreateAccount => 'إنشاء حساب';
@@ -1355,11 +1355,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتتضمن أحرفًا كبيرة وصغيرة ورقمًا وحرفًا خاصًا.';
+      'يجب أن تتكون كلمة المرور من 10 أحرف على الأقل وتتضمن أحرفًا كبيرة وصغيرة ورقمًا وحرفًا خاصًا.';
 
   @override
   String get regPasswordSuccess =>
-      'تم تعيين كلمة المرور بنجاح. مرحبا بكم في مركز المجلس الرقمي.';
+      'تم تعيين كلمة المرور بنجاح. مرحبًا بكم في تطبيق هيئة الزكاة والأوقاف.';
 
   @override
   String regInstitutionComplete(Object id) {

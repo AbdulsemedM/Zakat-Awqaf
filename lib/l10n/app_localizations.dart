@@ -1878,7 +1878,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginNewToBaraka.
   ///
   /// In en, this message translates to:
-  /// **'New to Baraka? '**
+  /// **'New here? '**
   String get loginNewToBaraka;
 
   /// No description provided for @loginCreateAccount.
@@ -2454,13 +2454,13 @@ abstract class AppLocalizations {
   /// No description provided for @regPasswordRules.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.'**
+  /// **'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character.'**
   String get regPasswordRules;
 
   /// No description provided for @regPasswordSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Password set successfully. Welcome to Mejlis Digital Hub.'**
+  /// **'Password set successfully. Welcome to the Zakat & Awqaf Commission app.'**
   String get regPasswordSuccess;
 
   /// No description provided for @regInstitutionComplete.

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/auth/auth_session_controller.dart';
+import '../../core/constants/app_constants.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_bloc.dart';
 import '../../features/beneficiary_registration/bloc/beneficiary_registration_event.dart';
 import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dart';
@@ -89,38 +90,40 @@ abstract class AppRouterModule {
               ),
             ],
           ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/awqaf',
-                builder: (context, state) => const AwqafHomeScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/awqaf/create',
-                builder: (context, state) => const AwqafCreateScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/awqaf/portfolio',
-                builder: (context, state) => const AwqafPortfolioScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/awqaf/profile',
-                builder: (context, state) => const AwqafProfileScreen(),
-              ),
-            ],
-          ),
+          if (AppFeatures.awqaf) ...[
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/awqaf',
+                  builder: (context, state) => const AwqafHomeScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/awqaf/create',
+                  builder: (context, state) => const AwqafCreateScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/awqaf/portfolio',
+                  builder: (context, state) => const AwqafPortfolioScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/awqaf/profile',
+                  builder: (context, state) => const AwqafProfileScreen(),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
       GoRoute(

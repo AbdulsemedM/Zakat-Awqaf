@@ -23,7 +23,12 @@ abstract class GuestPaymentTokenStore {
 
 @LazySingleton(as: GuestPaymentTokenStore)
 class SecureGuestPaymentTokenStore implements GuestPaymentTokenStore {
-  SecureGuestPaymentTokenStore() : _storage = const FlutterSecureStorage();
+  SecureGuestPaymentTokenStore()
+    : _storage = const FlutterSecureStorage(
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock_this_device,
+        ),
+      );
 
   static const _paymentsKey = 'zakat_guest_payment_tokens_v1';
   static const _certificatesKey = 'zakat_guest_certificate_payments_v1';

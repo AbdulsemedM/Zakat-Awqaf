@@ -89,14 +89,10 @@ abstract final class ProfileMapper {
     avatarAsset: null,
     roleLabel: 'Member',
     madhhab: Madhhab.hanafi,
-    nisabAlerts: true,
-    biometricEnabled: false,
     language: AppLanguage.english,
     themePreference: AppThemePreference.light,
     isBeneficiary: false,
     beneficiaryStatus: BeneficiaryStatus.pending,
-    lastDisbursement: null,
-    totalAidReceived: 0,
   );
 
   static BeneficiaryStatus _mapVerificationStatus(String? status) {

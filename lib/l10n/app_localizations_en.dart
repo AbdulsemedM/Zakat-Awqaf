@@ -1054,7 +1054,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginForgotPasswordComingSoon => 'Forgot password coming soon';
 
   @override
-  String get loginNewToBaraka => 'New to Baraka? ';
+  String get loginNewToBaraka => 'New here? ';
 
   @override
   String get loginCreateAccount => 'Create an account';
@@ -1364,11 +1364,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
+      'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character.';
 
   @override
   String get regPasswordSuccess =>
-      'Password set successfully. Welcome to Mejlis Digital Hub.';
+      'Password set successfully. Welcome to the Zakat & Awqaf Commission app.';
 
   @override
   String regInstitutionComplete(Object id) {
