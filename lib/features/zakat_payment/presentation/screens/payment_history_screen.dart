@@ -18,10 +18,11 @@ import '../../data/repository/zakat_payment_repository.dart';
 import '../open_payment.dart';
 import 'zakat_certificate_screen.dart';
 
-/// A signed-in donor's zakat payments (`GET /me/payments?type=zakat`),
-/// newest first. A paid row opens its certificate. Unsettled QR payments
-/// are checked with the bank in the background, which confirms late
-/// payments sooner.
+/// A signed-in donor's donations (`GET /me/payments`), newest first: zakat
+/// and Sadaqah by QR, and international card donations made while signed
+/// in. A paid QR row opens its certificate or receipt. Unsettled QR
+/// payments are checked with the bank in the background, which confirms
+/// late payments sooner.
 class PaymentHistoryScreen extends StatefulWidget {
   const PaymentHistoryScreen({super.key});
 
@@ -85,12 +86,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         if (!mounted) return;
         final index = _items.indexWhere((i) => i.paymentId == item.paymentId);
         if (index == -1 || payment.status == item.status) continue;
-        setState(
-          () => _items[index] = PaymentHistoryItem.fromPayment(
-            payment,
-            createdAt: item.createdAt,
-          ),
-        );
+        setState(() => _items[index] = item.withPayment(payment));
       } on ApiException {
         // Not checkable (e.g. an older payment): keep the row as it is.
       }
@@ -116,7 +112,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
             slivers: [
               SliverToBoxAdapter(
                 child: ZakatPageHeader(
-                  title: l10n.historyTitle,
+                  title: l10n.profileDonationHistory,
                   leadingIcon: Icons.history_rounded,
                 ),
               ),
@@ -184,9 +180,12 @@ class _HistoryRow extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final certificateId = item.certificateId;
     final date = item.paidAt ?? item.createdAt;
+    final amountUsd = item.amountUsd;
     final subtitle = [
-      zakatTypeLabel(l10n, item.zakatType),
+      _kindLabel(l10n, item),
       item.causeTitle,
+      // A card donation has no certificate: its reference is the receipt.
+      if (item.isCard) item.reference,
       if (date != null)
         DateFormat.yMMMd(
           context.contentLocale.toString(),
@@ -210,7 +209,10 @@ class _HistoryRow extends StatelessWidget {
             ? () => openPayment(context, item.paymentId)
             : null,
         title: Text(
-          MoneyFormatter.etb(item.amountEtb),
+          [
+            MoneyFormatter.etb(item.amountEtb),
+            if (amountUsd != null) 'USD ${amountUsd.toStringAsFixed(2)}',
+          ].join(' · '),
           style: AppTypography.body(
             fontSize: 16,
             color: scheme.onSurface,
@@ -247,6 +249,19 @@ class _HistoryRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Sadaqah, the zakat kind, or an international card donation and what it
+/// was for.
+String? _kindLabel(AppLocalizations l10n, PaymentHistoryItem item) {
+  if (!item.isCard) {
+    return givingKindLabel(l10n, purpose: item.type, zakatType: item.zakatType);
+  }
+  return switch (item.cardPurpose) {
+    'waqf' => l10n.historyCardWaqf,
+    'zakat' => l10n.historyCardZakat,
+    _ => item.methodLabel ?? l10n.historyCardZakat,
+  };
 }
 
 String paymentStatusLabel(AppLocalizations l10n, PaymentStatus status) =>

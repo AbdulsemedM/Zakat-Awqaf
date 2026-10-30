@@ -2208,4 +2208,176 @@ class AppLocalizationsOm extends AppLocalizations {
 
   @override
   String get deviceIntegrityContinue => 'Hubadheera, itti fufi';
+
+  @override
+  String get receiptTitleSadaqah => 'Nagahee sadaqaa';
+
+  @override
+  String receiptNumber(String id) {
+    return 'Nagahee $id';
+  }
+
+  @override
+  String get receiptVerifyHint =>
+      'Koodiin QR PDF irra jiru namni kamiyyuu nagahee kana akka mirkaneessu taasisa.';
+
+  @override
+  String payQrShareTextSadaqah(String amount) {
+    return 'QR kaffaltii sadaqaa: $amount';
+  }
+
+  @override
+  String get payTitleSadaqah => 'Sadaqaa kee xumuri';
+
+  @override
+  String paySucceededBodySadaqah(String amount) {
+    return 'Sadaqaan kee $amount nu ga\'eera. Rabbiin sirraa haa fudhatu.';
+  }
+
+  @override
+  String get payViewReceipt => 'Nagahee ilaali';
+
+  @override
+  String get payPayerNameHelperSadaqah =>
+      'Nagahee sadaqaa kee irratti maxxanfama.';
+
+  @override
+  String get historySadaqah => 'Sadaqaa';
+
+  @override
+  String get historyCardZakat => 'Kaardii idil-addunyaa · Zakaa';
+
+  @override
+  String get historyCardWaqf => 'Kaardii idil-addunyaa · Waqfii';
+
+  @override
+  String get givingSadaqah => 'sadaqaa kenname';
+
+  @override
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah) {
+    return 'Waliigala: zakaa $zakat, sadaqaa $sadaqah';
+  }
+
+  @override
+  String get profileAccountNumberLabel => 'Lakkoofsa herregaa';
+
+  @override
+  String get profileAccountNumberRequired =>
+      'Lakkoofsa herrega keessanii galchaa.';
+
+  @override
+  String get profileAccountNumberInvalid =>
+      'Lakkoofsi herregaa kun bifa baankichaa wajjin wal hin simu.';
+
+  @override
+  String get profilePayoutBanksLoadError => 'Baankota fe\'uun hin danda\'amne.';
+
+  @override
+  String get profileBankComingSoon => 'Dhiyootti';
+
+  @override
+  String get profileChangePhone => 'Jijjiiri';
+
+  @override
+  String get supportCopied => 'Garagalfameera';
+
+  @override
+  String get supportPhone => 'Bilbila';
+
+  @override
+  String get supportEmail => 'Imeelii';
+
+  @override
+  String get supportWebsite => 'Marsariitii';
+
+  @override
+  String get supportHours => 'Sa\'aatii hojii';
+
+  @override
+  String get otpResetTitle => 'Jecha icciitii kee haaromsi';
+
+  @override
+  String get otpResetIntro =>
+      'Lakkoofsa bilbilaa ittiin seenitu galchi. Koodii SMS\'n siif ergina.';
+
+  @override
+  String get otpSignupIntro =>
+      'Ragaalee fi arjooma kee bakka tokkotti qabachuuf herrega arjoomaa uumi. Koodii bilbila keetti ergina.';
+
+  @override
+  String get otpChangePhoneTitle => 'Lakkoofsa bilbilaa jijjiiri';
+
+  @override
+  String get otpChangePhoneIntro =>
+      'Lakkoofsi bilbila keetii karaa ittiin seentuu dha. Koodii lakkoofsa haaraatti ergina; jijjiirraa booda isaan irra deebi\'ii seeni.';
+
+  @override
+  String get otpNewPhoneLabel => 'Lakkoofsa bilbilaa haaraa';
+
+  @override
+  String get otpFullNameRequired => 'Maqaa kee guutuu galchi.';
+
+  @override
+  String get otpSendCode => 'Koodii ergi';
+
+  @override
+  String otpCodeSentTo(String phone) {
+    return 'Koodii gara $phone ergine galchi.';
+  }
+
+  @override
+  String get otpCodeLabel => 'Koodii';
+
+  @override
+  String get otpCodeRequired => 'Koodii SMS irratti siif dhufe galchi.';
+
+  @override
+  String otpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Yaaliiwwan $count hafaniiru',
+      one: 'Yaaliin 1 hafeera',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get otpResend => 'Koodii irra deebi\'ii ergi';
+
+  @override
+  String get otpCodeResent => 'Koodiin haaraan ergameera.';
+
+  @override
+  String get otpUseAnotherNumber => 'Lakkoofsa biraa fayyadami';
+
+  @override
+  String get otpNewPasswordLabel => 'Jecha icciitii haaraa';
+
+  @override
+  String get otpPasswordMismatch => 'Jechoonni icciitii wal hin simne.';
+
+  @override
+  String get otpResetButton => 'Jecha icciitii haaromsi';
+
+  @override
+  String get otpSignupButton => 'Herrega uumi';
+
+  @override
+  String get otpChangePhoneButton => 'Lakkoofsa jijjiiri';
+
+  @override
+  String get otpNetworkError =>
+      'Saarvarii bira ga\'uun hin danda\'amne. Walqunnamtii kee mirkaneessiitii irra deebi\'ii yaali.';
+
+  @override
+  String get otpResetDone =>
+      'Jechi icciitii jijjiirameera. Jecha icciitii haaraan seeni.';
+
+  @override
+  String get otpSignupLoginNeeded => 'Herregni uumameera. Maaloo seeni.';
+
+  @override
+  String get otpChangePhoneDone =>
+      'Lakkoofsi bilbilaa jijjiirameera. Lakkoofsa haaraan seeni.';
 }

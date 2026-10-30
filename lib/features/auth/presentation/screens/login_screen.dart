@@ -49,6 +49,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  /// Opens a code flow (password reset, sign-up) and shows the message it
+  /// ends with. The messenger outlives this screen, which a sign-up
+  /// replaces with the profile.
+  Future<void> _openFlow(String location) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final message = await context.push<String>(location);
+    if (message != null) {
+      messenger.showSnackBar(SnackBar(content: Text(message)));
+    }
+  }
+
   InputDecoration _fieldDecoration({
     required String hint,
     required IconData prefixIcon,
@@ -239,7 +250,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 24),
+                            Align(
+                              alignment: AlignmentDirectional.centerEnd,
+                              child: TextButton(
+                                onPressed: isLoading
+                                    ? null
+                                    : () => _openFlow('/auth/forgot-password'),
+                                child: Text(l10n.loginForgotPassword),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
                             FilledButton(
                               onPressed: isLoading ? null : _submit,
                               style: FilledButton.styleFrom(
@@ -256,7 +276,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )
                                   : Text(l10n.loginButton),
                             ),
-                            const SizedBox(height: 28),
+                            const SizedBox(height: 12),
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Text(
+                                  l10n.loginNewToBaraka,
+                                  style: AppTypography.body(
+                                    fontSize: 14,
+                                    color: scheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: isLoading
+                                      ? null
+                                      : () => _openFlow('/auth/sign-up'),
+                                  child: Text(l10n.loginCreateAccount),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
                             Row(
                               children: [
                                 Expanded(

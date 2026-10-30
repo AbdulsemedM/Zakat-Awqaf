@@ -15,6 +15,7 @@ class DevicePayment {
     required this.amountEtb,
     required this.status,
     this.step,
+    this.purpose,
     this.zakatType,
     this.causeTitle,
     this.expiresAt,
@@ -26,6 +27,7 @@ class DevicePayment {
   final double amountEtb;
   final PaymentStatus status;
   final PaymentStep? step;
+  final String? purpose;
   final String? zakatType;
   final String? causeTitle;
   final DateTime? expiresAt;
@@ -57,6 +59,7 @@ class DevicePayment {
       amountEtb: payment.amountEtb,
       status: payment.status,
       step: payment.step,
+      purpose: payment.purpose ?? previous?.purpose,
       zakatType: payment.zakatType ?? previous?.zakatType,
       causeTitle: payment.causeTitle ?? previous?.causeTitle,
       expiresAt: payment.expiresAt ?? previous?.expiresAt,
@@ -70,6 +73,7 @@ class DevicePayment {
     'amountEtb': amountEtb,
     'status': status.name,
     'step': ?step?.name,
+    'purpose': ?purpose,
     'zakatType': ?zakatType,
     'causeTitle': ?causeTitle,
     'expiresAt': ?expiresAt?.toIso8601String(),
@@ -89,6 +93,7 @@ class DevicePayment {
           PaymentStatus.values.asNameMap()[json['status']] ??
           PaymentStatus.pending,
       step: PaymentStep.values.asNameMap()[json['step']],
+      purpose: json['purpose']?.toString(),
       zakatType: json['zakatType']?.toString(),
       causeTitle: json['causeTitle']?.toString(),
       expiresAt: DateTime.tryParse(json['expiresAt']?.toString() ?? ''),

@@ -11,6 +11,7 @@ import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dar
 import '../../features/awqaf/home/presentation/screens/awqaf_home_screen.dart';
 import '../../features/awqaf/portfolio/presentation/screens/awqaf_portfolio_screen.dart';
 import '../../features/awqaf/profile/presentation/screens/awqaf_profile_screen.dart';
+import '../../features/auth/presentation/screens/otp_flow_screen.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
 import '../../features/causes/presentation/screens/cause_detail_screen.dart';
 import '../../features/causes/presentation/screens/causes_screen.dart';
@@ -208,6 +209,25 @@ abstract class AppRouterModule {
         path: '/zakat/history',
         builder: (context, state) =>
             const ZakatThemed(child: PaymentHistoryScreen()),
+      ),
+      // Pop with a message for the screen below (see OtpFlowScreen).
+      GoRoute(
+        path: '/auth/forgot-password',
+        builder: (context, state) => const ZakatThemed(
+          child: OtpFlowScreen(kind: OtpFlowKind.passwordReset),
+        ),
+      ),
+      GoRoute(
+        path: '/auth/sign-up',
+        builder: (context, state) => const ZakatThemed(
+          child: OtpFlowScreen(kind: OtpFlowKind.donorSignup),
+        ),
+      ),
+      GoRoute(
+        path: '/profile/change-phone',
+        builder: (context, state) => const ZakatThemed(
+          child: OtpFlowScreen(kind: OtpFlowKind.phoneChange),
+        ),
       ),
     ],
   );

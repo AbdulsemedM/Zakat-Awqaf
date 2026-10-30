@@ -3848,6 +3848,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I understand, continue'**
   String get deviceIntegrityContinue;
+
+  /// No description provided for @receiptTitleSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Sadaqah receipt'**
+  String get receiptTitleSadaqah;
+
+  /// No description provided for @receiptNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt {id}'**
+  String receiptNumber(String id);
+
+  /// No description provided for @receiptVerifyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The QR code on the PDF lets anyone verify this receipt.'**
+  String get receiptVerifyHint;
+
+  /// No description provided for @payQrShareTextSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Sadaqah payment QR: {amount}'**
+  String payQrShareTextSadaqah(String amount);
+
+  /// No description provided for @payTitleSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your Sadaqah'**
+  String get payTitleSadaqah;
+
+  /// No description provided for @paySucceededBodySadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sadaqah of {amount} has been received. May Allah accept it from you.'**
+  String paySucceededBodySadaqah(String amount);
+
+  /// No description provided for @payViewReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'View receipt'**
+  String get payViewReceipt;
+
+  /// No description provided for @payPayerNameHelperSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Printed on your Sadaqah receipt.'**
+  String get payPayerNameHelperSadaqah;
+
+  /// No description provided for @historySadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'Sadaqah'**
+  String get historySadaqah;
+
+  /// No description provided for @historyCardZakat.
+  ///
+  /// In en, this message translates to:
+  /// **'International card · Zakat'**
+  String get historyCardZakat;
+
+  /// No description provided for @historyCardWaqf.
+  ///
+  /// In en, this message translates to:
+  /// **'International card · Waqf'**
+  String get historyCardWaqf;
+
+  /// No description provided for @givingSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'sadaqah given'**
+  String get givingSadaqah;
+
+  /// No description provided for @givingAllTimeWithSadaqah.
+  ///
+  /// In en, this message translates to:
+  /// **'All time: {zakat} zakat, {sadaqah} sadaqah'**
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah);
+
+  /// No description provided for @profileAccountNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number'**
+  String get profileAccountNumberLabel;
+
+  /// No description provided for @profileAccountNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your account number.'**
+  String get profileAccountNumberRequired;
+
+  /// No description provided for @profileAccountNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This account number doesn\'t match the bank\'s format.'**
+  String get profileAccountNumberInvalid;
+
+  /// No description provided for @profilePayoutBanksLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the banks.'**
+  String get profilePayoutBanksLoadError;
+
+  /// No description provided for @profileBankComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get profileBankComingSoon;
+
+  /// No description provided for @profileChangePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get profileChangePhone;
+
+  /// No description provided for @supportCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get supportCopied;
+
+  /// No description provided for @supportPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get supportPhone;
+
+  /// No description provided for @supportEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get supportEmail;
+
+  /// No description provided for @supportWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get supportWebsite;
+
+  /// No description provided for @supportHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get supportHours;
+
+  /// No description provided for @otpResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset your password'**
+  String get otpResetTitle;
+
+  /// No description provided for @otpResetIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the phone number you sign in with. We\'ll send you a code by SMS.'**
+  String get otpResetIntro;
+
+  /// No description provided for @otpSignupIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a donor account to keep your certificates and donations in one place. We\'ll send a code to your phone.'**
+  String get otpSignupIntro;
+
+  /// No description provided for @otpChangePhoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change phone number'**
+  String get otpChangePhoneTitle;
+
+  /// No description provided for @otpChangePhoneIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone number is also how you sign in. We\'ll send a code to the new number; after the change, sign in again with it.'**
+  String get otpChangePhoneIntro;
+
+  /// No description provided for @otpNewPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New phone number'**
+  String get otpNewPhoneLabel;
+
+  /// No description provided for @otpFullNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name.'**
+  String get otpFullNameRequired;
+
+  /// No description provided for @otpSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get otpSendCode;
+
+  /// No description provided for @otpCodeSentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code we sent to {phone}.'**
+  String otpCodeSentTo(String phone);
+
+  /// No description provided for @otpCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get otpCodeLabel;
+
+  /// No description provided for @otpCodeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code from the SMS.'**
+  String get otpCodeRequired;
+
+  /// No description provided for @otpAttemptsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 attempt left} other{{count} attempts left}}'**
+  String otpAttemptsLeft(int count);
+
+  /// No description provided for @otpResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get otpResend;
+
+  /// No description provided for @otpCodeResent.
+  ///
+  /// In en, this message translates to:
+  /// **'A new code was sent.'**
+  String get otpCodeResent;
+
+  /// No description provided for @otpUseAnotherNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different number'**
+  String get otpUseAnotherNumber;
+
+  /// No description provided for @otpNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get otpNewPasswordLabel;
+
+  /// No description provided for @otpPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passwords don\'t match.'**
+  String get otpPasswordMismatch;
+
+  /// No description provided for @otpResetButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get otpResetButton;
+
+  /// No description provided for @otpSignupButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get otpSignupButton;
+
+  /// No description provided for @otpChangePhoneButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Change number'**
+  String get otpChangePhoneButton;
+
+  /// No description provided for @otpNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the server. Check your connection and try again.'**
+  String get otpNetworkError;
+
+  /// No description provided for @otpResetDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed. Sign in with your new password.'**
+  String get otpResetDone;
+
+  /// No description provided for @otpSignupLoginNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created. Please sign in.'**
+  String get otpSignupLoginNeeded;
+
+  /// No description provided for @otpChangePhoneDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number changed. Sign in with your new number.'**
+  String get otpChangePhoneDone;
 }
 
 class _AppLocalizationsDelegate

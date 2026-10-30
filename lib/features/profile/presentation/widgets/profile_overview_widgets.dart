@@ -367,6 +367,28 @@ class _BeneficiaryInsightsCard extends StatelessWidget {
                 ),
               ),
             ],
+            if (profile.totalAidReceivedEtb != null) ...[
+              const Divider(height: 24),
+              _InsightRow(
+                icon: Icons.volunteer_activism_outlined,
+                label: context.l10n.profileTotalAidReceived,
+                value: MoneyFormatter.etb(profile.totalAidReceivedEtb!),
+              ),
+            ],
+            if (profile.lastDisbursementAmountEtb != null) ...[
+              const SizedBox(height: 12),
+              _InsightRow(
+                icon: Icons.payments_outlined,
+                label: context.l10n.profileLastDisbursement,
+                value: [
+                  MoneyFormatter.etb(profile.lastDisbursementAmountEtb!),
+                  if (profile.lastDisbursementPaidAt != null)
+                    DateFormat.yMMMd(
+                      context.contentLocale.toString(),
+                    ).format(profile.lastDisbursementPaidAt!.toLocal()),
+                ].join(' · '),
+              ),
+            ],
           ],
         ),
       ),
@@ -436,10 +458,29 @@ class _PersonalInfoCard extends StatelessWidget {
             label: context.l10n.profilePhoneNumber,
             value: profile.phone,
             icon: Icons.phone_outlined,
+            // The phone is the login: changing it is verified by a code and
+            // ends the session. E-mail stays read-only (no e-mail from the
+            // backend yet).
+            action: profile.isDonor || profile.isBeneficiary
+                ? TextButton(
+                    onPressed: () => _changePhone(context),
+                    child: Text(context.l10n.profileChangePhone),
+                  )
+                : null,
           ),
         ],
       ),
     );
+  }
+}
+
+/// The phone change ends the session, so this screen is replaced by the
+/// sign-in; the root messenger shows how it ended.
+Future<void> _changePhone(BuildContext context) async {
+  final messenger = ScaffoldMessenger.of(context);
+  final message = await context.push<String>('/profile/change-phone');
+  if (message != null) {
+    messenger.showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
@@ -448,11 +489,13 @@ class _InfoRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.icon,
+    this.action,
   });
 
   final String label;
   final String value;
   final IconData icon;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -484,6 +527,7 @@ class _InfoRow extends StatelessWidget {
               ],
             ),
           ),
+          ?action,
         ],
       ),
     );

@@ -121,7 +121,11 @@ class _DevicePaymentRow extends StatelessWidget {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final subtitle = [
-      zakatTypeLabel(l10n, payment.zakatType),
+      givingKindLabel(
+        l10n,
+        purpose: payment.purpose,
+        zakatType: payment.zakatType,
+      ),
       payment.causeTitle,
       DateFormat.yMMMd(
         context.contentLocale.toString(),

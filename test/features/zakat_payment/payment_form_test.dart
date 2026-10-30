@@ -214,7 +214,7 @@ void main() {
     expect(payments.requests.single.causeId, 'c-42');
   });
 
-  testWidgets('local Sadaqah uses the QR steps as general zakat', (
+  testWidgets('local Sadaqah uses the QR steps with purpose sadaqah', (
     tester,
   ) async {
     final l10n = AppLocalizationsEn();
@@ -223,14 +223,19 @@ void main() {
       args: ZakatPaymentArgs.forSadaqah(l10n),
     );
     expect(find.text(l10n.donateSadaqah), findsOneWidget);
+    expect(find.text(l10n.payPayerNameHelperSadaqah), findsOneWidget);
 
     payments.errors.add(const ApiException('timeout', noResponse: true));
     await _fillGuest(tester);
     await _pay(tester);
     final request = payments.requests.single;
-    expect(request.zakatType, ZakatType.general);
+    expect(request.purpose, PaymentPurpose.sadaqah);
     expect(request.causeId, 'general');
     expect(request.methodCode, 'ethqr');
+    final json = request.toJson();
+    expect(json['purpose'], 'sadaqah');
+    // Sadaqah has no zakat kind.
+    expect(json.containsKey('zakatType'), isFalse);
   });
 
   testWidgets('a bad phone number is shown under its field', (tester) async {

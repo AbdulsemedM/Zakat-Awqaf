@@ -46,13 +46,14 @@ final class ProfileLoggedOut extends ProfileEvent {
 
 final class ProfileBankAccountSaved extends ProfileEvent {
   const ProfileBankAccountSaved({
-    required this.bankName,
+    required this.bankCode,
     required this.accountNumber,
   });
 
-  final String bankName;
+  /// From `GET /payout-banks`.
+  final String bankCode;
   final String accountNumber;
 
   @override
-  List<Object?> get props => [bankName, accountNumber];
+  List<Object?> get props => [bankCode, accountNumber];
 }

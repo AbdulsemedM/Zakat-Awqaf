@@ -69,12 +69,18 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
         '_',
       );
       final pdf = file = File(
-        p.join(dir.path, 'zakat-certificate-$safeName.pdf'),
+        p.join(
+          dir.path,
+          '${_certificate?.isSadaqah == true ? 'sadaqah-receipt' : 'zakat-certificate'}'
+          '-$safeName.pdf',
+        ),
       );
       await pdf.writeAsBytes(bytes, flush: true);
       await SharePlus.instance.share(
         ShareParams(
-          text: l10n.certTitle,
+          text: _certificate?.isSadaqah == true
+              ? l10n.receiptTitleSadaqah
+              : l10n.certTitle,
           files: [XFile(pdf.path, mimeType: 'application/pdf')],
         ),
       );
@@ -102,6 +108,7 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final certificate = _certificate;
+    final sadaqah = certificate?.isSadaqah == true;
     final error = _error;
     final Widget body;
     if (certificate != null) {
@@ -126,8 +133,10 @@ class _ZakatCertificateScreenState extends State<ZakatCertificateScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ZakatPageHeader(
-              title: l10n.certTitle,
-              subtitle: l10n.certNumber(widget.certificateId),
+              title: sadaqah ? l10n.receiptTitleSadaqah : l10n.certTitle,
+              subtitle: sadaqah
+                  ? l10n.receiptNumber(widget.certificateId)
+                  : l10n.certNumber(widget.certificateId),
               leadingIcon: Icons.workspace_premium_outlined,
               onBack: () => context.canPop() ? context.pop() : context.go('/'),
             ),
@@ -176,7 +185,9 @@ class _CertificateDetails extends StatelessWidget {
         value == null ? null : dateFormat.format(value.toLocal());
     final rows = <(String, String?)>[
       (l10n.certPayer, certificate.payerFullName),
-      (l10n.certType, zakatTypeLabel(l10n, certificate.zakatType)),
+      // Sadaqah has no zakat kind.
+      if (!certificate.isSadaqah)
+        (l10n.certType, zakatTypeLabel(l10n, certificate.zakatType)),
       (l10n.certCause, certificate.causeTitle),
       (l10n.certNaturalUnits, certificate.naturalUnitSummary),
       (l10n.certMethod, certificate.methodLabel),
@@ -260,7 +271,7 @@ class _CertificateDetails extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         Text(
-          l10n.certVerifyHint,
+          certificate.isSadaqah ? l10n.receiptVerifyHint : l10n.certVerifyHint,
           textAlign: TextAlign.center,
           style: AppTypography.body(
             fontSize: 12,
@@ -271,6 +282,15 @@ class _CertificateDetails extends StatelessWidget {
     );
   }
 }
+
+/// What was given: Sadaqah, or the localized zakat kind.
+String? givingKindLabel(
+  AppLocalizations l10n, {
+  String? purpose,
+  String? zakatType,
+}) => isSadaqahPurpose(purpose)
+    ? l10n.historySadaqah
+    : zakatTypeLabel(l10n, zakatType);
 
 /// Localized `zakatType`; the raw value for one the app does not know.
 String? zakatTypeLabel(AppLocalizations l10n, String? zakatType) =>

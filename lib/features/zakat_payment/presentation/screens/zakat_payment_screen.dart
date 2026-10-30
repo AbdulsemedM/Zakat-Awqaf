@@ -183,6 +183,7 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
     try {
       final payment = await _repository.startPayment(
         ZakatPaymentRequest(
+          purpose: widget.args.purpose,
           zakatType: widget.args.zakatType,
           amountEtb: _amountEtb,
           methodCode: method.code,
@@ -415,7 +416,9 @@ class _ZakatPaymentScreenState extends State<ZakatPaymentScreen> {
             onChanged: (_) => changed(() => _fullNameError = null),
             decoration: InputDecoration(
               labelText: l10n.payPayerNameLabel,
-              helperText: l10n.payPayerNameHelper,
+              helperText: widget.args.purpose == PaymentPurpose.sadaqah
+                  ? l10n.payPayerNameHelperSadaqah
+                  : l10n.payPayerNameHelper,
               helperMaxLines: 2,
               errorText: _fullNameError,
               prefixIcon: const Icon(Icons.person_outline_rounded),

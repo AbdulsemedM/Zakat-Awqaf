@@ -2186,4 +2186,174 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deviceIntegrityContinue => 'I understand, continue';
+
+  @override
+  String get receiptTitleSadaqah => 'Sadaqah receipt';
+
+  @override
+  String receiptNumber(String id) {
+    return 'Receipt $id';
+  }
+
+  @override
+  String get receiptVerifyHint =>
+      'The QR code on the PDF lets anyone verify this receipt.';
+
+  @override
+  String payQrShareTextSadaqah(String amount) {
+    return 'Sadaqah payment QR: $amount';
+  }
+
+  @override
+  String get payTitleSadaqah => 'Complete your Sadaqah';
+
+  @override
+  String paySucceededBodySadaqah(String amount) {
+    return 'Your sadaqah of $amount has been received. May Allah accept it from you.';
+  }
+
+  @override
+  String get payViewReceipt => 'View receipt';
+
+  @override
+  String get payPayerNameHelperSadaqah => 'Printed on your Sadaqah receipt.';
+
+  @override
+  String get historySadaqah => 'Sadaqah';
+
+  @override
+  String get historyCardZakat => 'International card · Zakat';
+
+  @override
+  String get historyCardWaqf => 'International card · Waqf';
+
+  @override
+  String get givingSadaqah => 'sadaqah given';
+
+  @override
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah) {
+    return 'All time: $zakat zakat, $sadaqah sadaqah';
+  }
+
+  @override
+  String get profileAccountNumberLabel => 'Account number';
+
+  @override
+  String get profileAccountNumberRequired => 'Enter your account number.';
+
+  @override
+  String get profileAccountNumberInvalid =>
+      'This account number doesn\'t match the bank\'s format.';
+
+  @override
+  String get profilePayoutBanksLoadError => 'Couldn\'t load the banks.';
+
+  @override
+  String get profileBankComingSoon => 'Coming soon';
+
+  @override
+  String get profileChangePhone => 'Change';
+
+  @override
+  String get supportCopied => 'Copied';
+
+  @override
+  String get supportPhone => 'Phone';
+
+  @override
+  String get supportEmail => 'Email';
+
+  @override
+  String get supportWebsite => 'Website';
+
+  @override
+  String get supportHours => 'Opening hours';
+
+  @override
+  String get otpResetTitle => 'Reset your password';
+
+  @override
+  String get otpResetIntro =>
+      'Enter the phone number you sign in with. We\'ll send you a code by SMS.';
+
+  @override
+  String get otpSignupIntro =>
+      'Create a donor account to keep your certificates and donations in one place. We\'ll send a code to your phone.';
+
+  @override
+  String get otpChangePhoneTitle => 'Change phone number';
+
+  @override
+  String get otpChangePhoneIntro =>
+      'Your phone number is also how you sign in. We\'ll send a code to the new number; after the change, sign in again with it.';
+
+  @override
+  String get otpNewPhoneLabel => 'New phone number';
+
+  @override
+  String get otpFullNameRequired => 'Enter your full name.';
+
+  @override
+  String get otpSendCode => 'Send code';
+
+  @override
+  String otpCodeSentTo(String phone) {
+    return 'Enter the code we sent to $phone.';
+  }
+
+  @override
+  String get otpCodeLabel => 'Code';
+
+  @override
+  String get otpCodeRequired => 'Enter the code from the SMS.';
+
+  @override
+  String otpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attempts left',
+      one: '1 attempt left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get otpResend => 'Resend code';
+
+  @override
+  String get otpCodeResent => 'A new code was sent.';
+
+  @override
+  String get otpUseAnotherNumber => 'Use a different number';
+
+  @override
+  String get otpNewPasswordLabel => 'New password';
+
+  @override
+  String get otpPasswordMismatch => 'The passwords don\'t match.';
+
+  @override
+  String get otpResetButton => 'Reset password';
+
+  @override
+  String get otpSignupButton => 'Create account';
+
+  @override
+  String get otpChangePhoneButton => 'Change number';
+
+  @override
+  String get otpNetworkError =>
+      'Couldn\'t reach the server. Check your connection and try again.';
+
+  @override
+  String get otpResetDone =>
+      'Password changed. Sign in with your new password.';
+
+  @override
+  String get otpSignupLoginNeeded => 'Account created. Please sign in.';
+
+  @override
+  String get otpChangePhoneDone =>
+      'Phone number changed. Sign in with your new number.';
 }

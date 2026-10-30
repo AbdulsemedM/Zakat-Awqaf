@@ -154,7 +154,9 @@ class _PaymentFlowView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ZakatPageHeader(
-                    title: l10n.payTitleZakat,
+                    title: payment.isSadaqah
+                        ? l10n.payTitleSadaqah
+                        : l10n.payTitleZakat,
                     leadingIcon: Icons.verified_user_outlined,
                     onBack: () => _onBack(context, state),
                   ),
@@ -341,7 +343,11 @@ class _QrStepState extends State<_QrStep> {
       if (png == null) return;
       await SharePlus.instance.share(
         ShareParams(
-          text: l10n.payQrShareText(MoneyFormatter.etb(payment.amountEtb)),
+          text: payment.isSadaqah
+              ? l10n.payQrShareTextSadaqah(
+                  MoneyFormatter.etb(payment.amountEtb),
+                )
+              : l10n.payQrShareText(MoneyFormatter.etb(payment.amountEtb)),
           files: [
             XFile.fromData(
               png,
@@ -530,7 +536,11 @@ class _SucceededResult extends StatelessWidget {
         const SizedBox(height: 12),
         _StepTitle(
           title: l10n.paySucceededTitle,
-          body: l10n.paySucceededBody(MoneyFormatter.etb(payment.amountEtb)),
+          body: payment.isSadaqah
+              ? l10n.paySucceededBodySadaqah(
+                  MoneyFormatter.etb(payment.amountEtb),
+                )
+              : l10n.paySucceededBody(MoneyFormatter.etb(payment.amountEtb)),
           center: true,
         ),
         if (payment.paidDifferentAmount) ...[
@@ -562,7 +572,9 @@ class _SucceededResult extends StatelessWidget {
         const SizedBox(height: 24),
         if (certificateId != null)
           GoldActionButton(
-            label: l10n.payViewCertificate,
+            label: payment.isSadaqah
+                ? l10n.payViewReceipt
+                : l10n.payViewCertificate,
             icon: Icons.workspace_premium_outlined,
             onPressed: () => context.push(
               '/zakat/certificate/${Uri.encodeComponent(certificateId)}',

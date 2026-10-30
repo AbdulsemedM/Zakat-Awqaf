@@ -2171,4 +2171,174 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deviceIntegrityContinue => 'فهمت، متابعة';
+
+  @override
+  String get receiptTitleSadaqah => 'إيصال صدقة';
+
+  @override
+  String receiptNumber(String id) {
+    return 'إيصال $id';
+  }
+
+  @override
+  String get receiptVerifyHint =>
+      'يتيح رمز QR في ملف PDF لأي شخص التحقق من هذا الإيصال.';
+
+  @override
+  String payQrShareTextSadaqah(String amount) {
+    return 'رمز QR لدفع الصدقة: $amount';
+  }
+
+  @override
+  String get payTitleSadaqah => 'أكمل صدقتك';
+
+  @override
+  String paySucceededBodySadaqah(String amount) {
+    return 'تم استلام صدقتك بمبلغ $amount. تقبّلها الله منك.';
+  }
+
+  @override
+  String get payViewReceipt => 'عرض الإيصال';
+
+  @override
+  String get payPayerNameHelperSadaqah => 'يُطبع على إيصال صدقتك.';
+
+  @override
+  String get historySadaqah => 'صدقة';
+
+  @override
+  String get historyCardZakat => 'بطاقة دولية · زكاة';
+
+  @override
+  String get historyCardWaqf => 'بطاقة دولية · وقف';
+
+  @override
+  String get givingSadaqah => 'صدقة مقدّمة';
+
+  @override
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah) {
+    return 'الإجمالي: $zakat زكاة، $sadaqah صدقة';
+  }
+
+  @override
+  String get profileAccountNumberLabel => 'رقم الحساب';
+
+  @override
+  String get profileAccountNumberRequired => 'أدخل رقم حسابك.';
+
+  @override
+  String get profileAccountNumberInvalid =>
+      'رقم الحساب هذا لا يطابق صيغة البنك.';
+
+  @override
+  String get profilePayoutBanksLoadError => 'تعذّر تحميل البنوك.';
+
+  @override
+  String get profileBankComingSoon => 'قريبًا';
+
+  @override
+  String get profileChangePhone => 'تغيير';
+
+  @override
+  String get supportCopied => 'تم النسخ';
+
+  @override
+  String get supportPhone => 'الهاتف';
+
+  @override
+  String get supportEmail => 'البريد الإلكتروني';
+
+  @override
+  String get supportWebsite => 'الموقع الإلكتروني';
+
+  @override
+  String get supportHours => 'ساعات العمل';
+
+  @override
+  String get otpResetTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get otpResetIntro =>
+      'أدخل رقم الهاتف الذي تسجّل الدخول به. سنرسل لك رمزًا عبر رسالة نصية.';
+
+  @override
+  String get otpSignupIntro =>
+      'أنشئ حساب متبرّع لتحتفظ بشهاداتك وتبرعاتك في مكان واحد. سنرسل رمزًا إلى هاتفك.';
+
+  @override
+  String get otpChangePhoneTitle => 'تغيير رقم الهاتف';
+
+  @override
+  String get otpChangePhoneIntro =>
+      'رقم هاتفك هو أيضًا وسيلة تسجيل دخولك. سنرسل رمزًا إلى الرقم الجديد؛ وبعد التغيير سجّل الدخول به من جديد.';
+
+  @override
+  String get otpNewPhoneLabel => 'رقم الهاتف الجديد';
+
+  @override
+  String get otpFullNameRequired => 'أدخل اسمك الكامل.';
+
+  @override
+  String get otpSendCode => 'إرسال الرمز';
+
+  @override
+  String otpCodeSentTo(String phone) {
+    return 'أدخل الرمز الذي أرسلناه إلى $phone.';
+  }
+
+  @override
+  String get otpCodeLabel => 'الرمز';
+
+  @override
+  String get otpCodeRequired => 'أدخل الرمز الوارد في الرسالة النصية.';
+
+  @override
+  String otpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بقيت $count محاولات',
+      one: 'بقيت محاولة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get otpResend => 'إعادة إرسال الرمز';
+
+  @override
+  String get otpCodeResent => 'تم إرسال رمز جديد.';
+
+  @override
+  String get otpUseAnotherNumber => 'استخدام رقم آخر';
+
+  @override
+  String get otpNewPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get otpPasswordMismatch => 'كلمتا المرور غير متطابقتين.';
+
+  @override
+  String get otpResetButton => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get otpSignupButton => 'إنشاء حساب';
+
+  @override
+  String get otpChangePhoneButton => 'تغيير الرقم';
+
+  @override
+  String get otpNetworkError =>
+      'تعذّر الوصول إلى الخادم. تحقّق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get otpResetDone =>
+      'تم تغيير كلمة المرور. سجّل الدخول بكلمة المرور الجديدة.';
+
+  @override
+  String get otpSignupLoginNeeded => 'تم إنشاء الحساب. يرجى تسجيل الدخول.';
+
+  @override
+  String get otpChangePhoneDone =>
+      'تم تغيير رقم الهاتف. سجّل الدخول برقمك الجديد.';
 }

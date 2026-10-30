@@ -2203,4 +2203,175 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get deviceIntegrityContinue => 'Waan fahmay, sii wad';
+
+  @override
+  String get receiptTitleSadaqah => 'Rasiidka sadaqada';
+
+  @override
+  String receiptNumber(String id) {
+    return 'Rasiid $id';
+  }
+
+  @override
+  String get receiptVerifyHint =>
+      'Koodhka QR ee PDF-ka ku yaal wuxuu qof kasta u oggolaanayaa inuu xaqiijiyo rasiidkan.';
+
+  @override
+  String payQrShareTextSadaqah(String amount) {
+    return 'QR-ka lacag-bixinta sadaqada: $amount';
+  }
+
+  @override
+  String get payTitleSadaqah => 'Dhammaystir sadaqadaada';
+
+  @override
+  String paySucceededBodySadaqah(String amount) {
+    return 'Sadaqadaadii $amount ahayd waa la helay. Alle ha kaa aqbalo.';
+  }
+
+  @override
+  String get payViewReceipt => 'Eeg rasiidka';
+
+  @override
+  String get payPayerNameHelperSadaqah =>
+      'Waxaa lagu daabacayaa rasiidka sadaqadaada.';
+
+  @override
+  String get historySadaqah => 'Sadaqo';
+
+  @override
+  String get historyCardZakat => 'Kaar caalami ah · Sakaad';
+
+  @override
+  String get historyCardWaqf => 'Kaar caalami ah · Waqf';
+
+  @override
+  String get givingSadaqah => 'sadaqo la bixiyay';
+
+  @override
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah) {
+    return 'Wadarta: $zakat sakaad, $sadaqah sadaqo';
+  }
+
+  @override
+  String get profileAccountNumberLabel => 'Lambarka akoonka';
+
+  @override
+  String get profileAccountNumberRequired => 'Geli lambarka akoonkaaga.';
+
+  @override
+  String get profileAccountNumberInvalid =>
+      'Lambarkan akoonku ma waafaqsana qaabka bangiga.';
+
+  @override
+  String get profilePayoutBanksLoadError => 'Bangiyada lama soo gelin karin.';
+
+  @override
+  String get profileBankComingSoon => 'Dhowaan';
+
+  @override
+  String get profileChangePhone => 'Beddel';
+
+  @override
+  String get supportCopied => 'Waa la koobiyeeyay';
+
+  @override
+  String get supportPhone => 'Telefoon';
+
+  @override
+  String get supportEmail => 'Iimayl';
+
+  @override
+  String get supportWebsite => 'Websaydh';
+
+  @override
+  String get supportHours => 'Saacadaha shaqada';
+
+  @override
+  String get otpResetTitle => 'Dib u deji furahaaga sirta ah';
+
+  @override
+  String get otpResetIntro =>
+      'Geli lambarka telefoonka aad ku gasho. Koodh ayaan kuugu soo diri doonnaa SMS.';
+
+  @override
+  String get otpSignupIntro =>
+      'Samee akoon deeq-bixiye si aad shahaadooyinkaaga iyo deeqahaaga hal meel ugu haysato. Koodh ayaan telefoonkaaga u diri doonnaa.';
+
+  @override
+  String get otpChangePhoneTitle => 'Beddel lambarka telefoonka';
+
+  @override
+  String get otpChangePhoneIntro =>
+      'Lambarka telefoonkaagu waa sida aad ku gasho. Koodh ayaan u diri doonnaa lambarka cusub; isbeddelka kadib dib ugu gal.';
+
+  @override
+  String get otpNewPhoneLabel => 'Lambarka telefoonka cusub';
+
+  @override
+  String get otpFullNameRequired => 'Geli magacaaga oo buuxa.';
+
+  @override
+  String get otpSendCode => 'Dir koodhka';
+
+  @override
+  String otpCodeSentTo(String phone) {
+    return 'Geli koodhka aan u dirnay $phone.';
+  }
+
+  @override
+  String get otpCodeLabel => 'Koodh';
+
+  @override
+  String get otpCodeRequired => 'Geli koodhka ku jira SMS-ka.';
+
+  @override
+  String otpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count isku day ayaa haray',
+      one: '1 isku day ayaa haray',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get otpResend => 'Dib u dir koodhka';
+
+  @override
+  String get otpCodeResent => 'Koodh cusub ayaa la diray.';
+
+  @override
+  String get otpUseAnotherNumber => 'Isticmaal lambar kale';
+
+  @override
+  String get otpNewPasswordLabel => 'Furaha sirta ah ee cusub';
+
+  @override
+  String get otpPasswordMismatch => 'Furayaasha sirta ahi isma laha.';
+
+  @override
+  String get otpResetButton => 'Dib u deji furaha sirta ah';
+
+  @override
+  String get otpSignupButton => 'Samee akoon';
+
+  @override
+  String get otpChangePhoneButton => 'Beddel lambarka';
+
+  @override
+  String get otpNetworkError =>
+      'Lama gaari karin server-ka. Hubi xiriirkaaga oo isku day mar kale.';
+
+  @override
+  String get otpResetDone =>
+      'Furaha sirta ah waa la beddelay. Ku gal furahaaga cusub.';
+
+  @override
+  String get otpSignupLoginNeeded => 'Akoonka waa la sameeyay. Fadlan gal.';
+
+  @override
+  String get otpChangePhoneDone =>
+      'Lambarka telefoonka waa la beddelay. Ku gal lambarkaaga cusub.';
 }

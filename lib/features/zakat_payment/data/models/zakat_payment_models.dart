@@ -60,6 +60,15 @@ class PaymentMethod extends Equatable {
 /// `zakatType` sent with a payment.
 enum ZakatType { wealth, livestock, crops, general, fitr }
 
+/// `purpose` of a payment. Sadaqah has no zakat kind, is QR only, and gets
+/// a Sadaqah Receipt instead of a zakat certificate.
+enum PaymentPurpose { zakat, sadaqah }
+
+/// `sadaqah` in a payment's or certificate's `purpose`; anything else
+/// (including an absent value from an older server) is zakat.
+bool isSadaqahPurpose(String? purpose) =>
+    purpose == PaymentPurpose.sadaqah.name;
+
 enum PaymentStatus { pending, succeeded, failed, cancelled, expired }
 
 /// Where a `pending` payment is. `scanQr`: waiting for the donor's bank app
@@ -73,6 +82,7 @@ class ZakatPayment extends Equatable {
     required this.paymentId,
     required this.status,
     this.step,
+    this.purpose,
     this.zakatType,
     required this.amountEtb,
     this.issuedAmountEtb,
@@ -95,6 +105,11 @@ class ZakatPayment extends Equatable {
   final String paymentId;
   final PaymentStatus status;
   final PaymentStep? step;
+
+  /// `zakat` or `sadaqah`; see [isSadaqah].
+  final String? purpose;
+
+  /// The zakat kind; always `general` for Sadaqah.
   final String? zakatType;
 
   /// The amount paid. When the donor paid a different amount than the QR's,
@@ -127,6 +142,8 @@ class ZakatPayment extends Equatable {
   final String? failureReason;
 
   bool get isFinal => status != PaymentStatus.pending;
+
+  bool get isSadaqah => isSadaqahPurpose(purpose);
 
   bool get isQr => step == PaymentStep.scanQr || methodCode == 'ethqr';
 
@@ -162,6 +179,7 @@ class ZakatPayment extends Equatable {
         'processing' => PaymentStep.processing,
         _ => null,
       },
+      purpose: jsonString(json['purpose']),
       zakatType: jsonString(json['zakatType']),
       amountEtb: jsonDouble(json['amountEtb']) ?? 0,
       issuedAmountEtb: jsonDouble(json['issuedAmountEtb']),
@@ -187,6 +205,7 @@ class ZakatPayment extends Equatable {
     paymentId,
     status,
     step,
+    purpose,
     zakatType,
     amountEtb,
     issuedAmountEtb,
@@ -210,6 +229,7 @@ class ZakatPayment extends Equatable {
 /// Body of `POST /api/payments/v1/zakat-payments`: creates the QR.
 class ZakatPaymentRequest {
   const ZakatPaymentRequest({
+    this.purpose = PaymentPurpose.zakat,
     required this.zakatType,
     required this.amountEtb,
     required this.methodCode,
@@ -219,6 +239,9 @@ class ZakatPaymentRequest {
     this.calculation,
   });
 
+  final PaymentPurpose purpose;
+
+  /// Not sent for Sadaqah (the server would ignore it).
   final ZakatType zakatType;
   final double amountEtb;
   final String methodCode;
@@ -232,7 +255,8 @@ class ZakatPaymentRequest {
   final Map<String, dynamic>? calculation;
 
   Map<String, dynamic> toJson() => {
-    'zakatType': zakatType.name,
+    'purpose': purpose.name,
+    if (purpose == PaymentPurpose.zakat) 'zakatType': zakatType.name,
     'amountEtb': double.parse(amountEtb.toStringAsFixed(2)),
     'methodCode': methodCode,
     'causeId': causeId,
@@ -264,6 +288,7 @@ class PaymentPayer {
 class ZakatCertificate extends Equatable {
   const ZakatCertificate({
     required this.certificateId,
+    this.purpose,
     this.payerFullName,
     required this.amountEtb,
     this.zakatType,
@@ -282,6 +307,9 @@ class ZakatCertificate extends Equatable {
   });
 
   final String certificateId;
+
+  /// `sadaqah`: a Sadaqah Receipt rather than a zakat certificate.
+  final String? purpose;
   final String? payerFullName;
   final double amountEtb;
   final String? zakatType;
@@ -298,6 +326,8 @@ class ZakatCertificate extends Equatable {
   final String? signatoryTitle;
   final String? verificationUrl;
 
+  bool get isSadaqah => isSadaqahPurpose(purpose);
+
   factory ZakatCertificate.fromJson(Map<String, dynamic> json) {
     final id = jsonString(json['certificateId']);
     if (id == null) throw const FormatException('Certificate without id');
@@ -305,6 +335,7 @@ class ZakatCertificate extends Equatable {
     final issuerMap = issuer is Map ? issuer : const {};
     return ZakatCertificate(
       certificateId: id,
+      purpose: jsonString(json['purpose']),
       payerFullName: jsonString(json['payerFullName']),
       amountEtb: jsonDouble(json['amountEtb']) ?? 0,
       zakatType: jsonString(json['zakatType']),
@@ -326,6 +357,7 @@ class ZakatCertificate extends Equatable {
   @override
   List<Object?> get props => [
     certificateId,
+    purpose,
     payerFullName,
     amountEtb,
     zakatType,
@@ -344,73 +376,114 @@ class ZakatCertificate extends Equatable {
   ];
 }
 
-/// A row of `GET /api/payments/v1/me/payments`.
+/// A row of `GET /api/payments/v1/me/payments`: a zakat or Sadaqah QR
+/// payment, or an international card donation made while signed in.
 class PaymentHistoryItem extends Equatable {
   const PaymentHistoryItem({
     required this.paymentId,
+    this.type,
     this.zakatType,
     required this.amountEtb,
+    this.amountUsd,
+    this.cardPurpose,
     this.methodLabel,
     this.causeTitle,
     required this.status,
+    this.reference,
     this.paidAt,
     this.certificateId,
     this.createdAt,
   });
 
+  /// `zp_…`, or the merchant reference of a card donation.
   final String paymentId;
+
+  /// `zakat`, `sadaqah` or `card`.
+  final String? type;
+
+  /// The zakat kind; absent for Sadaqah and card donations.
   final String? zakatType;
   final double amountEtb;
+
+  /// Card donations only.
+  final double? amountUsd;
+
+  /// Card donations only: `zakat` or `waqf`.
+  final String? cardPurpose;
   final String? methodLabel;
   final String? causeTitle;
   final PaymentStatus status;
+
+  /// The bank or card gateway's reference once paid.
+  final String? reference;
   final DateTime? paidAt;
   final String? certificateId;
   final DateTime? createdAt;
 
-  factory PaymentHistoryItem.fromJson(Map<String, dynamic> json) =>
-      PaymentHistoryItem.fromPayment(
-        ZakatPayment.fromJson(json),
-        createdAt: jsonDate(json['createdAt']),
-      );
+  bool get isCard => type == 'card';
 
-  /// The row for [payment], e.g. after `check-payment`.
-  factory PaymentHistoryItem.fromPayment(
-    ZakatPayment payment, {
-    DateTime? createdAt,
-  }) {
+  bool get isSadaqah => isSadaqahPurpose(type);
+
+  factory PaymentHistoryItem.fromJson(Map<String, dynamic> json) {
+    final payment = ZakatPayment.fromJson(json);
     return PaymentHistoryItem(
       paymentId: payment.paymentId,
+      type: jsonString(json['type']) ?? payment.purpose,
       zakatType: payment.zakatType,
       amountEtb: payment.amountEtb,
+      amountUsd: jsonDouble(json['amountUsd']),
+      cardPurpose: jsonString(json['cardPurpose']),
       methodLabel: payment.methodLabel,
       causeTitle: payment.causeTitle,
       status: payment.status,
+      reference: jsonString(json['reference']),
       paidAt: payment.paidAt,
       certificateId: payment.certificateId,
-      createdAt: createdAt ?? payment.createdAt,
+      createdAt: jsonDate(json['createdAt']),
     );
   }
 
-  /// Not settled and still confirmable: pending, or expired within
-  /// [ZakatPayment.lateConfirmWindow] of its start.
-  bool canCheckPayment(DateTime now) => switch (status) {
-    PaymentStatus.pending => true,
-    PaymentStatus.expired =>
-      createdAt != null &&
-          now.difference(createdAt!) <
-              ZakatPayment.lateConfirmWindow + const Duration(hours: 1),
-    _ => false,
-  };
+  /// [payment]'s new state applied to this row, e.g. after `check-payment`.
+  PaymentHistoryItem withPayment(ZakatPayment payment) => PaymentHistoryItem(
+    paymentId: paymentId,
+    type: type,
+    zakatType: zakatType,
+    amountEtb: payment.amountEtb,
+    methodLabel: payment.methodLabel ?? methodLabel,
+    causeTitle: payment.causeTitle ?? causeTitle,
+    status: payment.status,
+    reference: payment.providerReference ?? reference,
+    paidAt: payment.paidAt,
+    certificateId: payment.certificateId,
+    createdAt: createdAt,
+  );
+
+  /// A QR payment not settled and still confirmable: pending, or expired
+  /// within [ZakatPayment.lateConfirmWindow] of its start. Never a card
+  /// donation.
+  bool canCheckPayment(DateTime now) =>
+      !isCard &&
+      switch (status) {
+        PaymentStatus.pending => true,
+        PaymentStatus.expired =>
+          createdAt != null &&
+              now.difference(createdAt!) <
+                  ZakatPayment.lateConfirmWindow + const Duration(hours: 1),
+        _ => false,
+      };
 
   @override
   List<Object?> get props => [
     paymentId,
+    type,
     zakatType,
     amountEtb,
+    amountUsd,
+    cardPurpose,
     methodLabel,
     causeTitle,
     status,
+    reference,
     paidAt,
     certificateId,
     createdAt,
@@ -453,27 +526,34 @@ class PaymentHistoryPage extends Equatable {
 
 /// `GET /api/payments/v1/me/giving-summary` (signed-in donor): succeeded
 /// payments (Zakat al-Fitr included, linked guest payments too) in the
-/// current Hijri year, plus all time.
+/// current Hijri year, plus all time. Zakat and Sadaqah are totalled
+/// apart; card donations are not counted.
 class GivingSummary extends Equatable {
   const GivingSummary({
     this.periodLabel,
     this.totalZakatPaidEtb,
+    this.totalSadaqahEtb,
     this.paymentsCount,
     this.beneficiariesHelped,
     this.causesSupported,
     this.allTimeZakatPaidEtb,
+    this.allTimeSadaqahEtb,
     this.allTimePaymentsCount,
   });
 
   /// e.g. `1448 AH`.
   final String? periodLabel;
   final double? totalZakatPaidEtb;
+  final double? totalSadaqahEtb;
+
+  /// Zakat and Sadaqah payments.
   final int? paymentsCount;
 
   /// `null` until disbursements are recorded: hide it.
   final int? beneficiariesHelped;
   final int? causesSupported;
   final double? allTimeZakatPaidEtb;
+  final double? allTimeSadaqahEtb;
   final int? allTimePaymentsCount;
 
   factory GivingSummary.fromJson(Map<String, dynamic> json) {
@@ -483,10 +563,12 @@ class GivingSummary extends Equatable {
     return GivingSummary(
       periodLabel: period is Map ? jsonString(period['label']) : null,
       totalZakatPaidEtb: jsonDouble(json['totalZakatPaidEtb']),
+      totalSadaqahEtb: jsonDouble(json['totalSadaqahEtb']),
       paymentsCount: jsonInt(json['paymentsCount']),
       beneficiariesHelped: jsonInt(json['beneficiariesHelped']),
       causesSupported: jsonInt(json['causesSupported']),
       allTimeZakatPaidEtb: jsonDouble(allTimeMap['totalZakatPaidEtb']),
+      allTimeSadaqahEtb: jsonDouble(allTimeMap['totalSadaqahEtb']),
       allTimePaymentsCount: jsonInt(allTimeMap['paymentsCount']),
     );
   }
@@ -495,10 +577,12 @@ class GivingSummary extends Equatable {
   List<Object?> get props => [
     periodLabel,
     totalZakatPaidEtb,
+    totalSadaqahEtb,
     paymentsCount,
     beneficiariesHelped,
     causesSupported,
     allTimeZakatPaidEtb,
+    allTimeSadaqahEtb,
     allTimePaymentsCount,
   ];
 }

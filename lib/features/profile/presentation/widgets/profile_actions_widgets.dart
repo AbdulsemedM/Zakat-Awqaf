@@ -11,13 +11,14 @@ class _CoreActionsCard extends StatelessWidget {
       elevation: 0,
       child: Column(
         children: [
-          // Only donors pay zakat, so only they have a payment history.
+          // Only donors give, so only they have a donation history (zakat,
+          // Sadaqah and card donations).
           if (profile.isDonor) ...[
             _ActionTile(
               icon: Icons.history_rounded,
               iconColor: Theme.of(context).colorScheme.primary,
-              title: context.l10n.profileMyZakatHistory,
-              subtitle: context.l10n.profileMyZakatHistorySubtitle,
+              title: context.l10n.profileDonationHistory,
+              subtitle: context.l10n.profileDonationHistorySubtitle,
               onTap: () => context.push('/zakat/history'),
             ),
             const Divider(height: 1, indent: 56, endIndent: 16),

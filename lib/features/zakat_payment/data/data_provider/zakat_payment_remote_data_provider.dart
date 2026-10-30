@@ -151,7 +151,8 @@ class ZakatPaymentRemoteDataProviderImpl
   }) => guardApi(() async {
     final response = await _dio.get<dynamic>(
       '$_base/me/payments',
-      queryParameters: {'type': 'zakat', 'page': page, 'limit': limit},
+      // No `type`: zakat, Sadaqah and card donations, newest first.
+      queryParameters: {'page': page, 'limit': limit},
     );
     return PaymentHistoryPage.fromJson(unwrapApiObject(response));
   });

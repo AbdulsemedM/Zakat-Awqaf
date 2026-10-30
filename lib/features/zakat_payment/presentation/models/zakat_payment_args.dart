@@ -12,6 +12,7 @@ enum ZakatAmountEntryMode { fixed, userEstimatedEtb }
 /// Navigation extra for [`ZakatPaymentScreen`].
 class ZakatPaymentArgs {
   const ZakatPaymentArgs({
+    this.purpose = PaymentPurpose.zakat,
     required this.zakatType,
     required this.activeTab,
     required this.amountEntryMode,
@@ -30,7 +31,9 @@ class ZakatPaymentArgs {
     this.subtitle,
   });
 
-  /// Sent as `zakatType`.
+  final PaymentPurpose purpose;
+
+  /// Sent as `zakatType` (not for Sadaqah).
   final ZakatType zakatType;
 
   /// Drives the screen's wording (natural units note, amount hint).
@@ -76,10 +79,11 @@ class ZakatPaymentArgs {
     );
   }
 
-  /// Local (ETB) Sadaqah by QR. The payments API has no Sadaqah type yet
-  /// (B3.6), so it is sent as general zakat to the general fund.
+  /// Local (ETB) Sadaqah by QR to the general fund (`purpose: sadaqah`;
+  /// the donor gets a Sadaqah Receipt).
   static ZakatPaymentArgs forSadaqah(AppLocalizations l) {
     return ZakatPaymentArgs(
+      purpose: PaymentPurpose.sadaqah,
       zakatType: ZakatType.general,
       activeTab: ZakatCategoryTab.wealth,
       amountEntryMode: ZakatAmountEntryMode.userEstimatedEtb,

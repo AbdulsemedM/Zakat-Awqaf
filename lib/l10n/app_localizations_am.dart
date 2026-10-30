@@ -2151,4 +2151,170 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get deviceIntegrityContinue => 'ተረድቻለሁ፣ ቀጥል';
+
+  @override
+  String get receiptTitleSadaqah => 'የሰደቃ ደረሰኝ';
+
+  @override
+  String receiptNumber(String id) {
+    return 'ደረሰኝ $id';
+  }
+
+  @override
+  String get receiptVerifyHint =>
+      'በPDFው ላይ ያለው QR ኮድ ማንኛውም ሰው ይህን ደረሰኝ እንዲያረጋግጥ ያስችላል።';
+
+  @override
+  String payQrShareTextSadaqah(String amount) {
+    return 'የሰደቃ ክፍያ QR፦ $amount';
+  }
+
+  @override
+  String get payTitleSadaqah => 'ሰደቃዎን ያጠናቅቁ';
+
+  @override
+  String paySucceededBodySadaqah(String amount) {
+    return 'የ$amount ሰደቃዎ ደርሷል። አላህ ይቀበልዎ።';
+  }
+
+  @override
+  String get payViewReceipt => 'ደረሰኝ ይመልከቱ';
+
+  @override
+  String get payPayerNameHelperSadaqah => 'በሰደቃ ደረሰኝዎ ላይ ይታተማል።';
+
+  @override
+  String get historySadaqah => 'ሰደቃ';
+
+  @override
+  String get historyCardZakat => 'ዓለም አቀፍ ካርድ · ዘካት';
+
+  @override
+  String get historyCardWaqf => 'ዓለም አቀፍ ካርድ · ዋቅፍ';
+
+  @override
+  String get givingSadaqah => 'የተሰጠ ሰደቃ';
+
+  @override
+  String givingAllTimeWithSadaqah(String zakat, String sadaqah) {
+    return 'በአጠቃላይ፦ $zakat ዘካት፣ $sadaqah ሰደቃ';
+  }
+
+  @override
+  String get profileAccountNumberLabel => 'የሂሳብ ቁጥር';
+
+  @override
+  String get profileAccountNumberRequired => 'የሂሳብ ቁጥርዎን ያስገቡ።';
+
+  @override
+  String get profileAccountNumberInvalid => 'ይህ የሂሳብ ቁጥር ከባንኩ ቅርጸት ጋር አይመሳሰልም።';
+
+  @override
+  String get profilePayoutBanksLoadError => 'ባንኮቹን መጫን አልተቻለም።';
+
+  @override
+  String get profileBankComingSoon => 'በቅርቡ';
+
+  @override
+  String get profileChangePhone => 'ቀይር';
+
+  @override
+  String get supportCopied => 'ተቀድቷል';
+
+  @override
+  String get supportPhone => 'ስልክ';
+
+  @override
+  String get supportEmail => 'ኢሜይል';
+
+  @override
+  String get supportWebsite => 'ድረ-ገጽ';
+
+  @override
+  String get supportHours => 'የስራ ሰዓት';
+
+  @override
+  String get otpResetTitle => 'የይለፍ ቃልዎን ዳግም ያስጀምሩ';
+
+  @override
+  String get otpResetIntro => 'የሚገቡበትን ስልክ ቁጥር ያስገቡ። ኮድ በኤስኤምኤስ እንልክልዎታለን።';
+
+  @override
+  String get otpSignupIntro =>
+      'የምስክር ወረቀቶችዎንና ልገሳዎችዎን በአንድ ቦታ ለማቆየት የለጋሽ መለያ ይፍጠሩ። ወደ ስልክዎ ኮድ እንልካለን።';
+
+  @override
+  String get otpChangePhoneTitle => 'ስልክ ቁጥር ይቀይሩ';
+
+  @override
+  String get otpChangePhoneIntro =>
+      'ስልክ ቁጥርዎ የሚገቡበትም ነው። ወደ አዲሱ ቁጥር ኮድ እንልካለን፤ ከለውጡ በኋላ በአዲሱ ቁጥር እንደገና ይግቡ።';
+
+  @override
+  String get otpNewPhoneLabel => 'አዲስ ስልክ ቁጥር';
+
+  @override
+  String get otpFullNameRequired => 'ሙሉ ስምዎን ያስገቡ።';
+
+  @override
+  String get otpSendCode => 'ኮድ ላክ';
+
+  @override
+  String otpCodeSentTo(String phone) {
+    return 'ወደ $phone የላክነውን ኮድ ያስገቡ።';
+  }
+
+  @override
+  String get otpCodeLabel => 'ኮድ';
+
+  @override
+  String get otpCodeRequired => 'ከኤስኤምኤሱ የደረሰዎትን ኮድ ያስገቡ።';
+
+  @override
+  String otpAttemptsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ሙከራዎች ቀርተዋል',
+      one: '1 ሙከራ ቀርቷል',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get otpResend => 'ኮድ እንደገና ላክ';
+
+  @override
+  String get otpCodeResent => 'አዲስ ኮድ ተልኳል።';
+
+  @override
+  String get otpUseAnotherNumber => 'ሌላ ቁጥር ተጠቀም';
+
+  @override
+  String get otpNewPasswordLabel => 'አዲስ የይለፍ ቃል';
+
+  @override
+  String get otpPasswordMismatch => 'የይለፍ ቃሎቹ አይመሳሰሉም።';
+
+  @override
+  String get otpResetButton => 'የይለፍ ቃል ዳግም አስጀምር';
+
+  @override
+  String get otpSignupButton => 'መለያ ፍጠር';
+
+  @override
+  String get otpChangePhoneButton => 'ቁጥር ቀይር';
+
+  @override
+  String get otpNetworkError =>
+      'ወደ አገልጋዩ መድረስ አልተቻለም። ግንኙነትዎን አረጋግጠው እንደገና ይሞክሩ።';
+
+  @override
+  String get otpResetDone => 'የይለፍ ቃል ተቀይሯል። በአዲሱ የይለፍ ቃልዎ ይግቡ።';
+
+  @override
+  String get otpSignupLoginNeeded => 'መለያ ተፈጥሯል። እባክዎ ይግቡ።';
+
+  @override
+  String get otpChangePhoneDone => 'ስልክ ቁጥር ተቀይሯል። በአዲሱ ቁጥርዎ ይግቡ።';
 }

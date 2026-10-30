@@ -98,10 +98,10 @@ class TokenRefresher {
       );
       return RefreshResult.refreshed;
     } on DioException catch (e) {
-      final status = e.response?.statusCode;
-      // 401 SESSION_EXPIRED: expired, revoked or already used. 400: no
-      // usable token. Either way only a new sign-in helps.
-      if (status == 401 || status == 400) {
+      // 401 SESSION_EXPIRED: expired, revoked or already used; only a new
+      // sign-in helps. Anything else (400 VALIDATION_FAILED is a malformed
+      // request, 503 AUTH_UNAVAILABLE, network) does not end the session.
+      if (e.response?.statusCode == 401) {
         await _storage.clear();
         return RefreshResult.sessionExpired;
       }

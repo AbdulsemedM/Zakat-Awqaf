@@ -16,6 +16,8 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../app/router/app_router_module.dart' as _i800;
 import '../../features/auth/bloc/auth_bloc.dart' as _i55;
+import '../../features/auth/data/data_provider/account_otp_data_provider.dart'
+    as _i238;
 import '../../features/auth/data/data_provider/auth_data_provider.dart'
     as _i723;
 import '../../features/auth/data/data_provider/auth_data_provider_impl.dart'
@@ -156,9 +158,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dio(gh<_i53.AuthInterceptor>()),
     );
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.paymentsDio(gh<_i53.AuthInterceptor>()),
+      instanceName: 'paymentsDio',
+    );
+    gh.lazySingleton<_i238.AccountOtpDataProvider>(
+      () => _i238.AccountOtpDataProvider(
+        gh<_i361.Dio>(instanceName: 'authDio'),
+        gh<_i361.Dio>(),
+      ),
+    );
+    gh.lazySingleton<_i921.ImpactRemoteDataProvider>(
+      () => _i921.ImpactRemoteDataProviderImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i104.AuthRepository>(
       () => _i409.AuthRepositoryImpl(
         gh<_i723.AuthDataProvider>(),
+        gh<_i238.AccountOtpDataProvider>(),
         gh<_i149.AuthTokenStorage>(),
         gh<_i543.AuthSessionController>(),
         gh<_i599.TokenRefresher>(),
@@ -166,14 +182,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i804.DonationTokenStore>(),
         gh<_i272.DevicePaymentsStore>(),
       ),
-    );
-    gh.lazySingleton<_i361.Dio>(
-      () => dioModule.paymentsDio(gh<_i53.AuthInterceptor>()),
-      instanceName: 'paymentsDio',
-    );
-    gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(gh<_i104.AuthRepository>()));
-    gh.lazySingleton<_i921.ImpactRemoteDataProvider>(
-      () => _i921.ImpactRemoteDataProviderImpl(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i495.DonationDataProvider>(
       () => _i271.DonationDataProviderImpl(
@@ -240,6 +248,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i132.ImpactStoryBloc>(
       () => _i132.ImpactStoryBloc(gh<_i825.ImpactRepository>()),
     );
+    gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(gh<_i104.AuthRepository>()));
     gh.factory<_i40.ProfileBloc>(
       () => _i40.ProfileBloc(
         gh<_i508.ProfileRepository>(),

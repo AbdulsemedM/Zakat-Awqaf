@@ -1336,5 +1336,98 @@
   },
   "deviceIntegrityTitle": "This device may not be safe",
   "deviceIntegrityBody": "This phone appears to be rooted or jailbroken. Other apps on it may be able to read your sign-in details and payment information. We recommend using this app only on an unmodified phone.",
-  "deviceIntegrityContinue": "I understand, continue"
+  "deviceIntegrityContinue": "I understand, continue",
+  "receiptTitleSadaqah": "Sadaqah receipt",
+  "receiptNumber": "Receipt {id}",
+  "@receiptNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptVerifyHint": "The QR code on the PDF lets anyone verify this receipt.",
+  "payQrShareTextSadaqah": "Sadaqah payment QR: {amount}",
+  "@payQrShareTextSadaqah": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payTitleSadaqah": "Complete your Sadaqah",
+  "paySucceededBodySadaqah": "Your sadaqah of {amount} has been received. May Allah accept it from you.",
+  "@paySucceededBodySadaqah": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payViewReceipt": "View receipt",
+  "payPayerNameHelperSadaqah": "Printed on your Sadaqah receipt.",
+  "historySadaqah": "Sadaqah",
+  "historyCardZakat": "International card · Zakat",
+  "historyCardWaqf": "International card · Waqf",
+  "givingSadaqah": "sadaqah given",
+  "givingAllTimeWithSadaqah": "All time: {zakat} zakat, {sadaqah} sadaqah",
+  "@givingAllTimeWithSadaqah": {
+    "placeholders": {
+      "zakat": {
+        "type": "String"
+      },
+      "sadaqah": {
+        "type": "String"
+      }
+    }
+  },
+  "profileAccountNumberLabel": "Account number",
+  "profileAccountNumberRequired": "Enter your account number.",
+  "profileAccountNumberInvalid": "This account number doesn't match the bank's format.",
+  "profilePayoutBanksLoadError": "Couldn't load the banks.",
+  "profileBankComingSoon": "Coming soon",
+  "profileChangePhone": "Change",
+  "supportCopied": "Copied",
+  "supportPhone": "Phone",
+  "supportEmail": "Email",
+  "supportWebsite": "Website",
+  "supportHours": "Opening hours",
+  "otpResetTitle": "Reset your password",
+  "otpResetIntro": "Enter the phone number you sign in with. We'll send you a code by SMS.",
+  "otpSignupIntro": "Create a donor account to keep your certificates and donations in one place. We'll send a code to your phone.",
+  "otpChangePhoneTitle": "Change phone number",
+  "otpChangePhoneIntro": "Your phone number is also how you sign in. We'll send a code to the new number; after the change, sign in again with it.",
+  "otpNewPhoneLabel": "New phone number",
+  "otpFullNameRequired": "Enter your full name.",
+  "otpSendCode": "Send code",
+  "otpCodeSentTo": "Enter the code we sent to {phone}.",
+  "@otpCodeSentTo": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpCodeLabel": "Code",
+  "otpCodeRequired": "Enter the code from the SMS.",
+  "otpAttemptsLeft": "{count, plural, =1{1 attempt left} other{{count} attempts left}}",
+  "@otpAttemptsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "otpResend": "Resend code",
+  "otpCodeResent": "A new code was sent.",
+  "otpUseAnotherNumber": "Use a different number",
+  "otpNewPasswordLabel": "New password",
+  "otpPasswordMismatch": "The passwords don't match.",
+  "otpResetButton": "Reset password",
+  "otpSignupButton": "Create account",
+  "otpChangePhoneButton": "Change number",
+  "otpNetworkError": "Couldn't reach the server. Check your connection and try again.",
+  "otpResetDone": "Password changed. Sign in with your new password.",
+  "otpSignupLoginNeeded": "Account created. Please sign in.",
+  "otpChangePhoneDone": "Phone number changed. Sign in with your new number."
 }

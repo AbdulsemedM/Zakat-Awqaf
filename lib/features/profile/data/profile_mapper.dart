@@ -25,7 +25,11 @@ abstract final class ProfileMapper {
       isDonor: false,
       beneficiaryStatus: _mapVerificationStatus(dto.verificationStatus),
       bankName: dto.bankName,
+      bankCode: dto.bankCode,
       coopBankAccountNumber: dto.accountNumber,
+      lastDisbursementAmountEtb: dto.lastDisbursementAmountEtb,
+      lastDisbursementPaidAt: dto.lastDisbursementPaidAt,
+      totalAidReceivedEtb: dto.totalAidReceivedEtb,
       nationalId: dto.nationalId,
       region: dto.region,
       city: dto.city,
@@ -43,6 +47,9 @@ abstract final class ProfileMapper {
           : null,
       applicationCaseStatus: application.caseStatus,
       applicationMessage: application.verificationReason,
+      lastDisbursementAmountEtb: application.lastDisbursementAmountEtb,
+      lastDisbursementPaidAt: application.lastDisbursementPaidAt,
+      totalAidReceivedEtb: application.totalAidReceivedEtb,
     );
   }
 

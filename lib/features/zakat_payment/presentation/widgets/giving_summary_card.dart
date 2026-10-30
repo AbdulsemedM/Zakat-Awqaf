@@ -54,7 +54,10 @@ class _GivingSummaryCardState extends State<GivingSummaryCard> {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final total = summary.totalZakatPaidEtb;
+    final sadaqah = summary.totalSadaqahEtb;
     final stats = <(String, String)>[
+      if (sadaqah != null && sadaqah > 0)
+        (l10n.givingSadaqah, MoneyFormatter.etb(sadaqah)),
       if (summary.paymentsCount != null)
         (l10n.givingPayments, formatThousands(summary.paymentsCount!)),
       if (summary.causesSupported != null)
@@ -66,6 +69,7 @@ class _GivingSummaryCardState extends State<GivingSummaryCard> {
         ),
     ];
     final allTime = summary.allTimeZakatPaidEtb;
+    final allTimeSadaqah = summary.allTimeSadaqahEtb;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +126,12 @@ class _GivingSummaryCardState extends State<GivingSummaryCard> {
           if (allTime != null) ...[
             const Divider(height: 24),
             Text(
-              l10n.givingAllTime(MoneyFormatter.etb(allTime)),
+              allTimeSadaqah != null && allTimeSadaqah > 0
+                  ? l10n.givingAllTimeWithSadaqah(
+                      MoneyFormatter.etb(allTime),
+                      MoneyFormatter.etb(allTimeSadaqah),
+                    )
+                  : l10n.givingAllTime(MoneyFormatter.etb(allTime)),
               style: AppTypography.body(
                 fontSize: 13,
                 color: scheme.onSurfaceVariant,

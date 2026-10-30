@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/app_logo.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../core/common/utils/money_formatter.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../bloc/profile_bloc.dart';
 import '../../bloc/profile_event.dart';
 import '../../bloc/profile_state.dart';
+import '../../data/models/payout_bank.dart';
 import '../../data/models/profile_model.dart';
+import '../../data/models/support_contact.dart';
+import '../../data/repository/profile_repository.dart';
 import '../../../zakat_payment/presentation/widgets/giving_summary_card.dart';
 
 part '../widgets/profile_settings_widgets.dart';
 part '../widgets/profile_overview_widgets.dart';
 part '../widgets/profile_actions_widgets.dart';
 part '../widgets/profile_payout_account_widgets.dart';
+part '../widgets/profile_support_widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -186,6 +194,7 @@ class _ProfileContent extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _SettingsSecurityCard(profile: profile),
             ),
+            const _SupportSection(),
             const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),

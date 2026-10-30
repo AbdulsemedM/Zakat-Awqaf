@@ -6,7 +6,9 @@ import '../../../beneficiary_registration/data/mobile_error_message.dart';
 import '../../../beneficiary_registration/data/models/beneficiary_dto.dart';
 import '../models/application_status_dto.dart';
 import '../models/bank_account_update_request.dart';
+import '../models/payout_bank.dart';
 import '../models/profile_model.dart';
+import '../models/support_contact.dart';
 import '../profile_exception.dart';
 import '../profile_mapper.dart';
 import 'profile_data_provider.dart';
@@ -20,6 +22,8 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
 
   static const _mePath = 'api/beneficiaries/v1/me';
   static const _bankAccountPath = 'api/beneficiaries/v1/me/bank-account';
+  static const _payoutBanksPath = 'api/beneficiaries/v1/payout-banks';
+  static const _supportPath = 'api/zakat/v1/support';
   static const _applicationPath = 'api/beneficiaries/v1/me/application';
   static const _authMePath = 'api/auth/v1/me';
 
@@ -67,15 +71,43 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
   }
 
   @override
+  Future<List<PayoutBank>> fetchPayoutBanks() async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(_payoutBanksPath);
+      final data = _parseData(response.data);
+      return [
+        if (data is List)
+          for (final row in data)
+            if (row is Map) PayoutBank.fromJson(Map<String, dynamic>.from(row)),
+      ];
+    } on DioException catch (e) {
+      throw _mapDioException(e);
+    }
+  }
+
+  @override
+  Future<SupportContact> fetchSupportContact() async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(_supportPath);
+      final data = _parseData(response.data);
+      return data is Map
+          ? SupportContact.fromJson(Map<String, dynamic>.from(data))
+          : const SupportContact();
+    } on DioException catch (e) {
+      throw _mapDioException(e);
+    }
+  }
+
+  @override
   Future<ProfileModel> updateBankAccount({
-    required String bankName,
+    required String bankCode,
     required String accountNumber,
   }) async {
     try {
       final response = await _dio.put<Map<String, dynamic>>(
         _bankAccountPath,
         data: BankAccountUpdateRequest(
-          bankName: bankName,
+          bankCode: bankCode,
           accountNumber: accountNumber,
         ).toJson(),
       );
@@ -126,6 +158,19 @@ class RemoteProfileDataProvider implements ProfileDataProvider {
   @override
   Future<void> persistProfile(ProfileModel profile) async {
     _localCache = profile;
+  }
+
+  /// The envelope's `data` (any shape).
+  Object? _parseData(Map<String, dynamic>? body) {
+    if (body == null) {
+      throw ProfileException('Empty response body');
+    }
+    if (body['success'] != true) {
+      throw ProfileException(
+        parseMobileErrorMessage(body) ?? 'Request was not successful',
+      );
+    }
+    return body['data'];
   }
 
   BeneficiaryDto _parseEnvelope(Map<String, dynamic>? body, int status) {

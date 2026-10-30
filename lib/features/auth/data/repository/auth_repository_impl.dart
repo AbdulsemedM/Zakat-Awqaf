@@ -6,8 +6,11 @@ import '../../../../core/auth/token_refresher.dart';
 import '../../../donation/data/data_provider/donation_token_store.dart';
 import '../../../zakat_payment/data/data_provider/device_payments_store.dart';
 import '../../../zakat_payment/data/data_provider/guest_payment_token_store.dart';
+import '../data_provider/account_otp_data_provider.dart';
 import '../data_provider/auth_data_provider.dart';
 import '../models/login_request.dart';
+import '../models/login_response_dto.dart';
+import '../models/otp_challenge.dart';
 import '../models/set_password_request.dart';
 import 'auth_repository.dart';
 
@@ -15,6 +18,7 @@ import 'auth_repository.dart';
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(
     this._dataProvider,
+    this._otpDataProvider,
     this._tokenStorage,
     this._sessionController,
     this._refresher,
@@ -24,6 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
   );
 
   final AuthDataProvider _dataProvider;
+  final AccountOtpDataProvider _otpDataProvider;
   final AuthTokenStorage _tokenStorage;
   final AuthSessionController _sessionController;
   final TokenRefresher _refresher;
@@ -32,8 +37,10 @@ class AuthRepositoryImpl implements AuthRepository {
   final DevicePaymentsStore _devicePayments;
 
   @override
-  Future<void> login(LoginRequest request) async {
-    final dto = await _dataProvider.login(request);
+  Future<void> login(LoginRequest request) async =>
+      _startSession(await _dataProvider.login(request));
+
+  Future<void> _startSession(LoginResponseDto dto) async {
     await _tokenStorage.saveSession(
       accessToken: dto.accessToken,
       refreshToken: dto.refreshToken,
@@ -64,4 +71,66 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<bool> hasSession() => _tokenStorage.hasValidSession();
+
+  @override
+  Future<OtpChallenge> startPasswordReset(String phone) =>
+      _otpDataProvider.startPasswordReset(phone);
+
+  @override
+  Future<OtpChallenge> resendPasswordReset(String resetId) =>
+      _otpDataProvider.resendPasswordReset(resetId);
+
+  @override
+  Future<void> confirmPasswordReset(
+    String resetId, {
+    required String code,
+    required String newPassword,
+  }) => _otpDataProvider.confirmPasswordReset(
+    resetId,
+    code: code,
+    newPassword: newPassword,
+  );
+
+  @override
+  Future<OtpChallenge> startDonorSignup({
+    required String phone,
+    required String fullName,
+  }) => _otpDataProvider.startDonorSignup(phone: phone, fullName: fullName);
+
+  @override
+  Future<OtpChallenge> resendDonorSignup(String signupId) =>
+      _otpDataProvider.resendDonorSignup(signupId);
+
+  @override
+  Future<bool> completeDonorSignup(
+    String signupId, {
+    required String otp,
+    required String password,
+  }) async {
+    final dto = await _otpDataProvider.verifyDonorSignup(
+      signupId,
+      otp: otp,
+      password: password,
+    );
+    if (dto == null) return false;
+    await _startSession(dto);
+    return true;
+  }
+
+  @override
+  Future<OtpChallenge> startPhoneChange(String newPhone) =>
+      _otpDataProvider.startPhoneChange(newPhone);
+
+  @override
+  Future<OtpChallenge> resendPhoneChange(String changeId) =>
+      _otpDataProvider.resendPhoneChange(changeId);
+
+  @override
+  Future<void> completePhoneChange(
+    String changeId, {
+    required String code,
+  }) async {
+    await _otpDataProvider.verifyPhoneChange(changeId, code: code);
+    await logout();
+  }
 }

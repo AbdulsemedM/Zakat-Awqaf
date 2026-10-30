@@ -30,7 +30,11 @@ class BeneficiaryDto {
     this.nationality,
     this.caseStatus,
     this.bankName,
+    this.bankCode,
     this.accountNumber,
+    this.lastDisbursementAmountEtb,
+    this.lastDisbursementPaidAt,
+    this.totalAidReceivedEtb,
     this.passwordSetupToken,
     this.accountProvisioned,
     this.credentialsDelivery,
@@ -76,7 +80,17 @@ class BeneficiaryDto {
   final String? nationality;
   final String? caseStatus;
   final String? bankName;
+
+  /// The payout bank's code (`GET /payout-banks`).
+  final String? bankCode;
   final String? accountNumber;
+
+  /// Absent until the first payout.
+  final double? lastDisbursementAmountEtb;
+  final DateTime? lastDisbursementPaidAt;
+
+  /// `0` before the first payout.
+  final double? totalAidReceivedEtb;
   final String? passwordSetupToken;
   final bool? accountProvisioned;
   final String? credentialsDelivery;
@@ -105,6 +119,9 @@ class BeneficiaryDto {
         }
       }
     }
+
+    final lastDisbursement = json['lastDisbursement'];
+    final disbursement = lastDisbursement is Map ? lastDisbursement : const {};
 
     return BeneficiaryDto(
       id: json['id']?.toString() ?? '',
@@ -136,7 +153,14 @@ class BeneficiaryDto {
       nationality: json['nationality'] as String?,
       caseStatus: json['caseStatus'] as String?,
       bankName: json['bankName'] as String?,
+      bankCode: json['bankCode']?.toString(),
       accountNumber: json['accountNumber'] as String?,
+      lastDisbursementAmountEtb: (disbursement['amountEtb'] as num?)
+          ?.toDouble(),
+      lastDisbursementPaidAt: DateTime.tryParse(
+        disbursement['paidAt']?.toString() ?? '',
+      ),
+      totalAidReceivedEtb: (json['totalAidReceivedEtb'] as num?)?.toDouble(),
       passwordSetupToken: json['passwordSetupToken'] as String?,
       accountProvisioned: json['accountProvisioned'] as bool?,
       credentialsDelivery: json['credentialsDelivery'] as String?,

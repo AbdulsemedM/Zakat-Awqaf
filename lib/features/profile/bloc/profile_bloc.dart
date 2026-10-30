@@ -68,7 +68,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     try {
       final updated = await _repository.updateBankAccount(
-        bankName: event.bankName.trim(),
+        bankCode: event.bankCode,
         accountNumber: event.accountNumber.trim(),
       );
       emit(ProfileLoaded(updated, feedbackMessage: 'Bank account updated'));

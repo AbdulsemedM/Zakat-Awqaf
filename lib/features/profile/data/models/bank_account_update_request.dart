@@ -1,14 +1,16 @@
+/// Body of `PUT /api/beneficiaries/v1/me/bank-account`. The bank name comes
+/// from [bankCode] on the server.
 class BankAccountUpdateRequest {
   const BankAccountUpdateRequest({
-    required this.bankName,
+    required this.bankCode,
     required this.accountNumber,
   });
 
-  final String bankName;
+  final String bankCode;
   final String accountNumber;
 
   Map<String, dynamic> toJson() => {
-    'bankName': bankName,
+    'bankCode': bankCode,
     'accountNumber': accountNumber,
   };
 }

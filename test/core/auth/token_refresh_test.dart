@@ -145,6 +145,19 @@ void main() {
       expect(await storage.hasValidSession(), isFalse);
     });
 
+    test('a 400 is not a logout', () async {
+      final server = _Server()
+        ..handlers['api/auth/v1/refresh'] = (_) => (
+          400,
+          {'success': false, 'code': 'VALIDATION_FAILED', 'message': 'bad'},
+        );
+      final storage = await _signedIn(expiresInSeconds: 0);
+      final refresher = TokenRefresher(_dio(server), storage);
+
+      expect(await refresher.refresh(), RefreshResult.unavailable);
+      expect(await storage.hasValidSession(), isTrue);
+    });
+
     test('AUTH_UNAVAILABLE keeps the user signed in', () async {
       final server = _Server()
         ..handlers['api/auth/v1/refresh'] = (_) => (

@@ -66,6 +66,10 @@ class ProfileModel extends Equatable {
     required this.beneficiaryStatus,
     this.coopBankAccountNumber,
     this.bankName,
+    this.bankCode,
+    this.lastDisbursementAmountEtb,
+    this.lastDisbursementPaidAt,
+    this.totalAidReceivedEtb,
     this.nationalId,
     this.region,
     this.city,
@@ -93,8 +97,20 @@ class ProfileModel extends Equatable {
   final bool isDonor;
   final BeneficiaryStatus beneficiaryStatus;
 
+  /// The payout account number (any payout bank, despite the name).
   final String? coopBankAccountNumber;
   final String? bankName;
+
+  /// The payout bank's code (`GET /payout-banks`).
+  final String? bankCode;
+
+  /// The beneficiary's last payout; `null` until there is one.
+  final double? lastDisbursementAmountEtb;
+  final DateTime? lastDisbursementPaidAt;
+
+  /// All payouts so far; `0` before the first one, `null` when the server
+  /// did not say.
+  final double? totalAidReceivedEtb;
   final String? nationalId;
   final String? region;
   final String? city;
@@ -121,6 +137,10 @@ class ProfileModel extends Equatable {
     String? coopBankAccountNumber,
     bool clearCoopBankAccountNumber = false,
     String? bankName,
+    String? bankCode,
+    double? lastDisbursementAmountEtb,
+    DateTime? lastDisbursementPaidAt,
+    double? totalAidReceivedEtb,
     String? nationalId,
     String? region,
     String? city,
@@ -143,6 +163,12 @@ class ProfileModel extends Equatable {
           ? null
           : (coopBankAccountNumber ?? this.coopBankAccountNumber),
       bankName: bankName ?? this.bankName,
+      bankCode: bankCode ?? this.bankCode,
+      lastDisbursementAmountEtb:
+          lastDisbursementAmountEtb ?? this.lastDisbursementAmountEtb,
+      lastDisbursementPaidAt:
+          lastDisbursementPaidAt ?? this.lastDisbursementPaidAt,
+      totalAidReceivedEtb: totalAidReceivedEtb ?? this.totalAidReceivedEtb,
       nationalId: nationalId ?? this.nationalId,
       region: region ?? this.region,
       city: city ?? this.city,
@@ -167,6 +193,10 @@ class ProfileModel extends Equatable {
     beneficiaryStatus,
     coopBankAccountNumber,
     bankName,
+    bankCode,
+    lastDisbursementAmountEtb,
+    lastDisbursementPaidAt,
+    totalAidReceivedEtb,
     nationalId,
     region,
     city,
