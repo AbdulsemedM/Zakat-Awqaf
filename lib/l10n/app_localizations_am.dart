@@ -2096,7 +2096,16 @@ class AppLocalizationsAm extends AppLocalizations {
   String get payQrIHavePaid => 'ከፍያለሁ';
 
   @override
-  String get payQrShare => 'QRውን ያጋሩ ወይም ያስቀምጡ';
+  String get payQrShare => 'QRውን ያጋሩ';
+
+  @override
+  String get payQrSave => 'ወደ ጋለሪ ያስቀምጡ';
+
+  @override
+  String get payQrSaved => 'QRው ወደ ጋለሪዎ ተቀምጧል';
+
+  @override
+  String get payQrSaveFailed => 'QRውን ማስቀመጥ አልተቻለም። የፎቶ ፈቃድ ይፍቀዱና እንደገና ይሞክሩ።';
 
   @override
   String get payQrShareHint =>

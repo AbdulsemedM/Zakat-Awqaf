@@ -37,6 +37,7 @@ dependencies:
   flutter_secure_storage: ^10.3.4
   qr_flutter: ^4.1.0
   safe_device: ^1.4.1
+  gal: ^2.3.3
 
 dev_dependencies:
   flutter_test:

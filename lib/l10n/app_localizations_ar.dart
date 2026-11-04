@@ -2115,7 +2115,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payQrIHavePaid => 'لقد دفعت';
 
   @override
-  String get payQrShare => 'مشاركة رمز QR أو حفظه';
+  String get payQrShare => 'مشاركة رمز QR';
+
+  @override
+  String get payQrSave => 'حفظ في المعرض';
+
+  @override
+  String get payQrSaved => 'تم حفظ رمز QR في المعرض';
+
+  @override
+  String get payQrSaveFailed =>
+      'تعذّر حفظ رمز QR. اسمح بالوصول إلى الصور وحاول مرة أخرى.';
 
   @override
   String get payQrShareHint =>

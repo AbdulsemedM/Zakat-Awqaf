@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gal/gal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,6 +19,7 @@ import '../../../../core/l10n/l10n.dart';
 import '../../bloc/payment_flow_bloc.dart';
 import '../../data/models/zakat_payment_models.dart';
 import '../../data/repository/zakat_payment_repository.dart';
+import '../qr_png.dart';
 import '../widgets/payment_countdown.dart';
 
 /// A started zakat payment and its result: the QR to scan with a bank app
@@ -305,34 +306,34 @@ class _QrStep extends StatefulWidget {
 
 class _QrStepState extends State<_QrStep> {
   bool _sharing = false;
+  bool _saving = false;
 
-  /// PNG of the QR on a white background, so it also scans from a gallery.
-  /// Uses the image from step 1 when there is one, else draws the payload.
-  Future<Uint8List?> _qrPng(ZakatPayment payment) async {
-    final image = payment.qrImageBase64;
-    if (image != null) return base64Decode(image);
-    final payload = payment.qrPayload;
-    if (payload == null) return null;
-    const size = 720.0;
-    const margin = 48.0;
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder)
-      ..drawRect(
-        const Rect.fromLTWH(0, 0, size, size),
-        Paint()..color = Colors.white,
-      )
-      ..translate(margin, margin);
-    QrPainter(
-      data: payload,
-      version: QrVersions.auto,
-      gapless: true,
-    ).paint(canvas, const Size.square(size - 2 * margin));
-    final rendered = await recorder.endRecording().toImage(
-      size.toInt(),
-      size.toInt(),
+  /// PNG of the QR on opaque white, so it shows and scans from a gallery
+  /// or chat (the server's PNG can be transparent, which shows as black).
+  Future<Uint8List?> _qrPng(ZakatPayment payment) => buildQrPng(
+    payload: payment.qrPayload,
+    imageBase64: payment.qrImageBase64,
+  );
+
+  Future<void> _save(ZakatPayment payment) async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => _saving = true);
+    var saved = false;
+    try {
+      final png = await _qrPng(payment);
+      if (png != null && (await Gal.hasAccess() || await Gal.requestAccess())) {
+        await Gal.putImageBytes(png, name: 'zakat-qr-${payment.paymentId}');
+        saved = true;
+      }
+    } on GalException {
+      saved = false;
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+    messenger.showSnackBar(
+      SnackBar(content: Text(saved ? l10n.payQrSaved : l10n.payQrSaveFailed)),
     );
-    final bytes = await rendered.toByteData(format: ui.ImageByteFormat.png);
-    return bytes?.buffer.asUint8List();
   }
 
   Future<void> _share(ZakatPayment payment) async {
@@ -450,12 +451,28 @@ class _QrStepState extends State<_QrStep> {
         const SizedBox(height: 16),
         _CheckPaymentButton(state: state, label: l10n.payQrIHavePaid),
         const SizedBox(height: 8),
-        OutlinedButton.icon(
-          onPressed: _sharing || (payload == null && image == null)
-              ? null
-              : () => _share(payment),
-          icon: const Icon(Icons.ios_share_rounded),
-          label: Text(l10n.payQrShare),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: _saving || (payload == null && image == null)
+                    ? null
+                    : () => _save(payment),
+                icon: const Icon(Icons.download_rounded),
+                label: Text(l10n.payQrSave, textAlign: TextAlign.center),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: _sharing || (payload == null && image == null)
+                    ? null
+                    : () => _share(payment),
+                icon: const Icon(Icons.share_rounded),
+                label: Text(l10n.payQrShare, textAlign: TextAlign.center),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 4),
         Text(

@@ -3756,8 +3756,26 @@ abstract class AppLocalizations {
   /// No description provided for @payQrShare.
   ///
   /// In en, this message translates to:
-  /// **'Share or save the QR'**
+  /// **'Share QR'**
   String get payQrShare;
+
+  /// No description provided for @payQrSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to gallery'**
+  String get payQrSave;
+
+  /// No description provided for @payQrSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'QR saved to your gallery'**
+  String get payQrSaved;
+
+  /// No description provided for @payQrSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the QR. Allow photo access and try again.'**
+  String get payQrSaveFailed;
 
   /// No description provided for @payQrShareHint.
   ///

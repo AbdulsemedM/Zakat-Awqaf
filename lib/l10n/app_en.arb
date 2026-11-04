@@ -1304,7 +1304,10 @@
   "payQrMissing": "The QR code can't be shown. Please start a new payment.",
   "payQrConfirmNote": "After paying in your bank app, come back and tap \"I have paid\". The payment usually arrives within seconds.",
   "payQrIHavePaid": "I have paid",
-  "payQrShare": "Share or save the QR",
+  "payQrShare": "Share QR",
+  "payQrSave": "Save to gallery",
+  "payQrSaved": "QR saved to your gallery",
+  "payQrSaveFailed": "Couldn't save the QR. Allow photo access and try again.",
   "payQrShareHint": "Paying from this phone? Save the QR, then open it from your bank app.",
   "payQrShareText": "Zakat payment QR: {amount}",
   "@payQrShareText": {

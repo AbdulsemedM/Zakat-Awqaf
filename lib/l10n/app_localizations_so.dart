@@ -2147,7 +2147,17 @@ class AppLocalizationsSo extends AppLocalizations {
   String get payQrIHavePaid => 'Waan bixiyay';
 
   @override
-  String get payQrShare => 'La wadaag ama kaydi QR-ka';
+  String get payQrShare => 'La wadaag QR-ka';
+
+  @override
+  String get payQrSave => 'Ku kaydi gallery-ga';
+
+  @override
+  String get payQrSaved => 'QR-ka waxaa lagu kaydiyay gallery-gaaga';
+
+  @override
+  String get payQrSaveFailed =>
+      'Lama kaydin karin QR-ka. Oggolow helitaanka sawirrada oo isku day mar kale.';
 
   @override
   String get payQrShareHint =>

@@ -2151,7 +2151,17 @@ class AppLocalizationsOm extends AppLocalizations {
   String get payQrIHavePaid => 'Kaffaleera';
 
   @override
-  String get payQrShare => 'QR qoodaa ykn olkaa’aa';
+  String get payQrShare => 'QR qoodaa';
+
+  @override
+  String get payQrSave => 'Gaalarii keessatti olkaa’aa';
+
+  @override
+  String get payQrSaved => 'QR gaalarii keessan keessatti olkaa’ameera';
+
+  @override
+  String get payQrSaveFailed =>
+      'QR olkaa’uun hin danda’amne. Hayyama suuraa kennaatii irra deebi’aa yaalaa.';
 
   @override
   String get payQrShareHint =>

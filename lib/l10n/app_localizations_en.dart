@@ -2130,7 +2130,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payQrIHavePaid => 'I have paid';
 
   @override
-  String get payQrShare => 'Share or save the QR';
+  String get payQrShare => 'Share QR';
+
+  @override
+  String get payQrSave => 'Save to gallery';
+
+  @override
+  String get payQrSaved => 'QR saved to your gallery';
+
+  @override
+  String get payQrSaveFailed =>
+      'Couldn\'t save the QR. Allow photo access and try again.';
 
   @override
   String get payQrShareHint =>
