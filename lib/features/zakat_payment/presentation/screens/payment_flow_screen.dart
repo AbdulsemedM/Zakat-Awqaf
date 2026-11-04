@@ -225,8 +225,8 @@ class _PaymentSummary extends StatelessWidget {
 }
 
 /// "Finish within 12:34": the time left before the QR expires (30
-/// minutes). At zero, reloads the payment so the server's `expired` state
-/// is shown.
+/// minutes). At zero, the bloc stops polling and checks one last time, so
+/// a last-second payment or the server's `expired` state is shown.
 class _PaymentDeadline extends StatelessWidget {
   const _PaymentDeadline({required this.payment});
 
@@ -240,7 +240,7 @@ class _PaymentDeadline extends StatelessWidget {
     final bloc = context.read<PaymentFlowBloc>();
     return PaymentCountdown(
       deadline: expiresAt,
-      onFinished: () => bloc.add(const PaymentStatusRefreshRequested()),
+      onFinished: () => bloc.add(const PaymentQrExpired()),
       builder: (context, remaining) => Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Row(

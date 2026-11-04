@@ -298,31 +298,19 @@ void main() {
     expect(checked, ['waiting']);
   });
 
-  test('polling runs while processing and stops when final', () {
+  test('no polling while the bank confirms by hand (processing)', () {
     fakeAsync((async) {
       var calls = 0;
-      final repository = _PollingRepository(() {
-        calls++;
-        return calls < 2
-            ? _payment(step: 'processing')
-            : _payment(status: 'succeeded', step: null);
-      });
-      final bloc = PaymentFlowBloc(repository, _payment(step: 'processing'));
-
-      async.elapse(PaymentFlowBloc.pollInterval);
-      async.flushMicrotasks();
-      expect(calls, 1);
-      expect(bloc.state.payment.step, PaymentStep.processing);
-
-      async.elapse(PaymentFlowBloc.pollInterval);
-      async.flushMicrotasks();
-      expect(calls, 2);
-      expect(bloc.state.payment.status, PaymentStatus.succeeded);
-
+      final bloc = PaymentFlowBloc(
+        _PollingRepository(() {
+          calls++;
+          return _payment(step: 'processing');
+        }),
+        _payment(step: 'processing'),
+      );
       async.elapse(PaymentFlowBloc.pollInterval * 3);
       async.flushMicrotasks();
-      expect(calls, 2);
-
+      expect(calls, 0);
       bloc.close();
       async.flushMicrotasks();
     });
@@ -364,9 +352,9 @@ void main() {
       final bloc = PaymentFlowBloc(
         _PollingRepository(() {
           calls++;
-          return _payment(step: 'processing');
+          return _payment();
         }),
-        _payment(step: 'processing'),
+        _payment(),
       );
       bloc.close();
       async.flushMicrotasks();
@@ -398,7 +386,7 @@ class _PollingRepository implements ZakatPaymentRepository {
   final ZakatPayment Function() _status;
 
   @override
-  Future<ZakatPayment> fetchPayment(String paymentId) async => _status();
+  Future<ZakatPayment> checkPayment(String paymentId) async => _status();
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

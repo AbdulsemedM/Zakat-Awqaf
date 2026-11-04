@@ -250,6 +250,10 @@ void main() {
   });
 
   group('PaymentFlowBloc', () {
+    // After the QR's expiry (07:30Z): no background polling in these tests.
+    setUp(() => PaymentFlowBloc.now = () => DateTime.utc(2026, 10, 12, 8));
+    tearDown(() => PaymentFlowBloc.now = DateTime.now);
+
     test('"I have paid": received at once', () async {
       final repository = _FakeRepository()
         ..responses.add(
@@ -422,6 +426,127 @@ void main() {
       await _settle();
       expect(bloc.state.payment.step, PaymentStep.scanQr);
       expect(bloc.state.errorMessage, 'Payments are unavailable');
+    });
+  });
+
+  group('PaymentFlowBloc polling', () {
+    /// 30 minutes before the QR expires (07:30Z).
+    final start = DateTime.utc(2026, 10, 12, 7);
+
+    tearDown(() => PaymentFlowBloc.now = DateTime.now);
+
+    /// Runs [body] with the bloc's clock following fake time.
+    void run(void Function(FakeAsync async) body) => fakeAsync((async) {
+      PaymentFlowBloc.now = () => start.add(async.elapsed);
+      body(async);
+    });
+
+    void tick(FakeAsync async) {
+      async.elapse(PaymentFlowBloc.pollInterval);
+      async.flushMicrotasks();
+    }
+
+    test('check-payment every 5 s until it succeeds, then stops', () {
+      run((async) {
+        final repository = _FakeRepository()
+          ..responses.addAll([
+            _payment(),
+            _payment(status: 'succeeded', step: null),
+          ]);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        async.flushMicrotasks();
+        expect(repository.calls, isEmpty);
+
+        tick(async);
+        expect(repository.calls, ['check']);
+        tick(async);
+        expect(repository.calls, ['check', 'check']);
+        expect(bloc.state.payment.status, PaymentStatus.succeeded);
+
+        tick(async);
+        tick(async);
+        expect(repository.calls, ['check', 'check']);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('502 from the bank: keeps polling, no message', () {
+      run((async) {
+        final repository = _FakeRepository()
+          ..responses.addAll([
+            const ApiException(
+              'The QR code cannot be created right now',
+              statusCode: 502,
+              code: 'BANK_UNAVAILABLE',
+            ),
+            _payment(status: 'succeeded', step: null),
+          ]);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        tick(async);
+        expect(bloc.state.errorMessage, isNull);
+        expect(bloc.state.payment.status, PaymentStatus.pending);
+        tick(async);
+        expect(repository.calls, ['check', 'check']);
+        expect(bloc.state.payment.status, PaymentStatus.succeeded);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('processing (manual check at the bank) stops polling', () {
+      run((async) {
+        final repository = _FakeRepository()
+          ..responses.add(_payment(step: 'processing'));
+        final bloc = PaymentFlowBloc(repository, _payment());
+        tick(async);
+        expect(bloc.state.payment.step, PaymentStep.processing);
+        tick(async);
+        tick(async);
+        expect(repository.calls, ['check']);
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('at expiry: stops polling after one last check', () {
+      run((async) {
+        final repository = _FakeRepository();
+        // 360 ticks up to 07:30, then the last check.
+        for (var i = 0; i < 361; i++) {
+          repository.responses.add(_payment());
+        }
+        final bloc = PaymentFlowBloc(repository, _payment());
+        async.elapse(const Duration(minutes: 30, seconds: 30));
+        async.flushMicrotasks();
+        expect(repository.calls, hasLength(360));
+        expect(repository.responses, hasLength(1));
+
+        bloc.add(const PaymentQrExpired());
+        async.flushMicrotasks();
+        expect(repository.calls, hasLength(360));
+        bloc.close();
+        async.flushMicrotasks();
+      });
+    });
+
+    test('the countdown reaching zero triggers the last check once', () {
+      run((async) {
+        final repository = _FakeRepository()
+          ..responses.add(_payment(status: 'succeeded', step: null));
+        PaymentFlowBloc.now = () => DateTime.utc(2026, 10, 12, 7, 30);
+        final bloc = PaymentFlowBloc(repository, _payment());
+        bloc
+          ..add(const PaymentQrExpired())
+          ..add(const PaymentQrExpired());
+        async.flushMicrotasks();
+        expect(repository.calls, ['check']);
+        expect(bloc.state.payment.status, PaymentStatus.succeeded);
+        async.elapse(const Duration(minutes: 1));
+        expect(repository.calls, ['check']);
+        bloc.close();
+        async.flushMicrotasks();
+      });
     });
   });
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -38,10 +39,17 @@ final class PaymentStatusRefreshRequested extends PaymentFlowEvent {
   const PaymentStatusRefreshRequested();
 }
 
-/// A background status check: no spinner, and a failed check is ignored
-/// (the next one tries again).
+/// A background `check-payment` while the QR is on screen: no spinner, and
+/// a failed check (e.g. 502/503 from the bank) is ignored; the next one
+/// tries again.
 final class _PaymentPolled extends PaymentFlowEvent {
   const _PaymentPolled();
+}
+
+/// The QR's time ran out: one last `check-payment` (the donor may have paid
+/// in the last seconds), then polling stops.
+final class PaymentQrExpired extends PaymentFlowEvent {
+  const PaymentQrExpired();
 }
 
 class PaymentFlowState extends Equatable {
@@ -98,9 +106,11 @@ class PaymentFlowState extends Equatable {
   ];
 }
 
-/// Watches a started zakat payment until it is final: the QR waiting for
-/// the donor's bank app, and the checks with the bank once they say they
-/// paid. The payment is started on the payment form.
+/// Watches a started zakat payment until it is final. While the QR waits to
+/// be paid it polls `check-payment` every [pollInterval] (the server asks
+/// the bank), until the payment is no longer `pending` + `scan_qr`, the QR
+/// expires (then one last check), or the screen closes. The payment is
+/// started on the payment form.
 @injectable
 class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
   PaymentFlowBloc(this._repository, @factoryParam ZakatPayment payment)
@@ -115,11 +125,17 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
           _run(emit, () => _repository.fetchPayment(state.payment.paymentId)),
     );
     on<_PaymentPolled>(_onPolled);
+    on<PaymentQrExpired>(_onQrExpired);
     _schedulePolling(state.payment);
   }
 
-  /// How often to check a pending payment while its screen is open.
-  static const pollInterval = Duration(seconds: 10);
+  /// How often to run `check-payment` while the QR is on screen. The server
+  /// asks the bank at most this often per payment.
+  static const pollInterval = Duration(seconds: 5);
+
+  /// The clock; replaced in tests.
+  @visibleForTesting
+  static DateTime Function() now = DateTime.now;
 
   /// A payment usually arrives within seconds: one more check after this
   /// before saying it has not arrived.
@@ -127,6 +143,8 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
 
   final ZakatPaymentRepository _repository;
   Timer? _pollTimer;
+  bool _polling = false;
+  bool _finalCheckDone = false;
 
   static bool _notArrived(ZakatPayment payment) =>
       payment.status == PaymentStatus.pending ||
@@ -232,21 +250,67 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
     _PaymentPolled event,
     Emitter<PaymentFlowState> emit,
   ) async {
-    if (state.busy) return;
+    if (_qrExpired(state.payment)) {
+      _stopPolling();
+      add(const PaymentQrExpired());
+      return;
+    }
+    await _poll(emit);
+  }
+
+  Future<void> _onQrExpired(
+    PaymentQrExpired event,
+    Emitter<PaymentFlowState> emit,
+  ) async {
+    _stopPolling();
+    if (_finalCheckDone || !_waitingForScan(state.payment)) return;
+    _finalCheckDone = true;
+    await _poll(emit);
+  }
+
+  /// One quiet `check-payment`. Errors are ignored (502/503 doesn't mean the
+  /// payment failed), except 409: an older payment `check-payment` doesn't
+  /// handle, so read its stored state.
+  Future<void> _poll(Emitter<PaymentFlowState> emit) async {
+    if (state.busy || _polling) return;
+    _polling = true;
     try {
-      final payment = await _repository.fetchPayment(state.payment.paymentId);
-      if (state.busy) return;
+      final id = state.payment.paymentId;
+      ZakatPayment payment;
+      try {
+        payment = await _repository.checkPayment(id);
+      } on ApiException catch (e) {
+        if (e.statusCode != 409) return;
+        payment = await _repository.fetchPayment(id);
+      }
+      if (isClosed || state.busy) return;
       emit(state.copyWith(payment: payment));
       _schedulePolling(payment);
     } on ApiException {
       // Try again on the next tick.
+    } finally {
+      _polling = false;
     }
   }
 
+  /// The QR is on screen, waiting for the donor's bank app.
+  static bool _waitingForScan(ZakatPayment payment) =>
+      payment.status == PaymentStatus.pending &&
+      payment.step == PaymentStep.scanQr;
+
+  static DateTime? _qrDeadline(ZakatPayment payment) =>
+      payment.qrExpiresAt ?? payment.expiresAt;
+
+  static bool _qrExpired(ZakatPayment payment) {
+    final deadline = _qrDeadline(payment);
+    return deadline != null && !now().isBefore(deadline);
+  }
+
+  /// Polls while the QR waits to be paid and hasn't expired. Anything else
+  /// (paid, `processing`, expired, cancelled, failed) stops it.
   void _schedulePolling(ZakatPayment payment) {
-    if (payment.isFinal) {
-      _pollTimer?.cancel();
-      _pollTimer = null;
+    if (!_waitingForScan(payment) || _qrExpired(payment)) {
+      _stopPolling();
       return;
     }
     _pollTimer ??= Timer.periodic(
@@ -255,9 +319,14 @@ class PaymentFlowBloc extends Bloc<PaymentFlowEvent, PaymentFlowState> {
     );
   }
 
+  void _stopPolling() {
+    _pollTimer?.cancel();
+    _pollTimer = null;
+  }
+
   @override
   Future<void> close() {
-    _pollTimer?.cancel();
+    _stopPolling();
     return super.close();
   }
 }
