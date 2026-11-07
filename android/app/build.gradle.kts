@@ -1,5 +1,4 @@
 import java.io.FileInputStream
-import java.util.Base64
 import java.util.Properties
 
 plugins {
@@ -82,22 +81,10 @@ flutter {
     source = "../.."
 }
 
-// Fail fast, before compiling, when a release build has no signing key or
-// no API URL (`--dart-define-from-file=.env`; the app has no other source).
+// Fail fast, before compiling, when a release build has no signing key.
 gradle.taskGraph.whenReady {
     val buildsRelease = allTasks.any {
         it.project == project && it.name.contains("Release")
-    }
-    val dartDefines = (project.findProperty("dart-defines") as String?)
-        ?.split(",")
-        ?.filter { it.isNotBlank() }
-        ?.map { String(Base64.getDecoder().decode(it)) }
-        .orEmpty()
-    if (buildsRelease && dartDefines.none { it.startsWith("API_BASE_URL=https://") }) {
-        throw GradleException(
-            "Release builds need the API URL: build with --dart-define-from-file=.env " +
-                "(API_BASE_URL must be https).",
-        )
     }
     if (buildsRelease && !keystorePropertiesFile.exists()) {
         throw GradleException(

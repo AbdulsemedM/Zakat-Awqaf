@@ -8,7 +8,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('home renders app title', (WidgetTester tester) async {
-    // Needs --dart-define=API_BASE_URL=https://… (see AppEnv).
     configureDependencies();
 
     await tester.pumpWidget(

@@ -5,8 +5,7 @@
       "name": "Mejlis (debug)",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main.dart",
-      "args": ["--dart-define-from-file=.env"]
+      "program": "lib/main.dart"
     }
   ]
 }

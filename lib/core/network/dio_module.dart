@@ -21,7 +21,7 @@ void _configureTls(Dio dio) {
   if (scheme != 'https') {
     throw StateError(
       'API base URL must use https, got "${dio.options.baseUrl}". '
-      'Check API_BASE_URL in .env.',
+      'Check AppEnv (lib/core/config/app_env.dart).',
     );
   }
   if (PinnedCertificates.pem.isNotEmpty) {

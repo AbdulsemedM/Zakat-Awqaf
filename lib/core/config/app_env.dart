@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 
-/// API URLs, compiled in with `--dart-define-from-file=.env` (or
-/// `--dart-define`). Android release builds fail without `API_BASE_URL`.
+/// API URLs. Defaults are compiled in, so a plain `flutter run` /
+/// `flutter build apk` works with no extra flags.
 ///
-/// Debug builds without the define (a plain `flutter run`) fall back to the
-/// UAT server, so the defines are optional during development.
+/// To point at another server, change [_defaultApiBaseUrl] below.
+/// (`--dart-define=API_BASE_URL=…` still overrides it if ever needed.)
 abstract final class AppEnv {
   AppEnv._();
 
-  /// UAT server; the host [PinnedCertificates] trusts. Debug builds only.
-  static const _debugApiBaseUrl = 'https://196.188.249.232/';
+  /// The API server; the host [PinnedCertificates] trusts.
+  static const _defaultApiBaseUrl = 'https://196.188.249.232/';
 
-  // `String.fromEnvironment` only works as a const with a literal key.
+  // Optional overrides. `String.fromEnvironment` needs a literal key.
   static const _apiBaseUrl = String.fromEnvironment('API_BASE_URL');
   static const _authApiBaseUrl = String.fromEnvironment('AUTH_API_BASE_URL');
   static const _paymentsApiBaseUrl = String.fromEnvironment(
@@ -20,8 +20,7 @@ abstract final class AppEnv {
 
   static String get apiBaseUrl {
     final api = _apiBaseUrl.trim();
-    if (api.isEmpty && kDebugMode) return _debugApiBaseUrl;
-    return api;
+    return api.isNotEmpty ? api : _defaultApiBaseUrl;
   }
 
   static String get authApiBaseUrl {
