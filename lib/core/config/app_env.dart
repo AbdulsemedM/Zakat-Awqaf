@@ -8,8 +8,8 @@ import 'package:flutter/foundation.dart';
 abstract final class AppEnv {
   AppEnv._();
 
-  /// The API server; the host [PinnedCertificates] trusts.
-  static const _defaultApiBaseUrl = 'https://196.188.249.232/';
+  /// The API server. Its certificate must chain to a [PinnedCertificates] root.
+  static const _defaultApiBaseUrl = 'https://ezaac.com/';
 
   // Optional overrides. `String.fromEnvironment` needs a literal key.
   static const _apiBaseUrl = String.fromEnvironment('API_BASE_URL');

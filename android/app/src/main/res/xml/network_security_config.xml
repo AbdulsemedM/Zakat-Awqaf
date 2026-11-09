@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- HTTPS only. Everything else (the card gateway in the payment webview)
-     trusts the system's CAs, never user-installed ones. -->
+<!-- HTTPS only. No trust-anchors are declared on purpose: with targetSdk 24+
+     the platform default is the system CAs only (never user-installed ones),
+     and domain-config inherits it. Listing src="system" explicitly changes
+     nothing but makes scanners (MobSF) flag it, so leave it out. -->
 <network-security-config>
-    <base-config cleartextTrafficPermitted="false">
-        <trust-anchors>
-            <certificates src="system" />
-        </trust-anchors>
-    </base-config>
-    <!-- API server (UAT, self-signed): trusted only as this certificate and
-         pinned to its key. The Dart API clients pin it separately
-         (lib/core/network/pinned_certificates.dart); keep both in step when
-         the certificate changes. -->
+    <base-config cleartextTrafficPermitted="false" />
+    <!-- API server (Let's Encrypt): the chain must contain one of these
+         ISRG root keys (X1, X2, Root YE, Root YR). Pinning the roots, not the
+         90-day leaf, means certificate renewals need no app update. The Dart
+         API clients pin the same roots separately
+         (lib/core/network/pinned_certificates.dart); keep both in step. -->
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="false">196.188.249.232</domain>
-        <trust-anchors>
-            <certificates src="@raw/api_server_cert" />
-        </trust-anchors>
-        <pin-set expiration="2028-11-12">
-            <pin digest="SHA-256">u2lrk+xtYqQQyjvDcfOALZDnDpVGdDqTnco8BI9+h4g=</pin>
+        <domain includeSubdomains="false">ezaac.com</domain>
+        <pin-set expiration="2035-06-01">
+            <pin digest="SHA-256">C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=</pin>
+            <pin digest="SHA-256">diGVwiVYbubAI3RW4hB9xU8e/CH2GnkuvVFZE8zmgzI=</pin>
+            <pin digest="SHA-256">sCkq5UWXjg+7mKu9lMhhYF5bGLsy7VI/UNW3tccdR7w=</pin>
+            <pin digest="SHA-256">fk6IOKit1ild5647BH06ujSIq5XbCgqlbYl6ANhhi88=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>
