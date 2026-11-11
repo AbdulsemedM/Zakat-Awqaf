@@ -797,7 +797,7 @@ Future<void> _pickInstitutionDocument(
       case _DocumentPickSource.file:
         final result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
-          allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+          allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png', 'webp'],
         );
         filePath = result?.files.single.path;
     }

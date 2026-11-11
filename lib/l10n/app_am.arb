@@ -706,7 +706,7 @@
   "regLastName": "የአያት ስም",
   "regGrandfatherName": "የአያት ስም",
   "regPhoneNumber": "ስልክ ቁጥር",
-  "regPhoneHint": "+251911223344 or 0911223344",
+  "regPhoneHint": "0911223344, 0711223344 or +251911223344",
   "regEmail": "ኢሜይል",
   "regGender": "ጾታ",
   "regMale": "ወንድ",

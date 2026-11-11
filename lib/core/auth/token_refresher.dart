@@ -95,6 +95,7 @@ class TokenRefresher {
           final num seconds when seconds > 0 => seconds.toInt(),
           _ => 300,
         },
+        passwordChangeRequired: data['passwordChangeRequired'] == true,
       );
       return RefreshResult.refreshed;
     } on DioException catch (e) {

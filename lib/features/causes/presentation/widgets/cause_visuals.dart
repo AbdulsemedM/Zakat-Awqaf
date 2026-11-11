@@ -80,19 +80,31 @@ class CauseBanner extends StatelessWidget {
     required this.l10n,
     this.imageUrl,
     this.iconSize = 22,
+    this.detail = false,
   });
 
   final Cause cause;
   final AppLocalizations l10n;
 
-  /// Defaults to [Cause.imageUrl].
+  /// Defaults to [Cause.imageUrl] in the size for [detail].
   final String? imageUrl;
   final double iconSize;
 
+  /// A detail header: the medium size (800 px); otherwise the thumbnail
+  /// (400 px), to save data.
+  final bool detail;
+
   @override
   Widget build(BuildContext context) {
-    final url = httpsUrl(imageUrl ?? cause.imageUrl);
+    final variants = cause.imageVariants;
+    final url = httpsUrl(
+      imageUrl ??
+          (detail
+              ? variants.mediumOr(cause.imageUrl)
+              : variants.thumbnailOr(cause.imageUrl)),
+    );
     final badge = cause.badge;
+    final closed = cause.isClosed;
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -101,6 +113,8 @@ class CauseBanner extends StatelessWidget {
           Image.network(
             url,
             fit: BoxFit.cover,
+            semanticLabel: cause.imageAltText,
+            excludeFromSemantics: cause.imageAltText == null,
             errorBuilder: (_, _, _) => const SizedBox.shrink(),
             frameBuilder: (context, child, frame, wasSyncLoaded) =>
                 wasSyncLoaded
@@ -111,16 +125,18 @@ class CauseBanner extends StatelessWidget {
                     child: child,
                   ),
           ),
-        if (badge != null)
+        if (closed || badge != null)
           PositionedDirectional(
             top: 12,
             start: 12,
-            child: TagPill(
-              label: causeBadgeLabel(l10n, badge),
-              style: badge == CauseBadge.urgent
-                  ? TagStyle.gold
-                  : TagStyle.green,
-            ),
+            child: closed
+                ? TagPill(label: l10n.causesClosed, style: TagStyle.green)
+                : TagPill(
+                    label: causeBadgeLabel(l10n, badge!),
+                    style: badge == CauseBadge.urgent
+                        ? TagStyle.gold
+                        : TagStyle.green,
+                  ),
           ),
       ],
     );

@@ -68,7 +68,8 @@ class CauseCard extends StatelessWidget {
                         const Spacer(),
                         CauseProgressRow(cause: cause),
                         const SizedBox(height: 10),
-                        if (cause.acceptsZakat)
+                        // Closed causes take no more gifts.
+                        if (cause.canGive)
                           SizedBox(
                             width: double.infinity,
                             child: FilledButton(

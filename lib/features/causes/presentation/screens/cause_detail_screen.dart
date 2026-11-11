@@ -118,8 +118,12 @@ class _CauseDetailView extends StatelessWidget {
     final today = DateUtils.dateOnly(DateTime.now());
     final ended = endsOn != null && endsOn.isBefore(today);
     final body = (detail.body ?? cause.description ?? '').trim();
-    final images = detail.images.map(httpsUrl).nonNulls.toList();
-    final canPay = cause.acceptsZakat && !ended;
+    final gallery = [
+      for (final image in detail.gallery)
+        if (httpsUrl(image.variants.thumbnailOr(image.url)) case final url?)
+          (url: url, altText: image.altText),
+    ];
+    final canPay = cause.canGive && !ended;
 
     return Scaffold(
       body: CustomScrollView(
@@ -130,7 +134,12 @@ class _CauseDetailView extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  CauseBanner(cause: cause, l10n: l10n, iconSize: 30),
+                  CauseBanner(
+                    cause: cause,
+                    l10n: l10n,
+                    iconSize: 30,
+                    detail: true,
+                  ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -221,21 +230,24 @@ class _CauseDetailView extends StatelessWidget {
                     ),
                   ),
                 ],
-                if (images.isNotEmpty) ...[
+                if (gallery.isNotEmpty) ...[
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 120,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: images.length,
+                      itemCount: gallery.length,
                       separatorBuilder: (_, _) => const SizedBox(width: 10),
                       itemBuilder: (context, index) => ClipRRect(
                         borderRadius: BorderRadius.circular(14),
                         child: AspectRatio(
                           aspectRatio: 4 / 3,
                           child: Image.network(
-                            images[index],
+                            gallery[index].url,
                             fit: BoxFit.cover,
+                            semanticLabel: gallery[index].altText,
+                            excludeFromSemantics:
+                                gallery[index].altText == null,
                             errorBuilder: (_, _, _) =>
                                 CauseCategoryBackdrop(category: cause.category),
                           ),

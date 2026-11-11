@@ -11,6 +11,7 @@ import '../../features/awqaf/create/presentation/screens/awqaf_create_screen.dar
 import '../../features/awqaf/home/presentation/screens/awqaf_home_screen.dart';
 import '../../features/awqaf/portfolio/presentation/screens/awqaf_portfolio_screen.dart';
 import '../../features/awqaf/profile/presentation/screens/awqaf_profile_screen.dart';
+import '../../features/auth/presentation/screens/change_password_screen.dart';
 import '../../features/auth/presentation/screens/otp_flow_screen.dart';
 import '../../features/beneficiary_registration/presentation/screens/beneficiary_registration_screen.dart';
 import '../../features/causes/presentation/screens/cause_detail_screen.dart';
@@ -36,12 +37,35 @@ import '../../features/zakat_payment/presentation/screens/zakat_payment_screen.d
 import '../pages/main_nav_shell_page.dart';
 import '../widgets/zakat_themed.dart';
 
+/// Where a session with a temporary password is held until it is changed.
+const forcedPasswordChangeLocation = '/auth/change-password-required';
+
+/// While the account has a temporary password, every API call but a few
+/// answers 403 `PASSWORD_CHANGE_REQUIRED`, so the app shows only the
+/// change-password screen (after the splash and onboarding).
+String? passwordChangeRedirect(
+  AuthSessionController authSession,
+  String location,
+) {
+  if (location == '/splash' || location == '/onboarding') return null;
+  final mustChange = authSession.passwordChangeRequired;
+  if (mustChange && location != forcedPasswordChangeLocation) {
+    return forcedPasswordChangeLocation;
+  }
+  if (!mustChange && location == forcedPasswordChangeLocation) {
+    return '/profile';
+  }
+  return null;
+}
+
 @module
 abstract class AppRouterModule {
   @lazySingleton
   GoRouter router(AuthSessionController authSession) => GoRouter(
     initialLocation: '/splash',
     refreshListenable: authSession,
+    redirect: (context, state) =>
+        passwordChangeRedirect(authSession, state.matchedLocation),
     routes: [
       GoRoute(
         path: '/splash',
@@ -222,6 +246,16 @@ abstract class AppRouterModule {
         builder: (context, state) => const ZakatThemed(
           child: OtpFlowScreen(kind: OtpFlowKind.donorSignup),
         ),
+      ),
+      GoRoute(
+        path: forcedPasswordChangeLocation,
+        builder: (context, state) =>
+            const ZakatThemed(child: ChangePasswordScreen(forced: true)),
+      ),
+      GoRoute(
+        path: '/profile/change-password',
+        builder: (context, state) =>
+            const ZakatThemed(child: ChangePasswordScreen()),
       ),
       GoRoute(
         path: '/profile/change-phone',

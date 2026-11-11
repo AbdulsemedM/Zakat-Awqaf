@@ -66,7 +66,11 @@ class _PayoutAccountSetupCardState extends State<_PayoutAccountSetupCard> {
   /// The saved bank when it can still be picked, else the first available.
   String? _initialCode(List<PayoutBank>? banks) {
     final available = [...?banks?.where((b) => b.available)];
-    final saved = widget.profile.bankCode;
+    final savedCode = widget.profile.bankCode;
+    // An account saved as `debub_global` is now `global_bank`.
+    final saved = savedCode == null
+        ? null
+        : PayoutBank.canonicalCode(savedCode);
     if (available.any((b) => b.code == saved)) return saved;
     return available.isEmpty ? null : available.first.code;
   }

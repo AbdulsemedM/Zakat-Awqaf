@@ -1196,7 +1196,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get regPhoneNumber => 'Phone Number';
 
   @override
-  String get regPhoneHint => '+251911223344 or 0911223344';
+  String get regPhoneHint => '0911223344, 0711223344 or +251911223344';
 
   @override
   String get regEmail => 'Email';
@@ -1364,7 +1364,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get regPasswordRules =>
-      'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character.';
+      'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character. It can\'t be your phone number or one of your last 5 passwords.';
 
   @override
   String get regPasswordSuccess =>
@@ -2366,4 +2366,66 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get otpChangePhoneDone =>
       'Phone number changed. Sign in with your new number.';
+
+  @override
+  String get changePasswordTitle => 'Change password';
+
+  @override
+  String get changePasswordIntro =>
+      'Enter your current password, then choose a new one. You\'ll be signed out on your other devices.';
+
+  @override
+  String get changePasswordForcedIntro =>
+      'You signed in with a temporary password. Choose your own password to continue.';
+
+  @override
+  String get changePasswordCurrentLabel => 'Current password';
+
+  @override
+  String get changePasswordTemporaryLabel => 'Temporary password';
+
+  @override
+  String get changePasswordCurrentRequired => 'Enter your current password.';
+
+  @override
+  String get changePasswordCurrentInvalid => 'Current password is wrong.';
+
+  @override
+  String get changePasswordSameAsCurrent =>
+      'Choose a password different from the current one.';
+
+  @override
+  String get changePasswordButton => 'Change password';
+
+  @override
+  String get changePasswordDone => 'Password changed.';
+
+  @override
+  String get changePasswordSignInAgain =>
+      'Password changed. Sign in with your new password.';
+
+  @override
+  String get profileChangePasswordSubtitle =>
+      'Signs you out on your other devices';
+
+  @override
+  String get otpChangePhonePasswordHelper => 'To confirm it\'s you.';
+
+  @override
+  String get otpSignupNoCodeHint =>
+      'Didn\'t get a code? If you already have an account, log in or use Forgot password.';
+
+  @override
+  String get phoneEthiopianMobileInvalid =>
+      'Enter an Ethiopian mobile number, e.g. 0911223344 or 0711223344.';
+
+  @override
+  String homeOfflineCollected(String amount) {
+    return 'of which $amount recorded outside the app';
+  }
+
+  @override
+  String homeOfflineCollectedAsOf(String amount, String date) {
+    return 'of which $amount recorded outside the app (as of $date)';
+  }
 }

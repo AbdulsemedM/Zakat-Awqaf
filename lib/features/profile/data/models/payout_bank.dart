@@ -8,6 +8,7 @@ class PayoutBank extends Equatable {
     required this.name,
     required this.available,
     this.accountNumberPattern,
+    this.ipsPayable = false,
   });
 
   /// Sent as `bankCode`, e.g. `coop_bank_of_oromia`.
@@ -18,13 +19,21 @@ class PayoutBank extends Equatable {
   /// e.g. `^\d{6,30}$`, checked after spaces and dashes are removed.
   final String? accountNumberPattern;
 
+  /// Payouts to this bank can go over IPS (instant payment).
+  final bool ipsPayable;
+
+  /// `debub_global` was renamed `global_bank` ("Global Bank Ethiopia").
+  static String canonicalCode(String code) =>
+      code == 'debub_global' ? 'global_bank' : code;
+
   factory PayoutBank.fromJson(Map<String, dynamic> json) {
-    final code = json['code']?.toString() ?? '';
+    final code = canonicalCode(json['code']?.toString() ?? '');
     return PayoutBank(
       code: code,
       name: json['name']?.toString() ?? code,
       available: json['available'] == true,
       accountNumberPattern: json['accountNumberPattern']?.toString(),
+      ipsPayable: json['ipsPayable'] == true,
     );
   }
 
@@ -46,5 +55,11 @@ class PayoutBank extends Equatable {
   }
 
   @override
-  List<Object?> get props => [code, name, available, accountNumberPattern];
+  List<Object?> get props => [
+    code,
+    name,
+    available,
+    accountNumberPattern,
+    ipsPayable,
+  ];
 }

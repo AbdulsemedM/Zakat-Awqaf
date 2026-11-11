@@ -92,7 +92,7 @@ class _StoryBody extends StatelessWidget {
     final l10n = context.l10n;
     final locale = context.contentLocale;
     final scheme = Theme.of(context).colorScheme;
-    final imageUrl = httpsUrl(story.imageUrl);
+    final imageUrl = httpsUrl(story.imageVariants.mediumOr(story.imageUrl));
     final publishedAt = story.publishedAt;
     final text = (story.body ?? story.summary ?? '').trim();
     return CustomScrollView(
@@ -108,6 +108,8 @@ class _StoryBody extends StatelessWidget {
                   Image.network(
                     imageUrl,
                     fit: BoxFit.cover,
+                    semanticLabel: story.imageAltText,
+                    excludeFromSemantics: story.imageAltText == null,
                     errorBuilder: (_, _, _) => const SizedBox.shrink(),
                   ),
                 const DecoratedBox(

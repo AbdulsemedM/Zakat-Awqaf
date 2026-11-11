@@ -26,7 +26,10 @@ void main() {
       'android/app/src/main/res/xml/network_security_config.xml',
     ).readAsStringSync();
     final host = Uri.parse(AppEnv.apiBaseUrl).host;
-    expect(config, contains('<domain includeSubdomains="false">$host</domain>'));
+    expect(
+      config,
+      contains('<domain includeSubdomains="false">$host</domain>'),
+    );
     expect(
       RegExp('<pin digest="SHA-256">').allMatches(config).length,
       PinnedCertificates.pem.length,

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/network/api_envelope.dart';
+import '../../../../core/network/image_variants.dart';
 import '../../../beneficiary_registration/data/models/asnaf_category.dart';
 import '../../../causes/data/models/cause.dart';
 
@@ -153,6 +154,10 @@ class ImpactStory extends Equatable {
     this.region,
     this.imageUrl,
     this.publishedAt,
+    this.imageAltText,
+    this.imageVariants = ImageVariants.none,
+    this.regionCode,
+    this.updatedAt,
   });
 
   final String id;
@@ -168,6 +173,14 @@ class ImpactStory extends Equatable {
   final String? imageUrl;
   final DateTime? publishedAt;
 
+  /// Describes [imageUrl] for screen readers.
+  final String? imageAltText;
+
+  /// Thumbnail in lists, medium on the story screen.
+  final ImageVariants imageVariants;
+  final String? regionCode;
+  final DateTime? updatedAt;
+
   factory ImpactStory.fromJson(Map<String, dynamic> json) {
     final id = jsonString(json['id']);
     if (id == null) throw const FormatException('Story without id');
@@ -180,6 +193,10 @@ class ImpactStory extends Equatable {
       region: jsonString(json['region']),
       imageUrl: jsonString(json['imageUrl']),
       publishedAt: jsonDate(json['publishedAt']),
+      imageAltText: jsonString(json['imageAltText']),
+      imageVariants: ImageVariants.fromJson(json['imageVariants']),
+      regionCode: jsonString(json['regionCode']),
+      updatedAt: jsonDate(json['updatedAt']),
     );
   }
 
@@ -193,5 +210,9 @@ class ImpactStory extends Equatable {
     region,
     imageUrl,
     publishedAt,
+    imageAltText,
+    imageVariants,
+    regionCode,
+    updatedAt,
   ];
 }

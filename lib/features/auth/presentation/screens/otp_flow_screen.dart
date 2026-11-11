@@ -46,6 +46,9 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
   final _password = TextEditingController();
   final _confirm = TextEditingController();
 
+  /// Phone change only: the server asks for the current password.
+  final _currentPassword = TextEditingController();
+
   /// Set once a code was sent: step 2.
   OtpChallenge? _challenge;
   bool _busy = false;
@@ -55,6 +58,9 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
   String? _codeError;
   String? _passwordError;
   String? _confirmError;
+  String? _currentPasswordError;
+
+  bool get _isPhoneChange => widget.kind == OtpFlowKind.phoneChange;
 
   bool get _asksPassword => widget.kind != OtpFlowKind.phoneChange;
 
@@ -65,6 +71,7 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
     _code.dispose();
     _password.dispose();
     _confirm.dispose();
+    _currentPassword.dispose();
     super.dispose();
   }
 
@@ -72,13 +79,19 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
     final l10n = context.l10n;
     final phone = LoginIdentifier.resolvePhone(_phone.text);
     final fullName = _fullName.text.trim();
+    final currentPassword = _currentPassword.text;
     setState(() {
-      _phoneError = phone == null ? l10n.payPayerPhoneInvalid : null;
+      _phoneError = phone == null ? l10n.phoneEthiopianMobileInvalid : null;
       _nameError = widget.kind == OtpFlowKind.donorSignup && fullName.isEmpty
           ? l10n.otpFullNameRequired
           : null;
+      _currentPasswordError = _isPhoneChange && currentPassword.isEmpty
+          ? l10n.changePasswordCurrentRequired
+          : null;
     });
-    if (phone == null || _nameError != null) return;
+    if (phone == null || _nameError != null || _currentPasswordError != null) {
+      return;
+    }
     await _run(() async {
       final challenge = await switch (widget.kind) {
         OtpFlowKind.passwordReset => _repository.startPasswordReset(phone),
@@ -86,13 +99,18 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
           phone: phone,
           fullName: fullName,
         ),
-        OtpFlowKind.phoneChange => _repository.startPhoneChange(phone),
+        OtpFlowKind.phoneChange => _repository.startPhoneChange(
+          phone,
+          currentPassword: currentPassword,
+        ),
       };
       if (!mounted) return;
       setState(() {
         _challenge = challenge;
         _code.clear();
         _codeError = null;
+        // Not kept longer than needed.
+        _currentPassword.clear();
       });
     });
   }
@@ -188,6 +206,9 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
             : '${e.message}\n${l10n.otpAttemptsLeft(attempts)}';
       case 'WEAK_PASSWORD':
         _passwordError = e.message;
+      case 'CURRENT_PASSWORD_INVALID':
+        // Phone change: the session is still valid, only the field is wrong.
+        _currentPasswordError = context.l10n.changePasswordCurrentInvalid;
       case 'INVALID_PHONE' || 'SAME_PHONE' || 'PHONE_ALREADY_REGISTERED':
         _restart();
         _phoneError = e.message;
@@ -201,10 +222,17 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
         _phoneError =
             fields['username'] ?? fields['phone'] ?? fields['newPhone'];
         _nameError = fields['fullName'];
-        if (_phoneError != null || _nameError != null) _restart();
+        _currentPasswordError = fields['currentPassword'];
+        if (_phoneError != null ||
+            _nameError != null ||
+            _currentPasswordError != null) {
+          _restart();
+        }
       default:
         // Locked, expired, used or unknown: this code can't be used any
-        // more. Limits (429) and an unavailable SMS service (503) leave it.
+        // more. Limits (429 CHANGE_LIMIT, TOO_MANY_ATTEMPTS: the message
+        // says when to try again; no automatic retry) and an unavailable
+        // SMS service (503) leave it.
         if (challenge != null &&
             (e.code == 'OTP_LOCKED' ||
                 e.statusCode == 404 ||
@@ -296,12 +324,14 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
           controller: _phone,
           enabled: !_busy,
           keyboardType: TextInputType.phone,
-          textInputAction: TextInputAction.done,
           autofillHints: const [AutofillHints.telephoneNumber],
+          textInputAction: _isPhoneChange
+              ? TextInputAction.next
+              : TextInputAction.done,
           onChanged: (_) => setState(() => _phoneError = null),
-          onSubmitted: (_) => _send(),
+          onSubmitted: (_) => _isPhoneChange ? null : _send(),
           decoration: InputDecoration(
-            labelText: widget.kind == OtpFlowKind.phoneChange
+            labelText: _isPhoneChange
                 ? l10n.otpNewPhoneLabel
                 : l10n.profilePhoneNumber,
             hintText: l10n.regPhoneHint,
@@ -310,6 +340,38 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
             prefixIcon: const Icon(Icons.phone_outlined),
           ),
         ),
+        if (_isPhoneChange) ...[
+          const SizedBox(height: 14),
+          TextField(
+            controller: _currentPassword,
+            enabled: !_busy,
+            obscureText: _obscure,
+            autocorrect: false,
+            enableSuggestions: false,
+            keyboardType: TextInputType.visiblePassword,
+            textInputAction: TextInputAction.done,
+            autofillHints: const [AutofillHints.password],
+            onChanged: (_) => setState(() => _currentPasswordError = null),
+            onSubmitted: (_) => _send(),
+            decoration: InputDecoration(
+              labelText: l10n.changePasswordCurrentLabel,
+              helperText: l10n.otpChangePhonePasswordHelper,
+              helperMaxLines: 2,
+              errorText: _currentPasswordError,
+              errorMaxLines: 3,
+              prefixIcon: const Icon(Icons.key_outlined),
+              suffixIcon: IconButton(
+                onPressed: () => setState(() => _obscure = !_obscure),
+                icon: Icon(
+                  _obscure
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
         const SizedBox(height: 24),
         _SubmitButton(label: l10n.otpSendCode, busy: _busy, onPressed: _send),
       ],
@@ -339,6 +401,18 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
             height: 1.5,
           ),
         ),
+        if (widget.kind == OtpFlowKind.donorSignup) ...[
+          const SizedBox(height: 8),
+          // A phone that already has an account gets no code (the server
+          // answers as for a new one, so it doesn't reveal accounts).
+          Text(
+            l10n.otpSignupNoCodeHint,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              height: 1.4,
+            ),
+          ),
+        ],
         const SizedBox(height: 20),
         TextField(
           controller: _code,

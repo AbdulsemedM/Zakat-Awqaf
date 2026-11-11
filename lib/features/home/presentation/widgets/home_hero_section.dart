@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:provider/provider.dart';
 
 import '../../../../app/settings/app_settings_controller.dart';
@@ -122,6 +123,17 @@ class HomeHeroSection extends StatelessWidget {
                         totalCollectedEtb: totalCollected,
                         live: summary!.isLive(DateTime.now()),
                       ),
+                      if (summary.hasOfflineCollected) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          _offlineText(context, summary),
+                          style: AppTypography.body(
+                            fontSize: 11.5,
+                            color: AppColors.goldLight.withValues(alpha: 0.85),
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
                     ],
                     if (panels.isNotEmpty) ...[
                       const SizedBox(height: 16),
@@ -186,6 +198,18 @@ class _ModeSwitchButton extends StatelessWidget {
       ),
     );
   }
+}
+
+/// "of which ETB X recorded outside the app (as of D)".
+String _offlineText(BuildContext context, HomeSummary summary) {
+  final l10n = context.l10n;
+  final amount = MoneyFormatter.etb(summary.offlineCollectedEtb!);
+  final asOf = summary.offlineAsOfDate;
+  if (asOf == null) return l10n.homeOfflineCollected(amount);
+  final date = DateFormat.yMMMd(
+    Localizations.localeOf(context).toString(),
+  ).format(asOf);
+  return l10n.homeOfflineCollectedAsOf(amount, date);
 }
 
 String _changeText(AppLocalizations l10n, double percent) {

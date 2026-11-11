@@ -12,6 +12,11 @@ class HomeSummary extends Equatable {
     this.changePercent,
     this.totalBeneficiariesSupported,
     this.asOf,
+    this.liveCollectedEtb,
+    this.offlineCollectedEtb,
+    this.liveBeneficiariesSupported,
+    this.offlineBeneficiariesSupported,
+    this.offlineAsOfDate,
   });
 
   /// "LIVE" only while the oldest figure is fresher than this.
@@ -27,6 +32,18 @@ class HomeSummary extends Equatable {
 
   /// Time of the oldest figure shown.
   final DateTime? asOf;
+
+  /// [totalCollectedEtb] split into what was paid in the app and what was
+  /// recorded outside it (entered by staff, as of [offlineAsOfDate]).
+  final double? liveCollectedEtb;
+  final double? offlineCollectedEtb;
+  final int? liveBeneficiariesSupported;
+  final int? offlineBeneficiariesSupported;
+  final DateTime? offlineAsOfDate;
+
+  /// Whether part of the total was recorded outside the app.
+  bool get hasOfflineCollected =>
+      totalCollectedEtb != null && (offlineCollectedEtb ?? 0) > 0;
 
   bool isLive(DateTime now) {
     final asOf = this.asOf;
@@ -45,6 +62,13 @@ class HomeSummary extends Equatable {
       changePercent: jsonDouble(currentMonth['changePercent']),
       totalBeneficiariesSupported: jsonInt(json['totalBeneficiariesSupported']),
       asOf: jsonDate(json['asOf']),
+      liveCollectedEtb: jsonDouble(json['liveCollectedEtb']),
+      offlineCollectedEtb: jsonDouble(json['offlineCollectedEtb']),
+      liveBeneficiariesSupported: jsonInt(json['liveBeneficiariesSupported']),
+      offlineBeneficiariesSupported: jsonInt(
+        json['offlineBeneficiariesSupported'],
+      ),
+      offlineAsOfDate: jsonDate(json['offlineAsOfDate']),
     );
   }
 
@@ -56,5 +80,10 @@ class HomeSummary extends Equatable {
     changePercent,
     totalBeneficiariesSupported,
     asOf,
+    liveCollectedEtb,
+    offlineCollectedEtb,
+    liveBeneficiariesSupported,
+    offlineBeneficiariesSupported,
+    offlineAsOfDate,
   ];
 }

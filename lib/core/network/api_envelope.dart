@@ -11,6 +11,7 @@ class ApiException implements Exception {
     this.data = const {},
     this.fieldErrors = const {},
     this.noResponse = false,
+    this.requestId,
   });
 
   final String message;
@@ -29,10 +30,17 @@ class ApiException implements Exception {
   /// not have reached the server.
   final bool noResponse;
 
+  /// The server's id for the request (body `requestId` or the
+  /// `X-Request-Id` header): put it in error reports so the backend can
+  /// find the request in its logs.
+  final String? requestId;
+
   bool get isNotFound => statusCode == 404;
 
   @override
-  String toString() => 'ApiException($statusCode, $code): $message';
+  String toString() => requestId == null
+      ? 'ApiException($statusCode, $code): $message'
+      : 'ApiException($statusCode, $code, requestId: $requestId): $message';
 }
 
 /// Languages the public zakat endpoints accept in `?lang=`.
@@ -72,11 +80,13 @@ Map<String, dynamic> unwrapApiObject(Response<dynamic> response) {
 
 ApiException apiExceptionFromDio(DioException e) {
   final body = e.response?.data;
+  final headerRequestId = e.response?.headers.value('x-request-id');
   if (body is! Map) {
     return ApiException(
       e.message ?? 'Network error',
       statusCode: e.response?.statusCode,
       noResponse: e.response == null,
+      requestId: headerRequestId,
     );
   }
   final data = body['data'];
@@ -92,6 +102,7 @@ ApiException apiExceptionFromDio(DioException e) {
           if (error is Map && error['field'] != null)
             error['field'].toString(): error['message']?.toString() ?? '',
     },
+    requestId: body['requestId']?.toString() ?? headerRequestId,
   );
 }
 

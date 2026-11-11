@@ -256,6 +256,87 @@ void main() {
     });
   });
 
+  group('Temporary password', () {
+    Future<(Dio, _Server, AuthTokenStorage, AuthSessionController)> setUpApi({
+      bool passwordChangeRequired = false,
+    }) async {
+      final server = _Server();
+      final storage = AuthTokenStorage();
+      await storage.saveSession(
+        accessToken: _accessToken('old'),
+        refreshToken: 'refresh-old',
+        tokenType: 'Bearer',
+        expiresInSeconds: 300,
+        passwordChangeRequired: passwordChangeRequired,
+      );
+      final refresher = TokenRefresher(_dio(server), storage);
+      final session = AuthSessionController(storage, refresher);
+      await session.initialize();
+      final api = _dio(server)
+        ..interceptors.add(AuthInterceptor(storage, session, refresher));
+      return (api, server, storage, session);
+    }
+
+    test('the flag saved with the session is restored at startup', () async {
+      final (_, _, _, session) = await setUpApi(passwordChangeRequired: true);
+      expect(session.passwordChangeRequired, isTrue);
+    });
+
+    test(
+      '403 PASSWORD_CHANGE_REQUIRED sets the flag, keeps the session',
+      () async {
+        final (api, server, storage, session) = await setUpApi();
+        server.handlers['api/beneficiaries/v1/me'] = (_) => (
+          403,
+          {
+            'success': false,
+            'code': 'PASSWORD_CHANGE_REQUIRED',
+            'message': 'You must change your temporary password',
+          },
+        );
+
+        await expectLater(
+          api.get<dynamic>('api/beneficiaries/v1/me'),
+          throwsA(isA<DioException>()),
+        );
+        expect(session.isAuthenticated, isTrue);
+        expect(session.passwordChangeRequired, isTrue);
+        expect(await storage.readPasswordChangeRequired(), isTrue);
+      },
+    );
+
+    test('another 403 does not set it', () async {
+      final (api, server, _, session) = await setUpApi();
+      server.handlers['api/payments/v1/me/payments'] = (_) =>
+          (403, {'success': false, 'code': 'PAYER_NOT_ALLOWED'});
+
+      await expectLater(
+        api.get<dynamic>('api/payments/v1/me/payments'),
+        throwsA(isA<DioException>()),
+      );
+      expect(session.passwordChangeRequired, isFalse);
+    });
+
+    test('a refresh stores the flag the server sends', () async {
+      final server = _Server();
+      final storage = await _signedIn(expiresInSeconds: 5);
+      server.handlers['api/auth/v1/refresh'] = (_) {
+        final body = _tokens('new');
+        (body['data'] as Map)['passwordChangeRequired'] = true;
+        return (200, body);
+      };
+      await TokenRefresher(_dio(server), storage).refresh();
+      expect(await storage.readPasswordChangeRequired(), isTrue);
+      expect(await storage.readRefreshToken(), 'refresh-new');
+    });
+
+    test('signing out clears it', () async {
+      final (_, _, _, session) = await setUpApi(passwordChangeRequired: true);
+      session.markLoggedOut();
+      expect(session.passwordChangeRequired, isFalse);
+    });
+  });
+
   group('Session at startup', () {
     test(
       'an expired access token with a refresh token is still signed in',

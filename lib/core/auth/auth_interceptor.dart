@@ -103,6 +103,17 @@ class AuthInterceptor extends Interceptor {
     handler.next(options);
   }
 
+  /// The code of a 403 sent while the account still has a temporary
+  /// password (see [AuthSessionController.passwordChangeRequired]).
+  static const passwordChangeRequiredCode = 'PASSWORD_CHANGE_REQUIRED';
+
+  static bool _isPasswordChangeRequired(DioException err) {
+    final body = err.response?.data;
+    return err.response?.statusCode == 403 &&
+        body is Map &&
+        body['code'] == passwordChangeRequiredCode;
+  }
+
   /// On a 401 for a signed-in request: refresh once and send it again. Signs
   /// the user out only when the server says the session is over; a 401 that
   /// survives a successful refresh (e.g. an unknown route) is passed on.
@@ -113,6 +124,12 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final options = err.requestOptions;
     final hadToken = options.headers['Authorization'] != null;
+    if (hadToken && _isPasswordChangeRequired(err)) {
+      // The router then shows only the change-password screen.
+      await _sessionController.markPasswordChangeRequired();
+      handler.next(err);
+      return;
+    }
     final retried =
         options.extra[TokenRefresher.retriedAfterRefreshKey] == true;
     if (err.response?.statusCode != 401 ||

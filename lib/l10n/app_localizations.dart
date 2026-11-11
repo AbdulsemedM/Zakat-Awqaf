@@ -2142,7 +2142,7 @@ abstract class AppLocalizations {
   /// No description provided for @regPhoneHint.
   ///
   /// In en, this message translates to:
-  /// **'+251911223344 or 0911223344'**
+  /// **'0911223344, 0711223344 or +251911223344'**
   String get regPhoneHint;
 
   /// No description provided for @regEmail.
@@ -2454,7 +2454,7 @@ abstract class AppLocalizations {
   /// No description provided for @regPasswordRules.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character.'**
+  /// **'Password must be at least 10 characters and include uppercase, lowercase, a number, and a special character. It can\'t be your phone number or one of your last 5 passwords.'**
   String get regPasswordRules;
 
   /// No description provided for @regPasswordSuccess.
@@ -4154,6 +4154,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone number changed. Sign in with your new number.'**
   String get otpChangePhoneDone;
+
+  /// No description provided for @changePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePasswordTitle;
+
+  /// No description provided for @changePasswordIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password, then choose a new one. You\'ll be signed out on your other devices.'**
+  String get changePasswordIntro;
+
+  /// No description provided for @changePasswordForcedIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'You signed in with a temporary password. Choose your own password to continue.'**
+  String get changePasswordForcedIntro;
+
+  /// No description provided for @changePasswordCurrentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get changePasswordCurrentLabel;
+
+  /// No description provided for @changePasswordTemporaryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary password'**
+  String get changePasswordTemporaryLabel;
+
+  /// No description provided for @changePasswordCurrentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password.'**
+  String get changePasswordCurrentRequired;
+
+  /// No description provided for @changePasswordCurrentInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password is wrong.'**
+  String get changePasswordCurrentInvalid;
+
+  /// No description provided for @changePasswordSameAsCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a password different from the current one.'**
+  String get changePasswordSameAsCurrent;
+
+  /// No description provided for @changePasswordButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePasswordButton;
+
+  /// No description provided for @changePasswordDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed.'**
+  String get changePasswordDone;
+
+  /// No description provided for @changePasswordSignInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed. Sign in with your new password.'**
+  String get changePasswordSignInAgain;
+
+  /// No description provided for @profileChangePasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Signs you out on your other devices'**
+  String get profileChangePasswordSubtitle;
+
+  /// No description provided for @otpChangePhonePasswordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm it\'s you.'**
+  String get otpChangePhonePasswordHelper;
+
+  /// No description provided for @otpSignupNoCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t get a code? If you already have an account, log in or use Forgot password.'**
+  String get otpSignupNoCodeHint;
+
+  /// No description provided for @phoneEthiopianMobileInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an Ethiopian mobile number, e.g. 0911223344 or 0711223344.'**
+  String get phoneEthiopianMobileInvalid;
+
+  /// No description provided for @homeOfflineCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'of which {amount} recorded outside the app'**
+  String homeOfflineCollected(String amount);
+
+  /// No description provided for @homeOfflineCollectedAsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'of which {amount} recorded outside the app (as of {date})'**
+  String homeOfflineCollectedAsOf(String amount, String date);
 }
 
 class _AppLocalizationsDelegate

@@ -17,6 +17,14 @@ void main() {
     }
   });
 
+  group('Safaricom numbers (07…) become +2517 E.164', () {
+    for (final input in ['0711223344', '+251711223344', '251 711 223 344']) {
+      test('"$input"', () {
+        expect(LoginIdentifier.resolve(input), '+251711223344');
+      });
+    }
+  });
+
   group('emails pass through unchanged (trimmed)', () {
     test('plain', () {
       expect(
@@ -46,6 +54,7 @@ void main() {
       'a b@c.com',
       '12345',
       '0811223344', // not an Ethiopian mobile
+      '0111223344', // landline
       '+14155552671', // not Ethiopian
       '09112233445', // too long
     ]) {

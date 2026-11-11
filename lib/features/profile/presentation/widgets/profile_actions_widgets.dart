@@ -42,6 +42,15 @@ class _CoreActionsCard extends StatelessWidget {
                 : context.l10n.profileApplyAsBeneficiarySubtitle,
             onTap: () => context.go('/beneficiary-registration'),
           ),
+          const Divider(height: 1, indent: 56, endIndent: 16),
+          // Ends every session; the app signs in again with the new one.
+          _ActionTile(
+            icon: Icons.lock_reset_rounded,
+            iconColor: Theme.of(context).colorScheme.primary,
+            title: context.l10n.changePasswordTitle,
+            subtitle: context.l10n.profileChangePasswordSubtitle,
+            onTap: () => context.push('/profile/change-password'),
+          ),
         ],
       ),
     );

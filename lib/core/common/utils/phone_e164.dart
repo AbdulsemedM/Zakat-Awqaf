@@ -7,6 +7,20 @@ abstract final class PhoneE164 {
 
   static bool isValid(String phone) => _e164Pattern.hasMatch(phone.trim());
 
+  static final _ethiopianMobilePattern = RegExp(r'^\+251[79]\d{8}$');
+
+  /// An Ethiopian mobile (`+2519…`, `+2517…`, `2519…`, `09…`, `07…`; spaces
+  /// and dashes ignored) as the backend stores it (`+2519XXXXXXXX` /
+  /// `+2517XXXXXXXX`), or `null`. Every account and registration phone
+  /// field accepts only these; landlines (`+25111…`) and foreign numbers
+  /// are refused with 400.
+  static String? ethiopianMobile(String input) {
+    final phone = normalize(input);
+    return phone != null && _ethiopianMobilePattern.hasMatch(phone)
+        ? phone
+        : null;
+  }
+
   /// Converts common local formats (e.g. `0911223344`) to E.164 (`+251911223344`).
   ///
   /// Returns `null` when [input] cannot be normalized. Values already in E.164
@@ -35,8 +49,9 @@ abstract final class PhoneE164 {
       raw = raw.substring(1);
     }
 
-    // Ethiopian mobiles: 9 digits starting with 9.
-    if (RegExp(r'^9\d{8}$').hasMatch(raw)) {
+    // Ethiopian mobiles: 9 digits starting with 9 (Ethio telecom) or 7
+    // (Safaricom).
+    if (RegExp(r'^[79]\d{8}$').hasMatch(raw)) {
       final candidate = '+$countryCode$raw';
       return isValid(candidate) ? candidate : null;
     }

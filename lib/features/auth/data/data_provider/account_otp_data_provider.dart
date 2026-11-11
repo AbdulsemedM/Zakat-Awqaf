@@ -19,6 +19,7 @@ class AccountOtpDataProvider {
   static const _reset = 'api/auth/v1/password-reset';
   static const _signup = 'api/auth/v1/donors/signup';
   static const _phone = 'api/auth/v1/me/phone';
+  static const _password = 'api/auth/v1/me/password';
 
   static String _id(String id) => Uri.encodeComponent(id);
 
@@ -83,12 +84,33 @@ class AccountOtpDataProvider {
     return dto.accessToken.isEmpty || dto.refreshToken.isEmpty ? null : dto;
   });
 
-  /// The code goes to [newPhone] (E.164).
-  Future<OtpChallenge> startPhoneChange(String newPhone) =>
-      _challenge(_dio, _phone, 'changeId', data: {'newPhone': newPhone});
+  /// The code goes to [newPhone] (E.164). A wrong [currentPassword] is 400
+  /// `CURRENT_PASSWORD_INVALID`; too many starts, 429 `CHANGE_LIMIT`.
+  Future<OtpChallenge> startPhoneChange(
+    String newPhone, {
+    required String currentPassword,
+  }) => _challenge(
+    _dio,
+    _phone,
+    'changeId',
+    data: {'newPhone': newPhone, 'currentPassword': currentPassword},
+  );
 
   Future<OtpChallenge> resendPhoneChange(String changeId) =>
       _challenge(_dio, '$_phone/${_id(changeId)}/resend', 'changeId');
+
+  /// Signed in. A wrong [currentPassword] is 400 `CURRENT_PASSWORD_INVALID`
+  /// (the session is still valid), a weak new one 400, too many failures
+  /// 429 `TOO_MANY_ATTEMPTS`. On success every session of the account ends,
+  /// on all devices.
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) => _post(_dio, _password, {
+    'currentPassword': currentPassword,
+    'newPassword': newPassword,
+    'confirmNewPassword': newPassword,
+  });
 
   /// Ends every session of the account, on all devices.
   Future<void> verifyPhoneChange(String changeId, {required String code}) =>

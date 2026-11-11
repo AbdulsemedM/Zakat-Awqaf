@@ -40,11 +40,23 @@ abstract class AuthRepository {
   });
 
   /// Signed in. [newPhone] in E.164; the code goes to it.
-  Future<OtpChallenge> startPhoneChange(String newPhone);
+  Future<OtpChallenge> startPhoneChange(
+    String newPhone, {
+    required String currentPassword,
+  });
 
   Future<OtpChallenge> resendPhoneChange(String changeId);
 
   /// Changes the phone (the login). Every session of the account ends, so
   /// this one is closed on the phone too.
   Future<void> completePhoneChange(String changeId, {required String code});
+
+  /// Signed in: changes the password (also the forced change of a
+  /// temporary one). Every session of the account ends, so the app signs in
+  /// again with [newPassword]. `false` when that sign-in failed: the user is
+  /// then signed out and signs in themselves.
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }

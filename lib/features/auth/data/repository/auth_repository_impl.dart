@@ -46,8 +46,11 @@ class AuthRepositoryImpl implements AuthRepository {
       refreshToken: dto.refreshToken,
       tokenType: dto.tokenType,
       expiresInSeconds: dto.expiresIn > 0 ? dto.expiresIn : 300,
+      passwordChangeRequired: dto.passwordChangeRequired,
     );
-    _sessionController.markAuthenticated();
+    _sessionController.markAuthenticated(
+      passwordChangeRequired: dto.passwordChangeRequired,
+    );
   }
 
   @override
@@ -118,8 +121,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<OtpChallenge> startPhoneChange(String newPhone) =>
-      _otpDataProvider.startPhoneChange(newPhone);
+  Future<OtpChallenge> startPhoneChange(
+    String newPhone, {
+    required String currentPassword,
+  }) => _otpDataProvider.startPhoneChange(
+    newPhone,
+    currentPassword: currentPassword,
+  );
 
   @override
   Future<OtpChallenge> resendPhoneChange(String changeId) =>
@@ -132,5 +140,30 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     await _otpDataProvider.verifyPhoneChange(changeId, code: code);
     await logout();
+  }
+
+  @override
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    // The login name (phone or email), read before the session goes.
+    final username = (await _tokenStorage.readUser())?.phone.trim() ?? '';
+    await _otpDataProvider.changePassword(
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    );
+    // Every session ended on the server, this one too.
+    await _tokenStorage.clear();
+    if (username.isNotEmpty) {
+      try {
+        await login(LoginRequest(username: username, password: newPassword));
+        return true;
+      } catch (_) {
+        // Signed out below; the user signs in with the new password.
+      }
+    }
+    await logout();
+    return false;
   }
 }

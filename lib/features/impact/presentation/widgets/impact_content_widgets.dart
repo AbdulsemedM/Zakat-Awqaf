@@ -606,7 +606,7 @@ class _StoryAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final imageUrl = httpsUrl(story.imageUrl);
+    final imageUrl = httpsUrl(story.imageVariants.thumbnailOr(story.imageUrl));
     return InkWell(
       onTap: () =>
           context.push('/impact/stories/${Uri.encodeComponent(story.id)}'),
@@ -658,6 +658,8 @@ class _StoryAvatar extends StatelessWidget {
                         Image.network(
                           imageUrl,
                           fit: BoxFit.cover,
+                          semanticLabel: story.imageAltText,
+                          excludeFromSemantics: story.imageAltText == null,
                           errorBuilder: (_, _, _) => const SizedBox.shrink(),
                         ),
                     ],

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/network/api_envelope.dart';
+import '../../../../core/network/image_variants.dart';
 
 enum CauseBadge { essential, urgent }
 
@@ -39,6 +40,11 @@ class Cause extends Equatable {
     this.region,
     this.endsOn,
     required this.acceptsZakat,
+    this.status = CauseStatus.active,
+    this.closedAt,
+    this.imageAltText,
+    this.imageVariants = ImageVariants.none,
+    this.regionCode,
   });
 
   /// The permanent general zakat fund, always first in `acceptsZakat=true`.
@@ -61,7 +67,25 @@ class Cause extends Equatable {
   final DateTime? endsOn;
   final bool acceptsZakat;
 
+  /// Causes close by themselves after their end date.
+  final CauseStatus status;
+  final DateTime? closedAt;
+
+  /// Describes [imageUrl] for screen readers.
+  final String? imageAltText;
+
+  /// Smaller copies of [imageUrl]: thumbnail in lists, medium on detail.
+  final ImageVariants imageVariants;
+
+  /// Same codes as `GET /impact/regions`.
+  final String? regionCode;
+
   bool get isGeneralFund => id == generalFundId;
+
+  bool get isClosed => status == CauseStatus.closed;
+
+  /// Shows the Give button: accepts zakat and is not closed.
+  bool get canGive => acceptsZakat && !isClosed;
 
   factory Cause.fromJson(Map<String, dynamic> json) {
     final id = jsonString(json['id']);
@@ -83,6 +107,13 @@ class Cause extends Equatable {
       region: jsonString(json['region']),
       endsOn: jsonDate(json['endsOn']),
       acceptsZakat: json['acceptsZakat'] == true,
+      status: json['status'] == 'closed'
+          ? CauseStatus.closed
+          : CauseStatus.active,
+      closedAt: jsonDate(json['closedAt']),
+      imageAltText: jsonString(json['imageAltText']),
+      imageVariants: ImageVariants.fromJson(json['imageVariants']),
+      regionCode: jsonString(json['regionCode']),
     );
   }
 
@@ -100,12 +131,22 @@ class Cause extends Equatable {
     region,
     endsOn,
     acceptsZakat,
+    status,
+    closedAt,
+    imageAltText,
+    imageVariants,
+    regionCode,
   ];
 }
 
 /// `GET /api/zakat/v1/causes/{id}`: the list item plus long text and images.
 class CauseDetail extends Equatable {
-  const CauseDetail({required this.cause, this.body, this.images = const []});
+  const CauseDetail({
+    required this.cause,
+    this.body,
+    this.images = const [],
+    this.gallery = const [],
+  });
 
   final Cause cause;
   final String? body;
@@ -113,22 +154,34 @@ class CauseDetail extends Equatable {
   /// Absolute image URLs, possibly empty.
   final List<String> images;
 
+  /// The images with alt text and sizes; built from [images] when the
+  /// server sends no `gallery`.
+  final List<GalleryImage> gallery;
+
   factory CauseDetail.fromJson(Map<String, dynamic> json) {
-    final images = json['images'];
+    final rawImages = json['images'];
+    final images = rawImages is List
+        ? [
+            for (final url in rawImages)
+              if (url is String) url,
+          ]
+        : const <String>[];
+    final rawGallery = json['gallery'];
+    final gallery = rawGallery is List
+        ? rawGallery.map(GalleryImage.tryParse).nonNulls.toList()
+        : const <GalleryImage>[];
     return CauseDetail(
       cause: Cause.fromJson(json),
       body: jsonString(json['body']),
-      images: images is List
-          ? [
-              for (final url in images)
-                if (url is String) url,
-            ]
-          : const [],
+      images: images,
+      gallery: gallery.isNotEmpty
+          ? gallery
+          : [for (final url in images) GalleryImage(url: url)],
     );
   }
 
   @override
-  List<Object?> get props => [cause, body, images];
+  List<Object?> get props => [cause, body, images, gallery];
 }
 
 class CausesPage extends Equatable {

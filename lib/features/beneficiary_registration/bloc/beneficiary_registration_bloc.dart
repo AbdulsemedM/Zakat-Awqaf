@@ -524,8 +524,8 @@ class BeneficiaryRegistrationBloc
     if (!s.isIdentityStepComplete) {
       return 'Please complete all required identity fields.';
     }
-    if (PhoneE164.normalize(s.phoneNumber) == null) {
-      return 'Enter a valid phone number (e.g. +251911223344 or 0911223344).';
+    if (PhoneE164.ethiopianMobile(s.phoneNumber) == null) {
+      return 'Enter an Ethiopian mobile number (e.g. 0911223344, 0711223344 or +251911223344).';
     }
     if (s.birthdate == null) {
       return 'Select your birthdate.';
@@ -553,7 +553,7 @@ class BeneficiaryRegistrationBloc
 
     return FullBeneficiaryCreateRequest(
       fullName: fullName,
-      phone: PhoneE164.normalize(s.phoneNumber)!,
+      phone: PhoneE164.ethiopianMobile(s.phoneNumber)!,
       email: s.email.trim(),
       dateOfBirth: dateOfBirth,
       gender: genderStr,
@@ -900,8 +900,8 @@ class BeneficiaryRegistrationBloc
     if (!s.isInstitutionDetailsComplete) {
       return 'Please complete all required institution fields.';
     }
-    if (PhoneE164.normalize(s.phoneNumber) == null) {
-      return 'Enter a valid phone number (e.g. +251911223344 or 0911223344).';
+    if (PhoneE164.ethiopianMobile(s.phoneNumber) == null) {
+      return 'Enter an Ethiopian mobile number (e.g. 0911223344, 0711223344 or +251911223344).';
     }
     if (!s.email.trim().contains('@')) {
       return 'Enter a valid email address.';
@@ -918,7 +918,7 @@ class BeneficiaryRegistrationBloc
       tradeRegistrationNumber: s.tradeRegistrationNumber.trim(),
       taxIdentificationNumber: s.taxIdentificationNumber.trim(),
       vatRegistrationNumber: s.vatRegistrationNumber.trim(),
-      phone: PhoneE164.normalize(s.phoneNumber)!,
+      phone: PhoneE164.ethiopianMobile(s.phoneNumber)!,
       email: s.email.trim(),
       region: s.region.trim(),
       city: s.city.trim(),

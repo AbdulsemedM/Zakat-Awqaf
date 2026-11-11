@@ -55,6 +55,7 @@ class AuthTokenStorage {
   static const _userEmail = 'email';
   static const _userPhone = 'phone';
   static const _userRoles = 'roles';
+  static const _passwordChangeRequired = 'passwordChangeRequired';
 
   /// SharedPreferences keys used before the move to secure storage.
   static const _legacyAccessTokenKey = 'auth_access_token';
@@ -175,6 +176,23 @@ class AuthTokenStorage {
         : DateTime.fromMillisecondsSinceEpoch(expiresAt.toInt());
   }
 
+  /// Signed in with a temporary password (`passwordChangeRequired` on
+  /// login, refresh or `GET /me`): every call but `GET /me`,
+  /// `POST /me/password`, refresh and logout answers 403
+  /// `PASSWORD_CHANGE_REQUIRED` until the password is changed.
+  Future<bool> readPasswordChangeRequired() async =>
+      (await _read())?[_passwordChangeRequired] == true;
+
+  /// Records that the server asked for a password change (a 403
+  /// `PASSWORD_CHANGE_REQUIRED`). Does nothing when signed out.
+  Future<void> markPasswordChangeRequired() async {
+    final session = await _read();
+    if (session == null || session[_passwordChangeRequired] == true) return;
+    final updated = {...session, _passwordChangeRequired: true};
+    _session = Future.value(updated);
+    await _secure.write(key: _sessionKey, value: jsonEncode(updated));
+  }
+
   Future<StoredAuthUser?> readUser() async {
     final session = await _read();
     // Signed in when a session was saved; the token may carry no name (e.g.
@@ -196,6 +214,7 @@ class AuthTokenStorage {
     required String refreshToken,
     required String tokenType,
     required int expiresInSeconds,
+    bool passwordChangeRequired = false,
   }) async {
     final expiresAt = DateTime.now()
         .add(Duration(seconds: expiresInSeconds))
@@ -220,6 +239,7 @@ class AuthTokenStorage {
       _userEmail: email,
       _userPhone: phone,
       _userRoles: roles,
+      _passwordChangeRequired: passwordChangeRequired,
     };
     await _settle();
     _session = Future.value(session);
