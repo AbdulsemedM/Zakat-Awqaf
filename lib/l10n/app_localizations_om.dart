@@ -2356,6 +2356,35 @@ class AppLocalizationsOm extends AppLocalizations {
   String get otpResend => 'Koodii irra deebi\'ii ergi';
 
   @override
+  String otpResetCodeSentTo(String phone) {
+    return 'Lakkoofsi kun herrega yoo qabaate, koodii gara $phone ergineerra. Armaan gaditti galchi.';
+  }
+
+  @override
+  String otpResendIn(int seconds) {
+    return 'Koodii sekondii $seconds booda irra deebi\'ii ergi';
+  }
+
+  @override
+  String get otpSendFailed =>
+      'Koodii erguu hin dandeenye. Yeroo muraasa booda irra deebi\'ii yaali.';
+
+  @override
+  String get otpResetUnavailable => 'Jecha darbii haaromsuun amma hin argamu.';
+
+  @override
+  String get otpResetLimit =>
+      'Gaaffiiwwan baay\'ee ta\'aniiru. Sa\'aatii tokko booda irra deebi\'ii yaali.';
+
+  @override
+  String get otpResendLimit =>
+      'Koodiin dabalataa ergamuu hin danda\'u. Booda irra deebi\'ii jalqabi.';
+
+  @override
+  String get otpLocked =>
+      'Koodiiwwan dogoggoraa baay\'ee. Irra deebi\'ii jalqabi.';
+
+  @override
   String get otpCodeResent => 'Koodiin haaraan ergameera.';
 
   @override

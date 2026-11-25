@@ -2350,6 +2350,35 @@ class AppLocalizationsSo extends AppLocalizations {
   String get otpResend => 'Dib u dir koodhka';
 
   @override
+  String otpResetCodeSentTo(String phone) {
+    return 'Haddii lambarkan uu leeyahay akoon, koodh ayaan u dirnay $phone. Hoos ku geli.';
+  }
+
+  @override
+  String otpResendIn(int seconds) {
+    return 'Dib u dir koodhka ${seconds}s kadib';
+  }
+
+  @override
+  String get otpSendFailed =>
+      'Ma aanan diri karin koodhka. Isku day mar kale wax yar kadib.';
+
+  @override
+  String get otpResetUnavailable =>
+      'Dib u dejinta furaha sirta ah hadda lama heli karo.';
+
+  @override
+  String get otpResetLimit =>
+      'Codsiyo aad u badan. Isku day mar kale saacad kadib.';
+
+  @override
+  String get otpResendLimit =>
+      'Koodh kale lama diri karo. Dib u bilow mar dambe.';
+
+  @override
+  String get otpLocked => 'Koodhad khaldan oo aad u badan. Dib u bilow.';
+
+  @override
   String get otpCodeResent => 'Koodh cusub ayaa la diray.';
 
   @override

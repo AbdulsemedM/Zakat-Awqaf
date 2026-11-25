@@ -10,6 +10,7 @@ import '../../bloc/auth_bloc.dart';
 import '../../bloc/auth_event.dart';
 import '../../bloc/auth_state.dart';
 import '../../data/login_identifier.dart';
+import 'otp_flow_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({this.embeddedInProfile = false, super.key});
@@ -50,14 +51,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   /// Opens a code flow (password reset, sign-up) and shows the message it
-  /// ends with. The messenger outlives this screen, which a sign-up
-  /// replaces with the profile.
+  /// ends with. When the user should now sign in, fills in their phone
+  /// number. The messenger outlives this screen, which a sign-up replaces
+  /// with the profile.
   Future<void> _openFlow(String location) async {
     final messenger = ScaffoldMessenger.of(context);
-    final message = await context.push<String>(location);
-    if (message != null) {
-      messenger.showSnackBar(SnackBar(content: Text(message)));
+    final result = await context.push<OtpFlowResult>(location);
+    if (result == null) return;
+    final phone = result.phone;
+    if (phone != null && mounted) {
+      _identifierController.text = phone;
+      _passwordController.clear();
     }
+    messenger.showSnackBar(SnackBar(content: Text(result.message)));
   }
 
   InputDecoration _fieldDecoration({

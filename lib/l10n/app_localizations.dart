@@ -4089,6 +4089,48 @@ abstract class AppLocalizations {
   /// **'Resend code'**
   String get otpResend;
 
+  /// No description provided for @otpResetCodeSentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'If this number has an account, we sent a code to {phone}. Enter it below.'**
+  String otpResetCodeSentTo(String phone);
+
+  /// No description provided for @otpResendIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {seconds}s'**
+  String otpResendIn(int seconds);
+
+  /// No description provided for @otpSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not send the code. Try again in a moment.'**
+  String get otpSendFailed;
+
+  /// No description provided for @otpResetUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset is not available right now.'**
+  String get otpResetUnavailable;
+
+  /// No description provided for @otpResetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Try again in an hour.'**
+  String get otpResetLimit;
+
+  /// No description provided for @otpResendLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No more codes can be sent. Start again later.'**
+  String get otpResendLimit;
+
+  /// No description provided for @otpLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong codes. Start again.'**
+  String get otpLocked;
+
   /// No description provided for @otpCodeResent.
   ///
   /// In en, this message translates to:

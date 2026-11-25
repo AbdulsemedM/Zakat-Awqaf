@@ -2294,6 +2294,31 @@ class AppLocalizationsAm extends AppLocalizations {
   String get otpResend => 'ኮድ እንደገና ላክ';
 
   @override
+  String otpResetCodeSentTo(String phone) {
+    return 'ይህ ቁጥር መለያ ካለው ወደ $phone ኮድ ልከናል። ከታች ያስገቡት።';
+  }
+
+  @override
+  String otpResendIn(int seconds) {
+    return 'ኮድ በ$seconds ሰከንድ ውስጥ እንደገና መላክ ይቻላል';
+  }
+
+  @override
+  String get otpSendFailed => 'ኮዱን መላክ አልቻልንም። ትንሽ ቆይተው እንደገና ይሞክሩ።';
+
+  @override
+  String get otpResetUnavailable => 'የይለፍ ቃል ዳግም ማስጀመር አሁን አይገኝም።';
+
+  @override
+  String get otpResetLimit => 'በጣም ብዙ ጥያቄዎች። ከአንድ ሰዓት በኋላ እንደገና ይሞክሩ።';
+
+  @override
+  String get otpResendLimit => 'ተጨማሪ ኮድ መላክ አይቻልም። ቆይተው እንደገና ይጀምሩ።';
+
+  @override
+  String get otpLocked => 'በጣም ብዙ የተሳሳቱ ኮዶች። እንደገና ይጀምሩ።';
+
+  @override
   String get otpCodeResent => 'አዲስ ኮድ ተልኳል።';
 
   @override

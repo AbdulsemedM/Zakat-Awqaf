@@ -2317,6 +2317,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get otpResend => 'إعادة إرسال الرمز';
 
   @override
+  String otpResetCodeSentTo(String phone) {
+    return 'إذا كان لهذا الرقم حساب، فقد أرسلنا رمزًا إلى $phone. أدخله أدناه.';
+  }
+
+  @override
+  String otpResendIn(int seconds) {
+    return 'إعادة إرسال الرمز بعد $seconds ث';
+  }
+
+  @override
+  String get otpSendFailed => 'تعذّر إرسال الرمز. حاول مرة أخرى بعد قليل.';
+
+  @override
+  String get otpResetUnavailable => 'إعادة تعيين كلمة المرور غير متاحة حاليًا.';
+
+  @override
+  String get otpResetLimit => 'طلبات كثيرة جدًا. حاول مرة أخرى بعد ساعة.';
+
+  @override
+  String get otpResendLimit =>
+      'لا يمكن إرسال المزيد من الرموز. ابدأ من جديد لاحقًا.';
+
+  @override
+  String get otpLocked => 'رموز خاطئة كثيرة جدًا. ابدأ من جديد.';
+
+  @override
   String get otpCodeResent => 'تم إرسال رمز جديد.';
 
   @override

@@ -478,9 +478,9 @@ class _PersonalInfoCard extends StatelessWidget {
 /// sign-in; the root messenger shows how it ended.
 Future<void> _changePhone(BuildContext context) async {
   final messenger = ScaffoldMessenger.of(context);
-  final message = await context.push<String>('/profile/change-phone');
-  if (message != null) {
-    messenger.showSnackBar(SnackBar(content: Text(message)));
+  final result = await context.push<OtpFlowResult>('/profile/change-phone');
+  if (result != null) {
+    messenger.showSnackBar(SnackBar(content: Text(result.message)));
   }
 }
 

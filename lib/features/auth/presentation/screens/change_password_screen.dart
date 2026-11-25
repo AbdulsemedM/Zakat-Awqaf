@@ -205,7 +205,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       decoration: InputDecoration(
                         labelText: l10n.otpNewPasswordLabel,
                         helperText: l10n.regPasswordRules,
-                        helperMaxLines: 4,
+                        helperMaxLines: 5,
                         errorText: _passwordError,
                         errorMaxLines: 4,
                         prefixIcon: const Icon(Icons.lock_outline_rounded),

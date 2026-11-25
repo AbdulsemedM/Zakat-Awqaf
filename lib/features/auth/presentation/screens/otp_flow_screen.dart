@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,6 +12,15 @@ import '../../data/login_identifier.dart';
 import '../../data/models/otp_challenge.dart';
 import '../../data/password_rules.dart';
 import '../../data/repository/auth_repository.dart';
+
+/// What [OtpFlowScreen] pops with: a message for the screen below and,
+/// when the user should sign in next, the phone number to fill in.
+class OtpFlowResult {
+  const OtpFlowResult(this.message, {this.phone});
+
+  final String message;
+  final String? phone;
+}
 
 /// The account flows confirmed by an SMS code.
 enum OtpFlowKind {
@@ -25,7 +36,7 @@ enum OtpFlowKind {
 
 /// Step 1 asks for the phone number (and the name, for a sign-up) and
 /// sends the code; step 2 takes the code (and the new password, except for
-/// a phone change). Pops with a message for the screen below to show, or
+/// a phone change). Pops with an [OtpFlowResult] for the screen below, or
 /// `null` (cancelled, or signed in by a sign-up).
 ///
 /// The server's `message` is written for the user, so it is shown as is.
@@ -60,12 +71,26 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
   String? _confirmError;
   String? _currentPasswordError;
 
+  /// The server doesn't enforce a wait between codes, but one saves codes
+  /// and SMS cost.
+  static const _resendWait = Duration(seconds: 60);
+
+  /// When "Resend" becomes active again; ticks [_resendTimer] until then.
+  DateTime? _resendAt;
+  Timer? _resendTimer;
+
   bool get _isPhoneChange => widget.kind == OtpFlowKind.phoneChange;
+
+  bool get _isReset => widget.kind == OtpFlowKind.passwordReset;
+
+  /// The app's language, for the SMS (`Accept-Language`).
+  String get _language => apiLang(context.contentLocale);
 
   bool get _asksPassword => widget.kind != OtpFlowKind.phoneChange;
 
   @override
   void dispose() {
+    _resendTimer?.cancel();
     _phone.dispose();
     _fullName.dispose();
     _code.dispose();
@@ -94,7 +119,10 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
     }
     await _run(() async {
       final challenge = await switch (widget.kind) {
-        OtpFlowKind.passwordReset => _repository.startPasswordReset(phone),
+        OtpFlowKind.passwordReset => _repository.startPasswordReset(
+          phone,
+          language: _language,
+        ),
         OtpFlowKind.donorSignup => _repository.startDonorSignup(
           phone: phone,
           fullName: fullName,
@@ -109,6 +137,7 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
         _challenge = challenge;
         _code.clear();
         _codeError = null;
+        _startResendWait();
         // Not kept longer than needed.
         _currentPassword.clear();
       });
@@ -120,7 +149,10 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
     if (id == null) return;
     await _run(() async {
       final challenge = await switch (widget.kind) {
-        OtpFlowKind.passwordReset => _repository.resendPasswordReset(id),
+        OtpFlowKind.passwordReset => _repository.resendPasswordReset(
+          id,
+          language: _language,
+        ),
         OtpFlowKind.donorSignup => _repository.resendDonorSignup(id),
         OtpFlowKind.phoneChange => _repository.resendPhoneChange(id),
       };
@@ -129,6 +161,7 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
         _challenge = challenge;
         _code.clear();
         _codeError = null;
+        _startResendWait();
       });
       _showSnack(context.l10n.otpCodeResent);
     });
@@ -162,14 +195,18 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
             code: code,
             newPassword: password,
           );
-          _finish(l10n.otpResetDone);
+          // Every session of the account ended; sign in again.
+          _finish(l10n.otpResetDone, phone: _phone.text.trim());
         case OtpFlowKind.donorSignup:
           final signedIn = await _repository.completeDonorSignup(
             id,
             otp: code,
             password: password,
           );
-          _finish(signedIn ? null : l10n.otpSignupLoginNeeded);
+          _finish(
+            signedIn ? null : l10n.otpSignupLoginNeeded,
+            phone: _phone.text.trim(),
+          );
         case OtpFlowKind.phoneChange:
           await _repository.completePhoneChange(id, code: code);
           _finish(l10n.otpChangePhoneDone);
@@ -198,10 +235,18 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
       _showSnack(l10n.otpNetworkError);
       return;
     }
+    // The SMS gateway refused the message or couldn't be reached. Nothing
+    // was saved, so trying again is safe. The body's `code` isn't reliable.
+    if (e.statusCode == 502) {
+      _showSnack(l10n.otpSendFailed);
+      return;
+    }
     switch (e.code) {
       case 'OTP_WRONG' || 'OTP_EXPIRED':
         final attempts = _challenge?.attemptsLeft;
-        _codeError = attempts == null
+        // The server's message often already says how many are left
+        // ("Wrong code; 4 attempts left").
+        _codeError = attempts == null || e.message.contains('$attempts')
             ? e.message
             : '${e.message}\n${l10n.otpAttemptsLeft(attempts)}';
       case 'WEAK_PASSWORD':
@@ -214,7 +259,7 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
         _phoneError = e.message;
       case 'ALREADY_COMPLETED' when widget.kind == OtpFlowKind.donorSignup:
         // The account exists: sign in. (Not inside this setState.)
-        Future.microtask(() => _finish(e.message));
+        Future.microtask(() => _finish(e.message, phone: _phone.text.trim()));
       case 'VALIDATION_FAILED' when e.fieldErrors.isNotEmpty:
         final fields = e.fieldErrors;
         _codeError = fields['code'] ?? fields['otp'];
@@ -228,6 +273,16 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
             _currentPasswordError != null) {
           _restart();
         }
+      case 'OTP_UNAVAILABLE' when _isReset:
+        _showSnack(l10n.otpResetUnavailable);
+      case 'RESET_LIMIT':
+        _showSnack(l10n.otpResetLimit);
+      case 'OTP_RESEND_LIMIT':
+        _showSnack(l10n.otpResendLimit);
+      case 'OTP_LOCKED':
+        // The 5th wrong code (400) or a reset locked earlier (409).
+        _restart();
+        _showSnack(l10n.otpLocked);
       default:
         // Locked, expired, used or unknown: this code can't be used any
         // more. Limits (429 CHANGE_LIMIT, TOO_MANY_ATTEMPTS: the message
@@ -248,10 +303,39 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
     _challenge = null;
     _code.clear();
     _codeError = null;
+    _resendTimer?.cancel();
+    _resendAt = null;
   }
 
-  void _finish(String? message) {
-    if (mounted) context.pop(message);
+  void _startResendWait() {
+    _resendAt = DateTime.now().add(_resendWait);
+    _resendTimer?.cancel();
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return timer.cancel();
+      final at = _resendAt;
+      if (at == null || !DateTime.now().isBefore(at)) timer.cancel();
+      setState(() {});
+    });
+  }
+
+  /// Seconds until "Resend" is active, or 0.
+  int get _resendSeconds {
+    final at = _resendAt;
+    if (at == null) return 0;
+    final left = at.difference(DateTime.now());
+    return left.isNegative ? 0 : (left.inMilliseconds / 1000).ceil();
+  }
+
+  void _finish(String? message, {String? phone}) {
+    if (!mounted) return;
+    context.pop(
+      message == null
+          ? null
+          : OtpFlowResult(
+              message,
+              phone: phone == null || phone.isEmpty ? null : phone,
+            ),
+    );
   }
 
   void _showSnack(String text) {
@@ -391,7 +475,9 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n.otpCodeSentTo(
+          // A reset answers the same whether or not the number has an
+          // account, so don't promise that a code is on its way.
+          (_isReset ? l10n.otpResetCodeSentTo : l10n.otpCodeSentTo)(
             challenge.maskedPhone ??
                 LoginIdentifier.resolvePhone(_phone.text) ??
                 _phone.text,
@@ -450,7 +536,7 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
                   ? l10n.otpNewPasswordLabel
                   : l10n.regPassword,
               helperText: l10n.regPasswordRules,
-              helperMaxLines: 3,
+              helperMaxLines: 5,
               errorText: _passwordError,
               errorMaxLines: 3,
               prefixIcon: const Icon(Icons.lock_outline_rounded),
@@ -489,10 +575,15 @@ class _OtpFlowScreenState extends State<OtpFlowScreen> {
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: _busy || !challenge.canResend ? null : _resend,
-              child: Text(l10n.otpResend),
-            ),
+            if (challenge.canResend)
+              TextButton(
+                onPressed: _busy || _resendSeconds > 0 ? null : _resend,
+                child: Text(
+                  _resendSeconds > 0
+                      ? l10n.otpResendIn(_resendSeconds)
+                      : l10n.otpResend,
+                ),
+              ),
             TextButton(
               onPressed: _busy ? null : () => setState(_restart),
               child: Text(l10n.otpUseAnotherNumber),

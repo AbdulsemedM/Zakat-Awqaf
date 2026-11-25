@@ -1422,6 +1422,27 @@
     }
   },
   "otpResend": "Resend code",
+  "otpResetCodeSentTo": "If this number has an account, we sent a code to {phone}. Enter it below.",
+  "@otpResetCodeSentTo": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpResendIn": "Resend code in {seconds}s",
+  "@otpResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "otpSendFailed": "We could not send the code. Try again in a moment.",
+  "otpResetUnavailable": "Password reset is not available right now.",
+  "otpResetLimit": "Too many requests. Try again in an hour.",
+  "otpResendLimit": "No more codes can be sent. Start again later.",
+  "otpLocked": "Too many wrong codes. Start again.",
   "otpCodeResent": "A new code was sent.",
   "otpUseAnotherNumber": "Use a different number",
   "otpNewPasswordLabel": "New password",

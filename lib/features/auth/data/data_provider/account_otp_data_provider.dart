@@ -28,8 +28,15 @@ class AccountOtpDataProvider {
     String path,
     String idKey, {
     Object? data,
+    String? language,
   }) => guardApi(() async {
-    final response = await dio.post<dynamic>(path, data: data);
+    final response = await dio.post<dynamic>(
+      path,
+      data: data,
+      options: language == null
+          ? null
+          : Options(headers: {'Accept-Language': language}),
+    );
     return OtpChallenge.fromJson(unwrapApiObject(response), idKey: idKey);
   });
 
@@ -38,11 +45,26 @@ class AccountOtpDataProvider {
   });
 
   /// [phone] in E.164. Answers the same whether or not it has an account.
-  Future<OtpChallenge> startPasswordReset(String phone) =>
-      _challenge(_authDio, _reset, 'resetId', data: {'username': phone});
+  /// The SMS is in the account's preferred language, else [language] (the
+  /// app's, sent as `Accept-Language`), else English.
+  Future<OtpChallenge> startPasswordReset(String phone, {String? language}) =>
+      _challenge(
+        _authDio,
+        _reset,
+        'resetId',
+        data: {'username': phone},
+        language: language,
+      );
 
-  Future<OtpChallenge> resendPasswordReset(String resetId) =>
-      _challenge(_authDio, '$_reset/${_id(resetId)}/resend', 'resetId');
+  Future<OtpChallenge> resendPasswordReset(
+    String resetId, {
+    String? language,
+  }) => _challenge(
+    _authDio,
+    '$_reset/${_id(resetId)}/resend',
+    'resetId',
+    language: language,
+  );
 
   /// Ends every session of the account, on all devices.
   Future<void> confirmPasswordReset(

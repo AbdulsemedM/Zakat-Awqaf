@@ -76,12 +76,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> hasSession() => _tokenStorage.hasValidSession();
 
   @override
-  Future<OtpChallenge> startPasswordReset(String phone) =>
-      _otpDataProvider.startPasswordReset(phone);
+  Future<OtpChallenge> startPasswordReset(String phone, {String? language}) =>
+      _otpDataProvider.startPasswordReset(phone, language: language);
 
   @override
-  Future<OtpChallenge> resendPasswordReset(String resetId) =>
-      _otpDataProvider.resendPasswordReset(resetId);
+  Future<OtpChallenge> resendPasswordReset(
+    String resetId, {
+    String? language,
+  }) => _otpDataProvider.resendPasswordReset(resetId, language: language);
 
   @override
   Future<void> confirmPasswordReset(

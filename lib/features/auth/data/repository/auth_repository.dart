@@ -12,10 +12,11 @@ abstract class AuthRepository {
   Future<void> logout();
   Future<bool> hasSession();
 
-  /// [phone] in E.164.
-  Future<OtpChallenge> startPasswordReset(String phone);
+  /// [phone] in E.164. [language] (`en`, `am`, ...) picks the SMS language
+  /// when the account has none set.
+  Future<OtpChallenge> startPasswordReset(String phone, {String? language});
 
-  Future<OtpChallenge> resendPasswordReset(String resetId);
+  Future<OtpChallenge> resendPasswordReset(String resetId, {String? language});
 
   /// Every session of the account ends; the user signs in again.
   Future<void> confirmPasswordReset(

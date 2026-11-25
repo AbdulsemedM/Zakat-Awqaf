@@ -2332,6 +2332,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otpResend => 'Resend code';
 
   @override
+  String otpResetCodeSentTo(String phone) {
+    return 'If this number has an account, we sent a code to $phone. Enter it below.';
+  }
+
+  @override
+  String otpResendIn(int seconds) {
+    return 'Resend code in ${seconds}s';
+  }
+
+  @override
+  String get otpSendFailed =>
+      'We could not send the code. Try again in a moment.';
+
+  @override
+  String get otpResetUnavailable =>
+      'Password reset is not available right now.';
+
+  @override
+  String get otpResetLimit => 'Too many requests. Try again in an hour.';
+
+  @override
+  String get otpResendLimit => 'No more codes can be sent. Start again later.';
+
+  @override
+  String get otpLocked => 'Too many wrong codes. Start again.';
+
+  @override
   String get otpCodeResent => 'A new code was sent.';
 
   @override
