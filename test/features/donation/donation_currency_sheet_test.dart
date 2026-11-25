@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mejlis_digital_hub/core/config/app_env.dart';
 import 'package:mejlis_digital_hub/features/donation/presentation/widgets/donation_currency_sheet.dart';
 import 'package:mejlis_digital_hub/features/zakat_payment/presentation/models/zakat_payment_args.dart';
 import 'package:mejlis_digital_hub/l10n/app_localizations_en.dart';
@@ -47,13 +48,29 @@ Future<void> _openSheet(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+const _intlOff = !AppEnv.internationalSadaqahEnabled;
+
 void main() {
+  testWidgets(
+    'with international off, Sadaqah goes straight to the QR payment',
+    (tester) async {
+      await _openSheet(tester);
+
+      expect(find.text(_l10n.donationInternationalPaymentTitle), findsNothing);
+      expect(
+        find.text('zakat payment: ${_l10n.donateSadaqah}'),
+        findsOneWidget,
+      );
+    },
+    skip: !_intlOff,
+  );
+
   testWidgets('offers both local and international Sadaqah', (tester) async {
     await _openSheet(tester);
 
     expect(find.text(_l10n.donationLocalPaymentTitle), findsOneWidget);
     expect(find.text(_l10n.donationInternationalPaymentTitle), findsOneWidget);
-  });
+  }, skip: _intlOff);
 
   testWidgets('local opens the QR payment steps for Sadaqah', (tester) async {
     await _openSheet(tester);
@@ -62,7 +79,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('zakat payment: ${_l10n.donateSadaqah}'), findsOneWidget);
-  });
+  }, skip: _intlOff);
 
   testWidgets('international opens the card donation form', (tester) async {
     await _openSheet(tester);
@@ -71,5 +88,5 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('international form'), findsOneWidget);
-  });
+  }, skip: _intlOff);
 }

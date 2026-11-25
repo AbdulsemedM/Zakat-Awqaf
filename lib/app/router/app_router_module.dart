@@ -26,6 +26,7 @@ import '../../features/profile/presentation/screens/profile_auth_gate_screen.dar
 import '../../features/zakat_calculator/presentation/screens/zakat_calculator_screen.dart';
 import '../../core/di/injection.dart';
 import '../../core/l10n/l10n.dart';
+import '../../core/config/app_env.dart';
 import '../../features/donation/presentation/screens/international_donation_screen.dart';
 import '../../features/zakat_payment/data/models/zakat_payment_models.dart';
 import '../../features/zakat_payment/presentation/models/zakat_payment_args.dart';
@@ -197,11 +198,12 @@ abstract class AppRouterModule {
           child: ImpactStoryScreen(storyId: state.pathParameters['id']!),
         ),
       ),
-      GoRoute(
-        path: '/donation/international',
-        builder: (context, state) =>
-            const ZakatThemed(child: InternationalDonationScreen()),
-      ),
+      if (AppEnv.internationalSadaqahEnabled)
+        GoRoute(
+          path: '/donation/international',
+          builder: (context, state) =>
+              const ZakatThemed(child: InternationalDonationScreen()),
+        ),
       GoRoute(
         path: '/zakat/payment/flow',
         builder: (context, state) {

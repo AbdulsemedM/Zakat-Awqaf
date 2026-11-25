@@ -33,6 +33,12 @@ abstract final class AppEnv {
     return payments.isNotEmpty ? payments : apiBaseUrl;
   }
 
+  /// International (card) Sadaqah. Switched off for now: the Sadaqah button
+  /// goes straight to the local ETB (QR) payment and the
+  /// `/donation/international` route is not registered. Set to true to bring
+  /// the card option back.
+  static const internationalSadaqahEnabled = false;
+
   static Future<void> load() async {
     if (kDebugMode) debugPrint('AppEnv: API_BASE_URL → $apiBaseUrl');
   }

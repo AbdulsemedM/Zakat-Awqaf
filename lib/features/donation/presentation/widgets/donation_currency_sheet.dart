@@ -6,15 +6,25 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_typography.dart';
 import '../../../../app/theme/primary_hero.dart';
 import '../../../../app/widgets/islamic_ornaments.dart';
+import '../../../../core/config/app_env.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../zakat_payment/presentation/models/zakat_payment_args.dart';
 
 enum DonationCurrencyChoice { local, international }
 
-/// Opens the payment picker for Sadaqah donations: local (ETB, QR payment
-/// steps; sent as general zakat until the API has a Sadaqah type, B3.6) or
-/// international (card).
-Future<void> showDonationCurrencySheet(BuildContext context) {
+/// Starts a Sadaqah donation: local (ETB, QR payment steps; sent as general
+/// zakat until the API has a Sadaqah type, B3.6) or international (card).
+///
+/// While [AppEnv.internationalSadaqahEnabled] is false there is only one
+/// choice, so this opens the local QR payment directly instead of a picker.
+Future<void> showDonationCurrencySheet(BuildContext context) async {
+  if (!AppEnv.internationalSadaqahEnabled) {
+    await context.push(
+      '/zakat/payment',
+      extra: ZakatPaymentArgs.forSadaqah(context.l10n),
+    );
+    return;
+  }
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
